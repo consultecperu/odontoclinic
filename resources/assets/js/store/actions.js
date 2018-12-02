@@ -142,5 +142,13 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                              
+    },   
+    LOAD_TARIFARIOS_LIST: function ({ commit }) {
+        var url = '/api/tarifarios';
+        return axios.get(url).then((response) => {
+            commit('SET_TARIFARIOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                  
 }

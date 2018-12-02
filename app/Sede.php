@@ -18,5 +18,10 @@ class Sede extends Model
     public function ubigeo()
     {
     	return $this->belongsTo('App\Ubigeo');
-    }     
+    }  
+    
+    public function tarifarios()
+    {
+        return $this->hasMany('App\Tarifario');
+    }
 }

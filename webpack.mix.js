@@ -12,6 +12,3 @@ let mix = require('laravel-mix');
  */
 
 mix.js(['resources/assets/js/app.js'], 'public/js/app.js') // al final
-    .styles([
-        'resources/assets/css/toastr.css', 'resources/assets/css/customs.css'
-    ], 'public/css/app.css');

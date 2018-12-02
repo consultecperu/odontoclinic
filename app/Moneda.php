@@ -14,4 +14,8 @@ class Moneda extends Model
     {
     	return $this->hasMany('App\Materiale');
     } 
+    public function tarifarios()
+    {
+        return $this->hasMany('App\Tarifario');
+    }    
 }

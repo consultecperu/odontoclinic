@@ -14,4 +14,8 @@ class Plane extends Model
     {
     	return $this->belongsTo('App\User');
     } 
+    public function tarifarios()
+    {
+        return $this->hasMany('App\Tarifario');       
+    }      
 }

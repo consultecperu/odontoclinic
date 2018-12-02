@@ -29,6 +29,10 @@ class Servicio extends Model
     public function laboratorios()
     {
         return $this->belongsToMany('App\Laboratorio')->withTimestamps();
-    }       
+    }   
+    public function tarifarios()
+    {
+        return $this->hasMany('App\Tarifario');       
+    }    
     
 }

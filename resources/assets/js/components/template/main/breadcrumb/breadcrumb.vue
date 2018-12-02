@@ -6,6 +6,12 @@
                     <i class="flaticon-home"></i>
                 </a>
             </li>
+            <li class="separator" v-if="breadthird != null">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item" v-if="breadthird != null">
+                <a href="#">{{ breadthird }}</a>
+            </li>            
             <li class="separator" v-if="breadsecond != null">
                 <i class="flaticon-right-arrow"></i>
             </li>
@@ -31,10 +37,7 @@ export default {
         }
     }, 
     computed: {
-        ...mapState(['breadmain','breadsecond']),
+        ...mapState(['breadmain','breadsecond','breadthird']),
     },         
 }
 </script>
-<style scoped>
-
-</style>

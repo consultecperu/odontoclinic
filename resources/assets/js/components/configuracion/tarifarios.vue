@@ -9,9 +9,10 @@
         <div class="col">
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
-                <div class="card-header">                        
+                <div class="card-header pl-0 pr-0">                        
                     <div class="col">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-agenda-1"></i></span> Nuevo Plan</button>
+                        <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">
@@ -34,6 +35,9 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
+                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-primary btn-xs" data-original-title="Ver Tarifario" @click.prevent="cargaTarifario(props.row.id)">
+                                    <i class="la la-file-text font-large"></i>
+                                </button>                                  
                                 <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Tarifario" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
@@ -58,13 +62,24 @@
                         <div class="card-title">Registro de Nuevo Plan Multident</div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="nombre">Nombre de Plan</label>
-                            <input type="text" id="nombre" placeholder="Nombre de Plan" class="form-control input-sm mayusculas" v-model="dataPlan.descripcion">
+                        <div class="row">
+                            <div class="col-8 pr-0">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre de Plan</label>
+                                    <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataPlan.descripcion">
+                                </div>                            
+                            </div>
+                            <div class="col-4 pl-0">
+                                <div class="form-group">
+                                    <label for="nombre">Abreviatura </label>
+                                    <input type="text" id="abreviatura" class="form-control form-control-sm mayusculas border border-primary" v-model="dataPlan.abreviatura">
+                                </div>                            
+                            </div>
                         </div>
+
                         <div class="form-group">
                             <label for="comment">Comentario</label>
-                            <textarea class="form-control" id="comment" rows="5" v-model="dataPlan.comentario">
+                            <textarea class="form-control form-control-sm border border-primary" id="comment" rows="5" v-model="dataPlan.comentario">
 
                             </textarea>
                         </div>                        
@@ -104,7 +119,7 @@ export default {
                 label: 'Nombre',
                 field: 'descripcion',
                 filterOptions: {
-                    enabled: true, 
+                    enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'70%',
@@ -120,6 +135,8 @@ export default {
             dataPlan : {
                 descripcion:'',
                 comentario:'',
+                abreviatura:'',
+                ruc:'20137464439',
                 user_id:''
             },                                                               
             errors:[] ,                           
@@ -141,6 +158,8 @@ export default {
             this.dataPlan = {
                 descripcion:'',
                 comentario:'',
+                abreviatura:'',
+                ruc:'20137464439',
                 user_id: this.user_system.id
             }           
             this.$modal.show('plan')
@@ -215,8 +234,10 @@ export default {
             this.dataPlan = {
                 id:datapla.id,
                 descripcion:datapla.descripcion,
-                comentario:datapla.comentario 
-                                          
+                abreviatura:datapla.abreviatura,
+                comentario:datapla.comentario ,
+                ruc:datapla.ruc ,
+                user_id: this.user_system.id                                         
             }            
             this.$modal.show('plan')
         
@@ -247,11 +268,20 @@ export default {
                         });
                     }
                 });
-        }, 
+        },
+        cargaTarifario: function(id){
+            this.$router.push({ name: 'detalle', params: { plan: id }})
+        } 
 
     }    
 }
 </script>
 <style scoped>
+    .v--modal-overlay {
+        z-index:9000;     
+    }    
 
+    .vld-overlay.is-full-page {
+        z-index: 99999;
+    }
 </style>

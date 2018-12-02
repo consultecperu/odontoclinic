@@ -73,9 +73,13 @@ table.vgt-table {
     font-size: large !important;
 }
 
+.autocomplete--clear {
+    margin-top: -5px !important;
+}
+
 /* utilitarios margin padding */
 
-.p-0 {
+  .p-0 {
     padding: 0px !important;
   }
   .p-5 {

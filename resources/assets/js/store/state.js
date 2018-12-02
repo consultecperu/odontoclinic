@@ -15,7 +15,9 @@ export default {
     empresas:[],
     breadmain:[],
     breadsecond:[],
+    breadthird:[],    
     servicios:[],
     simbologias:[],
     planes:[],
+    tarifarios:[]
 }

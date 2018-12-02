@@ -13,6 +13,7 @@ export default {
     SET_BREADCRUMB(state, { datos }) {
         state.breadmain = datos.main
         state.breadsecond = datos.second  
+        state.breadthird = datos.third
     },    
     SET_PERFIL_USER: (state, { list }) => {      // PERFIL DE USUARIO
         state.perfil_user = list
@@ -58,5 +59,8 @@ export default {
     },   
     SET_PLANES_LIST: (state, { list }) => {      // PLANES
         state.planes = list
-    },                                                     
+    },  
+    SET_TARIFARIOS_LIST: (state, { list }) => {      // TARIFARIOS
+        state.tarifarios = list
+    },                                                          
 }

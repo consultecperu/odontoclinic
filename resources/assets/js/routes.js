@@ -16,6 +16,7 @@ import Sedes from './components/configuracion/sedes.vue'
 import Empresaadministradoras from './components/configuracion/empresaadministradoras.vue'
 import Servicios from './components/configuracion/servicios.vue'
 import Tarifarios from './components/configuracion/tarifarios.vue'
+import Detalletarifarios from './components/configuracion/detalletarifarios.vue'
 
 import Pacientes from './components/entidades/pacientes.vue'
 import Medicos from './components/entidades/medicos.vue'
@@ -35,7 +36,7 @@ export default [
                 component: Dashboard,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Dashboard', second: null }
+                    var payload = { main: 'Dashboard', second: null , third : null}
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }
@@ -52,7 +53,7 @@ export default [
                 component: Perfiles,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Perfiles', second: 'Seguridad' }
+                    var payload = { main: 'Perfiles', second: 'Seguridad', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                
@@ -69,7 +70,7 @@ export default [
                 component: Modulos,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Modulos', second: 'Seguridad' }
+                    var payload = { main: 'Modulos', second: 'Seguridad', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
@@ -80,7 +81,7 @@ export default [
                 component: Cargos,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Cargos', second: 'Configuracion' }
+                    var payload = { main: 'Cargos', second: 'Configuracion', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
@@ -91,7 +92,7 @@ export default [
                 component: Gruposervicios,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Grupo de Servicios', second: 'Configuracion' }
+                    var payload = { main: 'Grupo de Servicios', second: 'Configuracion', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -102,7 +103,7 @@ export default [
                 component: Servicios,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Servicios', second: 'Configuracion' }
+                    var payload = { main: 'Servicios', second: 'Configuracion', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -113,7 +114,7 @@ export default [
                 component: Laboratorios,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Laboratorios', second: 'Configuracion' }
+                    var payload = { main: 'Laboratorios', second: 'Configuracion', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -124,7 +125,7 @@ export default [
                 component: Materiales,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Materiales', second: 'Configuracion' }
+                    var payload = { main: 'Materiales', second: 'Configuracion', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -135,7 +136,7 @@ export default [
                 component: Sedes,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Sedes', second: 'Configuracion' }
+                    var payload = { main: 'Sedes', second: 'Configuracion', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -146,7 +147,7 @@ export default [
                 component: Empresaadministradoras,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Empresas Administradoras', second: 'Configuracion' }
+                    var payload = { main: 'Empresas Administradoras', second: 'Configuracion', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -157,18 +158,30 @@ export default [
                 component: Tarifarios,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Tarifarios', second: 'Configuracion' }
+                    var payload = { main: 'Planes', second: 'Configuracion' , third : null}
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }            
+            }, 
+            {
+                path: '/detalle/:plan',
+                name: 'detalle',
+                component: Detalletarifarios,
+                meta: { requiresAuth: true },
+                props: true,
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Tarifarios', second: 'Planes' , third : 'Configuracion' }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
-            },               
+            },                           
             {
                 path: '/pacientes',
                 name: 'pacientes',
                 component: Pacientes,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Pacientes', second: 'Entidades' }
+                    var payload = { main: 'Pacientes', second: 'Entidades', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -179,7 +192,7 @@ export default [
                 component: Medicos,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Medicos', second: 'Entidades' }
+                    var payload = { main: 'Medicos', second: 'Entidades', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
@@ -190,7 +203,7 @@ export default [
                 component: Personal,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Personal', second: 'Entidades' }
+                    var payload = { main: 'Personal', second: 'Entidades', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   

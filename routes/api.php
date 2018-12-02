@@ -48,5 +48,9 @@ Route::middleware(['auth'])->group(function(){
     // simbologias
     Route::resource('simbologias','SimbologiaController');  
     // planes
-    Route::resource('planes','PlaneController');                                           
+    Route::resource('planes','PlaneController');    
+    // tarifarios
+    Route::resource('tarifarios','TarifarioController');   
+    // detalle servicios
+    Route::resource('plandetalles','PlandetalleController');                                                 
 });

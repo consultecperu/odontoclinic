@@ -9,13 +9,13 @@
 	<!-- Fonts and icons -->
 	<script src="{{ asset('js/plugin/webfont/webfont.min.js') }}"></script>
 	<script>
-		WebFont.load({
+/* 		WebFont.load({
 			google: {"families":["Montserrat:100,200,300,400,500,600,700,800,900"]},
 			custom: {"families":["Flaticon", "LineAwesome"], urls: ['css/fonts.css']},
 			active: function() {
 				sessionStorage.fonts = true;
 			}
-		});
+		}); */
 	</script>
 
 	<!-- CSS Files -->
@@ -23,9 +23,11 @@
 	<link rel="stylesheet" href="{{ asset('css/ready.min.css') }}">
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="{{ asset('css/fonts.css') }}">	 
 	<link rel="stylesheet" href="{{ asset('css/demo.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/customs.css') }}">	
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}" >  	
+<!-- 	<link rel="stylesheet" href="{{ asset('css/app.css') }}" >  -->
+	
 </head>
 <body>
 	<div id="app">
@@ -105,7 +107,6 @@
 	<script src="{{ asset('js/setting-demo.js') }}"></script>
 	<script src="{{ asset('js/demo.js') }}"></script>
     <!-- Files VUE.JS 2-->
-    <script src="{{ asset('js/plugin/toastr/toastr.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>  	
 </body>
 </html>

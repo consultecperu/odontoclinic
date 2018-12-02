@@ -41,7 +41,41 @@ class PlaneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();    
+
+        try {
+          $rules = ['user_id'       =>  'required',
+                    'descripcion'   =>  'required',
+                    'ruc'           =>  'required'
+                    ];
+  
+          $validator = Validator::make($request->all(), $rules);
+          if ($validator->fails()) {
+              return response()->json(['errors'=>$validator->errors()]);
+          }
+          /*-- validacion del Nombre de plan--*/
+          if($request->get('descripcion')){
+              $nom = Str::upper($request->get('descripcion'));         
+              $nompla = Plane::where('descripcion',$nom)->count();
+              if($nompla > 0){
+                  return response()->json(['errors'=>['Nombre de Plan' => 'Ya existe un plan con estos datos']]);
+              }
+          }        
+  
+          $plan = new Plane($request->all());
+          $plan->descripcion = Str::upper($plan->descripcion);
+          $plan->abreviatura = Str::upper($plan->abreviatura);
+          $plan->save();
+  
+          DB::commit();        
+          return;
+        }
+        catch(Exception $e){
+          DB::rollback();
+          return response()->json(
+              ['status' => $e->getMessage()], 422
+          );
+        }
     }
 
     /**
@@ -75,7 +109,33 @@ class PlaneController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction(); 
+
+        try {
+            $rules = ['user_id'         =>  'required',
+                      'descripcion'     =>  'required',
+                      'ruc'             =>  'required'
+                     ];
+    
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            }
+
+            $plan = Plane::find($id);
+            $plan->fill($request->all());
+            $plan->descripcion = Str::upper($plan->descripcion);
+            $plan->abreviatura = Str::upper($plan->abreviatura);
+            $plan->save();
+  
+          DB::commit();           
+          return;
+        } catch (Exception $e) {
+          DB::rollback();          
+          return response()->json(
+              ['status' => $e->getMessage()], 422
+          );
+        }
     }
 
     /**
@@ -86,6 +146,15 @@ class PlaneController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $plan = Plane::findOrFail($id);
+            $plan->descripcion = $cargo->descripcion . ' *** ' . Carbon::now()->timestamp;            
+            $plan->activo = false;
+            $plan->save();            
+        } catch (Exception $e) {
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
     }
 }
