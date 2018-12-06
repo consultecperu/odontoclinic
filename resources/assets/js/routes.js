@@ -18,6 +18,16 @@ import Servicios from './components/configuracion/servicios.vue'
 import Tarifarios from './components/configuracion/tarifarios.vue'
 import Detalletarifarios from './components/configuracion/detalletarifarios.vue'
 
+import Convenios from './components/marketing/Convenios.vue'
+import Campañas from './components/marketing/Campañas.vue'
+import Canjes from './components/marketing/Canjes.vue'
+
+import Aseguradora from './components/seguros/aseguradora.vue'
+import Empresas from './components/seguros/empresas.vue'
+import Polizas from './components/seguros/polizas.vue'
+import Detalleaseguradora from './components/seguros/detalleaseguradora.vue'
+import Detalleempresa from './components/seguros/detalleempresa.vue'
+
 import Pacientes from './components/entidades/pacientes.vue'
 import Medicos from './components/entidades/medicos.vue'
 import Personal from './components/entidades/personal.vue'
@@ -174,7 +184,97 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
-            },                           
+            },
+            {
+                path: '/aseguradora',
+                name: 'aseguradora',
+                component: Aseguradora,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Aseguradora', second: 'Seguros', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },
+            {
+                path: '/detalle-aseguradora/:plan',
+                name: 'detalleaseguradora',
+                component: Detalleaseguradora,
+                meta: { requiresAuth: true },
+                props: true,
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Tarifarios', second: 'Aseguradoras' , third : 'Seguros' }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                  
+            },             
+            {
+                path: '/empresas',
+                name: 'empresas',
+                component: Empresas,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Empresas', second: 'Seguros', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },
+            {
+                path: '/detalle-empresa/:empresa',
+                name: 'detalleempresa',
+                component: Detalleempresa,
+                meta: { requiresAuth: true },
+                props: true,
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Aseguradoras', second: 'Empresas' , third : 'Seguros' }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                  
+            },             
+            {
+                path: '/polizas',
+                name: 'polizas',
+                component: Polizas,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Polizas', second: 'Seguros', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },  
+            {
+                path: '/convenios',
+                name: 'convenios',
+                component: Convenios,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Convenios', second: 'Marketing', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },  
+            {
+                path: '/campanias',
+                name: 'campañas',
+                component: Campañas,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Campañas', second: 'Marketing', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            }, 
+            {
+                path: '/canjes',
+                name: 'canjes',
+                component: Canjes,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Canjes', second: 'Marketing', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },                                                                                                  
             {
                 path: '/pacientes',
                 name: 'pacientes',

@@ -19,5 +19,12 @@ export default {
     servicios:[],
     simbologias:[],
     planes:[],
-    tarifarios:[]
+    tarifarios:[],
+    empresapacientes:[],
+    empresapacientesplanes:[],
+    polizas:[],
+    planpolizas:[],
+    convenios:[],
+    campañas:[],
+    canjes:[]
 }

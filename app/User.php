@@ -55,5 +55,21 @@ class User extends Authenticatable
     public function tarifarios()
     {
         return $this->hasMany('App\Tarifario');
-    }             
+    }   
+    public function empresapacientes()
+    {
+        return $this->hasMany('App\Empresapaciente');
+    } 
+    public function polizas()
+    {
+        return $this->hasMany('App\Poliza');
+    } 
+    public function convenios()
+    {
+        return $this->hasMany('App\Convenio');
+    }   
+    public function campañas()
+    {
+        return $this->hasMany('App\Campaña');
+    }                            
 }

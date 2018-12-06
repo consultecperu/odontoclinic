@@ -50,7 +50,18 @@ Route::middleware(['auth'])->group(function(){
     // planes
     Route::resource('planes','PlaneController');    
     // tarifarios
-    Route::resource('tarifarios','TarifarioController');   
-    // detalle servicios
-    Route::resource('plandetalles','PlandetalleController');                                                 
+    Route::resource('tarifarios','TarifarioController');    
+    // empresapacientes
+    Route::resource('empresapacientes','EmpresapacienteController'); 
+    Route::post('/empresapacientes/aseguradoras', 'EmpresapacienteController@addaseguradora'); 
+    Route::get('/empresapacientes/aseguradoras/{id}','EmpresapacienteController@listaaseguradoras');
+    Route::delete('/empresapacientes/aseguradoras/{id}','EmpresapacienteController@destroyaseguradora');  
+    // polizas
+    Route::resource('polizas','PolizaController'); 
+    Route::get('/polizas/detalle/{empid}/{plaid}','PolizaController@showpoliza');   
+    Route::get('/planpolizas','PolizaController@cargaplanpolizas');   
+    // convenios
+    Route::resource('convenios','ConvenioController');  
+    // campañas
+    Route::resource('campanias','CampañaController');                                                                     
 });

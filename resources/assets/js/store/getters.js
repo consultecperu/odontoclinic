@@ -40,5 +40,11 @@ export default {
             return state.planes.filter(plan => plan.tipo === 1)
         }
         return []
-    },                      
+    },  
+    getplanes_aseguradoras: state => {
+        if(state.planes.length > 0){
+            return state.planes.filter(plan => plan.tipo === 2)
+        }
+        return []
+    },                          
 }

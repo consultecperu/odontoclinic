@@ -150,5 +150,53 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                  
+    },
+    LOAD_EMPRESAPACIENTES_LIST: function ({ commit }) {
+        var url = '/api/empresapacientes';
+        return axios.get(url).then((response) => {
+            commit('SET_EMPRESAPACIENTES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
+    LOAD_EMPRESAPACIENTES_PLANES_LIST: function ({ commit } , payload) {  // aseguradoras ligadas a las empresas
+        var url = '/api/empresapacientes/aseguradoras/' + payload.id
+        return axios.get(url).then((response) => {
+            commit('SET_EMPRESAPACIENTES_PLANES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
+    LOAD_POLIZAS_LIST: function ({ commit }) {
+        var url = '/api/polizas';
+        return axios.get(url).then((response) => {
+            commit('SET_POLIZAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_PLANPOLIZAS_LIST: function ({ commit }) {
+        var url = '/api/planpolizas';
+        return axios.get(url).then((response) => {
+            commit('SET_PLANPOLIZAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
+    LOAD_CONVENIOS_LIST: function ({ commit }) {
+        var url = '/api/convenios';
+        return axios.get(url).then((response) => {
+            commit('SET_CONVENIOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
+    LOAD_CAMPAÑAS_LIST: function ({ commit }) {
+        var url = '/api/campanias';
+        return axios.get(url).then((response) => {
+            commit('SET_CAMPAÑAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                               
 }

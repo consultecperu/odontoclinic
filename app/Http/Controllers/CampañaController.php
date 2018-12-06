@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 use Exception;
 use Validator;
 use Carbon\Carbon;
-use App\Tarifario;
+use App\Campaña;
 
-class TarifarioController extends Controller
+class CampañaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +19,8 @@ class TarifarioController extends Controller
      */
     public function index()
     {
-        $tarifarios = Tarifario::with('moneda','servicio','sede')->orderBy('id','ASC')->where('activo',true)->get();
-        return $tarifarios;       
+        $campañas = Campaña::with('empresapaciente')->orderBy('id','ASC')->where('activo',true)->get();
+        return $campañas;  
     }
 
     /**
@@ -42,26 +42,25 @@ class TarifarioController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();    
-  
+
         try {
-            $rules = ['servicio_id'     => 'required',
-                      'plan_id'         => 'required',
-                      'moneda_id'       => 'required',
-                      'user_id'         => 'required'
+            $rules = ['nombre_campania'     => 'required',
+                      'lugar'               => 'required',
+                      'user_id'             => 'required',
+                      'vigencia'            => 'required',
+                      'fecha_realizacion'   => 'required',
+                      'fecha_vencimiento'   => 'required'
                     ];
     
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
-            }
-    
-            /*-- insertamos todas las sedes --*/
-            foreach ($request->get('sedes') as &$valor) {
-                $tarifario = new Tarifario($request->all());   
-                $tarifario->sede_id = $valor;
-                $tarifario->save();                
             }      
-
+    
+            $campaña = new Campaña($request->all());
+            $campaña->contacto = Str::upper($campaña->contacto);            
+            $campaña->save();
+    
             DB::commit();        
             return;
         }
@@ -108,11 +107,12 @@ class TarifarioController extends Controller
         DB::beginTransaction(); 
 
         try {
-            $rules = ['servicio_id'     => 'required',
-                      'plan_id'         => 'required',
-                      'moneda_id'       => 'required',
-                      'user_id'         => 'required',
-                      'sede_id'         => 'required'
+            $rules = ['nombre_campania'     => 'required',
+                      'lugar'               => 'required',
+                      'user_id'             => 'required',
+                      'vigencia'            => 'required',
+                      'fecha_realizacion'   => 'required',
+                      'fecha_vencimiento'   => 'required'
                     ];
     
             $validator = Validator::make($request->all(), $rules);
@@ -120,9 +120,10 @@ class TarifarioController extends Controller
                 return response()->json(['errors'=>$validator->errors()]);
             }
 
-            $tarifario = Tarifario::find($id);
-            $tarifario->fill($request->all());
-            $tarifario->save();
+            $campaña = Campaña::find($id);
+            $campaña->fill($request->all());
+            $campaña->contacto = Str::upper($campaña->contacto);
+            $campaña->save();
   
           DB::commit();           
           return;
@@ -132,6 +133,7 @@ class TarifarioController extends Controller
               ['status' => $e->getMessage()], 422
           );
         }
+
     }
 
     /**
@@ -143,9 +145,9 @@ class TarifarioController extends Controller
     public function destroy($id)
     {
         try {
-            $tarifario = Tarifario::findOrFail($id);         
-            $tarifario->activo = false;
-            $tarifario->save();            
+            $campaña = Campaña::findOrFail($id);         
+            $campaña->activo = false;
+            $campaña->save();            
         } catch (Exception $e) {
             return response()->json(
                 ['status' => $e->getMessage()], 422

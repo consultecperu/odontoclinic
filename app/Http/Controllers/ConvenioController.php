@@ -8,9 +8,10 @@ use Illuminate\Support\Str;
 use Exception;
 use Validator;
 use Carbon\Carbon;
-use App\Tarifario;
+use App\Convenio;
+use Globales;
 
-class TarifarioController extends Controller
+class ConvenioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +20,8 @@ class TarifarioController extends Controller
      */
     public function index()
     {
-        $tarifarios = Tarifario::with('moneda','servicio','sede')->orderBy('id','ASC')->where('activo',true)->get();
-        return $tarifarios;       
+        $convenios = Convenio::with('empresapaciente')->orderBy('id','ASC')->where('activo',true)->get();
+        return $convenios;  
     }
 
     /**
@@ -42,26 +43,32 @@ class TarifarioController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();    
-  
+
         try {
-            $rules = ['servicio_id'     => 'required',
-                      'plan_id'         => 'required',
-                      'moneda_id'       => 'required',
-                      'user_id'         => 'required'
+            $rules = ['empresapaciente_id'  => 'required',
+                      'user_id'             => 'required',
+                      'vigencia'            => 'required',
+                      'fecha_inicio'        => 'required',
+                      'fecha_finalizacion'  => 'required'
                     ];
     
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
             }
+            /*-- validacion de convenios con esta empresa--*/
+            if($request->get('empresapaciente_id')){  
+                $idemp = $request->get('empresapaciente_id');
+                $conv = Convenio::where('empresapaciente_id',$idemp)->whereDate('fecha_finalizacion',">=",Carbon::today()->toDateString())->count();
+                if($conv > 0){
+                    return response()->json(['errors'=>['Convenios' => 'Existe algun convenio con esta empresa que aun esta activo ... no puede grabar mas convenios con esta empresa']]);
+                }
+            }        
     
-            /*-- insertamos todas las sedes --*/
-            foreach ($request->get('sedes') as &$valor) {
-                $tarifario = new Tarifario($request->all());   
-                $tarifario->sede_id = $valor;
-                $tarifario->save();                
-            }      
-
+            $convenio = new Convenio($request->all());
+            $convenio->contacto = Str::upper($convenio->contacto);            
+            $convenio->save();
+    
             DB::commit();        
             return;
         }
@@ -108,11 +115,11 @@ class TarifarioController extends Controller
         DB::beginTransaction(); 
 
         try {
-            $rules = ['servicio_id'     => 'required',
-                      'plan_id'         => 'required',
-                      'moneda_id'       => 'required',
-                      'user_id'         => 'required',
-                      'sede_id'         => 'required'
+            $rules = ['empresapaciente_id'  => 'required',
+                      'user_id'             => 'required',
+                      'vigencia'            => 'required',
+                      'fecha_inicio'        => 'required',
+                      'fecha_finalizacion'  => 'required'
                     ];
     
             $validator = Validator::make($request->all(), $rules);
@@ -120,9 +127,10 @@ class TarifarioController extends Controller
                 return response()->json(['errors'=>$validator->errors()]);
             }
 
-            $tarifario = Tarifario::find($id);
-            $tarifario->fill($request->all());
-            $tarifario->save();
+            $convenio = Convenio::find($id);
+            $convenio->fill($request->all());
+            $convenio->contacto = Str::upper($convenio->contacto);
+            $convenio->save();
   
           DB::commit();           
           return;
@@ -132,6 +140,7 @@ class TarifarioController extends Controller
               ['status' => $e->getMessage()], 422
           );
         }
+
     }
 
     /**
@@ -143,9 +152,9 @@ class TarifarioController extends Controller
     public function destroy($id)
     {
         try {
-            $tarifario = Tarifario::findOrFail($id);         
-            $tarifario->activo = false;
-            $tarifario->save();            
+            $convenio = Convenio::findOrFail($id);         
+            $convenio->activo = false;
+            $convenio->save();            
         } catch (Exception $e) {
             return response()->json(
                 ['status' => $e->getMessage()], 422

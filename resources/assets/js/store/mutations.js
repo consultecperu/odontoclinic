@@ -62,5 +62,23 @@ export default {
     },  
     SET_TARIFARIOS_LIST: (state, { list }) => {      // TARIFARIOS
         state.tarifarios = list
-    },                                                          
+    }, 
+    SET_EMPRESAPACIENTES_LIST: (state, { list }) => {      // EMPRESAPACIENTES
+        state.empresapacientes = list
+    }, 
+    SET_EMPRESAPACIENTES_PLANES_LIST: (state, { list }) => {      // EMPRESAPACIENTES_PLANES
+        state.empresapacientesplanes = list
+    }, 
+    SET_POLIZAS_LIST: (state, { list }) => {      // POLIZAS
+        state.polizas = list
+    },
+    SET_PLANPOLIZAS_LIST: (state, { list }) => {      // PLANPOLIZAS
+        state.planpolizas = list
+    },  
+    SET_CONVENIOS_LIST: (state, { list }) => {      // CONVENIOS
+        state.convenios = list
+    },   
+    SET_CAMPAÑAS_LIST: (state, { list }) => {      // CAMPAÑAS
+        state.campañas = list
+    },                                                                                
 }

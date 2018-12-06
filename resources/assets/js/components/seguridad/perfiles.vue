@@ -329,8 +329,6 @@ export default {
         },
         updateModulos: function(){
             var url = '/api/perfiles/updateModules/'+this.dataRolModulo.idRol;
-            toastr.options.closeButton = true;
-            toastr.options.progressBar = true;
             axios.put(url, this.dataRolModulo).then(response => {
                 if(typeof(response.data.errors) != "undefined"){
                     this.errors = response.data.errors;

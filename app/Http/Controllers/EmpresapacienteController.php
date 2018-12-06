@@ -8,9 +8,10 @@ use Illuminate\Support\Str;
 use Exception;
 use Validator;
 use Carbon\Carbon;
-use App\Tarifario;
+use App\Empresapaciente;
+use App\EmpresapacientePlane;
 
-class TarifarioController extends Controller
+class EmpresapacienteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +20,8 @@ class TarifarioController extends Controller
      */
     public function index()
     {
-        $tarifarios = Tarifario::with('moneda','servicio','sede')->orderBy('id','ASC')->where('activo',true)->get();
-        return $tarifarios;       
+        $empresapacientes = Empresapaciente::orderBy('id','ASC')->where('activo',true)->get();
+        return $empresapacientes; 
     }
 
     /**
@@ -42,11 +43,10 @@ class TarifarioController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();    
-  
+
         try {
-            $rules = ['servicio_id'     => 'required',
-                      'plan_id'         => 'required',
-                      'moneda_id'       => 'required',
+            $rules = ['razon_social'    => 'required',
+                      'ruc'             => 'required',
                       'user_id'         => 'required'
                     ];
     
@@ -54,14 +54,19 @@ class TarifarioController extends Controller
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
             }
+            /*-- validacion de la Razon Social--*/
+            if($request->get('razon_social')){
+                $nom = Str::upper($request->get('razon_social'));         
+                $nomemp = Empresapaciente::where('razon_social',$nom)->count();
+                if($nomemp > 0){
+                    return response()->json(['errors'=>['Nombre de Empresa' => 'Ya existe una empresa con estos datos']]);
+                }
+            }        
     
-            /*-- insertamos todas las sedes --*/
-            foreach ($request->get('sedes') as &$valor) {
-                $tarifario = new Tarifario($request->all());   
-                $tarifario->sede_id = $valor;
-                $tarifario->save();                
-            }      
-
+            $empresapaciente = new Empresapaciente($request->all());
+            $empresapaciente->razon_social = Str::upper($empresapaciente->razon_social);
+            $empresapaciente->save();
+    
             DB::commit();        
             return;
         }
@@ -108,11 +113,9 @@ class TarifarioController extends Controller
         DB::beginTransaction(); 
 
         try {
-            $rules = ['servicio_id'     => 'required',
-                      'plan_id'         => 'required',
-                      'moneda_id'       => 'required',
-                      'user_id'         => 'required',
-                      'sede_id'         => 'required'
+            $rules = ['razon_social'    => 'required',
+                      'ruc'             => 'required',
+                      'user_id'         => 'required'
                     ];
     
             $validator = Validator::make($request->all(), $rules);
@@ -120,9 +123,10 @@ class TarifarioController extends Controller
                 return response()->json(['errors'=>$validator->errors()]);
             }
 
-            $tarifario = Tarifario::find($id);
-            $tarifario->fill($request->all());
-            $tarifario->save();
+            $empresapaciente = Empresapaciente::find($id);
+            $empresapaciente->fill($request->all());
+            $empresapaciente->razon_social = Str::upper($empresapaciente->razon_social);
+            $empresapaciente->save();
   
           DB::commit();           
           return;
@@ -132,6 +136,7 @@ class TarifarioController extends Controller
               ['status' => $e->getMessage()], 422
           );
         }
+
     }
 
     /**
@@ -143,13 +148,45 @@ class TarifarioController extends Controller
     public function destroy($id)
     {
         try {
-            $tarifario = Tarifario::findOrFail($id);         
-            $tarifario->activo = false;
-            $tarifario->save();            
+            $empresapaciente = Empresapaciente::findOrFail($id);
+            $empresapaciente->razon_social = $empresapaciente->razon_social . ' *** ' . Carbon::now()->timestamp;            
+            $empresapaciente->activo = false;
+            $empresapaciente->save();            
         } catch (Exception $e) {
             return response()->json(
                 ['status' => $e->getMessage()], 422
             );
         }
     }
+
+    public function listaaseguradoras($id){
+        $empresapacienteplan = EmpresapacientePlane::with('plane')->where('empresapaciente_id',$id)->where('activo',true)->get();
+        return $empresapacienteplan; 
+    }
+
+    public function addaseguradora(Request $request)
+    {
+        try {
+            // agrega las aseguradoras
+            $empresapacienteplan = new EmpresapacientePlane($request->all());
+            $empresapacienteplan->save(); 
+        } catch (Exception $e) {
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }       
+    }
+
+    public function destroyaseguradora($id)
+    {
+        try {
+            $empresapacienteplan = EmpresapacientePlane::findOrFail($id);
+            $empresapacienteplan->activo = false;
+            $empresapacienteplan->save();            
+        } catch (Exception $e) {
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
+    }    
 }

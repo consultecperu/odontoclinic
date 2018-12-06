@@ -9,22 +9,10 @@
         <div class="col">
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
-                <div class="card-header pl-0 pr-0"> 
-                    <div class="col-4">
-                        <div class="form-group pl-0 pt-0">
-                            <label for="basic" class="text-primary font-weight-bold">Sede :</label>
-                            <div class="select2-input">
-                                <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataSede" placeholder="Seleccione una sede" >
-                                    <option value="">-- Seleccione una Sede --</option>
-                                    <option v-for="sede in sedes" :value="sede.id" :key="sede.id">
-                                        {{ sede.nombre_sede}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>                        
-                    </div>                       
+                <div class="card-header pl-0 pr-0">                     
                     <div class="col border-top pt-20">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-add"></i></span> Agregar Servicio</button>
+                        <button type="button" class="btn btn-primary float-right mr-10" @click.prevent="$modal.show('copytarifario')"><span class="btn-label"><i class="flaticon-circle"></i></span> Copiar Tarifario</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
@@ -73,6 +61,19 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-6">
+                                <label for="basic" class="text-primary font-weight-bold pb-10">Tipo Tarifa :</label>
+                                <div class="select2-input">
+                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.tarifa">
+                                        <option value="">-- Seleccione Tipo--</option>
+                                        <option v-for="tipo in tipo_tarifas" :value="tipo.id" :key="tipo.id">
+                                            {{ tipo.nombre_tipotarifa}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>                            
+                        </div>
+                        <div class="row">
                             <span class="col-12 pb-10">
                                 <label class="text-primary font-weight-bold">Servicio :</label>
                             </span>                            
@@ -113,36 +114,11 @@
                             <div class="col">
                                 <div class="form-check pt-0 pb-0 pl-0">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" v-model="dataServicio.ortodoncia"/>
-                                        <span class="form-check-sign text-primary font-weight-bold">Aplicar como Ortodoncia</span>
+                                        <input class="form-check-input" type="checkbox" v-model="dataServicio.solocoaseguro"/>
+                                        <span class="form-check-sign text-primary font-weight-bold">Solo Coaseguro</span>
                                     </label>
                                 </div>                                
                             </div>
-                        </div>
-                        <div class="row" v-if="dataServicio.ortodoncia">
-                            <div class="col-6">
-                                <div class="form-group pl-0">
-                                    <label for="nombre" class="text-primary font-weight-bold">Cuota Inicial :</label>
-                                    <input type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataServicio.cuota_inicial">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="nombre" class="text-primary font-weight-bold">Control mensual :</label>
-                                    <input ref="inputcontrol" type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataServicio.control_mensual">
-                                </div>
-                            </div>                                                      
-                        </div>
-                        <div class="row pl-5" v-if="dataServicio.id === undefined">
-                            <span class="col-12 pb-10">
-                                <label class="text-primary font-weight-bold">Sedes :</label>
-                            </span>
-                            <div class="form-check col-6 pt-0 pb-0" v-for="sed in sedes" :key="sed.id" >
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" :id="sed.id" :value="sed.id" v-model="dataServicio.sedes" />
-                                    <span class="form-check-sign text-primary font-weight-bold">{{ sed.nombre_sede }}</span>
-                                </label>
-                            </div>                                
                         </div>
                     </div>
                     <div class="card-action">
@@ -151,17 +127,46 @@
                     </div>
                 </div>
             <!-- /. form de registro de planes -->
-        </modal>                         
-    </div>     
+        </modal>  
+        <!-- PAGE CONTENT MODAL -->  
+        <modal name="copytarifario" :width="'30%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+            <!-- form de registro de planes -->
+                <div class="card mb-0">
+                    <div class="card-header">
+                        <div class="card-title">Copiar Tarifario </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="basic" class="text-primary font-weight-bold pb-10">Aseguradora :</label>
+                                <div class="select2-input">
+                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.tarifa">
+                                        <option value="">-- Seleccione Aseguradora--</option>
+                                        <option v-for="aseguradora in getplanes_aseguradoras" :value="aseguradora.id" :key="aseguradora.id">
+                                            {{ aseguradora.descripcion}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <button class="btn btn-primary" @click.prevent="ActionCopy" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+                        <button class="btn btn-danger" @click="$modal.hide('copytarifario')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    </div>
+                </div>
+            <!-- /. form de registro de planes -->
+        </modal>                                  
+    </div>       
 </template>
 <script>
 import mixin from '../../mixins.js'
 import { mapState, mapGetters } from 'vuex'
 export default {
-    name: 'detalle_tarifarios',
+    name: 'detalle_aseguradoras',
     mixins: [mixin],  
-    mounted() {
-        this.$store.dispatch('LOAD_SEDES_LIST')        
+    mounted() {     
+        this.$store.dispatch('LOAD_PLANES_LIST')         
         this.$store.dispatch('LOAD_MONEDAS_LIST')        
         this.$store.dispatch('LOAD_SERVICIOS_LIST')
         this.$store.dispatch('LOAD_TARIFARIOS_LIST').then(() => {
@@ -177,6 +182,11 @@ export default {
             ShowIcon : false,
             labelButton: 'Grabar Datos',  
             columns: [
+                {
+                label: 'Tipo',
+                field: 'tipo',
+                width:'15%',
+                },                 
                 {
                 label: 'Servicio',
                 field: 'servicio.nombre_servicio',
@@ -195,12 +205,7 @@ export default {
                 label: 'Moneda',
                 field: 'moneda.nombre_moneda',
                 width:'15%',
-                },
-                {
-                label: 'Sede',
-                field: 'sede.nombre_sede',
-                width:'15%',
-                },                                                                                                                                                                                         
+                },                                                                                                                                                                                        
                 {
                 label: 'Acción',
                 field: 'btn',
@@ -211,12 +216,12 @@ export default {
                 }                               
             ],  
             dataServicio : {
-                sede_id:'',
+                sede_id:1,
                 servicio_id:'',
                 plan_id:'',
                 moneda_id:'',
                 costo:'',
-                tipo:'',
+                tipo:1,
                 solocoaseguro:'',
                 cuotas:'',
                 cuota_inicial:'',
@@ -226,6 +231,7 @@ export default {
                 user_id:'',
                 sedes:[]
             }, 
+            tipo_tarifas: [{'id':1 , 'nombre_tipotarifa':'ASEGURADORA'},{ 'id':2 ,'nombre_tipotarifa':'PARTICULAR'} ],
             dataSede:'', 
             searchServicio:'',  
             valorinicial:'',
@@ -236,8 +242,9 @@ export default {
     },
     computed: {
         ...mapState(['tarifarios','servicios','user_system','sedes','monedas']),
+        ...mapGetters(['getplanes_aseguradoras']),          
         detalle_tarifario: function(){
-            return this.tarifarios.filter((tar) => tar.sede_id == this.dataSede).filter((tar) => tar.plan_id == this.$route.params.plan)
+            return this.tarifarios.filter((tar) => tar.plan_id == this.$route.params.plan)
         },        
     },    
     methods: {
@@ -250,7 +257,7 @@ export default {
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')         
 
             this.dataServicio = {
-                sede_id:'',
+                sede_id:1,
                 servicio_id:'',
                 plan_id:this.$route.params.plan,
                 moneda_id:'',
@@ -261,9 +268,9 @@ export default {
                 cuota_inicial:'',
                 ortodoncia:0,
                 control_mensual:'',
-                tarifa:0,
+                tarifa:'',
                 user_id: this.user_system.id,
-                sedes:[]
+                sedes:[1]
             }   
             this.valorinicial = ''
             this.valordisplay = '' 
@@ -385,16 +392,13 @@ export default {
                     }
                 });
         }, 
-        handleHit(evt) {
-            this.dataServicio.servicio_id = evt.id
-        },
         selectidServicio (group) {
             this.dataServicio.servicio_id = group.value
         },        
-
     }        
     
 }
+
 </script>
 <style scoped>
     .v--modal-overlay {

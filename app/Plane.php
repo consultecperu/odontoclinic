@@ -17,5 +17,13 @@ class Plane extends Model
     public function tarifarios()
     {
         return $this->hasMany('App\Tarifario');       
-    }      
+    }  
+    public function empresapacienteplanes()
+    {
+        return $this->hasMany('App\EmpresapacientePlane');
+    }                
+    public function polizas()
+    {
+        return $this->hasMany('App\Poliza');
+    }     
 }
