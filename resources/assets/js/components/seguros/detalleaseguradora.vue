@@ -184,7 +184,7 @@ export default {
             columns: [
                 {
                 label: 'Tipo',
-                field: 'tipo',
+                field: this.fieldFn,
                 width:'15%',
                 },                 
                 {
@@ -394,7 +394,10 @@ export default {
         }, 
         selectidServicio (group) {
             this.dataServicio.servicio_id = group.value
-        },        
+        }, 
+        fieldFn(rowObj) {
+            return (rowObj.tipo == 1 ? 'ASEGURADORA' : 'PARTICULAR')     
+        }                 
     }        
     
 }

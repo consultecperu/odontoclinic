@@ -8,7 +8,7 @@
 					<label for="username" class="placeholder">Usuario</label>
 				</div>
 				<div class="form-group form-floating-label">
-					<input id="password" name="password" type="password" class="form-control input-border-bottom" v-model="dataLogin.password" required>
+					<input id="password" name="password" type="password" class="form-control input-border-bottom" v-model="dataLogin.password" @keyup.enter="login" required>
 					<label for="password" class="placeholder">Password</label>
 					<div class="show-password">
 						<i class="flaticon-interface"></i>

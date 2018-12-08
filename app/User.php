@@ -22,7 +22,7 @@ class User extends Authenticatable
 
     public function perfile()
     {
-        return $this->belongsTo('App\Perfile');
+        return $this->belongsTo('App\Perfile','perfil_id');
     }        
     public function cargos()
     {
@@ -38,7 +38,7 @@ class User extends Authenticatable
     }
     public function sedes()
     {
-        return $this->hasMany('App\Laboratorio');
+        return $this->hasMany('App\Sede');
     }      
     public function empresaadministradoras()
     {
@@ -71,5 +71,17 @@ class User extends Authenticatable
     public function campañas()
     {
         return $this->hasMany('App\Campaña');
-    }                            
+    }  
+    public function accesousers()
+    {
+        return $this->hasMany('App\AccesoUser');
+    }   
+    public function monedas()
+    {
+        return $this->hasMany('App\Moneda');        
+    } 
+    public function canjes()
+    {
+        return $this->hasMany('App\Canje');
+    }                                 
 }

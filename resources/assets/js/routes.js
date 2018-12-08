@@ -7,6 +7,7 @@ import Dashboard from './components/dashboard/dashboard.vue'
 import Perfiles from './components/seguridad/perfiles.vue'
 import Modulos from './components/seguridad/modulos.vue'
 import Usuarios from './components/seguridad/usuarios.vue'
+import Accesos from './components/seguridad/accesos.vue'
 
 import Cargos from './components/configuracion/cargos.vue'
 import Gruposervicios from './components/configuracion/gruposervicios.vue'
@@ -67,13 +68,7 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                
-            },  
-            {
-                path: '/usuarios',
-                name: 'usuarios',
-                component: Usuarios,
-                meta: { requiresAuth: true }
-            },              
+            },               
             {
                 path: '/modulos',
                 name: 'modulos',
@@ -85,6 +80,28 @@ export default [
                     next();
                 }                   
             }, 
+            {
+                path: '/usuarios',
+                name: 'usuarios',
+                component: Usuarios,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Usuarios', second: 'Seguridad', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },
+            {
+                path: '/accesos/:user',
+                name: 'accesos',
+                component: Accesos,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Accesos', second: 'Usuarios', third : 'Seguridad' ,ruta_second : 'usuarios' }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },                          
             {
                 path: '/cargos',
                 name: 'cargos',
@@ -180,7 +197,7 @@ export default [
                 meta: { requiresAuth: true },
                 props: true,
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Tarifarios', second: 'Planes' , third : 'Configuracion' }
+                    var payload = { main: 'Tarifarios', second: 'Planes' , third : 'Configuracion' , ruta_second : 'tarifarios' }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -203,7 +220,7 @@ export default [
                 meta: { requiresAuth: true },
                 props: true,
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Tarifarios', second: 'Aseguradoras' , third : 'Seguros' }
+                    var payload = { main: 'Tarifarios', second: 'Aseguradoras' , third : 'Seguros' , ruta_second : 'aseguradora' }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -226,7 +243,7 @@ export default [
                 meta: { requiresAuth: true },
                 props: true,
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Aseguradoras', second: 'Empresas' , third : 'Seguros' }
+                    var payload = { main: 'Aseguradoras', second: 'Empresas' , third : 'Seguros' , ruta_second :'empresas' }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  

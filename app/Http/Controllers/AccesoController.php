@@ -8,9 +8,10 @@ use Illuminate\Support\Str;
 use Exception;
 use Validator;
 use Carbon\Carbon;
-use App\User;
+use App\Acceso;
+use App\AccesoUser;
 
-class UserController extends Controller
+class AccesoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::with('perfile')->orderBy('id','ASC')->where('activo',true)->get();
-        return $usuarios;    
+        $accesos = Acceso::orderBy('id','ASC')->where('activo',true)->get();
+        return $accesos; 
     }
 
     /**
@@ -86,27 +87,26 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $cargo = Cargo::findOrFail($id);
-            $cargo->activo = false;
-            $cargo->save();            
-        } catch (Exception $e) {
-            return response()->json(
-                ['status' => $e->getMessage()], 422
-            );
-        }
+        //
     }
 
-    public function updateaccesos(Request $request, $id)
+    public function listaAccesosUsuario($id)
+    {
+        $accesos = AccesoUser::with('acceso')->where('user_id',$id)->orderBy('id','ASC')->where('activo',true)->get();
+        return $accesos;         
+    }
+
+    public function updateAccesosEstados(Request $request, $id)
     {
         try {
-            $user = User::findOrFail($id);           
-            $user->acceso = $request->get('acceso');
-            $user->save();            
+            $columna = $request->get('column');
+            $accesouser = AccesoUser::findOrFail($id);           
+            $accesouser->$columna = $request->get('valor');
+            $accesouser->save();            
         } catch (Exception $e) {
             return response()->json(
                 ['status' => $e->getMessage()], 422
             );
         }        
-    }
+    }    
 }

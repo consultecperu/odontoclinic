@@ -24,9 +24,14 @@ Route::middleware(['auth'])->group(function(){
     // perfiles
     Route::resource('perfiles','PerfileController');
     // usuarios
-    Route::resource('users','UserController');       
+    Route::resource('users','UserController');  
+    Route::put('/users/accesos/{id}','UserController@updateaccesos');     
     // modulos
     Route::resource('modulos','ModuloController');
+    // accesos
+    Route::resource('accesos','AccesoController');    
+    Route::get('/accesos/usuario/{id}','AccesoController@listaAccesosUsuario'); 
+    Route::put('/accesos/estados/{id}','AccesoController@updateAccesosEstados');        
     // cargos
     Route::resource('cargos','CargoController');    
     // grupo de servicios
@@ -63,5 +68,8 @@ Route::middleware(['auth'])->group(function(){
     // convenios
     Route::resource('convenios','ConvenioController');  
     // campañas
-    Route::resource('campanias','CampañaController');                                                                     
+    Route::resource('campanias','CampañaController');     
+    // canjes
+    Route::resource('canjes','CanjeController');
+    Route::put('/canjes/autorizar/{id}','CanjeController@autorizarCanjes');                                                                              
 });

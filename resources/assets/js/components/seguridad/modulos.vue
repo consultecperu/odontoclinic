@@ -31,13 +31,39 @@
                                         <thead class="bg-light">
                                             <tr>
                                                 <th><strong>{{module.name}}</strong></th>
-                                                <th>Editar | Eliminar</th>
+                                                <th>
+                                                    <button class="btn btn-link" @click.prevent="processEdit(module.idmenu,1)">
+                                                        <span class="btn-label">
+                                                            <i class="la la-edit"></i>
+                                                        </span>
+                                                        Editar
+                                                    </button>
+                                                    <button class="btn btn-link" :disabled="module.options.length > 0" @click.prevent="processDelete(module.idmenu)">
+                                                        <span class="btn-label">
+                                                            <i class="la la-trash"></i>
+                                                        </span>
+                                                        Eliminar
+                                                    </button>                                                                                            
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-for="opcion in module.options" :key="opcion.options.options.id">
                                                 <td>{{opcion.name}}</td> 
-                                                <td>Editar | Eliminar</td>
+                                                <td>
+                                                    <button class="btn btn-link" @click.prevent="processEdit(opcion.options.options.id,2)">
+                                                        <span class="btn-label">
+                                                            <i class="la la-edit"></i>
+                                                        </span>
+                                                        Editar
+                                                    </button>
+                                                    <button class="btn btn-link" @click.prevent="processDelete(opcion.options.options.id)">
+                                                        <span class="btn-label">
+                                                            <i class="la la-trash"></i>
+                                                        </span>
+                                                        Eliminar
+                                                    </button>                                                       
+                                                </td>
                                             </tr> 
                                         </tbody>
                                     </table>
@@ -58,7 +84,7 @@
                     <div class="card-body">
                         <div class="form-group pt-0 pb-0" v-if="MenuSelect">
                             <label for="exampleFormControlSelect1">Seleccione el Menú</label>
-                            <select v-model="dataModulo.idparent" class="form-control form-control-sm" id="exampleFormControlSelect1">
+                            <select v-model="dataModulo.idparent" class="form-control form-control-sm" id="exampleFormControlSelect1" :disabled="!(typeof(dataModulo.id) === 'undefined')">
                             <option v-for="menu in getMenus" :value="menu.id" :key="menu.id">
                                 {{ menu.name }}
                             </option>
@@ -113,8 +139,6 @@ export default {
         return {
             isLoading: true,
             fullPage: true,
-                        
-            searchText: '', // If value is falsy, reset searchText & searchItem
 
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
@@ -142,7 +166,7 @@ export default {
     },
     computed: {
         ...mapState(['modules']),
-        ...mapGetters(['getMenus']),        
+        ...mapGetters(['getMenus','getModulo']),        
     }, 
     methods: {
         StatusForm: function(eshow,eclass,elabel){
@@ -221,6 +245,91 @@ export default {
             this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')                     
             });
         },
+        updateModulo: function(){
+            var url = '/api/modulos/'+this.dataModulo.id;
+            this.StatusForm(true,'la la-spinner','Procesando')          
+            axios.put(url, this.dataModulo).then(response => {
+                if(typeof(response.data.errors) != "undefined"){
+                    this.errors = response.data.errors;
+                    var resultado = "";
+                    for (var i in this.errors) {
+                        if (this.errors.hasOwnProperty(i)) {
+                            resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                        }
+                    }
+                    this.StatusForm(false,'la la-cloud-download','Grabar Datos')
+                    this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                                    
+                    return;
+            }
+            this.$store.dispatch('LOAD_MENUS_LIST')
+            this.$store.dispatch('LOAD_MODULES_LIST')                    
+            this.errors = [];
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
+            this.$modal.hide('modulo');
+            this.notificaciones('el Modulo fue actualizado con exito','la la-thumbs-up','success')                                       
+
+            }).catch(error => {
+            this.errors = error.response.data.status;
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')                              
+            });
+        },        
+        processEdit(id,type){
+            var datamod = []
+            var modulo = this.getModulo(id)
+            datamod = _.clone(modulo[0])
+
+            if(type === 1){     // menu
+                this.MenuSelect = false 
+                this.labelSeleccion = 'Menú'                
+            }else{              // opcion
+                this.MenuSelect = true
+                this.labelSeleccion = 'Opción'
+            }
+
+            this.dataModulo = {
+                id:datamod.id,
+                name: datamod.name,
+                idparent: datamod.idparent,
+                type: datamod.type,
+                icono: datamod.icono,
+                name_router: datamod.name_router,
+                name_template: datamod.name_template,
+                orden: datamod.orden
+            }                          
+            this.$modal.show('modulo')
+        
+        },
+        processDelete(id){
+            this.$swal({
+                title: 'Desea eliminar este registro?',
+                text: "No podras revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.isLoading = true
+                        var url = '/api/modulos/' + id;
+                        axios.delete(url).then(response=> {
+                            this.$store.dispatch('LOAD_MENUS_LIST').then(() => {
+                                this.$store.dispatch('LOAD_MODULES_LIST').then(() => {
+                                    this.isLoading = false
+                                    this.$swal(
+                                    'Eliminado!',
+                                    'Este registro fue eliminado.',
+                                    'success'
+                                    )
+                                }) 
+                            })
+                   
+                        });
+                    }
+                });
+        },         
     }          
 }    
 

@@ -16,7 +16,8 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item" v-if="breadsecond != null">
-                <a href="#">{{ breadsecond }}</a>
+                <a href="#" v-if="breadthird == null">{{ breadsecond }}</a>
+                <router-link :to="{ name : ruta_second}" v-if="breadthird != null">{{ breadsecond }}</router-link>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
@@ -37,7 +38,7 @@ export default {
         }
     }, 
     computed: {
-        ...mapState(['breadmain','breadsecond','breadthird']),
+        ...mapState(['breadmain','breadsecond','breadthird','ruta_second']),
     },         
 }
 </script>

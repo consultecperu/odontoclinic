@@ -46,5 +46,11 @@ export default {
             return state.planes.filter(plan => plan.tipo === 2)
         }
         return []
-    },                          
+    },  
+    getModulo: (state, getters) => (id) => {
+        if(state.menus.length > 0){
+            return state.menus.filter(mod => mod.id === id)
+        }
+        return []
+    }                              
 }

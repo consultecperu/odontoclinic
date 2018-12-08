@@ -21,5 +21,9 @@ class Moneda extends Model
     public function polizas()
     {
         return $this->hasMany('App\Poliza');
-    }         
+    }  
+    public function user()
+    {
+    	return $this->belongsTo('App\User');
+    }            
 }

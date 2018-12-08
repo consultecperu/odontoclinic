@@ -21,7 +21,7 @@ class AuthenticateController extends Controller
                 return response()->json(['errors'=>$validator->errors()]);
             }    
     
-            if (Auth::attempt(['name' => $request->name, 'password' => $request->password , 'activo' => 1])) {
+            if (Auth::attempt(['name' => $request->name, 'password' => $request->password , 'activo' => 1 ,'acceso' => true])) {
                 $request->session()->regenerate();
                 $id = Auth::id();
                 $user = User::where('id',$id)->get();

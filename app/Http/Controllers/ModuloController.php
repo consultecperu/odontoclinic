@@ -19,7 +19,7 @@ class ModuloController extends Controller
      */
     public function index()
     {
-        $modules = Modulo::orderBy('id','ASC')->get();               // cargo todos los modulos de la BD
+        $modules = Modulo::orderBy('id','ASC')->where('active',true)->get();               // cargo todos los modulos de la BD
         
         $menus = array();
         $options = array();
@@ -133,7 +133,6 @@ class ModuloController extends Controller
           }        
   
           $modulo = new Modulo($request->all());
-          //$modulo->name = Str::upper($modulo->name);
           $modulo->save();
   
           DB::commit();        
@@ -179,7 +178,34 @@ class ModuloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction(); 
+
+        try {
+            $rules =    ['name'     => 'required',
+                        'idparent'  => 'required',
+                        'type'      => 'required',
+                        'orden'     => 'required'
+                        ];
+    
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            }
+
+            $modulo = Modulo::find($id);
+            $modulo->fill($request->all());
+            //$modulo->nombre_cargo = Str::upper($cargo->nombre_cargo);
+            $modulo->save();
+  
+          DB::commit();           
+          return;
+        } catch (Exception $e) {
+            DB::rollback();          
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
+
     }
 
     /**
@@ -190,6 +216,15 @@ class ModuloController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $modulo = Modulo::findOrFail($id);
+            $modulo->name = $modulo->name . ' *** ' . Carbon::now()->timestamp;            
+            $modulo->active = false;
+            $modulo->save();            
+        } catch (Exception $e) {
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
     }
 }

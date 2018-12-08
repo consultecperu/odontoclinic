@@ -198,5 +198,29 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                               
+    },  
+    LOAD_CANJES_LIST: function ({ commit }) {
+        var url = '/api/canjes';
+        return axios.get(url).then((response) => {
+            commit('SET_CANJES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },      
+    LOAD_USUARIOS_LIST: function ({ commit }) {
+        var url = '/api/users';
+        return axios.get(url).then((response) => {
+            commit('SET_USUARIOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_ACCESOSUSUARIO_LIST: function ({ commit }, payload) {
+        var url = '/api/accesos/usuario/'+ payload.id
+        return axios.get(url).then((response) => {
+            commit('SET_ACCESOSUSUARIO_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                  
 }

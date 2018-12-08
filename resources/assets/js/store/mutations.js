@@ -14,6 +14,7 @@ export default {
         state.breadmain = datos.main
         state.breadsecond = datos.second  
         state.breadthird = datos.third
+        state.ruta_second = datos.ruta_second != 'undefined' ? datos.ruta_second : null
     },    
     SET_PERFIL_USER: (state, { list }) => {      // PERFIL DE USUARIO
         state.perfil_user = list
@@ -80,5 +81,14 @@ export default {
     },   
     SET_CAMPAÑAS_LIST: (state, { list }) => {      // CAMPAÑAS
         state.campañas = list
-    },                                                                                
+    },  
+    SET_CANJES_LIST: (state, { list }) => {      // CANJES
+        state.canjes = list
+    },     
+    SET_USUARIOS_LIST: (state, { list }) => {      // USUARIOS
+        state.usuarios = list
+    },   
+    SET_ACCESOSUSUARIO_LIST: (state, { list }) => {      // ACCESOSUSUARIO
+        state.accesosusuario = list
+    },                                                                                        
 }
