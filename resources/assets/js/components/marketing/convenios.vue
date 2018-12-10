@@ -209,6 +209,7 @@ export default {
     name: 'convenios',
     mixins: [mixin],
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST')
         this.$store.dispatch('LOAD_CONVENIOS_LIST').then(() => {
             this.isLoading = false

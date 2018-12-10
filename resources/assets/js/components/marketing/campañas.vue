@@ -223,6 +223,7 @@ export default {
     name: 'campanias',
     mixins: [mixin],
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST')
         this.$store.dispatch('LOAD_CAMPAÑAS_LIST').then(() => {
             this.isLoading = false

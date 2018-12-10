@@ -29,5 +29,10 @@ export default {
     planpolizas:[],
     convenios:[],
     campañas:[],
-    canjes:[]
+    canjes:[],
+    estadosciviles:[],
+    tipodocumentos:[],
+    tipocontratos:[],
+    tipopagodoctores:[],
+    empleados:[],
 }

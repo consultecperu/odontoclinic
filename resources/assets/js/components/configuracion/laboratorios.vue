@@ -79,6 +79,7 @@ export default {
     name: 'laboratorios',
     mixins: [mixin],     
     mounted() {
+        this.showToolTips()
         this.$store.dispatch('LOAD_LABORATORIOS_LIST').then(() => {
             this.isLoading = false
         })                          

@@ -90,5 +90,16 @@ export default {
     },   
     SET_ACCESOSUSUARIO_LIST: (state, { list }) => {      // ACCESOSUSUARIO
         state.accesosusuario = list
-    },                                                                                        
+    }, 
+    SET_DATA_INIT_LIST: (state, { list }) => {      // CARGA INICIAL DEL MODULO EMPLEADOS
+        state.estadosciviles = list.estadosciviles
+        state.ubigeos = list.ubigeos   
+        state.tipodocumentos = list.tipodocumentos
+        state.tipocontratos = list.tipocontratos
+        state.tipopagodoctores = list.tipopagodoctores
+        state.cargos = list.cargos
+    },
+    SET_EMPLEADOS_LIST: (state, { list }) => {      // EMPLEADOS
+        state.empleados = list
+    },                                                                                                 
 }

@@ -78,7 +78,8 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'cargos',
     mixins: [mixin],
-    mounted() {
+    mounted() {      
+        this.showToolTips()
         this.$store.dispatch('LOAD_CARGOS_LIST').then(() => {
             this.isLoading = false
         })                          

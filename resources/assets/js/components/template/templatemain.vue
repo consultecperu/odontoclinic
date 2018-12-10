@@ -32,7 +32,7 @@ export default {
         document.body.className = "";
 
     }, 
-    mounted() {
+    mounted() {         
         console.log("autentificado: ",this.authenticated)
     },
     computed: {

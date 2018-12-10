@@ -73,6 +73,7 @@ export default {
     name:'accesos',
     mixins: [mixin],     
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_ACCESOSUSUARIO_LIST',{ id : this.$route.params.user }).then(() => {
             this.isLoading = false
         })     

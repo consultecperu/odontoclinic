@@ -83,5 +83,9 @@ class User extends Authenticatable
     public function canjes()
     {
         return $this->hasMany('App\Canje');
-    }                                 
+    }  
+    public function empleados()
+    {
+        return $this->hasMany('App\Empleado');
+    }                                     
 }

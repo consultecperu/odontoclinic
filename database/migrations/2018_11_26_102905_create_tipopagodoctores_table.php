@@ -16,7 +16,7 @@ class CreateTipopagodoctoresTable extends Migration
         Schema::create('tipopagodoctores', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre_tipopagodoctor')->unique();
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->nullable()->unsigned();
             $table->boolean('activo')->default(true);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');  
             $table->timestamps();

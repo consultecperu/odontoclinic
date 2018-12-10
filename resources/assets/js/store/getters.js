@@ -52,5 +52,11 @@ export default {
             return state.menus.filter(mod => mod.id === id)
         }
         return []
-    }                              
+    },  
+    getMedicos: state => {
+        return state.empleados.filter(emp => emp.tipo == 1)
+    },        
+    getPersonal: state => {
+        return state.empleados.filter(emp => emp.tipo == 2)
+    },                                 
 }

@@ -102,6 +102,7 @@ export default {
     name: 'materiales',
     mixins: [mixin],     
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_MONEDAS_LIST')
         this.$store.dispatch('LOAD_MATERIALES_LIST').then(() => {
             this.isLoading = false

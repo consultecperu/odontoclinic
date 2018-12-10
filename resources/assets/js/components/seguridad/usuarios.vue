@@ -63,6 +63,7 @@ export default {
     name:'usuarios',
     mixins: [mixin],     
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_USUARIOS_LIST').then(() => {
             this.isLoading = false
         })                  

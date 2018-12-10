@@ -91,6 +91,7 @@ export default {
     name: 'gruposervicios',
     mixins: [mixin],     
     mounted() {
+        this.showToolTips()
         this.$store.dispatch('LOAD_GRUPOSERVICIOS_LIST').then(() => {
             this.isLoading = false
         })                          

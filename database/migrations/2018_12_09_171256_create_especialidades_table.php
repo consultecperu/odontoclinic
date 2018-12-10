@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTipocontratosTable extends Migration
+class CreateEspecialidadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateTipocontratosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipocontratos', function (Blueprint $table) {
+        Schema::create('especialidades', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre_tipocontrato')->unique();
+            $table->string('nombre_especialidad')->unique();
             $table->integer('user_id')->nullable()->unsigned();
+            $table->float('peso',6,2)->nullable();
             $table->boolean('activo')->default(true);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');              
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateTipocontratosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipocontratos');
+        Schema::dropIfExists('especialidades');
     }
 }

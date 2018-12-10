@@ -17,5 +17,9 @@ class Ubigeo extends Model
     public function empresapacientes()
     {
     	return $this->hasMany('App\Empresapaciente');
-    }     
+    } 
+    public function empleados()
+    {
+        return $this->hasMany('App\Empleado');
+    }          
 }

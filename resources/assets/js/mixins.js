@@ -39,6 +39,11 @@ export default {
                 }
 
             }            
-        }        
+        },
+        showToolTips: function(){
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })             
+        }       
     }
 }

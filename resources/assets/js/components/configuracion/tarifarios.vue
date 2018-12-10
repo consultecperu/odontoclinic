@@ -100,6 +100,7 @@ export default {
     name: 'tarifarios',
     mixins: [mixin],  
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_PLANES_LIST').then(() => {
             this.isLoading = false
         })                          

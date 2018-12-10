@@ -138,6 +138,7 @@ export default {
     name: 'perfiles',
     mixins: [mixin],         
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_MODULES_LIST')
         this.$store.dispatch('LOAD_PERFILES_LIST').then(() => {
             this.isLoading = false

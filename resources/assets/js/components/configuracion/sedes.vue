@@ -166,6 +166,7 @@ export default {
     name: 'sedes',
     mixins: [mixin],      
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_UBIGEOS_LIST')
         this.$store.dispatch('LOAD_SEDES_LIST').then(() => {
             this.isLoading = false

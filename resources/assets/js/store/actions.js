@@ -222,5 +222,21 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                  
+    }, 
+    LOAD_DATA_INIT_LIST: function ({ commit }) {
+        var urlType = '/api/empleados/create';
+        return axios.get(urlType).then((response) => {
+            commit('SET_DATA_INIT_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_EMPLEADOS_LIST: function ({ commit }) {
+        var url = '/api/empleados';
+        return axios.get(url).then((response) => {
+            commit('SET_EMPLEADOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                         
 }

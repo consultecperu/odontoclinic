@@ -14,5 +14,9 @@ class Cargo extends Model
     {
     	return $this->belongsTo('App\User');
     } 
+    public function empleados()
+    {
+        return $this->hasMany('App\Empleado');
+    }     
           
 }

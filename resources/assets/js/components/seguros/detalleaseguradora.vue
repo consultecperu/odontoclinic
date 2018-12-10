@@ -165,7 +165,8 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'detalle_aseguradoras',
     mixins: [mixin],  
-    mounted() {     
+    mounted() {    
+        this.showToolTips()         
         this.$store.dispatch('LOAD_PLANES_LIST')         
         this.$store.dispatch('LOAD_MONEDAS_LIST')        
         this.$store.dispatch('LOAD_SERVICIOS_LIST')

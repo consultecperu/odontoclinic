@@ -90,6 +90,7 @@ export default {
     name: 'detalle_empresas',
     mixins: [mixin],  
     mounted() {     
+        this.showToolTips()        
         this.$store.dispatch('LOAD_EMPRESAPACIENTES_PLANES_LIST',{ id : this.$route.params.empresa }).then(() => {
             this.isLoading = false
         })                             

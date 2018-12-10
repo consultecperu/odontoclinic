@@ -32,6 +32,7 @@ import Detalleempresa from './components/seguros/detalleempresa.vue'
 import Pacientes from './components/entidades/pacientes.vue'
 import Medicos from './components/entidades/medicos.vue'
 import Personal from './components/entidades/personal.vue'
+import Detallepersonal from './components/entidades/detallepersonal.vue'
 
 import NotFound from './components/errors/notfound.vue'
 
@@ -324,7 +325,19 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
-            },                                                                                                           
+            }, 
+            {
+                path: '/detalle-personal/:personal',
+                name: 'detallepersonal',
+                component: Detallepersonal,
+                meta: { requiresAuth: true },
+                props: true,
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Detalle', second: 'Personal' , third : 'Entidades' , ruta_second :'personal' }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                  
+            },                                                                                                                        
         ]
     },
     {

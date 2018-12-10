@@ -132,6 +132,7 @@ export default {
     name: 'canjes',
     mixins: [mixin],
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_CANJES_LIST').then(() => {
             this.isLoading = false
         })                          

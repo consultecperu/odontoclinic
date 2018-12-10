@@ -109,6 +109,7 @@ export default {
     name: 'empresapacientes',
     mixins: [mixin],  
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST').then(() => {
             this.isLoading = false
         })                          

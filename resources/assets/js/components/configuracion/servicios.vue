@@ -234,6 +234,7 @@ export default {
     name:'servicios',
     mixins: [mixin],
     mounted() {
+        this.showToolTips()        
         this.$store.dispatch('LOAD_GRUPOSERVICIOS_LIST')
         this.$store.dispatch('LOAD_SIMBOLOGIAS_LIST')
         this.$store.dispatch('LOAD_SERVICIOS_LIST').then(() => {

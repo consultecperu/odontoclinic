@@ -161,6 +161,7 @@ export default {
     name: 'detalle_tarifarios',
     mixins: [mixin],  
     mounted() {
+        this.showToolTips()
         this.$store.dispatch('LOAD_SEDES_LIST')        
         this.$store.dispatch('LOAD_MONEDAS_LIST')        
         this.$store.dispatch('LOAD_SERVICIOS_LIST')

@@ -71,5 +71,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('campanias','CampañaController');     
     // canjes
     Route::resource('canjes','CanjeController');
-    Route::put('/canjes/autorizar/{id}','CanjeController@autorizarCanjes');                                                                              
+    Route::put('/canjes/autorizar/{id}','CanjeController@autorizarCanjes'); 
+    // empleados
+    Route::resource('empleados','EmpleadoController');                                                                                  
 });
