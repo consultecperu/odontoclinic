@@ -17,7 +17,6 @@
                 </div>
                 <div class="card-body">
                     <vue-good-table
-                    title="Listado de Grupo de Servicios"
                     :columns="columns"
                     :rows="gruposervicios"
                     :paginationOptions="{
@@ -35,10 +34,10 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Grupo" @click.prevent="processEdit(props)">
+                                <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Grupo'" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Grupo" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Grupo'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
                             </span>
@@ -91,7 +90,6 @@ export default {
     name: 'gruposervicios',
     mixins: [mixin],     
     mounted() {
-        this.showToolTips()
         this.$store.dispatch('LOAD_GRUPOSERVICIOS_LIST').then(() => {
             this.isLoading = false
         })                          

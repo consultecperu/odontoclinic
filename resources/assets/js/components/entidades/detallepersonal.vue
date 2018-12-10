@@ -124,10 +124,50 @@
     </div>        
 </template>
 <script>
+import mixin from '../../mixins.js'
+import { mapState, mapGetters } from 'vuex'
 export default {
-    data() {
+    name: 'detallepersonal',
+    mixins: [mixin],
+    mounted() {
+        //this.$store.dispatch('LOAD_DATA_INIT_LIST')
+/*         this.$store.dispatch('LOAD_EMPLEADOS_LIST').then(() => {
+            this.isLoading = false
+        })  */                         
+    },     
+    data() {        
         return {
-            
+            isLoading: true,
+            fullPage: true,  
+
+            dataEmpleado : {
+                tipodocumento_id:'',                
+                numero_documento:'',
+                nombres:'',
+                apellido_paterno:'',
+                apellido_materno:'',
+                fecha_nacimiento:'',
+                sexo:'',
+                direccion:'',
+                telefono:'',
+                celular:'',
+                email:'',
+                foto:'',
+                ubigeo_id:'',
+                COP:'',
+                nconsultorio:'',
+                tipocontrato_id:'',
+                useracceso_id:'',
+                estado_civil:'',
+                tipopagodoctor_id:'',
+                porcentaje_interno:'',
+                porcentaje_aseguradora:'',
+                fecha_ingreso:'',
+                cargo_id:'',
+                user_id:'',
+                nombre_completo:''
+            },                   
+            errors:[]                           
         }
     }
     

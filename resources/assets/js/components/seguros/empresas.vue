@@ -17,7 +17,6 @@
                 </div>
                 <div class="card-body">
                     <vue-good-table
-                    title="Listado de Empresas"
                     :columns="columns"
                     :rows="empresapacientes"
                     :paginationOptions="{
@@ -35,13 +34,13 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-primary btn-xs" data-original-title="Ver Aseguradoras" @click.prevent="cargaAseguradora(props.row.id)">
+                                <button type="button" class="btn btn-border btn-primary btn-xs" v-tooltip="'Ver Aseguradoras'" @click.prevent="cargaAseguradora(props.row.id)">
                                     <i class="la la-file-text font-large"></i>
                                 </button>                                  
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Empresa" @click.prevent="processEdit(props)">
+                                <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Empresa'" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Empresa" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Empresa'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
                             </span>
@@ -108,8 +107,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'empresapacientes',
     mixins: [mixin],  
-    mounted() {
-        this.showToolTips()        
+    mounted() {    
         this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST').then(() => {
             this.isLoading = false
         })                          

@@ -9,6 +9,12 @@ use Exception;
 use Validator;
 use Carbon\Carbon;
 use App\Empleado;
+use App\Estadocivile;
+use App\Ubigeo;
+use App\Tipodocumento;
+use App\Tipocontrato;
+use App\Tipopagodoctore;
+use App\Cargo;
 
 class EmpleadoController extends Controller
 {
@@ -30,12 +36,12 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        $estadosciviles = EstadoCivile::where('activo',true)->orderBy('id','ASC')->get();
-        $ubigeos = Ubigeo::where('activo',true)->orderBy('nombre','ASC')->get();
-        $tipodocumentos = Tipodocumento::where('activo',true)->orderBy('nombre','ASC')->get();
-        $tipocontratos = Tipocontrato::where('activo',true)->orderBy('nombre','ASC')->get();
-        $tipopagodoctores = Tipopagodoctore::where('activo',true)->orderBy('nombre','ASC')->get();
-        $cargos = Cargo::where('activo',true)->orderBy('nombre','ASC')->get();
+        $estadosciviles = Estadocivile::where('activo',true)->orderBy('id','ASC')->get();
+        $ubigeos = Ubigeo::orderBy('id','ASC')->where('activo',true)->get();
+        $tipodocumentos = Tipodocumento::where('activo',true)->orderBy('nombre_tipodocumento','ASC')->get();
+        $tipocontratos = Tipocontrato::where('activo',true)->orderBy('nombre_tipocontrato','ASC')->get();
+        $tipopagodoctores = Tipopagodoctore::where('activo',true)->orderBy('nombre_tipopagodoctor','ASC')->get();
+        $cargos = Cargo::where('activo',true)->orderBy('nombre_cargo','ASC')->get();
 
         return [
               'estadosciviles'          => $estadosciviles,

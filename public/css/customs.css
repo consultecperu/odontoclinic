@@ -77,6 +77,10 @@ table.vgt-table {
     margin-top: -5px !important;
 }
 
+.tooltip-arrow {
+  border-style: none !important;
+}
+
 /* utilitarios margin padding */
 
   .p-0 {

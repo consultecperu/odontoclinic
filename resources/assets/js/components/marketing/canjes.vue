@@ -17,7 +17,6 @@
                 </div>
                 <div class="card-body">
                     <vue-good-table
-                    title="Listado de Canjes"
                     :columns="columns"
                     :rows="canjes"
                     :paginationOptions="{
@@ -35,13 +34,13 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">                               
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Canje" @click.prevent="processEdit(props)">
+                                <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Canje'" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Canje" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Canje'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>   
-                                <button type="button" data-toggle="tooltip" :disable="props.row.estado == 'autorizado'" title="" class="btn btn-border btn-primary btn-xs" data-original-title="Autorizar Canje" @click.prevent="processAutorizar(props.row.id)">
+                                <button type="button" :disable="props.row.estado == 'autorizado'" class="btn btn-border btn-primary btn-xs" v-tooltip="'Autorizar Canje'" @click.prevent="processAutorizar(props.row.id)">
                                     <i class="la la-thumbs-o-up font-large"></i>
                                 </button>                                                               
                             </span>
@@ -131,8 +130,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'canjes',
     mixins: [mixin],
-    mounted() {
-        this.showToolTips()        
+    mounted() {    
         this.$store.dispatch('LOAD_CANJES_LIST').then(() => {
             this.isLoading = false
         })                          

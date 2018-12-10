@@ -27,7 +27,6 @@
                         </div>
                         <div class="card-body">
                             <vue-good-table
-                            title="Listado de Servicios Operatoria"
                             :columns="columns"
                             :rows="getservicios_operatoria"
                             :paginationOptions="{
@@ -45,10 +44,10 @@
                             styleClass="vgt-table condensed bordered striped">
                                 <template slot="table-row" slot-scope="props">
                                     <span v-if="props.column.field == 'btn'" class="center">
-                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Servicio" @click.prevent="processEdit(props)">
+                                        <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Servicio'" @click.prevent="processEdit(props)">
                                             <i class="la la-edit font-large"></i>
                                         </button>                                
-                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Servicio" @click.prevent="processDelete(props.row.id)">
+                                        <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Servicio'" @click.prevent="processDelete(props.row.id)">
                                             <i class="la la-trash-o font-large"></i>
                                         </button>                                
                                     </span>
@@ -80,7 +79,6 @@
                         </div>
                         <div class="card-body">
                             <vue-good-table
-                            title="Listado de Servicios Ortodoncia"
                             :columns="columns"
                             :rows="getservicios_ortodoncia"
                             :paginationOptions="{
@@ -98,10 +96,10 @@
                             styleClass="vgt-table condensed bordered striped">
                                 <template slot="table-row" slot-scope="props">
                                     <span v-if="props.column.field == 'btn'" class="center">
-                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Servicio" @click.prevent="processEdit(props)">
+                                        <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Servicio'" @click.prevent="processEdit(props)">
                                             <i class="la la-edit font-large"></i>
                                         </button>                                
-                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Servicio" @click.prevent="processDelete(props.row.id)">
+                                        <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Servicio'" @click.prevent="processDelete(props.row.id)">
                                             <i class="la la-trash-o font-large"></i>
                                         </button>                                
                                     </span>
@@ -234,7 +232,6 @@ export default {
     name:'servicios',
     mixins: [mixin],
     mounted() {
-        this.showToolTips()        
         this.$store.dispatch('LOAD_GRUPOSERVICIOS_LIST')
         this.$store.dispatch('LOAD_SIMBOLOGIAS_LIST')
         this.$store.dispatch('LOAD_SERVICIOS_LIST').then(() => {

@@ -30,7 +30,6 @@
                 </div>
                 <div class="card-body">
                     <vue-good-table
-                    title="Listado de Planes"
                     :columns="columns"
                     :rows="detalle_tarifario"
                     :paginationOptions="{
@@ -48,10 +47,10 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">                                 
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Tarifario" @click.prevent="processEdit(props)">
+                                <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Tarifario'" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Tarifario" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Tarifario'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
                             </span>
@@ -161,7 +160,6 @@ export default {
     name: 'detalle_tarifarios',
     mixins: [mixin],  
     mounted() {
-        this.showToolTips()
         this.$store.dispatch('LOAD_SEDES_LIST')        
         this.$store.dispatch('LOAD_MONEDAS_LIST')        
         this.$store.dispatch('LOAD_SERVICIOS_LIST')

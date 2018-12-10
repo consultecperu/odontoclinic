@@ -17,7 +17,6 @@
                 </div>
                 <div class="card-body">
                     <vue-good-table
-                    title="Listado de Planes"
                     :columns="columns"
                     :rows="getplanes_multident"
                     :paginationOptions="{
@@ -35,13 +34,13 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-primary btn-xs" data-original-title="Ver Tarifario" @click.prevent="cargaTarifario(props.row.id)">
+                                <button type="button" class="btn btn-border btn-primary btn-xs" v-tooltip="'Ver Tarifario'" @click.prevent="cargaTarifario(props.row.id)">
                                     <i class="la la-file-text font-large"></i>
                                 </button>                                  
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Tarifario" @click.prevent="processEdit(props)">
+                                <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Tarifario'" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Tarifario" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Tarifario'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
                             </span>
@@ -99,8 +98,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'tarifarios',
     mixins: [mixin],  
-    mounted() {
-        this.showToolTips()        
+    mounted() {   
         this.$store.dispatch('LOAD_PLANES_LIST').then(() => {
             this.isLoading = false
         })                          

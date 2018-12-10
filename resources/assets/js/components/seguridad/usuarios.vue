@@ -10,14 +10,13 @@
         <div class="col">
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
-                <div class="card-header">                            
+<!--                 <div class="card-header">                            
                     <div class="col">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-user-5"></i></span> Nuevo Perfil</button>
                     </div>                                                        
-                </div>
+                </div> -->
                 <div class="card-body">
                     <vue-good-table
-                    title="Listado de Usuarios"
                     :columns="columns"
                     :rows="usuarios"
                     :paginationOptions="{
@@ -34,10 +33,10 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Accesos" @click.prevent="cargaAccesos(props.row.id)">
+                                <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Permisos'" @click.prevent="cargaAccesos(props.row.id)">
                                     <i class="la la-calendar-check-o font-large"></i>
                                 </button>                                
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Usuario" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Usuario'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>
                             </span>
@@ -62,8 +61,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name:'usuarios',
     mixins: [mixin],     
-    mounted() {
-        this.showToolTips()        
+    mounted() {   
         this.$store.dispatch('LOAD_USUARIOS_LIST').then(() => {
             this.isLoading = false
         })                  
@@ -72,6 +70,8 @@ export default {
         return {
             isLoading: true,
             fullPage: true,
+
+            texto:'Actualizar acceso',
 
             columns: [
                 {
@@ -199,4 +199,5 @@ export default {
     .vld-overlay.is-full-page {
         z-index: 99999;
     }
+
 </style>

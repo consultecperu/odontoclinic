@@ -17,7 +17,6 @@
                 </div>
                 <div class="card-body">
                     <vue-good-table
-                    title="Listado de Aseguradoras"
                     :columns="columns"
                     :rows="empresapacientesplanes"
                     :paginationOptions="{
@@ -34,7 +33,7 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">                                                                
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Tarifario" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Tarifario'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
                             </span>
@@ -89,8 +88,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'detalle_empresas',
     mixins: [mixin],  
-    mounted() {     
-        this.showToolTips()        
+    mounted() {        
         this.$store.dispatch('LOAD_EMPRESAPACIENTES_PLANES_LIST',{ id : this.$route.params.empresa }).then(() => {
             this.isLoading = false
         })                             

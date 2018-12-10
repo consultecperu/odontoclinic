@@ -54,32 +54,11 @@
             </div>
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
-        <!-- PAGE CONTENT MODAL -->  
-        <modal name="personal" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
-            <!-- form de registro de cargos -->
-                <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title">Registro de Personal</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="nombre">Nombre de Cargo</label>
-                            <input type="text" id="nombre" placeholder="Nombre de Cargo" class="form-control input-sm mayusculas" v-model="dataCargo.nombre_cargo">
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionCargo" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('cargo')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
-                    </div>
-                </div>
-            <!-- /. form de registro de cargos -->
-        </modal>                         
+                
     </div>  
 </template>
 <script>
 import mixin from '../../mixins.js'
-import  {_} from 'vue-underscore'
-import MaskedInput from 'vue-masked-input'
 import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'personal',
@@ -146,17 +125,7 @@ export default {
                 width:'10%',  
                 }                               
             ],
-
-            dataEmpleado : {
-                empresapaciente_id:'',                
-                contacto:'',
-                user_id:'',
-                vigencia:'',
-                fecha_inicio:'',
-                fecha_finalizacion:'',
-                email:'',
-                telefono:''
-            },                   
+                 
             errors:[]                                    
             
         }
@@ -164,9 +133,6 @@ export default {
     computed: {
         ...mapState(['empleados','user_system']),
         ...mapGetters(['getPersonal','getMedicos'])    
-    }, 
-    components: {
-      MaskedInput 
     },       
     methods: {
         StatusForm: function(eshow,eclass,elabel){
@@ -174,45 +140,10 @@ export default {
             this.IconClass = eclass        
             this.labelButton = elabel            
         },
-        LoadForm: function(){  
-            this.StatusForm(false,'la la-cloud-download','Grabar Datos')         
-            this.nom_emp = ''
-
-            this.dataConvenio = {
-                empresapaciente_id:'',                
-                contacto:'',
-                user_id:this.user_system.id,
-                vigencia:1,
-                fecha_inicio:'',
-                fecha_finalizacion:'',
-                email:'',
-                telefono:''
-            }           
-            this.$modal.show('convenio')
-        }, 
-        LoadFormEmpresa: function(){  
-            this.StatusForm(false,'la la-cloud-download','Grabar Datos')         
-            this.nom_emp = ''
-            this.dataEmpresa = {
-                ruc:'',
-                razon_social:'',
-                ubigeo_id:'',
-                direccion:'',
-                telefono:'',
-                celular:'',
-                email:'',
-                user_id:this.user_system.id,
-                codigo:'',
-            }           
-            this.$modal.show('reg_empresa')
+        LoadForm: function(){         
+            this.$router.push({ name: 'detallepersonal', params: { personal: 1 }})       
         },         
-        ActionConvenio: function(){
-            if(typeof(this.dataConvenio.id) === "undefined"){
-                this.createConvenio()
-            }else{
-                this.updateConvenio()
-            }
-        },
+
         createConvenio: function(){
             var url = '/api/convenios';
             this.StatusForm(true,'la la-spinner','Procesando')     

@@ -129,8 +129,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'modulos',
     mixins: [mixin],     
-    mounted() {
-        this.showToolTips()        
+    mounted() {    
         this.$store.dispatch('LOAD_MENUS_LIST')
         this.$store.dispatch('LOAD_MODULES_LIST').then(() => {
             this.isLoading = false

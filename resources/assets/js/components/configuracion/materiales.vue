@@ -16,7 +16,6 @@
                 </div>
                 <div class="card-body">
                     <vue-good-table
-                    title="Listado de Materiales"
                     :columns="columns"
                     :rows="materiales"
                     :paginationOptions="{
@@ -34,10 +33,10 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Material" @click.prevent="processEdit(props)">
+                                <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Material'" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Material" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Material'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
                             </span>
@@ -101,8 +100,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'materiales',
     mixins: [mixin],     
-    mounted() {
-        this.showToolTips()        
+    mounted() {  
         this.$store.dispatch('LOAD_MONEDAS_LIST')
         this.$store.dispatch('LOAD_MATERIALES_LIST').then(() => {
             this.isLoading = false

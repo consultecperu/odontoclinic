@@ -20,6 +20,8 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import VueSweetalert2 from 'vue-sweetalert2'
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 import Autocomplete from 'vuejs-auto-complete'
+import Tooltip from 'vue-directive-tooltip'
+import 'vue-directive-tooltip/css/index.css'
 
 window.axios = require('axios');
 
@@ -35,4 +37,5 @@ Vue.component('loading', Loading)
 Vue.use(VueSweetalert2)
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 Vue.component('autocomplete',Autocomplete)
+Vue.use(Tooltip)
 
