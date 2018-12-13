@@ -51,28 +51,27 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="gruposervicio" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="gruposervicio" :width="'35%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de gruposervicios -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title text-primary">{{ labelAccion }} de Grupo de Servicio</div>
+                        <div class="card-title">{{ labelAccion }} de Grupo de Servicio</div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="nombre" class="text-primary">Nombre de Grupo de Servicio</label>
-                            <input type="text" id="nombre" placeholder="Nombre de Grupo" class="form-control input-sm mayusculas" v-model="dataGruposervicio.nombre_gruposervicio">
+                        <div class="form-group pt-0">
+                            <label for="nombre" class="text-primary font-weight-bold">Nombre de Grupo de Servicio</label>
+                            <input type="text" id="nombre" placeholder="Nombre de Grupo" class="form-control form-control-sm mayusculas" v-model="dataGruposervicio.nombre_gruposervicio">
                         </div>
                         <div class="form-check form-check-inline">
                             <div class="custom-control custom-radio">
                                 <input type="radio" id="operatoria" name="customRadio" class="custom-control-input" value=1 v-model="dataGruposervicio.tipo" :checked="dataGruposervicio.tipo == 1" />
-                                <label class="custom-control-label" for="operatoria">Operatoria</label>
+                                <label class="custom-control-label text-primary font-weight-bold" for="operatoria">Operatoria</label>
                             </div>
                             <div class="custom-control custom-radio">
                                 <input type="radio" id="ortodoncia" name="customRadio" class="custom-control-input" value=2 v-model="dataGruposervicio.tipo" :checked="dataGruposervicio.tipo == 2"/>
-                                <label class="custom-control-label" for="ortodoncia">Ortodoncia</label>
+                                <label class="custom-control-label text-primary font-weight-bold" for="ortodoncia">Ortodoncia</label>
                             </div>
-                        </div>                        
-                      
+                        </div>                                              
                     </div>                    
                     <div class="card-action">
                         <button class="btn btn-primary" @click.prevent="ActionGrupo" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
@@ -98,10 +97,8 @@ export default {
         return {
             isLoading: true,
             fullPage: true,
-                        
-            searchText: '', // If value is falsy, reset searchText & searchItem
-            labelAccion:'',
 
+            labelAccion:'',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',             

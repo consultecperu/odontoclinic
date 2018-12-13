@@ -37,7 +37,10 @@
                             <span v-if="props.column.field == 'btn'" class="center">
                                 <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Modulos'" @click.prevent="cargaModulos(props.row)">
                                     <i class="la la-calendar-check-o font-large"></i>
-                                </button>                                
+                                </button>
+                                <button type="button" class="btn btn-border btn-primary btn-xs" v-tooltip="'Actualizar Perfil'" @click.prevent="processEdit(props)">
+                                    <i class="la la-edit font-large"></i>
+                                </button>                                                                 
                                 <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Perfil'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
@@ -53,20 +56,20 @@
         </div> 
 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="perfil" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="perfil" :width="'40%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de perfiles -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Registro de Perfil</div>
+                        <div class="card-title">{{ labelAccion }} de Perfil</div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="nombre">Nombre de Perfil</label>
-                            <input type="text" id="nombre" placeholder="Nombre de Perfil" class="form-control input-sm mayusculas" v-model="dataPerfil.nombre_perfil">
+                        <div class="form-group pt-0">
+                            <label for="nombre" class="text-primary font-weight-bold">Nombre de Perfil <span class="required-label"> *</span></label>
+                            <input type="text" id="nombre" placeholder="Nombre de Perfil" class="form-control input-sm mayusculas border border-primary" v-model="dataPerfil.nombre_perfil">
                         </div>
-                        <div class="form-group">
-                            <label for="descripcion">Descripcion</label>
-                            <textarea class="form-control input-sm " id="descripcion" rows="2" v-model="dataPerfil.descripcion">
+                        <div class="form-group pt-0">
+                            <label for="descripcion" class="text-primary font-weight-bold">Descripcion</label>
+                            <textarea class="form-control input-sm border border-primary" id="descripcion" rows="2" v-model="dataPerfil.descripcion">
 
                             </textarea>
                         </div>
@@ -146,9 +149,8 @@ export default {
         return {
             isLoading: true,
             fullPage: true,
-                        
-            searchText: '', // If value is falsy, reset searchText & searchItem
 
+            labelAccion: '',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',             
@@ -209,7 +211,8 @@ export default {
                 descripcion:'',
                 habilitado: true,
                 activo: true
-            }           
+            }      
+            this.labelAccion = "Registro"     
             this.$modal.show('perfil')
         }, 
         ActionPerfil: function(){
@@ -282,7 +285,8 @@ export default {
                 id:dataper.id,
                 nombre_perfil:dataper.nombre_perfil, 
                 descripcion:dataper.descripcion                                           
-            }            
+            }   
+            this.labelAccion = "Actualización"         
             this.$modal.show('perfil')
         
         },

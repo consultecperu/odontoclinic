@@ -125,7 +125,7 @@
             <!-- form de registro de servicios -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title text-primary">Registro de Servicio</div>
+                        <div class="card-title">{{ labelAccion }} de Servicio</div>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -242,9 +242,8 @@ export default {
         return {
             isLoading: true,
             fullPage: true,
-                        
-            searchText: '', // If value is falsy, reset searchText & searchItem
 
+            labelAccion : '',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',             
@@ -256,26 +255,26 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },
-                width:'20%',
+                width:'30%',
                 },
                 {
                 label: 'Grupo',
                 field: this.fieldFn,
-                width:'20%',
+                width:'25%',
                 },
                 {
                 label: 'Laboratorio',
                 field: 'laboratorio',
                 thClass: 'center',
                 tdClass: 'center',
-                width:'15%',
+                width:'10%',
                 },
                 {
                 label: 'Material',
                 field: 'materiales',
                 thClass: 'center',
                 tdClass: 'center',
-                width:'15%',
+                width:'10%',
                 },                                                                                                                                                                                           
                 {
                 label: 'Simbologia',
@@ -284,7 +283,7 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },
-                width:'15%',
+                width:'10%',
                 },                                                                                                                                                                                           
                 {
                 label: 'Acción',
@@ -341,7 +340,8 @@ export default {
                 ortofacil: 0,               //  serviciodetalles  
                 dataGrupos:[],                            
                 user_id: this.user_system.id
-            }           
+            }   
+            this.labelAccion = "Registro"        
             this.$modal.show('servicio')
         }, 
         LoadFormOrto: function(){  
@@ -361,7 +361,8 @@ export default {
                 ortofacil:0 ,               //  serviciodetalles   
                 dataGrupos:[],                            
                 user_id: this.user_system.id
-            }           
+            }   
+            this.labelAccion = "Registro"        
             this.$modal.show('servicio')
         },         
         ActionServicio: function(){
@@ -464,7 +465,7 @@ export default {
             }   
 
             this.dataServicio.dataGrupos = list  
-                        
+            this.labelAccion = "Actualización"
             this.MuestraImagen(dataser.simbologia.id)         
             this.$modal.show('servicio')
         

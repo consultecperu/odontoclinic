@@ -75,6 +75,20 @@
 import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'sidebar',
+    created() {
+      this.$store.dispatch('LOAD_PERFIL_USER')      
+    },      
+    updated(){
+        $(".nav-item a").on('click', (function(){
+            if ( $(this).parent().find('.collapse').hasClass("show") ) { // si es show
+                $(this).parent().removeClass('submenu'); // quita color plomo a todo el conjunto de opciones
+            } else {        // no es show
+                $(this).parent().parent().find('.collapse.show').removeClass('show');
+                $(this).parent().parent().find('.nav-item.submenu').removeClass('submenu');
+                $(this).parent().addClass('submenu');   //agrega color plomo a todo el conjunto de opciones
+            }
+        }));        
+    },
     data () {
       return {
         listMenu : []
@@ -83,9 +97,7 @@ export default {
     computed: {
         ...mapState(['perfil_user','user_system']),
     },   
-    created() {
-      this.$store.dispatch('LOAD_PERFIL_USER')      
-    },  
+
     watch:{
       perfil_user: function(newVal){
         if(newVal != 'undefined' && newVal != null){

@@ -106,7 +106,7 @@
                     </div>
                     <div class="card-body">
                         <div class="col-12 pl-10 pr-10">
-                            <label for="basic" class="text-primary font-weight-bold pb-10">Empresa :</label>
+                            <label for="basic" class="text-primary font-weight-bold pb-10">Empresa <span class="required-label"> *</span></label>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control text-primary font-weight-bold" placeholder="Nombre de Empresa" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="nom_emp" readonly>
                                 <div class="input-group-append">
@@ -118,7 +118,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="" class="control-label">Fecha Inicio </label>
+                                    <label for="" class="text-primary font-weight-bold">Fecha Inicio <span class="required-label"> *</span></label>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <masked-input v-model="dataConvenio.fecha_inicio" mask="11/11/1111" placeholder="DD/MM/YYYY" />
@@ -128,7 +128,7 @@
                             </div>  
                             <div class="col-6">
                                 <div class="form-group pt-0 pl-0">
-                                    <label for="" class="control-label">Fecha Finalización </label>
+                                    <label for="" class="text-primary font-weight-bold">Fecha Finalización <span class="required-label"> *</span></label>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <masked-input v-model="dataConvenio.fecha_finalizacion" mask="11/11/1111" placeholder="DD/MM/YYYY" />
@@ -139,20 +139,20 @@
                         </div>
                         <div class="col-12 pl-0 pr-0">
                             <div class="form-group pt-0">
-                                <label for="nombre">Nombre del Contacto </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Nombre del Contacto <span class="required-label"> *</span></label>
                                 <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataConvenio.contacto">
                             </div>                            
                         </div>                            
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Email </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Email </label>
                                     <input type="email" id="email" class="form-control form-control-sm mayusculas border border-primary" v-model="dataConvenio.email">
                                 </div>  
                             </div>
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Teléfono </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Teléfono </label>
                                     <input type="text" id="telefono" class="form-control form-control-sm border border-primary" maxlength="9" v-model="dataConvenio.telefono">
                                 </div> 
                             </div>                          
@@ -174,19 +174,19 @@
                     <div class="card-body">
                         <div class="col-12">
                             <div class="form-group pt-0">
-                                <label for="nombre">RUC</label>
+                                <label for="nombre" class="text-primary font-weight-bold">RUC <span class="required-label"> *</span></label>
                                 <input type="text" id="ruc" class="form-control form-control-sm border border-primary" maxlength="11" v-model="dataEmpresa.ruc">
                             </div>                            
                         </div>
                         <div class="col-12">
                             <div class="form-group pt-0">
-                                <label for="nombre">Razón Social </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Razón Social <span class="required-label"> *</span></label>
                                 <input type="text" id="razonsocial" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.razon_social">
                             </div>                            
                         </div>
                         <div class="col-12">
                             <div class="form-group pt-0">
-                                <label for="nombre">Direccion </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Direccion <span class="required-label"> *</span></label>
                                 <input type="text" id="direccion" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.direccion">
                             </div>                            
                         </div>                                                  

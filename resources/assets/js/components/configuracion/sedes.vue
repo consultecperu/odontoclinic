@@ -10,8 +10,9 @@
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
                 <div class="card-header">                        
-                    <div class="col">
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-user-5"></i></span> Nueva Sede</button>
+                    <div class="col pl-0 pr-0">
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-placeholder"></i></span> Nueva Sede</button>
+                        <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">
@@ -50,100 +51,97 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="sede" :width="'70%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="sede" :width="'60%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de laboratorios -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Registro de Sede</div>
+                        <div class="card-title">{{ labelAccion }} de Sede</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="codigo">Codigo <span class="required-label">*</span></label>
-                                    <input type="text" id="codigo" placeholder="Codigo" class="form-control form-control-sm" v-model="dataSede.codigo">
+                                <div class="form-group pt-0">
+                                    <label for="codigo" class="text-primary font-weight-bold">Codigo <span class="required-label">*</span></label>
+                                    <input type="text" id="codigo" placeholder="Codigo" class="form-control form-control-sm border border-primary" v-model="dataSede.codigo">
                                 </div>
                               
                             </div>
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="nombre">Nombre de Sede <span class="required-label">*</span></label>
-                                    <input type="text" id="nombre" placeholder="Nombre de Sede" class="form-control form-control-sm mayusculas" v-model="dataSede.nombre_sede" required />
+                                <div class="form-group pt-0">
+                                    <label for="nombre" class="text-primary font-weight-bold">Nombre de Sede <span class="required-label">*</span></label>
+                                    <input type="text" id="nombre" placeholder="Nombre de Sede" class="form-control form-control-sm mayusculas border border-primary" v-model="dataSede.nombre_sede" required />
                                 </div>                                  
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="telefono">Teléfono <span class="required-label">*</span></label>
-                                    <input type="text" id="telefono" placeholder="Teléfono" class="form-control form-control-sm" v-model="dataSede.telefono" required />
+                                <div class="form-group pt-0">
+                                    <label for="telefono" class="text-primary font-weight-bold">Teléfono </label>
+                                    <input type="text" id="telefono" placeholder="Teléfono" class="form-control form-control-sm border-primary" v-model="dataSede.telefono" required />
                                 </div>
                               
                             </div>
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="celular">Celular <span class="required-label">*</span></label>
-                                    <input type="text" id="celular" placeholder="Celular" class="form-control form-control-sm" v-model="dataSede.celular" required />
+                                <div class="form-group pt-0">
+                                    <label for="celular" class="text-primary font-weight-bold">Celular </label>
+                                    <input type="text" id="celular" placeholder="Celular" class="form-control form-control-sm border-primary" v-model="dataSede.celular" required />
                                 </div>                                  
                             </div>
                         </div> 
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="teladicional">Teléfono Adicional</label>
-                                    <input type="text" id="teladicional" placeholder="Teléfono adicional" class="form-control form-control-sm" v-model="dataSede.telef_adicional" />
+                                <div class="form-group pt-0">
+                                    <label for="teladicional" class="text-primary font-weight-bold">Teléfono Adicional</label>
+                                    <input type="text" id="teladicional" placeholder="Teléfono adicional" class="form-control form-control-sm border-primary" v-model="dataSede.telef_adicional" />
                                 </div>                              
                             </div>
                         </div>   
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label>Departamento</label>
-                                        <div class="select2-input">
-                                            <select id="basic" name="basic" class="form-control form-control-sm" v-model="coddepa" @change="onchangeDepa">
-                                                <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
-                                                    {{ depa.descripcion}}
-                                                </option>
-                                            </select>
-                                        </div>
+                                    <label class="text-primary font-weight-bold">Departamento <span class="required-label"> *</span></label>
+                                    <div class="select2-input">
+                                        <select id="basic" name="basic" class="form-control form-control-sm border-primary" v-model="coddepa" @change="onchangeDepa">
+                                            <option value="">--Seleccione--</option>
+                                            <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
+                                                {{ depa.descripcion}}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label>Provincia</label>
-                                        <div class="select2-input">
-                                            <select id="basic2" name="basic" class="form-control form-control-sm" v-model="codprov" @change="onchangeProv">
-                                                <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
-                                                    {{ prov.descripcion}}
-                                                </option>
-                                            </select>
-                                        </div>
+                                    <label class="text-primary font-weight-bold">Provincia <span class="required-label"> *</span></label>
+                                    <div class="select2-input">
+                                        <select id="basic2" name="basic" class="form-control form-control-sm border-primary" v-model="codprov" @change="onchangeProv">
+                                            <option value="">--Seleccione--</option>
+                                            <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
+                                                {{ prov.descripcion}}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label>Distrito</label>
-                                        <div class="select2-input">
-                                            <select id="basic3" name="basic" class="form-control form-control-sm" v-model="dataSede.ubigeo_id" @change="onchangeDist">
-                                                <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
-                                                    {{ dist.descripcion}}
-                                                </option>
-                                            </select>
-                                        </div>
+                                    <label class="text-primary font-weight-bold">Distrito <span class="required-label"> *</span></label>
+                                    <div class="select2-input">
+                                        <select id="basic3" name="basic" class="form-control form-control-sm border-primary" v-model="dataSede.ubigeo_id" @change="onchangeDist">
+                                            <option value="">--Seleccione--</option>
+                                            <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
+                                                {{ dist.descripcion}}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>                                                        
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div class="form-group">
-                                    <label for="direccion">Dirección</label>
-                                    <input type="text" id="direccion" placeholder="Dirección" class="form-control form-control-sm" v-model="dataSede.direccion" />
+                                <div class="form-group pt-0">
+                                    <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
+                                    <input type="text" id="direccion" placeholder="Dirección" class="form-control form-control-sm border border-primary" v-model="dataSede.direccion" />
                                 </div>                              
                             </div>                        
                         </div>                                             
@@ -174,9 +172,8 @@ export default {
         return {
             isLoading: true,
             fullPage: true,
-                        
-            searchText: '', // If value is falsy, reset searchText & searchItem
 
+            labelAccion:'',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',  
@@ -190,7 +187,7 @@ export default {
                 label: 'Codigo',
                 field: 'codigo',
                 filterOptions: {
-                    enabled: true, 
+                    enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'10%',
@@ -199,7 +196,7 @@ export default {
                 label: 'Nombre de Sede',
                 field: 'nombre_sede',
                 filterOptions: {
-                    enabled: true, 
+                    enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'30%',
@@ -207,28 +204,16 @@ export default {
                 {
                 label: 'Dirección',
                 field: 'direccion',
-                filterOptions: {
-                    enabled: true, 
-                    placeholder: 'Buscar', 
-                },
                 width:'20%',
                 }, 
                 {
                 label: 'Teléfono',
                 field: 'telefono',
-                filterOptions: {
-                    enabled: true, 
-                    placeholder: 'Buscar', 
-                },
                 width:'10%',
                 }, 
                 {
                 label: 'Celular',
                 field: 'celular',
-                filterOptions: {
-                    enabled: true, 
-                    placeholder: 'Buscar', 
-                },
                 width:'15%',
                 },                                                                                                                                                                                                          
                 {
@@ -289,7 +274,8 @@ export default {
                 correo:'',
                 codigo:'',
                 user_id:this.user_system.id
-            }                     
+            }   
+            this.labelAccion = "Registro"                  
             this.$modal.show('sede')
         }, 
         ActionSede: function(){
@@ -373,7 +359,7 @@ export default {
             this.coddepa = datased.ubigeo.coddepa;
             this.codprov = datased.ubigeo.codprov;
             this.coddist = datased.ubigeo.coddist;           
-
+            this.labelAccion = "Actualización" 
             this.$modal.show('sede')
         
         },

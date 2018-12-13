@@ -9,8 +9,10 @@
         <div class="col">
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
-                <div class="card-header pl-0 pr-0"> 
-                    <div class="col-4">
+                <div class="card-header pr-0"> 
+				    <div class="card-category">Plan :</div>                    
+                    <div class="card-title">{{ plan.descripcion}} </div>                     
+                    <div class="col-4 pl-0">
                         <div class="form-group pl-0 pt-0">
                             <label for="basic" class="text-primary font-weight-bold">Sede :</label>
                             <div class="select2-input">
@@ -23,7 +25,7 @@
                             </div>
                         </div>                        
                     </div>                       
-                    <div class="col border-top pt-20">
+                    <div class="col border-top pl-0 pt-20">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-add"></i></span> Agregar Servicio</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
@@ -64,11 +66,11 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="servicio" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="servicio" :width="'40%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de planes -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Añadir Servicio al Plan</div>
+                        <div class="card-title">{{ labelAccion }} Servicio al Plan</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -102,7 +104,7 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="form-group pt-0">
+                                <div class="form-group pt-0 pr-0">
                                     <label for="nombre" class="text-primary font-weight-bold">Monto :</label>
                                     <input type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataServicio.costo">
                                 </div>
@@ -160,6 +162,7 @@ export default {
     name: 'detalle_tarifarios',
     mixins: [mixin],  
     mounted() {
+        this.$store.dispatch('LOAD_PLANES_LIST')         
         this.$store.dispatch('LOAD_SEDES_LIST')        
         this.$store.dispatch('LOAD_MONEDAS_LIST')        
         this.$store.dispatch('LOAD_SERVICIOS_LIST')
@@ -172,6 +175,7 @@ export default {
             isLoading: true,
             fullPage: true,
 
+            labelAccion:'',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',  
@@ -234,10 +238,13 @@ export default {
         }
     },
     computed: {
-        ...mapState(['tarifarios','servicios','user_system','sedes','monedas']),
+        ...mapState(['tarifarios','servicios','user_system','sedes','monedas','planes']),
         detalle_tarifario: function(){
             return this.tarifarios.filter((tar) => tar.sede_id == this.dataSede).filter((tar) => tar.plan_id == this.$route.params.plan)
-        },        
+        }, 
+        plan: function(){
+            return this.planes.find((pla) => pla.id == this.$route.params.plan)
+        }                
     },    
     methods: {
         StatusForm: function(eshow,eclass,elabel){
@@ -266,7 +273,8 @@ export default {
             }   
             this.valorinicial = ''
             this.valordisplay = '' 
-            this.disableinput=false       
+            this.disableinput=false   
+            this.labelAccion = "Añadir"    
             this.$modal.show('servicio')
         }, 
         ActionServicio: function(){
@@ -355,6 +363,7 @@ export default {
             this.valorinicial = dataser.servicio.id
             this.valordisplay = dataser.servicio.nombre_servicio
             this.disableinput = true
+            this.labelAccion = "Actualizar"
             this.$modal.show('servicio')        
         },
         processDelete(id){

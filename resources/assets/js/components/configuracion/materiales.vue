@@ -11,7 +11,8 @@
             <div class="card text-white bg-white mb-3">
                 <div class="card-header">                        
                     <div class="col">
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-user-5"></i></span> Nuevo Material</button>
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-inbox"></i></span> Nuevo Material</button>
+                        <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">
@@ -33,6 +34,9 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
+                                <button type="button" class="btn btn-border btn-primary btn-xs" v-tooltip="'Ver Servicios'" @click.prevent="cargaServicios(props.row.id)">
+                                    <i class="la la-file-text font-large"></i>
+                                </button>                                 
                                 <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Material'" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
@@ -41,8 +45,9 @@
                                 </button>                                
                             </span>
                             <span v-else-if="props.column.field == 'devolucion'">
-                                <label v-if="props.row.devolucion == true" class="text-primary">SI</label>
+<!--                                 <label v-if="props.row.devolucion == true" class="text-primary">SI</label>
                                 <label v-else class="text-danger">NO</label>
+ -->                                <span class="center badge" :class="[props.row.devolucion == 1 ? 'badge-primary' : 'badge-danger']">{{ props.row.devolucion == 1 ? 'SI' : 'NO'}}</span>                                
                             </span>
                             <span v-else>
                                 {{props.formattedRow[props.column.field]}}
@@ -58,15 +63,15 @@
             <!-- form de registro de materiales -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Registro de Material</div>
+                        <div class="card-title">{{ labelAccion }} de Material</div>
                     </div>
                     <div class="card-body">                   
-                        <div class="form-group pb-0">
-                            <label for="opcion">Nombre de Material <span class="required-label">*</span></label>
+                        <div class="form-group pt0">
+                            <label for="opcion" class="text-primary font-weight-bold">Nombre de Material <span class="required-label">*</span></label>
                             <input type="text" id="opcion" placeholder="Nombre" class="form-control form-control-sm mayusculas" v-model="dataMaterial.nombre_material">
                         </div>
                         <div class="form-group pt-0 pb-0">
-                            <label for="exampleFormControlSelect1">Seleccione la Moneda</label>
+                            <label for="exampleFormControlSelect1" class="text-primary font-weight-bold">Seleccione la Moneda <span class="required-label">*</span></label>
                             <select v-model="dataMaterial.moneda_id" class="form-control form-control-sm" id="exampleFormControlSelect1">
                             <option v-for="moneda in monedas" :value="moneda.id" :key="moneda.id">
                                 {{ moneda.nombre_moneda }}
@@ -74,13 +79,13 @@
                             </select>                            
                         </div>                        
                         <div class="form-group pb-0">
-                            <label for="costo">Costo</label>
+                            <label for="costo" class="text-primary font-weight-bold">Costo</label>
                             <input type="text" id="costo" placeholder="Costo" class="form-control form-control-sm" v-model="dataMaterial.costo">
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input class="form-check-input" type="checkbox" value="" v-model="dataMaterial.devolucion" true-value=true false-value=false />
-                                <span class="form-check-sign">Devolución al Doctor</span>
+                                <span class="form-check-sign text-primary font-weight-bold">Devolución al Doctor</span><span class="required-label"> *</span>
                             </label>
                         </div>                        
 
@@ -110,9 +115,8 @@ export default {
         return {
             isLoading: true,
             fullPage: true,
-                        
-            searchText: '', // If value is falsy, reset searchText & searchItem
 
+            labelAccion:'',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',             
@@ -124,32 +128,35 @@ export default {
                     enabled: true, 
                     placeholder: 'Buscar', 
                 },
-                width:'20%',
+                width:'30%',
                 }, 
                 {
-                label: 'Num. Servicios',
+                label: 'Nro Servicios',
                 field: 'numero_servicios',
                 width:'15%',
                 },
                 {
                 label: 'Moneda',
                 field: 'moneda.nombre_moneda',
-                width:'15%',
+                width:'10%',
                 },
                 {
                 label: 'Costo',
                 field: 'costo',
-                width:'15%',
+                width:'10%',
                 },
                 {
-                label: 'Devolucion al Doc.',
+                label: 'Devolucion al Doc',
                 field: 'devolucion',
-                width:'20%',
+                tdClass: 'center',
+                thClass: 'center',
+                width:'15%',
                 },                                                                                                                                                                                                          
                 {
                 label: 'Acción',
                 field: 'btn',
                 tdClass: 'center',
+                thClass: 'center',
                 html: true  ,
                 width:'15%',  
                 }                               
@@ -181,7 +188,8 @@ export default {
                 moneda_id:'',
                 user_id:this.user_system.id,
                 costo:''
-            }                       
+            }   
+            this.labelAccion = "Registro"                    
             this.$modal.show('material')
         }, 
         ActionMaterial: function(){
@@ -257,7 +265,8 @@ export default {
                 moneda_id:datamat.moneda_id,
                 user_id:this.user_system.id,
                 costo:datamat.costo
-            }                          
+            }   
+            this.labelAccion = "Actualización"                       
             this.$modal.show('material')
         
         },
@@ -288,6 +297,9 @@ export default {
                     }
                 });
         }, 
+        cargaServicios: function(id){
+            this.$router.push({ name: 'detallematerial', params: { material: id }})
+        },        
     }
     
 }

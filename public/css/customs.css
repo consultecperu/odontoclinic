@@ -81,6 +81,10 @@ table.vgt-table {
   border-style: none !important;
 }
 
+.autocomplete__box {
+  border: none !important;
+}
+
 /* utilitarios margin padding */
 
   .p-0 {

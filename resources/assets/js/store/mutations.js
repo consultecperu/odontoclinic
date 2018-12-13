@@ -101,5 +101,11 @@ export default {
     },
     SET_EMPLEADOS_LIST: (state, { list }) => {      // EMPLEADOS
         state.empleados = list
-    },                                                                                                 
+    },
+    SET_LABORATORIOSERVICIOS_LIST: (state, { list }) => {      // LABORATORIOSSERVICIOS
+        state.laboratorioservicios = list
+    },   
+    SET_MATERIALSERVICIOS_LIST: (state, { list }) => {      // MATERIALSERVICIOS
+        state.materialservicios = list
+    },                                                                                                        
 }

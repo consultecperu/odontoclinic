@@ -33,6 +33,10 @@ class Servicio extends Model
     public function tarifarios()
     {
         return $this->hasMany('App\Tarifario');       
-    }    
+    }
+    public function materialservicios()
+    {
+        return $this->hasMany('App\Materialservicio');
+    }          
     
 }

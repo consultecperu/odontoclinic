@@ -102,7 +102,7 @@
             <!-- form de registro de campañas -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Registro de Nueva Campaña</div>
+                        <div class="card-title">{{ labelAccion }} de Campaña</div>
                     </div>
                     <div class="card-body">
                         <div class="col-12 pl-10 pr-10">
@@ -118,13 +118,13 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Nombre de Campaña </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Nombre de Campaña <span class="required-label"> *</span></label>
                                     <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataCampania.nombre_campania">
                                 </div>  
                             </div>
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="lugar">Lugar </label>
+                                    <label for="lugar" class="text-primary font-weight-bold">Lugar </label>
                                     <input type="text" id="lugar" class="form-control form-control-sm border border-primary" v-model="dataCampania.lugar">
                                 </div> 
                             </div>                          
@@ -132,7 +132,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="" class="control-label">Fecha Realización </label>
+                                    <label for="" class="text-primary font-weight-bold">Fecha Realización <span class="required-label"> *</span></label>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <masked-input v-model="dataCampania.fecha_realizacion" mask="11/11/1111" placeholder="DD/MM/YYYY" />
@@ -142,7 +142,7 @@
                             </div>  
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="" class="control-label">Fecha Vencimiento </label>
+                                    <label for="" class="text-primary font-weight-bold">Fecha Vencimiento <span class="required-label"> *</span></label>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <masked-input v-model="dataCampania.fecha_vencimiento" mask="11/11/1111" placeholder="DD/MM/YYYY" />
@@ -153,20 +153,20 @@
                         </div>
                         <div class="col-12 pl-0 pr-0">
                             <div class="form-group pt-0">
-                                <label for="nombre">Nombre del Contacto </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Nombre del Contacto <span class="required-label"> *</span></label>
                                 <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataCampania.contacto">
                             </div>                            
                         </div>                            
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Email </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Email </label>
                                     <input type="email" id="email" class="form-control form-control-sm mayusculas border border-primary">
                                 </div>  
                             </div>
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Teléfono </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Teléfono </label>
                                     <input type="text" id="telefono" class="form-control form-control-sm border border-primary" maxlength="9" v-model="dataCampania.telefono">
                                 </div> 
                             </div>                          
@@ -188,19 +188,19 @@
                     <div class="card-body">
                         <div class="col-12">
                             <div class="form-group pt-0">
-                                <label for="nombre">RUC</label>
+                                <label for="nombre" class="text-primary font-weight-bold">RUC <span class="required-label"> *</span></label>
                                 <input type="text" id="ruc" class="form-control form-control-sm border border-primary" maxlength="11" v-model="dataEmpresa.ruc">
                             </div>                            
                         </div>
                         <div class="col-12">
                             <div class="form-group pt-0">
-                                <label for="nombre">Razón Social </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Razón Social <span class="required-label"> *</span></label>
                                 <input type="text" id="razonsocial" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.razon_social">
                             </div>                            
                         </div>
                         <div class="col-12">
                             <div class="form-group pt-0">
-                                <label for="nombre">Direccion </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Direccion <span class="required-label"> *</span></label>
                                 <input type="text" id="direccion" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.direccion">
                             </div>                            
                         </div>                                                  
@@ -232,6 +232,7 @@ export default {
             isLoading: true,
             fullPage: true,
 
+            labelAccion:'',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos', 
@@ -381,7 +382,8 @@ export default {
                 user_id:this.user_system.id,
                 vigencia:1,
                 telefono:''
-            }           
+            }    
+            this.labelAccion = "Registro"       
             this.$modal.show('campaña')
         }, 
         LoadFormEmpresa: function(){  
@@ -486,7 +488,7 @@ export default {
             if(datacam.empresapaciente != null){
                 this.nom_emp = datacam.empresapaciente.razon_social  
             }
-        
+            this.labelAccion = "Actualización"
             this.$modal.show('campaña')
         
         },

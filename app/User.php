@@ -87,5 +87,13 @@ class User extends Authenticatable
     public function empleados()
     {
         return $this->hasMany('App\Empleado');
-    }                                     
+    }  
+    public function laboratorioservicios()
+    {
+        return $this->hasMany('App\Laboratorioservicio');
+    }   
+    public function materialservicios()
+    {
+        return $this->hasMany('App\Materialservicio');
+    }                                           
 }

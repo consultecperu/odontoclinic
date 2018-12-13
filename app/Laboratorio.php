@@ -17,5 +17,9 @@ class Laboratorio extends Model
     public function servicios()
     {
         return $this->belongsToMany('App\Servicio')->withTimestamps();
-    }          
+    } 
+    public function laboratorioservicios()
+    {
+        return $this->hasMany('App\Laboratorioservicio');
+    }              
 }

@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 use Exception;
 use Validator;
 use Carbon\Carbon;
-use App\Laboratorio;
+use App\Laboratorioservicio;
 
-class LaboratorioController extends Controller
+class LaboratorioservicioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +19,8 @@ class LaboratorioController extends Controller
      */
     public function index()
     {
-        $laboratorios = Laboratorio::with('laboratorioservicios')->orderBy('id','ASC')->where('activo',true)->get();
-        return $laboratorios;   
+        $labservicios = Laboratorioservicio::with('moneda','laboratorio')->orderBy('id','ASC')->where('activo',true)->get();
+        return $labservicios;   
     }
 
     /**
@@ -30,7 +30,7 @@ class LaboratorioController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -44,33 +44,36 @@ class LaboratorioController extends Controller
         DB::beginTransaction();    
 
         try {
-          $rules = ['nombre_laboratorio' => 'required'];
-  
-          $validator = Validator::make($request->all(), $rules);
-          if ($validator->fails()) {
-              return response()->json(['errors'=>$validator->errors()]);
-          }
-          /*-- validacion del Nombre de laboratorio--*/
-          if($request->get('nombre_laboratorio')){
-              $nom = Str::upper($request->get('nombre_laboratorio'));         
-              $nomlab = Laboratorio::where('nombre_laboratorio',$nom)->count();
-              if($nomlab > 0){
-                  return response()->json(['errors'=>['Nombre de laboratorio' => 'Ya existe un laboratorio con estos datos']]);
-              }
-          }        
-  
-          $laboratorio = new Laboratorio($request->all());
-          $laboratorio->nombre_laboratorio = Str::upper($laboratorio->nombre_laboratorio);
-          $laboratorio->save();
-  
-          DB::commit();        
-          return;
+            $rules = ['laboratorio_id'  => 'required',
+                      'moneda_id'       => 'required',
+                      'user_id'         => 'required'
+                      ];
+    
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            }
+            /*-- validacion del Nombre de servicio--*/
+            if($request->get('nombre_servicio')){
+                $nom = Str::upper($request->get('nombre_servicio'));         
+                $nomser = Laboratorioservicio::where('nombre_servicio',$nom)->count();
+                if($nomser > 0){
+                    return response()->json(['errors'=>['Nombre de servicio' => 'Ya existe un servicio con estos datos']]);
+                }
+            }        
+    
+            $labservicio = new Laboratorioservicio($request->all());
+            $labservicio->nombre_servicio = Str::upper($labservicio->nombre_servicio);
+            $labservicio->save();
+    
+            DB::commit();        
+            return;
         }
         catch(Exception $e){
-          DB::rollback();
-          return response()->json(
-              ['status' => $e->getMessage()], 422
-          );
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
         }
 
     }
@@ -109,17 +112,20 @@ class LaboratorioController extends Controller
         DB::beginTransaction(); 
 
         try {
-            $rules =    ['nombre_laboratorio'     => 'required'];
+            $rules = ['laboratorio_id'  => 'required',
+                      'moneda_id'       => 'required',
+                      'user_id'         => 'required'
+                      ];
     
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
             }
 
-            $laboratorio = Laboratorio::find($id);
-            $laboratorio->fill($request->all());
-            $laboratorio->nombre_laboratorio = Str::upper($laboratorio->nombre_laboratorio);
-            $laboratorio->save();
+            $labservicio = Laboratorioservicio::find($id);
+            $labservicio->fill($request->all());
+            $labservicio->nombre_servicio = Str::upper($labservicio->nombre_servicio);
+            $labservicio->save();
   
           DB::commit();           
           return;
@@ -129,7 +135,6 @@ class LaboratorioController extends Controller
               ['status' => $e->getMessage()], 422
           );
         }
-
     }
 
     /**
@@ -141,10 +146,10 @@ class LaboratorioController extends Controller
     public function destroy($id)
     {
         try {
-            $laboratorio = Laboratorio::findOrFail($id);
-            $laboratorio->nombre_laboratorio = $laboratorio->nombre_laboratorio . ' *** ' . Carbon::now()->timestamp;            
-            $laboratorio->activo = false;
-            $laboratorio->save();            
+            $labservicio = Laboratorioservicio::findOrFail($id);
+            $labservicio->nombre_servicio = $labservicio->nombre_servicio . ' *** ' . Carbon::now()->timestamp;            
+            $labservicio->activo = false;
+            $labservicio->save();            
         } catch (Exception $e) {
             return response()->json(
                 ['status' => $e->getMessage()], 422

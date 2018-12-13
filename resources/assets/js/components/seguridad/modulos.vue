@@ -11,7 +11,7 @@
                 <div class="card-header">                          
                     <div class="col">
 <!--                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-user-5"></i></span> Nuevo Modulo</button>
- -->                    <div class="btn-group float-right" role="group">
+ -->                    <div class="btn-group float-right pr-10" role="group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="btn-label"><i class="flaticon-technology-1"></i></span> Nuevo
                             </button>
@@ -83,32 +83,32 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group pt-0 pb-0" v-if="MenuSelect">
-                            <label for="exampleFormControlSelect1">Seleccione el Menú</label>
-                            <select v-model="dataModulo.idparent" class="form-control form-control-sm" id="exampleFormControlSelect1" :disabled="!(typeof(dataModulo.id) === 'undefined')">
+                            <label for="exampleFormControlSelect1" class="text-primary font-weight-bold">Seleccione el Menú</label>
+                            <select v-model="dataModulo.idparent" class="form-control form-control-sm border border-primary" id="exampleFormControlSelect1" :disabled="!(typeof(dataModulo.id) === 'undefined')">
                             <option v-for="menu in getMenus" :value="menu.id" :key="menu.id">
                                 {{ menu.name }}
                             </option>
                             </select>                            
                         </div>                    
                         <div class="form-group pb-0">
-                            <label for="opcion">Nombre de {{ labelSeleccion }}</label>
-                            <input type="text" id="opcion" placeholder="Nombre" class="form-control form-control-sm" v-model="dataModulo.name">
+                            <label for="opcion" class="text-primary font-weight-bold">Nombre de {{ labelSeleccion }} <span class="required-label"> *</span></label>
+                            <input type="text" id="opcion" placeholder="Nombre" class="form-control form-control-sm border border-primary" v-model="dataModulo.name">
                         </div>
                         <div class="form-group pb-0">
-                            <label for="icono">Icono</label>
-                            <input type="text" id="icono" placeholder="Nombre de Icono" class="form-control form-control-sm" v-model="dataModulo.icono">
+                            <label for="icono" class="text-primary font-weight-bold">Icono <span class="required-label"> *</span></label>
+                            <input type="text" id="icono" placeholder="Nombre de Icono" class="form-control form-control-sm border border-primary" v-model="dataModulo.icono">
                         </div>
                         <div class="form-group pb-0">
-                            <label for="ruta">Nombre de Ruta</label>
-                            <input type="text" id="ruta" placeholder="Nombre de Ruta" class="form-control form-control-sm" v-model="dataModulo.name_router">
+                            <label for="ruta" class="text-primary font-weight-bold">Nombre de Ruta <span class="required-label"> *</span></label>
+                            <input type="text" id="ruta" placeholder="Nombre de Ruta" class="form-control form-control-sm border border-primary" v-model="dataModulo.name_router">
                         </div> 
                         <div class="form-group pb-0">
-                            <label for="plantilla">Nombre en Plantilla</label>
-                            <input type="text" id="plantilla" placeholder="Nombre en Plantilla" class="form-control form-control-sm" v-model="dataModulo.name_template">
+                            <label for="plantilla" class="text-primary font-weight-bold">Nombre en Plantilla <span class="required-label"> *</span></label>
+                            <input type="text" id="plantilla" placeholder="Nombre en Plantilla" class="form-control form-control-sm border border-primary" v-model="dataModulo.name_template">
                         </div>                                                                        
                         <div class="form-group pb-0">
-                            <label for="orden">Numero de orden</label>
-                            <input type="text" id="orden" placeholder="Número Orden" class="form-control form-control-sm" v-model="dataModulo.orden">
+                            <label for="orden" class="text-primary font-weight-bold">Numero de orden</label>
+                            <input type="text" id="orden" placeholder="Número Orden" class="form-control form-control-sm border border-primary" v-model="dataModulo.orden">
                         </div> 
                     </div>
                     <div class="card-action pb-10 pt-10">

@@ -238,5 +238,21 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                         
+    }, 
+    LOAD_LABORATORIOSERVICIOS_LIST: function ({ commit }) {
+        var url = '/api/laboratorioservicios';
+        return axios.get(url).then((response) => {
+            commit('SET_LABORATORIOSERVICIOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },  
+    LOAD_MATERIALSERVICIOS_LIST: function ({ commit }) {
+        var url = '/api/materialservicios';
+        return axios.get(url).then((response) => {
+            commit('SET_MATERIALSERVICIOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                               
 }

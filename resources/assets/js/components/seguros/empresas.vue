@@ -11,7 +11,7 @@
             <div class="card text-white bg-white mb-3">
                 <div class="card-header pl-0 pr-0">                        
                     <div class="col">
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-agenda-1"></i></span> Nueva Empresa</button>
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-home"></i></span> Nueva Empresa</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
@@ -58,36 +58,36 @@
             <!-- form de registro de empresas -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Registro de Nueva Empresa</div>
+                        <div class="card-title">{{ labelAccion }} de Nueva Empresa</div>
                     </div>
                     <div class="card-body">
-                        <div class="col-12">
+                        <div class="col-12 pl-0 pr-0">
                             <div class="form-group pt-0">
-                                <label for="nombre">RUC</label>
+                                <label for="nombre" class="text-primary font-weight-bold">RUC <span class="required-label"> *</span></label>
                                 <input type="text" id="ruc" class="form-control form-control-sm border border-primary" maxlength="11" v-model="dataEmpresa.ruc">
                             </div>                            
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 pl-0 pr-0">
                             <div class="form-group pt-0">
-                                <label for="nombre">Razón Social </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Razón Social <span class="required-label"> *</span></label>
                                 <input type="text" id="razonsocial" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.razon_social">
                             </div>                            
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 pl-0 pr-0">
                             <div class="form-group pt-0">
-                                <label for="nombre">Direccion </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Direccion </label>
                                 <input type="text" id="direccion" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.direccion">
                             </div>                            
                         </div>                            
-                        <div class="col-12">
+                        <div class="col-12 pl-0 pr-0">
                             <div class="form-group pt-0">
-                                <label for="nombre">Email </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Email </label>
                                 <input type="email" id="email" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.email">
                             </div>                            
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 pl-0 pr-0">
                             <div class="form-group pt-0">
-                                <label for="nombre">Teléfono </label>
+                                <label for="nombre" class="text-primary font-weight-bold">Teléfono </label>
                                 <input type="text" id="telefono" class="form-control form-control-sm border border-primary" maxlength="9" v-model="dataEmpresa.telefono">
                             </div>                            
                         </div>                       
@@ -117,6 +117,7 @@ export default {
             isLoading: true,
             fullPage: true,
 
+            labelAccion: '',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',  
@@ -189,7 +190,8 @@ export default {
                 email:'',
                 codigo:'',
                 user_id: this.user_system.id
-            }           
+            }  
+            this.labelAccion = "Registro"         
             this.$modal.show('empresa')
         }, 
         ActionEmpresa: function(){
@@ -215,7 +217,6 @@ export default {
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')                
                 return;
             }
-
             this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST')    
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
@@ -225,7 +226,6 @@ export default {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
             this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
-
             });
         },
         updateEmpresa: function(){
@@ -244,7 +244,6 @@ export default {
                     this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
                     return;
                 }
-
                 this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST')                  
                 this.errors = [];
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
@@ -270,7 +269,8 @@ export default {
                 email:dataemp.email,
                 codigo:dataemp.codigo,
                 user_id: this.user_system.id                                      
-            }            
+            }      
+            this.labelAccion = "Actualizacion"      
             this.$modal.show('empresa')
         
         },

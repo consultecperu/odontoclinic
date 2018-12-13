@@ -11,7 +11,7 @@
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
                 <div class="card-header">                            
-                    <div class="col">
+                    <div class="col pl-0">
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>

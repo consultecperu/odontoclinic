@@ -85,23 +85,23 @@ function customCheckColor(){
 	logoHeader = $('.main-header .logo-header').attr('data-background-color');
 	if (typeof sidebar == typeof undefined) {
 		if (typeof logoHeader !== typeof undefined) {
-			$('.logo-header .logo-img').attr('src', 'img/logoresponsive2.png');
+			$('.logo-header .logo-img').attr('src', '/img/logoresponsive2.png');
 			$('.logo-header .navbar-brand').attr('src', 'img/logoheader2.png');
 		} else {
-			$('.logo-header .logo-img').attr('src', 'img/logoresponsive.png');
-			$('.logo-header .navbar-brand').attr('src', 'img/logoheader.png');
+			$('.logo-header .logo-img').attr('src', '/img/logoresponsive.png');
+			$('.logo-header .navbar-brand').attr('src', '/img/logoheader.png');
 		}
 	} 
 	else{
 		if ($(window).width() > 991) {
-			$('.logo-header .logo-img').attr('src', 'img/logoresponsive2.png');
-			$('.logo-header .navbar-brand').attr('src', 'img/logoheader2.png');
+			$('.logo-header .logo-img').attr('src', '/img/logoresponsive2.png');
+			$('.logo-header .navbar-brand').attr('src', '/img/logoheader2.png');
 		} else  {
 			if(typeof logoHeader !== typeof undefined) {
-				$('.logo-header .logo-img').attr('src', 'img/logoresponsive2.png');
+				$('.logo-header .logo-img').attr('src', '/img/logoresponsive2.png');
 				$('.logo-header .navbar-brand').attr('src', 'img/logoheader2.png');		
 			} else {
-				$('.logo-header .logo-img').attr('src', 'img/logoresponsive.png');
+				$('.logo-header .logo-img').attr('src', '/img/logoresponsive.png');
 				$('.logo-header .navbar-brand').attr('src', 'img/logoheader.png');				
 			}
 		}

@@ -54,31 +54,31 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="plan" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="plan" :width="'45%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de planes -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Registro de Nuevo Plan Multident</div>
+                        <div class="card-title">{{ labelAccion }} de Nuevo Plan Multident</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8 pr-0">
-                                <div class="form-group">
-                                    <label for="nombre">Nombre de Plan</label>
+                                <div class="form-group pt-0">
+                                    <label for="nombre" class="text-primary font-weight-bold">Nombre de Plan <span class="required-label"> *</span></label>
                                     <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataPlan.descripcion">
                                 </div>                            
                             </div>
                             <div class="col-4 pl-0">
-                                <div class="form-group">
-                                    <label for="nombre">Abreviatura </label>
+                                <div class="form-group pt-0">
+                                    <label for="nombre" class="text-primary font-weight-bold">Abreviatura <span class="required-label"> *</span></label>
                                     <input type="text" id="abreviatura" class="form-control form-control-sm mayusculas border border-primary" v-model="dataPlan.abreviatura">
                                 </div>                            
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="comment">Comentario</label>
-                            <textarea class="form-control form-control-sm border border-primary" id="comment" rows="5" v-model="dataPlan.comentario">
+                        <div class="form-group pt-0">
+                            <label for="comment" class="text-primary font-weight-bold">Comentario</label>
+                            <textarea class="form-control form-control-sm border border-primary" id="comment" rows="4" v-model="dataPlan.comentario">
 
                             </textarea>
                         </div>                        
@@ -107,9 +107,8 @@ export default {
         return {
             isLoading: true,
             fullPage: true,
-                        
-            searchText: '', // If value is falsy, reset searchText & searchItem
 
+            labelAccion: '',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',  
@@ -121,14 +120,14 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },
-                width:'70%',
+                width:'80%',
                 },                                                                                                                                           
                 {
                 label: 'Acción',
                 field: 'btn',
                 tdClass: 'center',
                 html: true  ,
-                width:'30%',  
+                width:'20%',  
                 }                               
             ],
             dataPlan : {
@@ -160,7 +159,8 @@ export default {
                 abreviatura:'',
                 ruc:'20137464439',
                 user_id: this.user_system.id
-            }           
+            }   
+            this.labelAccion = "Registro"        
             this.$modal.show('plan')
         }, 
         ActionPlan: function(){
@@ -237,7 +237,8 @@ export default {
                 comentario:datapla.comentario ,
                 ruc:datapla.ruc ,
                 user_id: this.user_system.id                                         
-            }            
+            }   
+            this.labelAccion = "Actualización"                        
             this.$modal.show('plan')
         
         },

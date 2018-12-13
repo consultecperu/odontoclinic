@@ -9,19 +9,18 @@
         <div class="col">
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
-                <div class="card-header pr-0">  
-				    <div class="card-category">Aseguradora :</div>                    
-                    <div class="card-title">{{ aseguradora.descripcion}} </div>                                        
+                <div class="card-header pr-0"> 
+				    <div class="card-category">Laboratorio :</div>                    
+                    <div class="card-title">{{ laboratorio.nombre_laboratorio}} </div> 
                     <div class="col border-top pt-20 pl-0">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-add"></i></span> Agregar Servicio</button>
-                        <button type="button" class="btn btn-primary float-right mr-10" @click.prevent="$modal.show('copytarifario')"><span class="btn-label"><i class="flaticon-circle"></i></span> Copiar Tarifario</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">
                     <vue-good-table
                     :columns="columns"
-                    :rows="detalle_tarifario"
+                    :rows="detalle_laboratorio"
                     :paginationOptions="{
                         enabled: true,
                         dropdownAllowAll: false,
@@ -37,10 +36,10 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">                                 
-                                <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Tarifario'" @click.prevent="processEdit(props)">
+                                <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Servicio'" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
-                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Tarifario'" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Servicio'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
                             </span>
@@ -54,71 +53,46 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="servicio" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="servicio" :width="'35%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de planes -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} Servicio al Plan</div>
+                        <div class="card-title">{{ labelAccion }} Servicio</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-6">
-                                <label for="basic" class="text-primary font-weight-bold pb-10">Tipo Tarifa <span class="required-label"> *</span></label>
-                                <div class="select2-input">
-                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.tarifa">
-                                        <option value="">-- Seleccione Tipo--</option>
-                                        <option v-for="tipo in tipo_tarifas" :value="tipo.id" :key="tipo.id">
-                                            {{ tipo.nombre_tipotarifa}}
-                                        </option>
-                                    </select>
+                            <div class="col-12">
+                                <div class="form-group pt-0">
+                                    <label for="nombre" class="text-primary font-weight-bold">Nombre del Servicio <span class="required-label"> *</span></label>
+                                    <input type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataLabservicio.nombre_servicio">
                                 </div>
-                            </div>                            
-                        </div>
-                        <div class="row">
-                            <span class="col-12 pb-10 pt-10">
-                                <label class="text-primary font-weight-bold">Servicio <span class="required-label"> *</span></label>
-                            </span>                            
-                            <div class="col">
-                                <autocomplete class="border border-primary rounded"
-                                ref="autocomplete"
-                                placeholder="Buscar Servicio"
-                                :source="servicios"
-                                input-class="form-control form-control-sm"
-                                results-value="id"
-                                results-display="nombre_servicio"
-                                :inital-value="valorinicial"
-                                :initial-display="valordisplay"
-                                :disable-input="disableinput"
-                                @selected="selectidServicio">
-                                </autocomplete>                                
                             </div>
                         </div>
-                        <div class="row pt-20">
-                            <div class="col-6">
+                        <div class="row pl-20">
+                            <div class="col-12 pl-6 pb-10 pr-30">
                                 <label for="basic" class="text-primary font-weight-bold pb-10">Moneda <span class="required-label"> *</span></label>
                                 <div class="select2-input">
-                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.moneda_id">
+                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataLabservicio.moneda_id">
+                                        <option value="">--Seleccione--</option>
                                         <option v-for="moneda in monedas" :value="moneda.id" :key="moneda.id">
                                             {{ moneda.nombre_moneda}}
                                         </option>
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
                                     <label for="nombre" class="text-primary font-weight-bold">Monto <span class="required-label"> *</span></label>
-                                    <input type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataServicio.costo">
+                                    <input type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataLabservicio.costo_lab">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-check pt-0 pb-0 pl-0">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" v-model="dataServicio.solocoaseguro"/>
-                                        <span class="form-check-sign text-primary font-weight-bold">Solo Coaseguro</span>
-                                    </label>
-                                </div>                                
+                            </div>                            
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="nombre" class="text-primary font-weight-bold">Monto Doctor <span class="required-label"> *</span></label>
+                                    <input type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataLabservicio.costo_doctor">
+                                </div>                               
                             </div>
                         </div>
                     </div>
@@ -128,86 +102,56 @@
                     </div>
                 </div>
             <!-- /. form de registro de planes -->
-        </modal>  
-        <!-- PAGE CONTENT MODAL -->  
-        <modal name="copytarifario" :width="'30%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
-            <!-- form de registro de planes -->
-                <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title">Copiar Tarifario </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="basic" class="text-primary font-weight-bold pb-10">Aseguradora <span class="required-label"> *</span></label>
-                                <div class="select2-input">
-                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.tarifa">
-                                        <option value="">-- Seleccione Aseguradora--</option>
-                                        <option v-for="aseguradora in getplanes_aseguradoras" :value="aseguradora.id" :key="aseguradora.id">
-                                            {{ aseguradora.descripcion}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>                            
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionCopy" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('copytarifario')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
-                    </div>
-                </div>
-            <!-- /. form de registro de planes -->
-        </modal>                                  
-    </div>       
+        </modal>                         
+    </div>     
 </template>
 <script>
 import mixin from '../../mixins.js'
 import { mapState, mapGetters } from 'vuex'
 export default {
-    name: 'detalle_aseguradoras',
+    name: 'detalle_laboratorios',
     mixins: [mixin],  
-    mounted() {       
-        this.$store.dispatch('LOAD_PLANES_LIST')         
+    mounted() {     
+        this.$store.dispatch('LOAD_LABORATORIOS_LIST')        
         this.$store.dispatch('LOAD_MONEDAS_LIST')        
-        this.$store.dispatch('LOAD_SERVICIOS_LIST')
-        this.$store.dispatch('LOAD_TARIFARIOS_LIST').then(() => {
+        this.$store.dispatch('LOAD_LABORATORIOSERVICIOS_LIST').then(() => {
             this.isLoading = false
         })                             
-    }, 
+    },
     data() {
         return {
             isLoading: true,
             fullPage: true,
 
-            labelAccion: '',
+            labelAccion:'',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',  
             columns: [
                 {
-                label: 'Tipo',
-                field: this.fieldFn,
-                width:'15%',
-                },                 
-                {
                 label: 'Servicio',
-                field: 'servicio.nombre_servicio',
+                field: 'nombre_servicio',
                 filterOptions: {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'40%',
-                },    
+                },
+                {
+                label: 'Nº Servicios',
+                field: this.fieldFn,
+                width:'15%',
+                },                     
                 {
                 label: 'Costo',
-                field: 'costo',
+                field: 'costo_lab',
                 width:'15%',
                 }, 
                 {
                 label: 'Moneda',
                 field: 'moneda.nombre_moneda',
                 width:'15%',
-                },                                                                                                                                                                                        
+                },                                                                                                                                                                                       
                 {
                 label: 'Acción',
                 field: 'btn',
@@ -217,41 +161,31 @@ export default {
                 width:'15%',  
                 }                               
             ],  
-            dataServicio : {
-                sede_id:1,
-                servicio_id:'',
-                plan_id:'',
+            dataLabservicio : {
+                laboratorio_id:'',
+                fase_id:'',
+                costo_lab:'',
+                costo_doctor:'',
+                nombre_servicio:'',
                 moneda_id:'',
-                costo:'',
-                tipo:1,
-                solocoaseguro:'',
-                cuotas:'',
-                cuota_inicial:'',
-                ortodoncia:0,
-                control_mensual:'',
-                tarifa:'',
-                user_id:'',
-                sedes:[]
-            }, 
-            tipo_tarifas: [{'id':1 , 'nombre_tipotarifa':'ASEGURADORA'},{ 'id':2 ,'nombre_tipotarifa':'PARTICULAR'} ],
-            dataSede:'', 
-            searchServicio:'',  
-            valorinicial:'',
-            valordisplay:'',  
-            disableinput:false,                                                       
+                user_id:''
+            },                                                      
             errors:[] ,              
+
         }
     },
     computed: {
-        ...mapState(['tarifarios','servicios','user_system','sedes','monedas','planes']),
-        ...mapGetters(['getplanes_aseguradoras']),          
-        detalle_tarifario: function(){
-            return this.tarifarios.filter((tar) => tar.plan_id == this.$route.params.plan)
-        }, 
-        aseguradora: function(){
-            return this.planes.find((pla) => pla.id == this.$route.params.plan)
-        },               
-    },    
+        ...mapState(['laboratorios','servicios','user_system','monedas','laboratorioservicios']),
+        detalle_laboratorio: function(){
+            if(this.laboratorioservicios.length > 0){
+                return this.laboratorioservicios.filter((lab) => lab.laboratorio_id == this.$route.params.laboratorio)
+            }
+            return []
+        },
+        laboratorio: function(){
+            return this.laboratorios.find((lab) => lab.id == this.$route.params.laboratorio)
+        }        
+    },
     methods: {
         StatusForm: function(eshow,eclass,elabel){
             this.ShowIcon = eshow
@@ -261,39 +195,29 @@ export default {
         LoadForm: function(){  
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')         
 
-            this.dataServicio = {
-                sede_id:1,
-                servicio_id:'',
-                plan_id:this.$route.params.plan,
+            this.dataLabservicio = {
+                laboratorio_id:this.$route.params.laboratorio,
+                fase_id:'',
+                costo_lab:'',
+                costo_doctor:'',
+                nombre_servicio:'',
                 moneda_id:'',
-                costo:'',
-                tipo:1,
-                solocoaseguro:'',
-                cuotas:'',
-                cuota_inicial:'',
-                ortodoncia:0,
-                control_mensual:'',
-                tarifa:'',
-                user_id: this.user_system.id,
-                sedes:[1]
+                user_id:this.user_system.id
             }   
-            this.valorinicial = ''
-            this.valordisplay = '' 
-            this.disableinput=false    
-            this.labelAccion ="Registro"   
+            this.labelAccion = "Añadir"    
             this.$modal.show('servicio')
         }, 
         ActionServicio: function(){
-            if(typeof(this.dataServicio.id) === "undefined"){
+            if(typeof(this.dataLabservicio.id) === "undefined"){
                 this.createServicio()
             }else{
                 this.updateServicio()
             }
         },
         createServicio: function(){
-            var url = '/api/tarifarios';
+            var url = '/api/laboratorioservicios';
             this.StatusForm(true,'la la-spinner','Procesando')     
-            axios.post(url, this.dataServicio).then(response => {
+            axios.post(url, this.dataLabservicio).then(response => {
             if(typeof(response.data.errors) != "undefined"){
                 this.errors = response.data.errors;
                 var resultado = "";
@@ -307,7 +231,7 @@ export default {
                 return;
             }
 
-            this.$store.dispatch('LOAD_TARIFARIOS_LIST')   
+            this.$store.dispatch('LOAD_LABORATORIOSERVICIOS_LIST')   
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
             this.$modal.hide('servicio');   
@@ -320,9 +244,9 @@ export default {
             });
         },
         updateServicio: function(){
-            var url = '/api/tarifarios/'+this.dataServicio.id; 
+            var url = '/api/laboratorioservicios/'+this.dataLabservicio.id; 
             this.StatusForm(true,'la la-spinner','Procesando')     
-            axios.put(url, this.dataServicio).then(response => {
+            axios.put(url, this.dataLabservicio).then(response => {
                 if(typeof(response.data.errors) != "undefined"){
                     this.errors = response.data.errors;
                     var resultado = "";
@@ -336,7 +260,7 @@ export default {
                     return;
                 }
 
-                this.$store.dispatch('LOAD_TARIFARIOS_LIST')                  
+                this.$store.dispatch('LOAD_LABORATORIOSERVICIOS_LIST')                  
                 this.errors = [];
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
                 this.$modal.hide('servicio');  
@@ -350,26 +274,17 @@ export default {
         processEdit(params){
             var dataser = []
             dataser = _.clone(params.row)
-            this.dataServicio = {
+            this.dataLabservicio = {
                 id:dataser.id,
-                sede_id:dataser.sede_id,
-                servicio_id:dataser.servicio_id,
-                plan_id:dataser.plan_id,
+                laboratorio_id:dataser.laboratorio_id,
+                fase_id:dataser.fase_id,
+                costo_lab:dataser.costo_lab,
+                costo_doctor:dataser.costo_doctor,
+                nombre_servicio:dataser.nombre_servicio,
                 moneda_id:dataser.moneda_id,
-                costo:dataser.costo,
-                tipo:dataser.tipo,
-                solocoaseguro:dataser.solocoaseguro,
-                cuotas:dataser.cuotas,
-                cuota_inicial:dataser.cuota_inicial,
-                ortodoncia:dataser.ortodoncia,
-                control_mensual:dataser.control_mensual,
-                tarifa:dataser.tarifa,
-                user_id: this.user_system.id                                                       
+                user_id:this.user_system.id                                                     
             }   
-            this.valorinicial = dataser.servicio.id
-            this.valordisplay = dataser.servicio.nombre_servicio
-            this.disableinput = true
-            this.labelAccion = "Actualización"
+            this.labelAccion = "Actualizar"
             this.$modal.show('servicio')        
         },
         processDelete(id){
@@ -385,9 +300,9 @@ export default {
                 }).then((result) => {
                     if (result.value) {
                         this.isLoading = true
-                        var url = '/api/tarifarios/' + id;
+                        var url = '/api/laboratorioservicios/' + id;
                         axios.delete(url).then(response=> {
-                            this.$store.dispatch('LOAD_TARIFARIOS_LIST').then(() => {
+                            this.$store.dispatch('LOAD_LABORATORIOSERVICIOS_LIST').then(() => {
                                 this.isLoading = false
                                 this.$swal(
                                 'Eliminado!',
@@ -398,17 +313,13 @@ export default {
                         });
                     }
                 });
-        }, 
-        selectidServicio (group) {
-            this.dataServicio.servicio_id = group.value
-        }, 
+        },
         fieldFn(rowObj) {
-            return (rowObj.tipo == 1 ? 'ASEGURADORA' : 'PARTICULAR')     
-        }                 
-    }        
-    
-}
+            return 1
+        }           
 
+    }               
+}
 </script>
 <style scoped>
     .v--modal-overlay {
@@ -417,5 +328,9 @@ export default {
 
     .vld-overlay.is-full-page {
         z-index: 99999;
+    }
+
+    .pl-6 {
+        padding-left: 6px !important;
     }
 </style>

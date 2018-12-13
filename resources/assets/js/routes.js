@@ -12,7 +12,9 @@ import Accesos from './components/seguridad/accesos.vue'
 import Cargos from './components/configuracion/cargos.vue'
 import Gruposervicios from './components/configuracion/gruposervicios.vue'
 import Laboratorios from './components/configuracion/laboratorios.vue'
+import Detallelaboratorio from './components/configuracion/detallelaboratorios.vue'
 import Materiales from './components/configuracion/materiales.vue'
+import Detallematerial from './components/configuracion/detallemateriales.vue'
 import Sedes from './components/configuracion/sedes.vue'
 import Empresaadministradoras from './components/configuracion/empresaadministradoras.vue'
 import Servicios from './components/configuracion/servicios.vue'
@@ -148,6 +150,18 @@ export default [
                 }                  
             },
             {
+                path: '/detalle-laboratorio/:laboratorio',
+                name: 'detallelaboratorio',
+                component: Detallelaboratorio,
+                meta: { requiresAuth: true },
+                props: true,
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Servicios', second: 'Laboratorios' , third : 'Configuracion' , ruta_second : 'laboratorios' }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                  
+            },            
+            {
                 path: '/materiales',
                 name: 'materiales',
                 component: Materiales,
@@ -157,7 +171,19 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
-            },   
+            },
+            {
+                path: '/detalle-material/:material',
+                name: 'detallematerial',
+                component: Detallematerial,
+                meta: { requiresAuth: true },
+                props: true,
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Servicios', second: 'Materiales' , third : 'Configuracion' , ruta_second : 'laboratorios' }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                  
+            },               
             {
                 path: '/sedes',
                 name: 'sedes',

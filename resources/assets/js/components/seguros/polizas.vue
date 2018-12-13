@@ -141,20 +141,20 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="" class="control-label">Vigencia del </label>
+                                    <label for="" class="text-primary font-weight-bold">Vigencia del </label>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <masked-input v-model="dataPoliza.vigencia_del" mask="11/11/1111" placeholder="DD/MM/YYYY" />
+                                            <masked-input v-model="dataPoliza.vigencia_del" mask="11/11/1111" placeholder="DD/MM/YYYY" class="border border-primary"/>
                                         </div>
                                     </div>
                                 </div>                            
                             </div>  
                             <div class="col-6">
                                 <div class="form-group pt-0 pl-0">
-                                    <label for="" class="control-label">Vigencia al </label>
+                                    <label for="" class="text-primary font-weight-bold">Vigencia al </label>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <masked-input v-model="dataPoliza.vigencia_al" mask="11/11/1111" placeholder="DD/MM/YYYY" />
+                                            <masked-input v-model="dataPoliza.vigencia_al" mask="11/11/1111" placeholder="DD/MM/YYYY" class="border border-primary"/>
                                         </div>
                                     </div>
                                 </div>                            
@@ -174,19 +174,19 @@
                             </div>
                             <div class="col-4 pr-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Deducible : </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Deducible : </label>
                                     <input type="text" id="deducible" class="form-control form-control-sm border border-primary" v-model="dataPoliza.deducible">
                                 </div>                            
                             </div>
                             <div class="col-4 pl-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">%Coaseguro : </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">%Coaseguro : </label>
                                     <input type="text" id="coaseguro" class="form-control form-control-sm mayusculas border border-primary" v-model="dataPoliza.coaseguro">
                                 </div>                            
                             </div>
                         </div>                                              
                         <div class="form-group">
-                            <label for="comment">Comentario</label>
+                            <label for="comment" class="text-primary font-weight-bold">Comentario</label>
                             <textarea class="form-control form-control-sm border border-primary" id="comment" rows="4" v-model="dataPoliza.comentario">
                             </textarea>
                         </div>                        
@@ -211,6 +211,7 @@ export default {
         this.$store.dispatch('LOAD_MONEDAS_LIST')
         this.$store.dispatch('LOAD_PLANPOLIZAS_LIST')
         this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST')
+        this.$store.dispatch('LOAD_EMPRESAPACIENTES_PLANES_LIST',{ id : 0 })        
         this.$store.dispatch('LOAD_POLIZAS_LIST').then(() => {
             this.isLoading = false
         })                          

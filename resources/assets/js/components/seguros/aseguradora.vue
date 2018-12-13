@@ -58,19 +58,19 @@
             <!-- form de registro de aseguradoras -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Registro de Nueva Aseguradora</div>
+                        <div class="card-title">{{ labelAccion}} de Nueva Aseguradora</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4 pr-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">RUC</label>
+                                    <label for="nombre" class="text-primary font-weight-bold">RUC <span class="required-label"> *</span></label>
                                     <input type="text" id="ruc" class="form-control form-control-sm border border-primary" maxlength="11" v-model="dataAseguradora.ruc">
                                 </div>                            
                             </div>
                             <div class="col-8 pl-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Nombre de Aseguradora </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Nombre de Aseguradora <span class="required-label"> *</span></label>
                                     <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataAseguradora.descripcion">
                                 </div>                            
                             </div>
@@ -78,7 +78,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Direccion </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Direccion </label>
                                     <input type="text" id="direccion" class="form-control form-control-sm mayusculas border border-primary" v-model="dataAseguradora.direccion">
                                 </div>                            
                             </div>                            
@@ -86,13 +86,13 @@
                         <div class="row">
                             <div class="col-4 pr-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Teléfono </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Teléfono </label>
                                     <input type="text" id="telefono" class="form-control form-control-sm border border-primary" maxlength="9" v-model="dataAseguradora.telefono">
                                 </div>                            
                             </div>
                             <div class="col-8 pl-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Facturar a </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Facturar a </label>
                                     <input type="text" id="facturar_a" class="form-control form-control-sm mayusculas border border-primary" v-model="dataAseguradora.facturar_a">
                                 </div>                            
                             </div>
@@ -100,13 +100,13 @@
                         <div class="row">
                             <div class="col-4 pr-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">% Descuento </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">% Descuento </label>
                                     <input type="text" id="descuento" class="form-control form-control-sm mayusculas border border-primary" v-model="dataAseguradora.descuento">
                                 </div>                            
                             </div>
                             <div class="col-4 pl-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre">Monto Fact.Mensual </label>
+                                    <label for="nombre" class="text-primary font-weight-bold">Monto Fact.Mensual </label>
                                     <input type="text" id="monto" class="form-control form-control-sm mayusculas border border-primary" v-model="dataAseguradora.monto_mensual">
                                 </div>                            
                             </div>
@@ -119,7 +119,7 @@
                         </div>                                               
 
                         <div class="form-group">
-                            <label for="comment">Comentario</label>
+                            <label for="comment" class="text-primary font-weight-bold">Comentario</label>
                             <textarea class="form-control form-control-sm border border-primary" id="comment" rows="5" v-model="dataAseguradora.comentario">
 
                             </textarea>
@@ -150,6 +150,7 @@ export default {
             isLoading: true,
             fullPage: true,
 
+            labelAccion:'',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',  
@@ -232,7 +233,8 @@ export default {
                 telefono:'',
                 descuento:'',
                 user_id: this.user_system.id
-            }           
+            } 
+            this.labelAccion = "Registro"       
             this.$modal.show('aseguradora')
         }, 
         ActionAseguradora: function(){
@@ -316,7 +318,8 @@ export default {
                 telefono:datapla.telefono,
                 descuento:datapla.descuento,                
                 user_id: this.user_system.id                                         
-            }            
+            }   
+            this.labelAccion = "Actualización"         
             this.$modal.show('aseguradora')
         
         },

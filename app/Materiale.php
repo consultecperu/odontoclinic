@@ -18,5 +18,9 @@ class Materiale extends Model
     public function moneda()
     {
     	return $this->belongsTo('App\Moneda');
-    }     
+    }   
+    public function materialservicios()
+    {
+        return $this->hasMany('App\Materialservicio');
+    }         
 }

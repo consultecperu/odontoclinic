@@ -37,11 +37,13 @@ Route::middleware(['auth'])->group(function(){
     // grupo de servicios
     Route::resource('gruposervicios','GruposervicioController');  
     // laboratorios
-    Route::resource('laboratorios','LaboratorioController');  
+    Route::resource('laboratorios','LaboratorioController');
+    Route::resource('laboratorioservicios','LaboratorioservicioController');       
     // monedas
     Route::resource('monedas','MonedaController');   
     // materiales
-    Route::resource('materiales','MaterialController');  
+    Route::resource('materiales','MaterialController');
+    Route::resource('materialservicios','MaterialservicioController');       
     // sedes
     Route::resource('sedes','SedeController');  
     // ubigeos

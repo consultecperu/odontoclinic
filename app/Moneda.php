@@ -22,8 +22,13 @@ class Moneda extends Model
     {
         return $this->hasMany('App\Poliza');
     }  
+    public function laboratorioservicios()
+    {
+        return $this->hasMany('App\Laboratorioservicio');
+    }     
     public function user()
     {
     	return $this->belongsTo('App\User');
-    }            
+    } 
+           
 }

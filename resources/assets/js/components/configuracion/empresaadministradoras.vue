@@ -12,6 +12,7 @@
                 <div class="card-header">                        
                     <div class="col">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-user-5"></i></span> Nueva Empresa</button>
+                        <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">
@@ -50,118 +51,112 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="empresa" :width="'70%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="empresa" :width="'60%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de empresas -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Registro de Empresa Administradora</div>
+                        <div class="card-title">{{ labelAccion }} de Empresa Administradora</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="razon">Razón Social <span class="required-label">*</span></label>
-                                    <input type="text" id="razon" placeholder="Razón social" class="form-control form-control-sm mayusculas" v-model="dataEmpresa.nombre_empresa" required />
+                                <div class="form-group pt-0">
+                                    <label for="razon" class="text-primary font-weight-bold">Razón Social <span class="required-label">*</span></label>
+                                    <input type="text" id="razon" placeholder="Razón social" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.nombre_empresa" required />
                                 </div>
                               
                             </div>
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="ruc">RUC <span class="required-label">*</span></label>
-                                    <input type="text" id="ruc" placeholder="RUC" class="form-control form-control-sm" maxlength="11" v-model="dataEmpresa.ruc" required />
+                                <div class="form-group pt-0">
+                                    <label for="ruc" class="text-primary font-weight-bold">RUC <span class="required-label">*</span></label>
+                                    <input type="text" id="ruc" placeholder="RUC" class="form-control form-control-sm border border-primary" maxlength="11" v-model="dataEmpresa.ruc" required />
                                 </div>                                  
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="telefono">Teléfono <span class="required-label">*</span></label>
-                                    <input type="text" id="telefono" placeholder="Teléfono" class="form-control form-control-sm" v-model="dataEmpresa.telefono" required />
+                                <div class="form-group pt-0">
+                                    <label for="telefono" class="text-primary font-weight-bold">Teléfono </label>
+                                    <input type="text" id="telefono" placeholder="Teléfono" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telefono" required />
                                 </div>
                               
                             </div>
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="celular">Celular <span class="required-label">*</span></label>
-                                    <input type="text" id="celular" placeholder="Celular" class="form-control form-control-sm" v-model="dataEmpresa.celular" required />
+                                <div class="form-group pt-0">
+                                    <label for="celular" class="text-primary font-weight-bold">Celular </label>
+                                    <input type="text" id="celular" placeholder="Celular" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.celular" required />
                                 </div>                                  
                             </div>
                         </div> 
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="email">Email </label>
-                                    <input type="email" id="email" placeholder="Email" class="form-control form-control-sm" v-model="dataEmpresa.email" />
+                                <div class="form-group pt-0">
+                                    <label for="email" class="text-primary font-weight-bold">Email </label>
+                                    <input type="email" id="email" placeholder="Email" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.email" />
                                 </div>
                               
                             </div>
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="teladicional">Telef. Adicional </label>
-                                    <input type="text" id="teladicional" placeholder="Teléfono adicional" class="form-control form-control-sm" v-model="dataEmpresa.telef_adicional" />
+                                <div class="form-group pt-0">
+                                    <label for="teladicional" class="text-primary font-weight-bold">Telef. Adicional </label>
+                                    <input type="text" id="teladicional" placeholder="Teléfono adicional" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telef_adicional" />
                                 </div>                                  
                             </div>
                         </div>                        
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label for="representante">Representante Legal</label>
-                                    <input type="text" id="representante" placeholder="Representante" class="form-control form-control-sm" v-model="dataEmpresa.representante_legal" />
+                                <div class="form-group pt-0">
+                                    <label for="representante" class="text-primary font-weight-bold">Representante Legal <span class="required-label">*</span></label>
+                                    <input type="text" id="representante" placeholder="Representante" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.representante_legal" />
                                 </div>                              
                             </div>
                         </div>   
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label>Departamento</label>
-                                        <div class="select2-input">
-                                            <select id="basic" name="basic" class="form-control form-control-sm" v-model="coddepa" @change="onchangeDepa">
-                                                <option value="">&nbsp;</option>
-                                                <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
-                                                    {{ depa.descripcion}}
-                                                </option>
-                                            </select>
-                                        </div>
+                                <div class="form-group pt-0">
+                                    <label class="text-primary font-weight-bold">Departamento <span class="required-label">*</span></label>
+                                    <div class="select2-input">
+                                        <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="coddepa" @change="onchangeDepa">
+                                            <option value="">--Seleccione--</option>
+                                            <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
+                                                {{ depa.descripcion}}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label>Provincia</label>
-                                        <div class="select2-input">
-                                            <select id="basic2" name="basic" class="form-control form-control-sm" v-model="codprov" @change="onchangeProv">
-                                                <option value="">&nbsp;</option>
-                                                <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
-                                                    {{ prov.descripcion}}
-                                                </option>
-                                            </select>
-                                        </div>
+                                <div class="form-group pt-0">
+                                    <label class="text-primary font-weight-bold">Provincia <span class="required-label">*</span></label>
+                                    <div class="select2-input">
+                                        <select id="basic2" name="basic" class="form-control form-control-sm border border-primary" v-model="codprov" @change="onchangeProv">
+                                            <option value="">--Seleccione--</option>
+                                            <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
+                                                {{ prov.descripcion}}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label>Distrito</label>
-                                        <div class="select2-input">
-                                            <select id="basic3" name="basic" class="form-control form-control-sm" v-model="dataEmpresa.ubigeo_id" @change="onchangeDist">
-                                                <option value="">&nbsp;</option>
-                                                <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
-                                                    {{ dist.descripcion}}
-                                                </option>
-                                            </select>
-                                        </div>
+                                <div class="form-group pt-0">
+                                    <label class="text-primary font-weight-bold">Distrito <span class="required-label">*</span></label>
+                                    <div class="select2-input">
+                                        <select id="basic3" name="basic" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.ubigeo_id" @change="onchangeDist">
+                                            <option value="">--Seleccione--</option>
+                                            <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
+                                                {{ dist.descripcion}}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>                                                        
                         </div>
                         <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="direccion">Dirección</label>
-                                    <input type="text" id="direccion" placeholder="Dirección" class="form-control form-control-sm" v-model="dataEmpresa.direccion" />
+                            <div class="col-12">
+                                <div class="form-group pt-0">
+                                    <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
+                                    <input type="text" id="direccion" placeholder="Dirección" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.direccion" />
                                 </div>                              
                             </div>                        
                         </div>                                             
@@ -192,9 +187,8 @@ export default {
         return {
             isLoading: true,
             fullPage: true,
-                        
-            searchText: '', // If value is falsy, reset searchText & searchItem
 
+            labelAccion : '',
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos',  
@@ -208,7 +202,7 @@ export default {
                 label: 'RUC',
                 field: 'ruc',
                 filterOptions: {
-                    enabled: true, 
+                    enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'10%',
@@ -217,7 +211,7 @@ export default {
                 label: 'Nombre',
                 field: 'nombre_empresa',
                 filterOptions: {
-                    enabled: true, 
+                    enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'20%',
@@ -226,7 +220,7 @@ export default {
                 label: 'Dirección',
                 field: 'direccion',
                 filterOptions: {
-                    enabled: true, 
+                    enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'20%',
@@ -235,7 +229,7 @@ export default {
                 label: 'Teléfono',
                 field: 'telefono',
                 filterOptions: {
-                    enabled: true, 
+                    enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'10%',
@@ -244,7 +238,7 @@ export default {
                 label: 'Celular',
                 field: 'celular',
                 filterOptions: {
-                    enabled: true, 
+                    enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'10%',
@@ -253,7 +247,7 @@ export default {
                 label: 'Representante',
                 field: 'representante_legal',
                 filterOptions: {
-                    enabled: true, 
+                    enabled: false, 
                     placeholder: 'Buscar', 
                 },
                 width:'15%',
@@ -321,7 +315,8 @@ export default {
                 representante_legal:'',
                 logo:'',
                 user_id:this.user_system.id
-            }                                
+            }      
+            this.labelAccion = "Registro"                          
             this.$modal.show('empresa')
         }, 
         ActionEmpresa: function(){
@@ -408,7 +403,7 @@ export default {
             this.coddepa = dataemp.ubigeo.coddepa;
             this.codprov = dataemp.ubigeo.codprov;
             this.coddist = dataemp.ubigeo.coddist;           
-
+            this.labelAccion = "Actualización"
             this.$modal.show('empresa')
         
         },

@@ -9,8 +9,10 @@
         <div class="col">
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
-                <div class="card-header pl-0 pr-0">                     
-                    <div class="col border-top pt-20">
+                <div class="card-header pr-0"> 
+				    <div class="card-category">Empresa :</div>                    
+                    <div class="card-title">{{ empresa.razon_social}} </div>                                            
+                    <div class="col border-top pl-0 pt-20">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-add"></i></span> Agregar Aseguradora</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
@@ -33,7 +35,7 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">                                                                
-                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Tarifario'" @click.prevent="processDelete(props.row.id)">
+                                <button type="button" class="btn btn-border btn-danger btn-xs" v-tooltip="'Eliminar Aseguradora'" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
                             </span>
@@ -51,11 +53,10 @@
             <!-- form de registro de planes -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">Añadir Servicio al Plan</div>
+                        <div class="card-title">Añadir Aseguradora a la Empresa</div>
                     </div>
                     <div class="card-body">
-
-                        <div class="row">
+                        <div class="row pl-10 pr-10">
                             <span class="col-12 pb-10">
                                 <label class="text-primary font-weight-bold">Aseguradora :</label>
                             </span>                            
@@ -67,7 +68,7 @@
                                 input-class="form-control form-control-sm"
                                 results-value="id"
                                 results-display="descripcion"
-                                @selected="selectidAseguradora">
+                                @selected="selectedAseguradora">
                                 </autocomplete>                                
                             </div>
                         </div>
@@ -114,7 +115,7 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },
-                width:'60%',
+                width:'70%',
                 },                                                                                                                                                                                          
                 {
                 label: 'Acción',
@@ -122,7 +123,7 @@ export default {
                 thClass: 'center',
                 tdClass: 'center',
                 html: true  ,
-                width:'20%',  
+                width:'10%',  
                 }                               
             ],  
             dataAseguradora : {
@@ -135,7 +136,10 @@ export default {
     },
     computed: {
         ...mapState(['empresapacientes','user_system','empresapacientesplanes']),
-        ...mapGetters(['getplanes_aseguradoras']),           
+        ...mapGetters(['getplanes_aseguradoras']),   
+        empresa: function(){
+            return this.empresapacientes.find((emp) => emp.id == this.$route.params.empresa)
+        },                 
     },
     methods: {
         StatusForm: function(eshow,eclass,elabel){
@@ -208,7 +212,7 @@ export default {
                     }
                 });
         }, 
-        selectidAseguradora (group) {
+        selectedAseguradora (group) {
             this.dataAseguradora.plane_id = group.value
         },        
     }               
