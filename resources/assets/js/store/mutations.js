@@ -98,6 +98,8 @@ export default {
         state.tipocontratos = list.tipocontratos
         state.tipopagodoctores = list.tipopagodoctores
         state.cargos = list.cargos
+        state.perfiles = list.perfiles
+        state.horas = list.horas
     },
     SET_EMPLEADOS_LIST: (state, { list }) => {      // EMPLEADOS
         state.empleados = list

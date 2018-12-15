@@ -37,4 +37,5 @@ export default {
     tipocontratos:[],
     tipopagodoctores:[],
     empleados:[],
+    horas:[]
 }

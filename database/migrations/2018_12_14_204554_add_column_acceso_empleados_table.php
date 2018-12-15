@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHorasTable extends Migration
+class AddColumnAccesoEmpleadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateHorasTable extends Migration
      */
     public function up()
     {
-        Schema::create('horas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre_hora');
-            $table->boolean('activo')->default(true);
-            $table->timestamps();
+        Schema::table('empleados', function (Blueprint $table) {
+            $table->boolean('acceso_system')->default(false);
         });
     }
 
@@ -28,6 +25,8 @@ class CreateHorasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('horas');
+        Schema::table('empleados', function (Blueprint $table) {
+            $table->dropColumn('acceso_system');
+        });
     }
 }

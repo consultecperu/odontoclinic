@@ -22,6 +22,8 @@ import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 import Autocomplete from 'vuejs-auto-complete'
 import Tooltip from 'vue-directive-tooltip'
 import 'vue-directive-tooltip/css/index.css'
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 window.axios = require('axios');
 
@@ -38,4 +40,5 @@ Vue.use(VueSweetalert2)
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 Vue.component('autocomplete',Autocomplete)
 Vue.use(Tooltip)
+Vue.component('multiselect', Multiselect)
 

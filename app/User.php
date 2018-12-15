@@ -14,7 +14,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password' , 'perfil_id' , 'acceso', 'activo' , 'fecha_vencimiento'];
+    protected $fillable = ['name', 'email', 'password' , 'perfil_id' , 'acceso', 'activo' , 'fecha_vencimiento','empleado_id'];
 
     protected $hidden = [
         'password', 'remember_token',
@@ -95,5 +95,9 @@ class User extends Authenticatable
     public function materialservicios()
     {
         return $this->hasMany('App\Materialservicio');
-    }                                           
+    } 
+    public function __empleado()
+    {
+        return $this->belongsTo('App\Empleado');
+    }                                         
 }

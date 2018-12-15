@@ -50,6 +50,7 @@
 
 	<!-- Moment JS -->
 	<script src="{{ asset('js/plugin/moment/moment.min.js') }}"></script>
+	<script src="{{ asset('js/plugin/moment/moment-with-locales.min.js') }}"></script>	
 
 	<!-- Chart JS -->
 	<script src="{{ asset('js/plugin/chart.js/chart.min.js') }}"></script>

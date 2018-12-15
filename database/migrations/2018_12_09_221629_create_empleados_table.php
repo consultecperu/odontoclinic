@@ -54,7 +54,7 @@ class CreateEmpleadosTable extends Migration
             $table->timestamps();
         });   
 
-        Schema::create('sede_empleado', function (Blueprint $table) {
+        Schema::create('empleado_sede', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sede_id')->unsigned();
             $table->integer('empleado_id')->unsigned();           

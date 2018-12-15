@@ -10,14 +10,13 @@
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
                 <div class="card-header">                        
-                    <div class="col">
+                    <div class="col pl-0 pr-0">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-user-5"></i></span> Nuevo Personal</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">
                     <vue-good-table
-                    title="Listado de Personal"
                     :columns="columns"
                     :rows="getPersonal"
                     :paginationOptions="{
@@ -29,19 +28,15 @@
                         ofLabel: 'de',
                         allLabel: 'Todos',
                     }"
-                    @on-row-dblclick="processEdit"
                     :rowStyleClass="'enlace'"
                     :lineNumbers="true"
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-primary btn-xs" data-original-title="Ver Detalle" @click.prevent="verPersonal(props.row.id)">
+                                <button type="button" v-tooltip="'Ver Personal'" class="btn btn-border btn-primary btn-xs" @click.prevent="verPersonal(props.row.id)">
                                     <i class="la la-file-text font-large"></i>
-                                </button>                                 
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-success btn-xs" data-original-title="Actualizar Personal" @click.prevent="processEdit(props)">
-                                    <i class="la la-edit font-large"></i>
-                                </button>                                
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-border btn-danger btn-xs" data-original-title="Eliminar Personal" @click.prevent="processDelete(props.row.id)">
+                                </button>                                                                
+                                <button type="button" v-tooltip="'Eliminar Personal'" class="btn btn-border btn-danger btn-xs" @click.prevent="processDelete(props.row.id)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>                                
                             </span>
@@ -53,22 +48,258 @@
                 </div>
             </div>
             <!-- END DEFAULT DATATABLE -->                                   
-        </div> 
-                
+        </div>
+        <!-- Modal de Creacion de empleados-->
+        <modal name="empleado" :width="'70%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" @opened="openedFn()">
+            <!-- form de registro de empleados -->
+                <div class="card mb-0">
+                    <div class="card-header">
+                        <div class="card-title">Registro de Nuevo Empleado</div>
+                    </div>
+                        <form role="form" method="POST" v-on:submit.prevent="createEmpleado">                    
+                            <div class="card-body">
+                                <div class="row pr-10 pl-10">
+                                    <div class="col-md-3">
+                                        <div class="card card-profile card-secondary">
+                                            <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
+                                                <div class="profile-picture">
+                                                    <img :src="'/img/'+ dataEmpleado.foto" alt="Profile Picture">
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="user-profile text-center pt-20">
+                                                    <div class="view-profile">
+                                                        <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" @change="onFileChange" >
+                                                        <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-secondary btn-block"><i class="la la-file-image-o"></i> Cargar Imagen</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-9">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary">
+                                                    <label for="tipodoc" class="text-primary font-weight-bold">Tipo de Documento <span class="required-label"> *</span></label>
+                                                    <select class="form-control form-control-sm" id="tipodoc" v-model="dataEmpleado.tipodocumento_id">
+                                                        <option value="">-- Seleccione Tipo--</option>
+                                                        <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
+                                                            {{ tipo.nombre_tipodocumento}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary" >
+                                                    <label for="numdoc" class="text-primary font-weight-bold">Num.Documento <span class="required-label"> *</span></label>
+                                                    <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataEmpleado.numero_documento">
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary" >
+                                                    <label for="apepat" class="text-primary font-weight-bold">Apellido Paterno <span class="required-label"> *</span></label>
+                                                    <input type="text" class="form-control form-control-sm mayusculas" name="apepat" placeholder="Apellido Paterno" v-model="dataEmpleado.apellido_paterno">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary" >
+                                                    <label for="apemat" class="text-primary font-weight-bold">Apellido Materno <span class="required-label"> *</span></label>
+                                                    <input type="text" class="form-control form-control-sm mayusculas" name="apemat" placeholder="Apellido Materno" v-model="dataEmpleado.apellido_materno">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary" >
+                                                    <label for="nombres" class="text-primary font-weight-bold">Nombres <span class="required-label"> *</span></label>
+                                                    <input type="text" class="form-control form-control-sm mayusculas" name="nombres" placeholder="Nombres" v-model="dataEmpleado.nombres">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary">
+                                                    <label for="datepicker" class="text-primary font-weight-bold">Fecha de Nacimiento</label>
+                                                    <input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Fecha de Nacimiento" v-model="dataEmpleado.fecha_nacimiento">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary">
+                                                    <label for="tipodoc" class="text-primary font-weight-bold">Sexo <span class="required-label"> *</span></label>
+                                                    <select class="form-control form-control-sm" id="tipodoc" v-model="dataEmpleado.sexo">
+                                                        <option value="">-- Seleccione --</option>
+                                                        <option v-for="sexo in sexos" :value="sexo.id" :key="sexo.id">
+                                                            {{ sexo.value}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary" >
+                                                    <label for="telefono" class="text-primary font-weight-bold">Telefono</label>
+                                                    <input type="text" class="form-control form-control-sm" name="telefono" placeholder="Telefono" maxlength="8" v-model="dataEmpleado.telefono">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary" >
+                                                    <label for="celular" class="text-primary font-weight-bold">Celular</label>
+                                                    <input type="text" class="form-control form-control-sm" name="celular" placeholder="Celular" maxlength="9" v-model="dataEmpleado.celular">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary" >
+                                                    <label for="email" class="text-primary font-weight-bold">Email <span class="required-label"> *</span></label>
+                                                    <input type="email" class="form-control form-control-sm" name="email" placeholder="Email" v-model="dataEmpleado.email">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary">
+                                                    <label for="estciv" class="text-primary font-weight-bold">Estado Civil</label>
+                                                    <select class="form-control form-control-sm" id="estciv" v-model="dataEmpleado.estadocivil_id">
+                                                        <option value="">-- Seleccione --</option>
+                                                        <option v-for="estado in estadosciviles" :value="estado.id" :key="estado.id">
+                                                            {{ estado.nombre_estadocivil}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary">
+                                                    <label for="dtpingreso" class="text-primary font-weight-bold">Fecha de Ingreso</label>
+                                                    <input type="text" class="form-control" id="dtpingreso" name="dtpingreso" placeholder="Fecha de Ingreso" v-model="dataEmpleado.fecha_ingreso">
+                                                </div>                                                
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group form-group-default border border-primary">
+                                                    <label for="basic" class="text-primary font-weight-bold">Departamento</label>
+                                                    <div class="select2-input">
+                                                        <select id="basic" name="basic" class="form-control form-control-sm border-primary" v-model="coddepa">
+                                                            <option value="">--Seleccione--</option>
+                                                            <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
+                                                                {{ depa.descripcion}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group form-group-default border border-primary">
+                                                    <label for="basic2" class="text-primary font-weight-bold">Provincia</label>
+                                                    <div class="select2-input">
+                                                        <select id="basic2" name="basic2" class="form-control form-control-sm border-primary" v-model="codprov">
+                                                            <option value="">--Seleccione--</option>
+                                                            <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
+                                                                {{ prov.descripcion}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group form-group-default border border-primary">
+                                                    <label for="basic3" class="text-primary font-weight-bold">Distrito</label>
+                                                    <div class="select2-input">
+                                                        <select id="basic3" name="basic3" class="form-control form-control-sm border-primary" v-model="dataEmpleado.ubigeo_id">
+                                                            <option value="">--Seleccione--</option>
+                                                            <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
+                                                                {{ dist.descripcion}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group form-group-default border border-primary" >
+                                                    <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
+                                                    <input type="text" class="form-control form-control-sm" name="direccion" placeholder="Direccion" v-model="dataEmpleado.direccion">
+                                                </div>                                                
+                                            </div>
+                                        </div> 
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group border border-primary rounded pt-5">
+                                                    <label for="sede" class="text-primary font-weight-bold mb-0">Sede</label>
+                                                    <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="20" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
+                                                </div>
+                                            </div>                                            
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary mb-0 pb-20">
+                                                    <label for="cargo" class="text-primary font-weight-bold">Cargo</label>
+                                                    <select class="form-control form-control-sm" id="cargo" v-model="dataEmpleado.cargo_id">
+                                                        <option value="">-- Seleccione --</option>
+                                                        <option v-for="cargo in cargos" :value="cargo.id" :key="cargo.id">
+                                                            {{ cargo.nombre_cargo}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="row pb-20 pt-20">
+                                            <div class="col-6">
+                                                <label for="">Acceso al Sistema</label>
+                                                <toggle-button :sync="true" :labels="{checked: 'SI', unchecked: 'NO'}" :color="{checked: '#005FD8', unchecked: '#FF0000', disabled: '#CCCCCC'}" v-model="dataEmpleado.acceso_system"/>                                
+                                            </div>
+                                        </div>
+                                        <div class="row" v-show="dataEmpleado.acceso_system">
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary" >
+                                                    <label for="usernme" class="text-primary font-weight-bold">Nombre de Usuario</label>
+                                                    <input type="text" class="form-control form-control-sm" name="username" placeholder="Nombre de usuario" v-model="dataEmpleado.username">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group form-group-default border border-primary">
+                                                    <label for="perfil" class="text-primary font-weight-bold">Perfil de Acceso</label>
+                                                    <select class="form-control form-control-sm" id="perfil" v-model="dataEmpleado.perfil_id">
+                                                        <option value="">-- Seleccione --</option>
+                                                        <option v-for="perfil in perfiles" :value="perfil.id" :key="perfil.id">
+                                                            {{ perfil.nombre_perfil}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>                                      
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-action">
+                                <button type="submit" class="btn btn-primary" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+                                <button class="btn btn-danger" @click.prevent="$modal.hide('empleado')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                            </div>
+                        </form>                    
+                </div>
+            <!-- /. form de registro de campañas -->
+        </modal>                          
     </div>  
 </template>
 <script>
 import mixin from '../../mixins.js'
+import  {_} from 'vue-underscore'
 import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'personal',
     mixins: [mixin],
     mounted() {
         this.$store.dispatch('LOAD_DATA_INIT_LIST')
+        this.$store.dispatch('LOAD_SEDES_LIST')
+        this.$store.dispatch('LOAD_CARGOS_LIST')                
         this.$store.dispatch('LOAD_EMPLEADOS_LIST').then(() => {
             this.isLoading = false
-        })                          
-    },     
+        })                              
+    }, 
     data() {
         return {
             isLoading: true,
@@ -77,6 +308,10 @@ export default {
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
             labelButton: 'Grabar Datos', 
+           
+            coddepa:'',
+            codprov:'',
+            coddist:'',            
             columns: [
                 {
                 label: 'Doc',
@@ -90,7 +325,7 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },             
-                width:'15%',
+                width:'10%',
                 },
                 {
                 label: 'Empleado',
@@ -104,7 +339,7 @@ export default {
                 {
                 label: 'Teléfono',
                 field: 'telefono',
-                width:'15%',
+                width:'10%',
                 },
                 {
                 label: 'Email',
@@ -114,7 +349,7 @@ export default {
                 {
                 label: 'Cargo',
                 field: 'cargo.nombre_cargo',
-                width:'10%',
+                width:'20%',
                 },                                                                                                                                                                                                                        
                 {
                 label: 'Acción',
@@ -125,14 +360,59 @@ export default {
                 width:'10%',  
                 }                               
             ],
-                 
+            dataEmpleado: {
+                tipodocumento_id:'',
+                numero_documento:'',
+                nombres:'',
+                apellido_paterno:'',
+                apellido_materno:'',
+                fecha_nacimiento:'',
+                sexo:'',
+                direccion:'',
+                telefono:'',
+                celular:'',
+                email:'',
+                foto:'',
+                ubigeo_id:'',
+                COP:'',
+                nconsultorio:'',
+                tipocontrato_id:'',
+                useracceo_id:'',
+                estadocivil_id:'',
+                tipopagodoctor_i:'',
+                porcentaje_interno:'',
+                porcentaje_aseguradora:'',
+                fecha_ingreso:'',
+                cargo_id:'',
+                user_id:'',
+                tipo:'',
+                username:'',
+                perfil_id:'',
+                acceso_system:false,
+                image:'', 
+                sedes:[],
+                checkedSedes:[]          
+            }, 
+            sexos :[
+                { id : 'H' , value : 'Hombre'},
+                { id : 'M' , value : 'Mujer'}
+            ],                
             errors:[]                                    
             
         }
     },
     computed: {
-        ...mapState(['empleados','user_system']),
-        ...mapGetters(['getPersonal','getMedicos'])    
+        ...mapState(['empleados','user_system','tipodocumentos','estadosciviles','sedes','cargos','perfiles']),
+        ...mapGetters(['getPersonal','getMedicos','getDocumentosIdentidad','getubigeos']),
+        departamentos: function(){
+            return this.getubigeos.filter((ubigeo) => ubigeo.codprov == '00').filter((ubigeo) => ubigeo.coddist == '00');
+        },
+        provincias: function(){
+            return this.getubigeos.filter((ubigeo) => ubigeo.coddepa == this.coddepa).filter((ubigeo) => ubigeo.codprov != '00').filter((ubigeo) => ubigeo.coddist == '00');
+        },
+        distritos: function(){
+            return this.getubigeos.filter((ubigeo) => ubigeo.coddepa == this.coddepa).filter((ubigeo) => ubigeo.codprov == this.codprov).filter((ubigeo) => ubigeo.coddist != '00');
+        }             
     },       
     methods: {
         StatusForm: function(eshow,eclass,elabel){
@@ -140,14 +420,46 @@ export default {
             this.IconClass = eclass        
             this.labelButton = elabel            
         },
-        LoadForm: function(){         
-            this.$router.push({ name: 'detallepersonal', params: { personal: 1 }})       
-        },         
+        LoadForm: function(){  
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')         
 
-        createConvenio: function(){
-            var url = '/api/convenios';
+            this.dataEmpleado = {
+                tipodocumento_id:'',
+                numero_documento:'',
+                nombres:'',
+                apellido_paterno:'',
+                apellido_materno:'',
+                fecha_nacimiento:moment().format('DD/MM/YYYY'),
+                sexo:'H',
+                direccion:'',
+                telefono:'',
+                celular:'',
+                email:'',
+                foto:'no-image.jpg',
+                ubigeo_id:'',
+                COP:'',
+                nconsultorio:'',
+                tipocontrato_id:'',
+                useracceo_id:'',
+                estadocivil_id:'',
+                tipopagodoctor_i:'',
+                porcentaje_interno:'',
+                porcentaje_aseguradora:'',
+                fecha_ingreso:moment().format('DD/MM/YYYY'),
+                cargo_id:'',
+                user_id:this.user_system.id,
+                tipo:2,
+                username:'',
+                perfil_id:'',
+                image:'', 
+                sedes:[]   
+            }           
+            this.$modal.show('empleado')                                                
+        },         
+        createEmpleado: function(){
+            var url = '/api/empleados';
             this.StatusForm(true,'la la-spinner','Procesando')     
-            axios.post(url, this.dataConvenio).then(response => {
+            axios.post(url, this.dataEmpleado).then(response => {
             if(typeof(response.data.errors) != "undefined"){
                 this.errors = response.data.errors;
                 var resultado = "";
@@ -161,63 +473,17 @@ export default {
                 return;
             }
 
-            this.$store.dispatch('LOAD_CONVENIOS_LIST')    
+            this.$store.dispatch('LOAD_EMPLEADOS_LIST')    
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
-            this.$modal.hide('convenio');   
-            this.notificaciones('Nuevo Convenio creado con exito','la la-thumbs-up','success')       
+            this.$modal.hide('empleado');   
+            this.notificaciones('Nuevo Personal creado con exito','la la-thumbs-up','success')       
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
             this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
 
             });
-        },
-        updateConvenio: function(){
-            var url = '/api/convenios/'+this.dataConvenio.id; 
-            this.StatusForm(true,'la la-spinner','Procesando')     
-            axios.put(url, this.dataConvenio).then(response => {
-                if(typeof(response.data.errors) != "undefined"){
-                    this.errors = response.data.errors;
-                    var resultado = "";
-                    for (var i in this.errors) {
-                        if (this.errors.hasOwnProperty(i)) {
-                            resultado += "error -> " + i + " = " + this.errors[i] + "\n";
-                        }
-                    }   
-                    this.StatusForm(false,'la la-cloud-download','Grabar Datos')
-                    this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
-                    return;
-                }
-
-                this.$store.dispatch('LOAD_CONVENIOS_LIST')                  
-                this.errors = [];
-                this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-                this.$modal.hide('convenio');  
-                this.notificaciones('El Convenio fue actualizado con exito','la la-thumbs-up','success')                  
-            }).catch(error => {
-                this.errors = error.response.data.status;  
-                this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
-                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
-            });
-        },
-        processEdit(params){
-            var datacon = []
-            datacon = _.clone(params.row)
-            this.dataConvenio = {
-                id:datacon.id,
-                empresapaciente_id:datacon.empresapaciente_id,                
-                contacto:datacon.contacto,
-                user_id:this.user_system.id,
-                vigencia:datacon.vigencia,
-                fecha_inicio:moment(datacon.fecha_inicio).format("DD/MM/YYYY"),
-                fecha_finalizacion:moment(datacon.fecha_finalizacion).format("DD/MM/YYYY"),
-                email:datacon.email,
-                telefono:datacon.telefono                                 
-            } 
-            this.nom_emp = datacon.empresapaciente.razon_social          
-            this.$modal.show('convenio')
-        
         },
         processDelete(id){
             this.$swal({
@@ -232,9 +498,9 @@ export default {
                 }).then((result) => {
                     if (result.value) {
                         this.isLoading = true
-                        var url = '/api/convenios/' + id;
+                        var url = '/api/empleados/' + id;
                         axios.delete(url).then(response=> {
-                            this.$store.dispatch('LOAD_CONVENIOS_LIST').then(() => {
+                            this.$store.dispatch('LOAD_EMPLEADOS_LIST').then(() => {
                                 this.isLoading = false
                                 this.$swal(
                                 'Eliminado!',
@@ -245,39 +511,52 @@ export default {
                         });
                     }
                 });
-        },
-        createEmpresa: function(){
-            var url = '/api/empresapacientes';
-            this.StatusForm(true,'la la-spinner','Procesando')     
-            axios.post(url, this.dataEmpresa).then(response => {
-            if(typeof(response.data.errors) != "undefined"){
-                this.errors = response.data.errors;
-                var resultado = "";
-                for (var i in this.errors) {
-                    if (this.errors.hasOwnProperty(i)) {
-                        resultado += "error -> " + i + " = " + this.errors[i] + "\n";
-                    }
-                }
-                this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                
-                this.StatusForm(false,'la la-cloud-download','Grabar Datos')                
-                return;
-            }
-
-            this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST')    
-            this.errors = [];
-            this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
-            this.$modal.hide('reg_empresa');   
-            this.notificaciones('Nueva Empresa creada con exito','la la-thumbs-up','success')       
-            }).catch(error => {
-            this.errors = error.response.data.status;
-            this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
-
-            });
-        },        
+        },              
         verPersonal: function(id){
             this.$router.push({ name: 'detallepersonal', params: { personal: id }})
-        }                 
+        },  
+        openedFn () {
+            $(".form-group-default .form-control").focus(function(){
+                $(this).parent().addClass("active");
+            }).blur(function(){
+                $(this).parent().removeClass("active");
+            })   
+
+            $('#datepicker').datetimepicker({
+                locale: 'es',
+                format: 'DD/MM/YYYY',
+            }); 
+            $('#dtpingreso').datetimepicker({
+                locale: 'es',
+                format: 'DD/MM/YYYY'
+            });                        
+        },
+        addSede (row) {
+            var list=[];
+            var ised = _.size(row)
+            if(ised > 0){
+                row.map(function(value, key) {
+                    list.push(value.id)
+                }) 
+            } 
+            this.dataEmpleado.checkedSedes = list          
+        },
+        onFileChange(e) {
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length) {
+                this.dataEmpleado.image = null;
+                return;
+            }
+            this.createImage(files[0]);
+        },
+        createImage(file) {
+            let reader = new FileReader();
+            let vm = this;
+            reader.onload = (e) => {
+                vm.dataEmpleado.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },        
     }   
 }
 </script>
@@ -288,4 +567,7 @@ export default {
     .vld-overlay.is-full-page {
         z-index: 99999;
     }
+    input[type="file"] {
+        display: none;
+    }    
 </style>

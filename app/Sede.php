@@ -24,4 +24,9 @@ class Sede extends Model
     {
         return $this->hasMany('App\Tarifario');
     }
+
+    public function empleados()
+    {
+        return $this->belongsToMany('App\Empleado')->withTimestamps();
+    }      
 }

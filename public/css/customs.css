@@ -1,13 +1,4 @@
 /** Clases Importantes para el uso del sistema **/
-.title-form {
-    background-color: #CF120B;
-    color: white;
-}
-
-.h3-title {
-    margin:10px 0 10px 20px;
-    color: white;
-}
 
 .close-form {
     margin:15px;
@@ -83,6 +74,36 @@ table.vgt-table {
 
 .autocomplete__box {
   border: none !important;
+}
+/***  MULTISELECT ****/
+.multiselect__option--selected {
+  font-weight: 200 !important;
+}
+
+.multiselect , .multiselect__input , .multiselect__single {
+  font-size: 10px !important;
+}
+
+.multiselect__option--highlight {
+  height: 15px !important;
+}
+
+.multiselect__tag {
+  margin-bottom: 0 !important;
+}
+
+.multiselect__tags {
+  font-size: 12px !important;
+}
+/*** FIN MULTISELECT ***/
+
+.card-profile .profile-picture {
+  bottom: -60px !important;
+}
+
+.card-profile .profile-picture img {
+  width: 120px !important;
+  height: 120px !important;
 }
 
 /* utilitarios margin padding */

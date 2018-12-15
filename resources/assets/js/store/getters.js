@@ -58,5 +58,20 @@ export default {
     },        
     getPersonal: state => {
         return state.empleados.filter(emp => emp.tipo == 2)
-    },                                 
+    }, 
+    getDocumentosIdentidad: state => {
+        return state.tipodocumentos.filter(doc => doc.tipo == 1)
+    },        
+    getDocumentosContables: state => {
+        return state.tipodocumentos.filter(doc => doc.tipo == 2)
+    }, 
+    getEmpleadoById: (state, getters) => (id) => {
+        return state.empleados.find(emp => emp.id == id)
+    },  
+    getHorasAM: state => {
+        return state.horas.filter(hor => hor.turno == 1)
+    },  
+    getHorasPM: state => {
+        return state.horas.filter(hor => hor.turno == 2)
+    },                                               
 }
