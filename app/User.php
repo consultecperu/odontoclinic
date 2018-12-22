@@ -99,5 +99,17 @@ class User extends Authenticatable
     public function __empleado()
     {
         return $this->belongsTo('App\Empleado');
-    }                                         
+    } 
+    public function turnos()
+    {
+        return $this->hasMany('App\Turno');
+    }  
+    public function turnosespeciales()
+    {
+        return $this->hasMany('App\TurnoEspecial');
+    }  
+    public function permisos()
+    {
+        return $this->hasMany('App\Permiso');
+    }                                                      
 }

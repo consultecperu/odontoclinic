@@ -75,5 +75,11 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('canjes','CanjeController');
     Route::put('/canjes/autorizar/{id}','CanjeController@autorizarCanjes'); 
     // empleados
-    Route::resource('empleados','EmpleadoController');                                                                                  
+    Route::resource('empleados','EmpleadoController'); 
+    // turnos
+    Route::resource('turnos','TurnoController');  
+    // turnos-especiales
+    Route::resource('turnos-especiales','TurnoEspecialController');   
+    // permisos
+    Route::resource('permisos','PermisoController');                                                                                              
 });

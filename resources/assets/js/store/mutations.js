@@ -100,6 +100,8 @@ export default {
         state.cargos = list.cargos
         state.perfiles = list.perfiles
         state.horas = list.horas
+        state.dias = list.dias
+        state.especialidades = list.especialidades
     },
     SET_EMPLEADOS_LIST: (state, { list }) => {      // EMPLEADOS
         state.empleados = list
@@ -109,5 +111,14 @@ export default {
     },   
     SET_MATERIALSERVICIOS_LIST: (state, { list }) => {      // MATERIALSERVICIOS
         state.materialservicios = list
-    },                                                                                                        
+    },
+    SET_TURNOS_LIST: (state, { list }) => {      // TURNOS
+        state.turnos = list
+    }, 
+    SET_TURNOS_ESPECIALES_LIST: (state, { list }) => {      // TURNOS_ESPECIALES
+        state.turnosespeciales = list
+    }, 
+    SET_PERMISOS_LIST: (state, { list }) => {      // PERMISOS
+        state.permisos = list
+    },                                                                                                                         
 }

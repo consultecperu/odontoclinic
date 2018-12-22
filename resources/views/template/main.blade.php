@@ -21,7 +21,9 @@
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/ready.min.css') }}">
-
+	<!-- CSS bootstrap-datepicker -->
+	<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker/bootstrap-datepicker3.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker/prettify.css') }}">	
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="{{ asset('css/fonts.css') }}">	 
 	<link rel="stylesheet" href="{{ asset('css/demo.css') }}">
@@ -82,6 +84,11 @@
 
 	<!-- DateTimePicker -->
 	<script src="{{ asset('js/plugin/datepicker/bootstrap-datetimepicker.min.js') }}"></script>
+	
+	<!-- Bootstrap datepicker -->
+    <script src="{{ asset('js/plugin/bootstrap-datepicker/js/prettify.min.js') }}"></script>
+    <script src="{{ asset('js/plugin/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>	
+	<script src="{{ asset('js/plugin/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" charset="UTF-8"></script>	
 
 	<!-- Bootstrap Tagsinput -->
 	<script src="{{ asset('js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>

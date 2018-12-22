@@ -8,7 +8,7 @@ class Globales
     // --- funciones de fechas ---- //
     public static function FormatFecDMY($valor) {
         // recibe el formado YYYY-MM-DD
-        $fecha = explode("/", $valor);          
+        $fecha = explode("-", $valor);          
         $formato = empty($valor) ? null : Carbon::create($fecha[2],$fecha[1],$fecha[0]);
         return $formato;
         // retorna formato DD-MM-YYYY
@@ -16,7 +16,7 @@ class Globales
 
     public static function FormatFecYMD($valor) {
         // recibe el formato DD-MM-YYYY
-        $fecha = explode("/", $valor);          
+        $fecha = explode("-", $valor);          
         $formato = empty($valor) ? null : Carbon::create($fecha[2],$fecha[1],$fecha[0]);
         return $formato;
         // retorna formato YYYY-MM-DD
@@ -28,7 +28,7 @@ class Globales
     }
 
     public static function Edad($value){
-        $fecha = explode("/", $value);          
+        $fecha = explode("-", $value);          
         $edad = Carbon::createFromDate($fecha[2],$fecha[0],$fecha[1])->age;  
         return $edad;       
     }

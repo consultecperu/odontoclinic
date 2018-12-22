@@ -73,5 +73,17 @@ export default {
     },  
     getHorasPM: state => {
         return state.horas.filter(hor => hor.turno == 2)
-    },                                               
+    }, 
+    getTurnosEmpleadoById: (state, getters) => (id) => {
+        return state.turnos.filter(tur => tur.empleado_id == id)
+    },   
+    getTurnosEspEmpleadoById: (state, getters) => (id) => {
+        return state.turnosespeciales.filter(tur => tur.empleado_id == id)
+    },  
+    getPerfilMedico: state => {
+        return state.perfiles.find(per => per.nombre_perfil == 'MEDICO')
+    }, 
+    getPermisosByDoc: (state) => (id) => {
+        return state.permisos.filter(per => per.empleado_id == id)
+    },                                                               
 }

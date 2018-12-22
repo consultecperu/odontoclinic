@@ -14,19 +14,28 @@ class Sede extends Model
     {
     	return $this->belongsTo('App\User');
     } 
-
     public function ubigeo()
     {
     	return $this->belongsTo('App\Ubigeo');
-    }  
-    
+    }      
     public function tarifarios()
     {
         return $this->hasMany('App\Tarifario');
     }
-
     public function empleados()
     {
         return $this->belongsToMany('App\Empleado')->withTimestamps();
-    }      
+    }  
+    public function turnos()
+    {
+        return $this->hasMany('App\Turno');
+    }    
+    public function turnosespeciales()
+    {
+        return $this->hasMany('App\TurnoEspecial');
+    } 
+    public function permisos()
+    {
+        return $this->hasMany('App\Permiso');
+    }                  
 }

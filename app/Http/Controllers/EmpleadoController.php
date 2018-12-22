@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Exception;
 use Validator;
 use Image;
@@ -19,6 +20,8 @@ use App\Cargo;
 use App\Perfile;
 use App\Hora;
 use App\User;
+use App\Dia;
+use App\Especialidade;
 use Globales; // son los helpers
 
 class EmpleadoController extends Controller
@@ -30,7 +33,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados = Empleado::with('tipodocumento','cargo','ubigeo','__user','__user.perfile','sedes')->orderBy('id','ASC')->where('activo',true)->get();
+        $empleados = Empleado::with('tipodocumento','cargo','ubigeo','__user','__user.perfile','sedes','especialidades','tipopagodoctor','tipocontrato')->orderBy('id','ASC')->where('activo',true)->get();
         return $empleados;  
     }
 
@@ -48,8 +51,9 @@ class EmpleadoController extends Controller
         $tipopagodoctores = Tipopagodoctore::where('activo',true)->orderBy('nombre_tipopagodoctor','ASC')->get();
         $cargos = Cargo::where('activo',true)->orderBy('nombre_cargo','ASC')->get();
         $perfiles = Perfile::where('activo',true)->orderBy('id','ASC')->get();
-        $horas = Hora::where('activo',true)->orderBy('id','ASC')->get();        
-
+        $horas = Hora::where('activo',true)->orderBy('id','ASC')->get();   
+        $dias = Dia::where('activo',true)->orderBy('id','ASC')->get();               
+        $especialidades = Especialidade::where('activo',true)->orderBy('id','ASC')->get();   
         return [
               'estadosciviles'          => $estadosciviles,
               'ubigeos'                 => $ubigeos,
@@ -58,7 +62,9 @@ class EmpleadoController extends Controller
               'tipopagodoctores'        => $tipopagodoctores,
               'cargos'                  => $cargos,
               'perfiles'                => $perfiles,
-              'horas'                   => $horas
+              'horas'                   => $horas,
+              'dias'                    => $dias,
+              'especialidades'          => $especialidades
           ];
     }
 
@@ -70,30 +76,46 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         DB::beginTransaction();    
 
         try {
-            $rules = ['tipodocumento_id'    =>  'required',
-                      'numero_documento'    =>  'required',
-                      'apellido_paterno'    =>  'required',
-                      'apellido_materno'    =>  'required',
-                      'nombres'             =>  'required',
-                      'sexo'                =>  'required',
-                      'email'               =>  'required',
-                      'checkedSedes'        =>  'required'
-                     ];
-
-            if($request->has('fecha_nacimiento')){
-                $rules = array_add($rules, 'fecha_nacimiento', 'date_format:d/m/Y');
+            if($request->get('tipo') == 1){
+                $rules = [  'tipodocumento_id'          =>  'required',
+                            'numero_documento'          =>  'required',
+                            'apellido_paterno'          =>  'required',
+                            'apellido_materno'          =>  'required',
+                            'nombres'                   =>  'required',
+                            'COP'                       =>  'required',
+                            'sexo'                      =>  'required',
+                            'email'                     =>  'required',
+                            'tipopagodoctor_id'         =>  'required',
+                            'tipocontrato_id'           =>  'required',
+                            'porcentaje_interno'        =>  'required',
+                            'porcentaje_aseguradora'    =>  'required',
+                            'checkedSedes'              =>  'required',
+                            'checkedEspecialidades'     =>  'required'
+                        ];
+            }else{
+                $rules = [  'tipodocumento_id'    =>  'required',
+                            'numero_documento'    =>  'required',
+                            'apellido_paterno'    =>  'required',
+                            'apellido_materno'    =>  'required',
+                            'nombres'             =>  'required',
+                            'sexo'                =>  'required',
+                            'email'               =>  'required',
+                            'checkedSedes'        =>  'required'
+                        ];
             }
-            if($request->get('image')){
+            if($request->has('fecha_nacimiento')){
+                $rules = array_add($rules, 'fecha_nacimiento', 'date_format:d-m-Y');
+            }
+/*             if($request->get('image')){
                 $rules = array_add($rules, 'image', 'image64:jpeg,jpg,png');
-            }    
-            $messages = ['fecha_nacimiento.date_format' => 'Formato de fecha invalido',
-            'image.image64' => 'formato de imagen invalido'];                             
+            }   */  
+/*             $messages = ['fecha_nacimiento.date_format' => 'Formato de fecha invalido',
+            'image.image64' => 'formato de imagen invalido'];    */                          
     
-            $validator = Validator::make($request->all(), $rules ,$messages);
+            $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
             }
@@ -158,11 +180,14 @@ class EmpleadoController extends Controller
                 $usuario->fecha_vencimiento = Carbon::now()->format('Y-m-d'); 
                 $usuario->empleado_id = $empleado->id;
                 $usuario->save();         
-            }
+            }           
             /** --- creamos los registros en la tabla pivot empleado_sede**/
             if($request->get('checkedSedes')){
-                $empleado->sedes()->sync($request->get('checkedSedes'));  
+                $empleado->sedes()->attach($request->get('checkedSedes'));  
             }
+            if($request->get('checkedEspecialidades')){
+                $empleado->especialidades()->attach($request->get('checkedEspecialidades'));  
+            }            
               
             DB::commit();        
             return;
@@ -207,7 +232,85 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction(); 
+
+        try {
+            if($request->get('tipo') == 1){
+                $rules = [  'tipodocumento_id'          =>  'required',
+                            'numero_documento'          =>  'required',
+                            'apellido_paterno'          =>  'required',
+                            'apellido_materno'          =>  'required',
+                            'nombres'                   =>  'required',
+                            'COP'                       =>  'required',
+                            'sexo'                      =>  'required',
+                            'email'                     =>  'required',
+                            'tipopagodoctor_id'         =>  'required',
+                            'tipocontrato_id'           =>  'required',
+                            'porcentaje_interno'        =>  'required',
+                            'porcentaje_aseguradora'    =>  'required',
+                            'checkedSedes'              =>  'required',
+                            'checkedEspecialidades'     =>  'required'
+                        ];
+            }else{
+                $rules = [  'tipodocumento_id'    =>  'required',
+                            'numero_documento'    =>  'required',
+                            'apellido_paterno'    =>  'required',
+                            'apellido_materno'    =>  'required',
+                            'nombres'             =>  'required',
+                            'sexo'                =>  'required',
+                            'email'               =>  'required',
+                            'checkedSedes'        =>  'required'
+                        ];
+            }
+            if($request->has('fecha_nacimiento')){
+                $rules = array_add($rules, 'fecha_nacimiento', 'date_format:d-m-Y');
+            }
+/*             if($request->get('image')){
+                $rules = array_add($rules, 'image', 'image|mimes:jpeg,png,jpg,gif,svg|max:1024');
+            }  */   
+/*             $messages = ['fecha_nacimiento.date_format' => 'Formato de fecha invalido',
+            'image.image' => 'formato de imagen invalido'];     */                     
+    
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            }
+            /*-- Validacion de la imagen --*/
+            if($request->get('image')){
+                $imageData = $request->get('image');
+                $fileName = $request->get('numero_documento') . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
+                Image::make($request->get('image'))->save(public_path('images/').$fileName);         
+            }   
+            $empleado = Empleado::find($id);
+            $empleado->fill($request->all());
+            if(isset($fileName)){
+                $empleado->foto = $fileName;
+            }                        
+            $empleado->fecha_nacimiento = Globales::FormatFecYMD($request->get('fecha_nacimiento'));           
+            $empleado->fecha_ingreso = Globales::FormatFecYMD($request->get('fecha_ingreso'));
+            $empleado->nombres = Str::upper($empleado->nombres);
+            $empleado->apellido_paterno = Str::upper($empleado->apellido_paterno);
+            $empleado->apellido_materno = Str::upper($empleado->apellido_materno);
+            $empleado->nombre_completo = Str::upper($empleado->nombres).' '.Str::upper($empleado->apellido_paterno).' '.Str::upper($empleado->apellido_materno);                                    
+
+            $empleado->save();
+            /**-- Modificamos el username **/
+            $user = User::where('empleado_id', $id)->first();
+            $user->name = $request->get('username');            
+            $user->refresh();                        
+            /** --- creamos los registros en la tabla pivot empleado_sede**/
+            if($request->get('checkedSedes')){
+                $empleado->sedes()->sync($request->get('checkedSedes'));  
+            }    
+            DB::commit();           
+            return;
+        } catch (Exception $e) {
+            DB::rollback();          
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
+
     }
 
     /**
@@ -218,6 +321,16 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $empleado = Empleado::findOrFail($id);  
+            $empleado->dni = null;
+            $empleado->nombre_completo = $empleado->nombre_completo . ' *** ' . Carbon::now()->timestamp;                                     
+            $empleado->activo = false;
+            $empleado->save();            
+        } catch (Exception $e) {
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
     }
 }

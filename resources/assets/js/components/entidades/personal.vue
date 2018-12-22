@@ -63,7 +63,8 @@
                                         <div class="card card-profile card-secondary">
                                             <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
                                                 <div class="profile-picture">
-                                                    <img :src="'/img/'+ dataEmpleado.foto" alt="Profile Picture">
+                                                    <img v-if="dataEmpleado.image" :src="dataEmpleado.image" alt="Imagen de Perfil">
+                                                    <img v-if="!dataEmpleado.image" src="/images/no-image.jpg" alt="Imagen de Perfil">
                                                 </div>
                                             </div>
                                             <div class="card-body">
@@ -92,7 +93,7 @@
                                             <div class="col-6">
                                                 <div class="form-group form-group-default border border-primary" >
                                                     <label for="numdoc" class="text-primary font-weight-bold">Num.Documento <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataEmpleado.numero_documento">
+                                                    <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataEmpleado.numero_documento" maxlength="9">
                                                 </div>
                                             </div> 
                                         </div>
@@ -122,7 +123,7 @@
                                             <div class="col-6">
                                                 <div class="form-group form-group-default border border-primary">
                                                     <label for="datepicker" class="text-primary font-weight-bold">Fecha de Nacimiento</label>
-                                                    <input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Fecha de Nacimiento" v-model="dataEmpleado.fecha_nacimiento">
+                                                    <masked-input v-model="dataEmpleado.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -174,7 +175,7 @@
                                             <div class="col-6">
                                                 <div class="form-group form-group-default border border-primary">
                                                     <label for="dtpingreso" class="text-primary font-weight-bold">Fecha de Ingreso</label>
-                                                    <input type="text" class="form-control" id="dtpingreso" name="dtpingreso" placeholder="Fecha de Ingreso" v-model="dataEmpleado.fecha_ingreso">
+                                                    <masked-input v-model="dataEmpleado.fecha_ingreso" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
                                                 </div>                                                
                                             </div>
                                         </div>
@@ -281,13 +282,14 @@
                             </div>
                         </form>                    
                 </div>
-            <!-- /. form de registro de campañas -->
+            <!-- /. form de registro de empleados -->
         </modal>                          
     </div>  
 </template>
 <script>
 import mixin from '../../mixins.js'
 import  {_} from 'vue-underscore'
+import MaskedInput from 'vue-masked-input'
 import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'personal',
@@ -377,9 +379,9 @@ export default {
                 COP:'',
                 nconsultorio:'',
                 tipocontrato_id:'',
-                useracceo_id:'',
+                useracceso_id:'',
                 estadocivil_id:'',
-                tipopagodoctor_i:'',
+                tipopagodoctor_id:'',
                 porcentaje_interno:'',
                 porcentaje_aseguradora:'',
                 fecha_ingreso:'',
@@ -413,7 +415,10 @@ export default {
         distritos: function(){
             return this.getubigeos.filter((ubigeo) => ubigeo.coddepa == this.coddepa).filter((ubigeo) => ubigeo.codprov == this.codprov).filter((ubigeo) => ubigeo.coddist != '00');
         }             
-    },       
+    },  
+    components: {
+      MaskedInput 
+    },            
     methods: {
         StatusForm: function(eshow,eclass,elabel){
             this.ShowIcon = eshow
@@ -440,9 +445,9 @@ export default {
                 COP:'',
                 nconsultorio:'',
                 tipocontrato_id:'',
-                useracceo_id:'',
+                useracceso_id:'',
                 estadocivil_id:'',
-                tipopagodoctor_i:'',
+                tipopagodoctor_id:'',
                 porcentaje_interno:'',
                 porcentaje_aseguradora:'',
                 fecha_ingreso:moment().format('DD/MM/YYYY'),
@@ -457,6 +462,7 @@ export default {
             this.$modal.show('empleado')                                                
         },         
         createEmpleado: function(){
+            console.log("enviando",this.dataEmpleado)
             var url = '/api/empleados';
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.post(url, this.dataEmpleado).then(response => {
@@ -520,16 +526,7 @@ export default {
                 $(this).parent().addClass("active");
             }).blur(function(){
                 $(this).parent().removeClass("active");
-            })   
-
-            $('#datepicker').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY',
-            }); 
-            $('#dtpingreso').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY'
-            });                        
+            })                          
         },
         addSede (row) {
             var list=[];

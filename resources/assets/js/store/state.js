@@ -37,5 +37,10 @@ export default {
     tipocontratos:[],
     tipopagodoctores:[],
     empleados:[],
-    horas:[]
+    horas:[],
+    dias:[],
+    turnos:[],
+    turnosespeciales:[],
+    especialidades:[],
+    permisos:[],
 }

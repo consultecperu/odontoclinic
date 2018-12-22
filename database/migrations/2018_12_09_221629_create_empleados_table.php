@@ -43,12 +43,12 @@ class CreateEmpleadosTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('especialidad_empleado', function (Blueprint $table) {
+        Schema::create('empleado_especialidad', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('especialidad_id')->unsigned();
+            $table->integer('especialidade_id')->unsigned();
             $table->integer('empleado_id')->unsigned();           
 
-            $table->foreign('especialidad_id')->references('id')->on('especialidades');
+            $table->foreign('especialidade_id')->references('id')->on('especialidades');
             $table->foreign('empleado_id')->references('id')->on('empleados');
 
             $table->timestamps();

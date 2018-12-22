@@ -254,5 +254,29 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                               
+    }, 
+    LOAD_TURNOS_LIST: function ({ commit }) {
+        var url = '/api/turnos';
+        return axios.get(url).then((response) => {
+            commit('SET_TURNOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_TURNOS_ESPECIALES_LIST: function ({ commit }) {
+        var url = '/api/turnos-especiales';
+        return axios.get(url).then((response) => {
+            commit('SET_TURNOS_ESPECIALES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_PERMISOS_LIST: function ({ commit }) {
+        var url = '/api/permisos';
+        return axios.get(url).then((response) => {
+            commit('SET_PERMISOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                             
 }
