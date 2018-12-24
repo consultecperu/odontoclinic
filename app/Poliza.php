@@ -29,5 +29,9 @@ class Poliza extends Model
     public function plane()
     {
     	return $this->belongsTo('App\Plane');
-    }      
+    } 
+    public function pacienteplanes()
+    {
+        return $this->hasMany('App\Pacienteplan');
+    }          
 }

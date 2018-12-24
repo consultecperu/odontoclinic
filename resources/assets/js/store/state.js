@@ -43,4 +43,8 @@ export default {
     turnosespeciales:[],
     especialidades:[],
     permisos:[],
+    pacientes:[],
+    parentescos:[],
+    asignaciones:[],
+    motivocaptaciones:[]
 }

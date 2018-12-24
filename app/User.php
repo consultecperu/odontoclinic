@@ -111,5 +111,17 @@ class User extends Authenticatable
     public function permisos()
     {
         return $this->hasMany('App\Permiso');
-    }                                                      
+    }    
+    public function pacientes()
+    {
+        return $this->hasMany('App\Paciente');
+    }   
+    public function dependientes()
+    {
+        return $this->hasMany('App\Dependiente');
+    }  
+    public function pacienteplanes()
+    {
+        return $this->hasMany('App\Pacienteplan');
+    }                                                               
 }

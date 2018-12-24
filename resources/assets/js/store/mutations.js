@@ -66,10 +66,14 @@ export default {
     }, 
     SET_EMPRESAPACIENTES_LIST: (state, { list }) => {      // EMPRESAPACIENTES
         state.empresapacientes = list
+        console.log("empresas",state.empresapacientes)
     }, 
     SET_EMPRESAPACIENTES_PLANES_LIST: (state, { list }) => {      // EMPRESAPACIENTES_PLANES
         state.empresapacientesplanes = list
     }, 
+    SET_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST: (state, { list }) => {      // EMPRESAPACIENTES_PLANES
+        state.empresapacientesplanes = list
+    },     
     SET_POLIZAS_LIST: (state, { list }) => {      // POLIZAS
         state.polizas = list
     },
@@ -120,5 +124,16 @@ export default {
     }, 
     SET_PERMISOS_LIST: (state, { list }) => {      // PERMISOS
         state.permisos = list
-    },                                                                                                                         
+    }, 
+    SET_DATA_INIT_PACIENTES_LIST: (state, { list }) => {      // CARGA INICIAL DEL MODULO PACIENTES
+        state.estadosciviles = list.estadosciviles
+        state.ubigeos = list.ubigeos   
+        state.tipodocumentos = list.tipodocumentos
+        state.motivocaptaciones = list.motivocaptaciones
+        state.parentescos = list.parentescos
+        state.asignaciones = list.asignaciones
+    }, 
+    SET_PACIENTES_LIST: (state, { list }) => {      // PACIENTES
+        state.pacientes = list
+    },                                                                                                                                
 }

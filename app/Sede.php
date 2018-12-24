@@ -37,5 +37,13 @@ class Sede extends Model
     public function permisos()
     {
         return $this->hasMany('App\Permiso');
-    }                  
+    }
+    public function pacientes()
+    {
+        return $this->hasMany('App\Paciente');
+    }  
+    public function historiaclinicas()
+    {
+        return $this->hasMany('App\Historiaclinica');
+    }                            
 }

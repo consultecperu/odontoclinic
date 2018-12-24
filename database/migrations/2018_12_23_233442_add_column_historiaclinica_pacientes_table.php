@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMotivocaptacionesTable extends Migration
+class AddColumnHistoriaclinicaPacientesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateMotivocaptacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('motivocaptaciones', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre_motivocaptacion')->unique();
-            $table->boolean('activo')->default(true);
-            $table->timestamps();
+        Schema::table('pacientes', function (Blueprint $table) {
+            $table->integer('historiaclinica')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateMotivocaptacionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('motivocaptaciones');
+        Schema::table('pacientes', function (Blueprint $table) {
+            $table->dropColumn('historiaclinica');
+        });
     }
 }

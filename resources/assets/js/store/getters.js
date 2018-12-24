@@ -47,7 +47,7 @@ export default {
         }
         return []
     },  
-    getModulo: (state, getters) => (id) => {
+    getModulo: (state) => (id) => {
         if(state.menus.length > 0){
             return state.menus.filter(mod => mod.id === id)
         }
@@ -65,7 +65,7 @@ export default {
     getDocumentosContables: state => {
         return state.tipodocumentos.filter(doc => doc.tipo == 2)
     }, 
-    getEmpleadoById: (state, getters) => (id) => {
+    getEmpleadoById: (state) => (id) => {
         return state.empleados.find(emp => emp.id == id)
     },  
     getHorasAM: state => {
@@ -74,10 +74,10 @@ export default {
     getHorasPM: state => {
         return state.horas.filter(hor => hor.turno == 2)
     }, 
-    getTurnosEmpleadoById: (state, getters) => (id) => {
+    getTurnosEmpleadoById: (state) => (id) => {
         return state.turnos.filter(tur => tur.empleado_id == id)
     },   
-    getTurnosEspEmpleadoById: (state, getters) => (id) => {
+    getTurnosEspEmpleadoById: (state) => (id) => {
         return state.turnosespeciales.filter(tur => tur.empleado_id == id)
     },  
     getPerfilMedico: state => {
@@ -85,5 +85,9 @@ export default {
     }, 
     getPermisosByDoc: (state) => (id) => {
         return state.permisos.filter(per => per.empleado_id == id)
-    },                                                               
+    },  
+    getPolizas: (state) => (idemp , idpla) => {
+        console.log("datos",idemp,idpla)
+        return state.polizas.filter(pol => pol.empresapaciente_id == idemp).filter(pol => pol.plane_id == idpla)
+    },                                                                   
 }

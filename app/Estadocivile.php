@@ -14,5 +14,9 @@ class Estadocivile extends Model
     {
         return $this->hasMany('App\Empleado');
     }      
+    public function pacientes()
+    {
+        return $this->hasMany('App\Paciente');
+    }       
 }
 

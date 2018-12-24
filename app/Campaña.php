@@ -17,5 +17,9 @@ class Campaña extends Model
     public function empresapaciente()
     {
     	return $this->belongsTo('App\Empresapaciente');
-    }        
+    }  
+    public function pacientes()
+    {
+        return $this->hasMany('App\Paciente');
+    }            
 }

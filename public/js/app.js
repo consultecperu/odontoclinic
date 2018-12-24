@@ -2179,26 +2179,6 @@ module.exports = g;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = cloneObject;
-function cloneObject (dirtyObject) {
-  dirtyObject = dirtyObject || {}
-  var object = {}
-
-  for (var property in dirtyObject) {
-    if (dirtyObject.hasOwnProperty(property)) {
-      object[property] = dirtyObject[property]
-    }
-  }
-
-  return object
-}
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inputmask_core__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_inputmask_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_inputmask_core__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ff_polyfill__ = __webpack_require__(202);
@@ -2544,13 +2524,33 @@ Object(__WEBPACK_IMPORTED_MODULE_1__ff_polyfill__["a" /* default */])();
 
 
 /***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = cloneObject;
+function cloneObject (dirtyObject) {
+  dirtyObject = dirtyObject || {}
+  var object = {}
+
+  for (var property in dirtyObject) {
+    if (dirtyObject.hasOwnProperty(property)) {
+      object[property] = dirtyObject[property]
+    }
+  }
+
+  return object
+}
+
+
+/***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = startOfISOWeek;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__startOfWeek_index_js__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_cloneObject_index_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_cloneObject_index_js__ = __webpack_require__(10);
 
 
 
@@ -18799,7 +18799,7 @@ function endOfMonth (dirtyDate, dirtyOptions) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isValid_index_js__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__locale_en_US_index_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_formatters_index_js__ = __webpack_require__(308);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_cloneObject_index_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_cloneObject_index_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_addUTCMinutes_index_js__ = __webpack_require__(310);
 
 
@@ -39261,7 +39261,11 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
     turnos: [],
     turnosespeciales: [],
     especialidades: [],
-    permisos: []
+    permisos: [],
+    pacientes: [],
+    parentescos: [],
+    asignaciones: [],
+    motivocaptaciones: []
 });
 
 /***/ }),
@@ -39376,49 +39380,55 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
         var list = _ref19.list;
         // EMPRESAPACIENTES
         state.empresapacientes = list;
+        console.log("empresas", state.empresapacientes);
     },
     SET_EMPRESAPACIENTES_PLANES_LIST: function SET_EMPRESAPACIENTES_PLANES_LIST(state, _ref20) {
         var list = _ref20.list;
         // EMPRESAPACIENTES_PLANES
         state.empresapacientesplanes = list;
     },
-    SET_POLIZAS_LIST: function SET_POLIZAS_LIST(state, _ref21) {
+    SET_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST: function SET_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST(state, _ref21) {
         var list = _ref21.list;
+        // EMPRESAPACIENTES_PLANES
+        state.empresapacientesplanes = list;
+    },
+    SET_POLIZAS_LIST: function SET_POLIZAS_LIST(state, _ref22) {
+        var list = _ref22.list;
         // POLIZAS
         state.polizas = list;
     },
-    SET_PLANPOLIZAS_LIST: function SET_PLANPOLIZAS_LIST(state, _ref22) {
-        var list = _ref22.list;
+    SET_PLANPOLIZAS_LIST: function SET_PLANPOLIZAS_LIST(state, _ref23) {
+        var list = _ref23.list;
         // PLANPOLIZAS
         state.planpolizas = list;
     },
-    SET_CONVENIOS_LIST: function SET_CONVENIOS_LIST(state, _ref23) {
-        var list = _ref23.list;
+    SET_CONVENIOS_LIST: function SET_CONVENIOS_LIST(state, _ref24) {
+        var list = _ref24.list;
         // CONVENIOS
         state.convenios = list;
     },
-    SET_CAMPAÑAS_LIST: function SET_CAMPAAS_LIST(state, _ref24) {
-        var list = _ref24.list;
+    SET_CAMPAÑAS_LIST: function SET_CAMPAAS_LIST(state, _ref25) {
+        var list = _ref25.list;
         // CAMPAÑAS
         state.campañas = list;
     },
-    SET_CANJES_LIST: function SET_CANJES_LIST(state, _ref25) {
-        var list = _ref25.list;
+    SET_CANJES_LIST: function SET_CANJES_LIST(state, _ref26) {
+        var list = _ref26.list;
         // CANJES
         state.canjes = list;
     },
-    SET_USUARIOS_LIST: function SET_USUARIOS_LIST(state, _ref26) {
-        var list = _ref26.list;
+    SET_USUARIOS_LIST: function SET_USUARIOS_LIST(state, _ref27) {
+        var list = _ref27.list;
         // USUARIOS
         state.usuarios = list;
     },
-    SET_ACCESOSUSUARIO_LIST: function SET_ACCESOSUSUARIO_LIST(state, _ref27) {
-        var list = _ref27.list;
+    SET_ACCESOSUSUARIO_LIST: function SET_ACCESOSUSUARIO_LIST(state, _ref28) {
+        var list = _ref28.list;
         // ACCESOSUSUARIO
         state.accesosusuario = list;
     },
-    SET_DATA_INIT_LIST: function SET_DATA_INIT_LIST(state, _ref28) {
-        var list = _ref28.list;
+    SET_DATA_INIT_LIST: function SET_DATA_INIT_LIST(state, _ref29) {
+        var list = _ref29.list;
         // CARGA INICIAL DEL MODULO EMPLEADOS
         state.estadosciviles = list.estadosciviles;
         state.ubigeos = list.ubigeos;
@@ -39431,35 +39441,50 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
         state.dias = list.dias;
         state.especialidades = list.especialidades;
     },
-    SET_EMPLEADOS_LIST: function SET_EMPLEADOS_LIST(state, _ref29) {
-        var list = _ref29.list;
+    SET_EMPLEADOS_LIST: function SET_EMPLEADOS_LIST(state, _ref30) {
+        var list = _ref30.list;
         // EMPLEADOS
         state.empleados = list;
     },
-    SET_LABORATORIOSERVICIOS_LIST: function SET_LABORATORIOSERVICIOS_LIST(state, _ref30) {
-        var list = _ref30.list;
+    SET_LABORATORIOSERVICIOS_LIST: function SET_LABORATORIOSERVICIOS_LIST(state, _ref31) {
+        var list = _ref31.list;
         // LABORATORIOSSERVICIOS
         state.laboratorioservicios = list;
     },
-    SET_MATERIALSERVICIOS_LIST: function SET_MATERIALSERVICIOS_LIST(state, _ref31) {
-        var list = _ref31.list;
+    SET_MATERIALSERVICIOS_LIST: function SET_MATERIALSERVICIOS_LIST(state, _ref32) {
+        var list = _ref32.list;
         // MATERIALSERVICIOS
         state.materialservicios = list;
     },
-    SET_TURNOS_LIST: function SET_TURNOS_LIST(state, _ref32) {
-        var list = _ref32.list;
+    SET_TURNOS_LIST: function SET_TURNOS_LIST(state, _ref33) {
+        var list = _ref33.list;
         // TURNOS
         state.turnos = list;
     },
-    SET_TURNOS_ESPECIALES_LIST: function SET_TURNOS_ESPECIALES_LIST(state, _ref33) {
-        var list = _ref33.list;
+    SET_TURNOS_ESPECIALES_LIST: function SET_TURNOS_ESPECIALES_LIST(state, _ref34) {
+        var list = _ref34.list;
         // TURNOS_ESPECIALES
         state.turnosespeciales = list;
     },
-    SET_PERMISOS_LIST: function SET_PERMISOS_LIST(state, _ref34) {
-        var list = _ref34.list;
+    SET_PERMISOS_LIST: function SET_PERMISOS_LIST(state, _ref35) {
+        var list = _ref35.list;
         // PERMISOS
         state.permisos = list;
+    },
+    SET_DATA_INIT_PACIENTES_LIST: function SET_DATA_INIT_PACIENTES_LIST(state, _ref36) {
+        var list = _ref36.list;
+        // CARGA INICIAL DEL MODULO PACIENTES
+        state.estadosciviles = list.estadosciviles;
+        state.ubigeos = list.ubigeos;
+        state.tipodocumentos = list.tipodocumentos;
+        state.motivocaptaciones = list.motivocaptaciones;
+        state.parentescos = list.parentescos;
+        state.asignaciones = list.asignaciones;
+    },
+    SET_PACIENTES_LIST: function SET_PACIENTES_LIST(state, _ref37) {
+        var list = _ref37.list;
+        // PACIENTES
+        state.pacientes = list;
     }
 });
 
@@ -39683,8 +39708,18 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_POLIZAS_LIST: function LOAD_POLIZAS_LIST(_ref23) {
+    LOAD_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST: function LOAD_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST(_ref23, payload) {
         var commit = _ref23.commit;
+        // empresas ligadas a las aseguradoras
+        var url = '/api/empresapacientes/empresas/' + payload.id;
+        return axios.get(url).then(function (response) {
+            commit('SET_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST', { list: response.data });
+        }, function (err) {
+            console.log(err);
+        });
+    },
+    LOAD_POLIZAS_LIST: function LOAD_POLIZAS_LIST(_ref24) {
+        var commit = _ref24.commit;
 
         var url = '/api/polizas';
         return axios.get(url).then(function (response) {
@@ -39693,8 +39728,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_PLANPOLIZAS_LIST: function LOAD_PLANPOLIZAS_LIST(_ref24) {
-        var commit = _ref24.commit;
+    LOAD_PLANPOLIZAS_LIST: function LOAD_PLANPOLIZAS_LIST(_ref25) {
+        var commit = _ref25.commit;
 
         var url = '/api/planpolizas';
         return axios.get(url).then(function (response) {
@@ -39703,8 +39738,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_CONVENIOS_LIST: function LOAD_CONVENIOS_LIST(_ref25) {
-        var commit = _ref25.commit;
+    LOAD_CONVENIOS_LIST: function LOAD_CONVENIOS_LIST(_ref26) {
+        var commit = _ref26.commit;
 
         var url = '/api/convenios';
         return axios.get(url).then(function (response) {
@@ -39713,8 +39748,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_CAMPAÑAS_LIST: function LOAD_CAMPAAS_LIST(_ref26) {
-        var commit = _ref26.commit;
+    LOAD_CAMPAÑAS_LIST: function LOAD_CAMPAAS_LIST(_ref27) {
+        var commit = _ref27.commit;
 
         var url = '/api/campanias';
         return axios.get(url).then(function (response) {
@@ -39723,8 +39758,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_CANJES_LIST: function LOAD_CANJES_LIST(_ref27) {
-        var commit = _ref27.commit;
+    LOAD_CANJES_LIST: function LOAD_CANJES_LIST(_ref28) {
+        var commit = _ref28.commit;
 
         var url = '/api/canjes';
         return axios.get(url).then(function (response) {
@@ -39733,8 +39768,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_USUARIOS_LIST: function LOAD_USUARIOS_LIST(_ref28) {
-        var commit = _ref28.commit;
+    LOAD_USUARIOS_LIST: function LOAD_USUARIOS_LIST(_ref29) {
+        var commit = _ref29.commit;
 
         var url = '/api/users';
         return axios.get(url).then(function (response) {
@@ -39743,8 +39778,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_ACCESOSUSUARIO_LIST: function LOAD_ACCESOSUSUARIO_LIST(_ref29, payload) {
-        var commit = _ref29.commit;
+    LOAD_ACCESOSUSUARIO_LIST: function LOAD_ACCESOSUSUARIO_LIST(_ref30, payload) {
+        var commit = _ref30.commit;
 
         var url = '/api/accesos/usuario/' + payload.id;
         return axios.get(url).then(function (response) {
@@ -39753,8 +39788,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_DATA_INIT_LIST: function LOAD_DATA_INIT_LIST(_ref30) {
-        var commit = _ref30.commit;
+    LOAD_DATA_INIT_LIST: function LOAD_DATA_INIT_LIST(_ref31) {
+        var commit = _ref31.commit;
 
         var urlType = '/api/empleados/create';
         return axios.get(urlType).then(function (response) {
@@ -39763,8 +39798,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_EMPLEADOS_LIST: function LOAD_EMPLEADOS_LIST(_ref31) {
-        var commit = _ref31.commit;
+    LOAD_EMPLEADOS_LIST: function LOAD_EMPLEADOS_LIST(_ref32) {
+        var commit = _ref32.commit;
 
         var url = '/api/empleados';
         return axios.get(url).then(function (response) {
@@ -39773,8 +39808,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_LABORATORIOSERVICIOS_LIST: function LOAD_LABORATORIOSERVICIOS_LIST(_ref32) {
-        var commit = _ref32.commit;
+    LOAD_LABORATORIOSERVICIOS_LIST: function LOAD_LABORATORIOSERVICIOS_LIST(_ref33) {
+        var commit = _ref33.commit;
 
         var url = '/api/laboratorioservicios';
         return axios.get(url).then(function (response) {
@@ -39783,8 +39818,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_MATERIALSERVICIOS_LIST: function LOAD_MATERIALSERVICIOS_LIST(_ref33) {
-        var commit = _ref33.commit;
+    LOAD_MATERIALSERVICIOS_LIST: function LOAD_MATERIALSERVICIOS_LIST(_ref34) {
+        var commit = _ref34.commit;
 
         var url = '/api/materialservicios';
         return axios.get(url).then(function (response) {
@@ -39793,8 +39828,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_TURNOS_LIST: function LOAD_TURNOS_LIST(_ref34) {
-        var commit = _ref34.commit;
+    LOAD_TURNOS_LIST: function LOAD_TURNOS_LIST(_ref35) {
+        var commit = _ref35.commit;
 
         var url = '/api/turnos';
         return axios.get(url).then(function (response) {
@@ -39803,8 +39838,8 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_TURNOS_ESPECIALES_LIST: function LOAD_TURNOS_ESPECIALES_LIST(_ref35) {
-        var commit = _ref35.commit;
+    LOAD_TURNOS_ESPECIALES_LIST: function LOAD_TURNOS_ESPECIALES_LIST(_ref36) {
+        var commit = _ref36.commit;
 
         var url = '/api/turnos-especiales';
         return axios.get(url).then(function (response) {
@@ -39813,12 +39848,32 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             console.log(err);
         });
     },
-    LOAD_PERMISOS_LIST: function LOAD_PERMISOS_LIST(_ref36) {
-        var commit = _ref36.commit;
+    LOAD_PERMISOS_LIST: function LOAD_PERMISOS_LIST(_ref37) {
+        var commit = _ref37.commit;
 
         var url = '/api/permisos';
         return axios.get(url).then(function (response) {
             commit('SET_PERMISOS_LIST', { list: response.data });
+        }, function (err) {
+            console.log(err);
+        });
+    },
+    LOAD_DATA_INIT_PACIENTES_LIST: function LOAD_DATA_INIT_PACIENTES_LIST(_ref38) {
+        var commit = _ref38.commit;
+
+        var urlType = '/api/pacientes/create';
+        return axios.get(urlType).then(function (response) {
+            commit('SET_DATA_INIT_PACIENTES_LIST', { list: response.data });
+        }, function (err) {
+            console.log(err);
+        });
+    },
+    LOAD_PACIENTES_LIST: function LOAD_PACIENTES_LIST(_ref39) {
+        var commit = _ref39.commit;
+
+        var url = '/api/pacientes';
+        return axios.get(url).then(function (response) {
+            commit('SET_PACIENTES_LIST', { list: response.data });
         }, function (err) {
             console.log(err);
         });
@@ -39897,7 +39952,7 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
         }
         return [];
     },
-    getModulo: function getModulo(state, getters) {
+    getModulo: function getModulo(state) {
         return function (id) {
             if (state.menus.length > 0) {
                 return state.menus.filter(function (mod) {
@@ -39927,7 +39982,7 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             return doc.tipo == 2;
         });
     },
-    getEmpleadoById: function getEmpleadoById(state, getters) {
+    getEmpleadoById: function getEmpleadoById(state) {
         return function (id) {
             return state.empleados.find(function (emp) {
                 return emp.id == id;
@@ -39944,14 +39999,14 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
             return hor.turno == 2;
         });
     },
-    getTurnosEmpleadoById: function getTurnosEmpleadoById(state, getters) {
+    getTurnosEmpleadoById: function getTurnosEmpleadoById(state) {
         return function (id) {
             return state.turnos.filter(function (tur) {
                 return tur.empleado_id == id;
             });
         };
     },
-    getTurnosEspEmpleadoById: function getTurnosEspEmpleadoById(state, getters) {
+    getTurnosEspEmpleadoById: function getTurnosEspEmpleadoById(state) {
         return function (id) {
             return state.turnosespeciales.filter(function (tur) {
                 return tur.empleado_id == id;
@@ -39967,6 +40022,16 @@ function t(t,n,r){return void 0===(t=(n.split?n.split("."):n).reduce(function(t,
         return function (id) {
             return state.permisos.filter(function (per) {
                 return per.empleado_id == id;
+            });
+        };
+    },
+    getPolizas: function getPolizas(state) {
+        return function (idemp, idpla) {
+            console.log("datos", idemp, idpla);
+            return state.polizas.filter(function (pol) {
+                return pol.empresapaciente_id == idemp;
+            }).filter(function (pol) {
+                return pol.plane_id == idpla;
             });
         };
     }
@@ -59334,7 +59399,7 @@ exports.push([module.i, "\n.v--modal-overlay[data-v-252f5300] {\n    z-index:900
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_masked_input__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_masked_input__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -61415,7 +61480,7 @@ exports.push([module.i, "\n.v--modal-overlay[data-v-13d01123] {\n    z-index:900
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_masked_input__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_masked_input__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -66148,7 +66213,7 @@ exports.push([module.i, "\n.v--modal-overlay[data-v-e03702a0] {\n    z-index:900
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_masked_input__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_masked_input__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -69317,7 +69382,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.v--modal-overlay[data-v-18f895ba] {\n    z-index:9000;\n}\n.vld-overlay.is-full-page[data-v-18f895ba] {\n    z-index: 99999;\n}\ninput[type=\"file\"][data-v-18f895ba] {\n    display: none;\n}   \n", ""]);
 
 // exports
 
@@ -69328,13 +69393,700 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_underscore__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'pacientes',
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_js__["a" /* default */]],
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$store.dispatch('LOAD_DATA_INIT_PACIENTES_LIST');
+        this.$store.dispatch('LOAD_SEDES_LIST');
+        this.$store.dispatch('LOAD_EMPLEADOS_LIST');
+        this.$store.dispatch('LOAD_PLANES_LIST');
+        //this.$store.dispatch('LOAD_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST')   
+        this.$store.dispatch('LOAD_POLIZAS_LIST');
+        this.$store.dispatch('LOAD_PACIENTES_LIST').then(function () {
+            _this.isLoading = false;
+        });
+    },
     data: function data() {
-        return {};
+        return {
+            isLoading: true,
+            fullPage: true,
+
+            IconClass: 'la la-cloud-download',
+            ShowIcon: false,
+            labelButton: 'Grabar Datos',
+
+            coddepa: '',
+            codprov: '',
+            coddist: '',
+            columns: [{
+                label: 'Doc',
+                field: 'tipodocumento.abreviatura',
+                width: '15%'
+            }, {
+                label: 'Número',
+                field: 'numero_documento',
+                filterOptions: {
+                    enabled: false,
+                    placeholder: 'Buscar'
+                },
+                width: '10%'
+            }, {
+                label: 'Hist.Clinica',
+                field: 'historiaclinica',
+                width: '15%'
+            }, {
+                label: 'Paciente',
+                field: 'nombre_completo',
+                filterOptions: {
+                    enabled: false,
+                    placeholder: 'Buscar'
+                },
+                width: '50%'
+            }, {
+                label: 'Acción',
+                field: 'btn',
+                thClass: 'center',
+                tdClass: 'center',
+                html: true,
+                width: '10%'
+            }],
+            dataPaciente: {
+                tipodocumento_id: '',
+                numero_documento: '',
+                sede_id: '',
+                nombres: '',
+                apellido_paterno: '',
+                apellido_materno: '',
+                fecha_nacimiento: '',
+                sexo: '',
+                ubigeo_id: '',
+                direccion: '',
+                telefono: '',
+                celular: '',
+                email: '',
+                estadocivil_id: '',
+                motivocaptacion_id: '',
+                telefono_mensajeria: '',
+                titular: '',
+                mensajeria: '',
+                foto: '',
+                condicion_id: '',
+                empleado_id: '',
+                asignacion_id: '',
+                fecha_ingreso: '',
+                nombre_completo: '',
+                carnet: '',
+                convenio_id: '',
+                campania_id: '',
+                historiaclinica_id: '',
+                observacion: '',
+                apoderado: '',
+                parentesco_apoderado_id: '',
+                historial: '',
+                user_id: '',
+                tipo: '',
+                plan_id: '',
+                empresapaciente_id: '',
+                poliza_id: '',
+                descripcion: '',
+                image: ''
+            },
+            sexos: [{ id: 'H', value: 'Hombre' }, { id: 'M', value: 'Mujer' }],
+            tipoplanes: [{ id: 1, value: 'PLANES MULTIDENT' }, { id: 2, value: 'SEGUROS' }],
+            getPlanes: [],
+            polizaspac: [],
+            errors: []
+        };
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapState */])(['pacientes', 'user_system', 'tipodocumentos', 'estadosciviles', 'sedes', 'motivocaptaciones', 'asignaciones', 'parentescos', 'empresapacientesplanes', 'planes', 'polizas']), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(['getubigeos', 'getMedicos', 'getDocumentosIdentidad', 'getplanes_aseguradoras', 'getPolizas']), {
+        departamentos: function departamentos() {
+            return this.getubigeos.filter(function (ubigeo) {
+                return ubigeo.codprov == '00';
+            }).filter(function (ubigeo) {
+                return ubigeo.coddist == '00';
+            });
+        },
+        provincias: function provincias() {
+            var _this2 = this;
+
+            return this.getubigeos.filter(function (ubigeo) {
+                return ubigeo.coddepa == _this2.coddepa;
+            }).filter(function (ubigeo) {
+                return ubigeo.codprov != '00';
+            }).filter(function (ubigeo) {
+                return ubigeo.coddist == '00';
+            });
+        },
+        distritos: function distritos() {
+            var _this3 = this;
+
+            return this.getubigeos.filter(function (ubigeo) {
+                return ubigeo.coddepa == _this3.coddepa;
+            }).filter(function (ubigeo) {
+                return ubigeo.codprov == _this3.codprov;
+            }).filter(function (ubigeo) {
+                return ubigeo.coddist != '00';
+            });
+        }
+    }),
+    components: {
+        MaskedInput: __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__["a" /* default */]
+    },
+    methods: {
+        StatusForm: function StatusForm(eshow, eclass, elabel) {
+            this.ShowIcon = eshow;
+            this.IconClass = eclass;
+            this.labelButton = elabel;
+        },
+        LoadForm: function LoadForm() {
+            this.StatusForm(false, 'la la-cloud-download', 'Grabar Datos');
+
+            this.dataPaciente = {
+                tipodocumento_id: '',
+                numero_documento: '',
+                sede_id: 1,
+                nombres: '',
+                apellido_paterno: '',
+                apellido_materno: '',
+                fecha_nacimiento: moment().format('DD-MM-YYYY'),
+                sexo: 'H',
+                ubigeo_id: '',
+                direccion: '',
+                telefono: '',
+                celular: '',
+                email: '',
+                estadocivil_id: '',
+                motivocaptacion_id: '',
+                telefono_mensajeria: '',
+                titular: 1,
+                mensajeria: '',
+                foto: 'no-image.jpg',
+                condicion_id: '',
+                empleado_id: '',
+                asignacion_id: '',
+                fecha_ingreso: moment().format('DD-MM-YYYY'),
+                nombre_completo: '',
+                carnet: '',
+                convenio_id: '',
+                campania_id: '',
+                historiaclinica_id: '',
+                observacion: '',
+                apoderado: '',
+                parentesco_apoderado_id: '',
+                historial: '',
+                user_id: this.user_system.id,
+                tipo: 1,
+                plan_id: '',
+                empresapaciente_id: '',
+                poliza_id: '',
+                descripcion: '',
+                image: ''
+            };
+            this.SelectTipoPlan();
+            this.$modal.show('paciente');
+        },
+        createPaciente: function createPaciente() {
+            var _this4 = this;
+
+            //this.dataPaciente.descripcion = this.dataPaciente.tipo == 1 ? :
+            var url = '/api/pacientes';
+            this.StatusForm(true, 'la la-spinner', 'Procesando');
+            axios.post(url, this.dataPaciente).then(function (response) {
+                if (typeof response.data.errors != "undefined") {
+                    _this4.errors = response.data.errors;
+                    var resultado = "";
+                    for (var i in _this4.errors) {
+                        if (_this4.errors.hasOwnProperty(i)) {
+                            resultado += "error -> " + i + " = " + _this4.errors[i] + "\n";
+                        }
+                    }
+                    _this4.notificaciones('Hubo un error en el proceso: ' + resultado, 'la la-thumbs-o-down', 'danger');
+                    _this4.StatusForm(false, 'la la-cloud-download', 'Grabar Datos');
+                    return;
+                }
+
+                _this4.$store.dispatch('LOAD_PACIENTES_LIST');
+                _this4.errors = [];
+                _this4.StatusForm(false, 'la la-cloud-download', 'Grabar Datos');
+                _this4.$modal.hide('paciente');
+                _this4.notificaciones('Nuevo Paciente creado con exito', 'la la-thumbs-up', 'success');
+            }).catch(function (error) {
+                _this4.errors = error.response.data.status;
+                _this4.StatusForm(false, 'la la-cloud-download', 'Grabar Datos');
+                _this4.notificaciones('Hubo un error en el proceso: ' + _this4.errors.data.error, 'la la-thumbs-o-down', 'danger');
+            });
+        },
+        processDelete: function processDelete(id) {
+            var _this5 = this;
+
+            this.$swal({
+                title: 'Desea eliminar este registro?',
+                text: "No podras revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, eliminar!'
+            }).then(function (result) {
+                if (result.value) {
+                    _this5.isLoading = true;
+                    var url = '/api/pacientes/' + id;
+                    axios.delete(url).then(function (response) {
+                        _this5.$store.dispatch('LOAD_PACIENTES_LIST').then(function () {
+                            _this5.isLoading = false;
+                            _this5.$swal('Eliminado!', 'Este registro fue eliminado.', 'success');
+                        });
+                    });
+                }
+            });
+        },
+
+        verMedico: function verMedico(id) {
+            this.$router.push({ name: 'detallemedicos', params: { medico: id } });
+        },
+        openedFn: function openedFn() {
+            $(".form-group-default .form-control").focus(function () {
+                $(this).parent().addClass("active");
+            }).blur(function () {
+                $(this).parent().removeClass("active");
+            });
+        },
+        onFileChange: function onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length) {
+                this.dataPaciente.image = null;
+                return;
+            }
+            this.createImage(files[0]);
+        },
+        createImage: function createImage(file) {
+            var reader = new FileReader();
+            var vm = this;
+            reader.onload = function (e) {
+                vm.dataPaciente.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        SelectTipoPlan: function SelectTipoPlan() {
+            var _this6 = this;
+
+            this.getPlanes = this.planes.filter(function (pla) {
+                return pla.tipo == _this6.dataPaciente.tipo;
+            });
+        },
+        SelectPlan: function SelectPlan() {
+            var _this7 = this;
+
+            var self = this;
+            this.$store.dispatch('LOAD_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST', { id: this.dataPaciente.plan_id }).then(function () {
+                _this7.isLoading = false;
+            });
+            __WEBPACK_IMPORTED_MODULE_1_vue_underscore__["a" /* _ */].each(this.planes, function (value, key) {
+                if (value.id == self.dataPaciente.plan_id) {
+                    self.dataPaciente.descripcion = value.descripcion;
+                    return;
+                }
+            });
+        },
+        SelectEmpresa: function SelectEmpresa() {
+            this.polizaspac = this.getPolizas(this.dataPaciente.empresapaciente_id, this.dataPaciente.plan_id);
+        }
     }
 });
 
@@ -69346,9 +70098,2323 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "background-color": "#000",
+          color: "red",
+          "can-cancel": false,
+          "is-full-page": _vm.fullPage
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col" }, [
+        _c("div", { staticClass: "card text-white bg-white mb-3" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("div", { staticClass: "col pl-0 pr-0" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary float-right",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.LoadForm($event)
+                    }
+                  }
+                },
+                [_vm._m(0), _vm._v(" Nuevo Paciente")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-border",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.showSearch(_vm.columns)
+                    }
+                  }
+                },
+                [_vm._m(1), _vm._v(" Buscar")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _c("vue-good-table", {
+                attrs: {
+                  columns: _vm.columns,
+                  rows: _vm.pacientes,
+                  paginationOptions: {
+                    enabled: true,
+                    dropdownAllowAll: false,
+                    nextLabel: "Sig",
+                    prevLabel: "Ant",
+                    rowsPerPageLabel: "Registros por Pagina",
+                    ofLabel: "de",
+                    allLabel: "Todos"
+                  },
+                  rowStyleClass: "enlace",
+                  lineNumbers: true,
+                  styleClass: "vgt-table condensed bordered striped"
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "table-row",
+                    fn: function(props) {
+                      return [
+                        props.column.field == "btn"
+                          ? _c("span", { staticClass: "center" }, [
+                              _c(
+                                "button",
+                                {
+                                  directives: [
+                                    {
+                                      name: "tooltip",
+                                      rawName: "v-tooltip",
+                                      value: "Ver Paciente",
+                                      expression: "'Ver Paciente'"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "btn btn-border btn-primary btn-xs",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.verMedico(props.row.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "la la-file-text font-large"
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  directives: [
+                                    {
+                                      name: "tooltip",
+                                      rawName: "v-tooltip",
+                                      value: "Eliminar Medico",
+                                      expression: "'Eliminar Medico'"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "btn btn-border btn-danger btn-xs",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.processDelete(props.row.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "la la-trash-o font-large"
+                                  })
+                                ]
+                              )
+                            ])
+                          : _c("span", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    props.formattedRow[props.column.field]
+                                  ) +
+                                  "\n                            "
+                              )
+                            ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          attrs: {
+            name: "paciente",
+            width: "80%",
+            height: "auto",
+            transition: "pop-out",
+            scrollable: true,
+            clickToClose: false
+          },
+          on: {
+            opened: function($event) {
+              _vm.openedFn()
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "card mb-0" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _c("div", { staticClass: "card-title" }, [
+                _vm._v("Registro de Paciente")
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                attrs: { role: "form", method: "POST" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.createPaciente($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row pr-10 pl-10" }, [
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c(
+                        "div",
+                        { staticClass: "card card-profile card-secondary" },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "card-header",
+                              staticStyle: {
+                                "background-image": "url('/img/blogpost.jpg')"
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "profile-picture" }, [
+                                _vm.dataPaciente.image
+                                  ? _c("img", {
+                                      attrs: {
+                                        src: _vm.dataPaciente.image,
+                                        alt: "Imagen de Perfil"
+                                      }
+                                    })
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                !_vm.dataPaciente.image
+                                  ? _c("img", {
+                                      attrs: {
+                                        src: "/images/no-image.jpg",
+                                        alt: "Imagen de Perfil"
+                                      }
+                                    })
+                                  : _vm._e()
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "card-body" }, [
+                            _c(
+                              "div",
+                              { staticClass: "user-profile text-center pt-20" },
+                              [
+                                _c("div", { staticClass: "view-profile" }, [
+                                  _c("input", {
+                                    staticClass:
+                                      "form-control form-control-file",
+                                    attrs: {
+                                      type: "file",
+                                      id: "uploadImg",
+                                      name: "uploadImg",
+                                      accept: "image/*"
+                                    },
+                                    on: { change: _vm.onFileChange }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        " label-input-file text-white btn btn-icon btn-secondary btn-block",
+                                      attrs: { for: "uploadImg" }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "la la-file-image-o"
+                                      }),
+                                      _vm._v(" Cargar Imagen")
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-9" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c(
+                            "p",
+                            {
+                              staticClass:
+                                "form-control-static text-danger font-weight-bold"
+                            },
+                            [_vm._v("Datos Personales")]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "historia" }
+                                },
+                                [
+                                  _vm._v("Historia Clínica "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.historia_clinica,
+                                    expression: "dataPaciente.historia_clinica"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "text",
+                                  name: "historia",
+                                  placeholder: "",
+                                  disabled: ""
+                                },
+                                domProps: {
+                                  value: _vm.dataPaciente.historia_clinica
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "historia_clinica",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "tipodoc" }
+                                },
+                                [
+                                  _vm._v("Tipo de Documento "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.dataPaciente.tipodocumento_id,
+                                      expression:
+                                        "dataPaciente.tipodocumento_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: { id: "tipodoc" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.dataPaciente,
+                                        "tipodocumento_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("-- Seleccione Tipo--")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.getDocumentosIdentidad, function(
+                                    tipo
+                                  ) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: tipo.id,
+                                        domProps: { value: tipo.id }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                            " +
+                                            _vm._s(tipo.nombre_tipodocumento) +
+                                            "\n                                                        "
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "numdoc" }
+                                },
+                                [
+                                  _vm._v("Num.Documento "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.numero_documento,
+                                    expression: "dataPaciente.numero_documento"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "text",
+                                  name: "numdoc",
+                                  placeholder: "Num.Documento",
+                                  maxlength: "9"
+                                },
+                                domProps: {
+                                  value: _vm.dataPaciente.numero_documento
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "numero_documento",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "apepat" }
+                                },
+                                [
+                                  _vm._v("Apellido Paterno "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.apellido_paterno,
+                                    expression: "dataPaciente.apellido_paterno"
+                                  }
+                                ],
+                                staticClass:
+                                  "form-control form-control-sm mayusculas",
+                                attrs: {
+                                  type: "text",
+                                  name: "apepat",
+                                  placeholder: "Apellido Paterno"
+                                },
+                                domProps: {
+                                  value: _vm.dataPaciente.apellido_paterno
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "apellido_paterno",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "apemat" }
+                                },
+                                [
+                                  _vm._v("Apellido Materno "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.apellido_materno,
+                                    expression: "dataPaciente.apellido_materno"
+                                  }
+                                ],
+                                staticClass:
+                                  "form-control form-control-sm mayusculas",
+                                attrs: {
+                                  type: "text",
+                                  name: "apemat",
+                                  placeholder: "Apellido Materno"
+                                },
+                                domProps: {
+                                  value: _vm.dataPaciente.apellido_materno
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "apellido_materno",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "nombres" }
+                                },
+                                [
+                                  _vm._v("Nombres "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.nombres,
+                                    expression: "dataPaciente.nombres"
+                                  }
+                                ],
+                                staticClass:
+                                  "form-control form-control-sm mayusculas",
+                                attrs: {
+                                  type: "text",
+                                  name: "nombres",
+                                  placeholder: "Nombres"
+                                },
+                                domProps: { value: _vm.dataPaciente.nombres },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "nombres",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "tipodoc" }
+                                },
+                                [
+                                  _vm._v("Sexo "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.dataPaciente.sexo,
+                                      expression: "dataPaciente.sexo"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: { id: "tipodoc" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.dataPaciente,
+                                        "sexo",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("-- Seleccione --")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.sexos, function(sexo) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: sexo.id,
+                                        domProps: { value: sexo.id }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                            " +
+                                            _vm._s(sexo.value) +
+                                            "\n                                                        "
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "datepicker" }
+                                },
+                                [_vm._v("Fecha de Nacimiento")]
+                              ),
+                              _vm._v(" "),
+                              _c("masked-input", {
+                                staticClass: "form-control",
+                                attrs: {
+                                  mask: "11-11-1111",
+                                  placeholder: "DD-MM-YYYY"
+                                },
+                                model: {
+                                  value: _vm.dataPaciente.fecha_nacimiento,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "fecha_nacimiento",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "dataPaciente.fecha_nacimiento"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "edad" }
+                                },
+                                [_vm._v("Edad")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.edad,
+                                    expression: "dataPaciente.edad"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "text",
+                                  name: "edad",
+                                  disabled: ""
+                                },
+                                domProps: { value: _vm.dataPaciente.edad },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "edad",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "telefono" }
+                                },
+                                [_vm._v("Telefono")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.telefono,
+                                    expression: "dataPaciente.telefono"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "text",
+                                  name: "telefono",
+                                  placeholder: "Telefono",
+                                  maxlength: "8"
+                                },
+                                domProps: { value: _vm.dataPaciente.telefono },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "telefono",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "celular" }
+                                },
+                                [
+                                  _vm._v("Celular"),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.celular,
+                                    expression: "dataPaciente.celular"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "text",
+                                  name: "celular",
+                                  placeholder: "Celular",
+                                  maxlength: "9"
+                                },
+                                domProps: { value: _vm.dataPaciente.celular },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "celular",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "mensajeria" }
+                                },
+                                [_vm._v("Nº Mensajeria")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.numero_mensajeria,
+                                    expression: "dataPaciente.numero_mensajeria"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "text",
+                                  name: "mensajeria",
+                                  placeholder: "Celular"
+                                },
+                                domProps: {
+                                  value: _vm.dataPaciente.numero_mensajeria
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "numero_mensajeria",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "email" }
+                                },
+                                [
+                                  _vm._v("Email "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.email,
+                                    expression: "dataPaciente.email"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "email",
+                                  name: "email",
+                                  placeholder: "Email"
+                                },
+                                domProps: { value: _vm.dataPaciente.email },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "email",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "estciv" }
+                                },
+                                [_vm._v("Estado Civil")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.dataPaciente.estadocivil_id,
+                                      expression: "dataPaciente.estadocivil_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: { id: "estciv" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.dataPaciente,
+                                        "estadocivil_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("-- Seleccione --")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.estadosciviles, function(estado) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: estado.id,
+                                        domProps: { value: estado.id }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                            " +
+                                            _vm._s(estado.nombre_estadocivil) +
+                                            "\n                                                        "
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "captaciones" }
+                                },
+                                [_vm._v("Captación")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.dataPaciente.motivocaptacion_id,
+                                      expression:
+                                        "dataPaciente.motivocaptacion_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: { id: "captaciones" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.dataPaciente,
+                                        "motivocaptacion_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("-- Seleccione --")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.motivocaptaciones, function(cap) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: cap.id,
+                                        domProps: { value: cap.id }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                            " +
+                                            _vm._s(cap.nombre_motivocaptacion) +
+                                            "\n                                                        "
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "carnet" }
+                                },
+                                [_vm._v("Nº Carnet")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.numero_carnet,
+                                    expression: "dataPaciente.numero_carnet"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "text",
+                                  name: "carnet",
+                                  placeholder: "Carnet"
+                                },
+                                domProps: {
+                                  value: _vm.dataPaciente.numero_carnet
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "numero_carnet",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-8" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "observaciones" }
+                                },
+                                [_vm._v("Observaciones")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.observaciones,
+                                    expression: "dataPaciente.observaciones"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "text",
+                                  name: "observaciones",
+                                  placeholder: ""
+                                },
+                                domProps: {
+                                  value: _vm.dataPaciente.observaciones
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "observaciones",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "basic" }
+                                },
+                                [_vm._v("Departamento")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "select2-input" }, [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.coddepa,
+                                        expression: "coddepa"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-sm border-primary",
+                                    attrs: { id: "basic", name: "basic" },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.coddepa = $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("option", { attrs: { value: "" } }, [
+                                      _vm._v("--Seleccione--")
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.departamentos, function(depa) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: depa.id,
+                                          domProps: { value: depa.coddepa }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(depa.descripcion) +
+                                              "\n                                                            "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "basic2" }
+                                },
+                                [_vm._v("Provincia")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "select2-input" }, [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.codprov,
+                                        expression: "codprov"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-sm border-primary",
+                                    attrs: { id: "basic2", name: "basic2" },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.codprov = $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("option", { attrs: { value: "" } }, [
+                                      _vm._v("--Seleccione--")
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.provincias, function(prov) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: prov.id,
+                                          domProps: { value: prov.codprov }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(prov.descripcion) +
+                                              "\n                                                            "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "basic3" }
+                                },
+                                [_vm._v("Distrito")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "select2-input" }, [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.dataPaciente.ubigeo_id,
+                                        expression: "dataPaciente.ubigeo_id"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-sm border-primary",
+                                    attrs: { id: "basic3", name: "basic3" },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.dataPaciente,
+                                          "ubigeo_id",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("option", { attrs: { value: "" } }, [
+                                      _vm._v("--Seleccione--")
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.distritos, function(dist) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: dist.id,
+                                          domProps: { value: dist.id }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(dist.descripcion) +
+                                              "\n                                                            "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ])
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "direccion" }
+                                },
+                                [_vm._v("Dirección")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.dataPaciente.direccion,
+                                    expression: "dataPaciente.direccion"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "text",
+                                  name: "direccion",
+                                  placeholder: "Direccion"
+                                },
+                                domProps: { value: _vm.dataPaciente.direccion },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.dataPaciente,
+                                      "direccion",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c(
+                            "p",
+                            {
+                              staticClass:
+                                "form-control-static text-danger font-weight-bold"
+                            },
+                            [_vm._v("Asignación del Paciente")]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-6" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "medico" }
+                                },
+                                [
+                                  _vm._v("Médico"),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.dataPaciente.empleado_id,
+                                      expression: "dataPaciente.empleado_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: { id: "medico" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.dataPaciente,
+                                        "empleado_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("-- Seleccione --")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.getMedicos, function(med) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: med.id,
+                                        domProps: { value: med.id }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                            " +
+                                            _vm._s(med.nombre_completo) +
+                                            "\n                                                        "
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-6" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "asignacion" }
+                                },
+                                [
+                                  _vm._v("Asignación"),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.dataPaciente.asignacion_id,
+                                      expression: "dataPaciente.asignacion_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: { id: "asignacion" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.dataPaciente,
+                                        "asignacion_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("-- Seleccione --")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.asignaciones, function(asig) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: asig.id,
+                                        domProps: { value: asig.id }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                            " +
+                                            _vm._s(asig.nombre_asignacion) +
+                                            "\n                                                        "
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c(
+                            "p",
+                            {
+                              staticClass:
+                                "form-control-static text-danger font-weight-bold"
+                            },
+                            [_vm._v("Asignación del Plan")]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-6" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "tipoplan" }
+                                },
+                                [
+                                  _vm._v("Tipo Plan"),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.dataPaciente.tipo,
+                                      expression: "dataPaciente.tipo"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: { id: "tipoplan" },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.dataPaciente,
+                                          "tipo",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      _vm.SelectTipoPlan
+                                    ]
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("-- Seleccione --")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.tipoplanes, function(tip) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: tip.id,
+                                        domProps: { value: tip.id }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                            " +
+                                            _vm._s(tip.value) +
+                                            "\n                                                        "
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-6" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group form-group-default border border-primary"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "text-primary font-weight-bold",
+                                  attrs: { for: "plan" }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.dataPaciente.tipo == 1
+                                        ? "Elige Plan"
+                                        : "Aseguradora"
+                                    )
+                                  ),
+                                  _c(
+                                    "span",
+                                    { staticClass: "required-label" },
+                                    [_vm._v(" *")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.dataPaciente.plan_id,
+                                      expression: "dataPaciente.plan_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control form-control-sm",
+                                  attrs: { id: "plan" },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.dataPaciente,
+                                          "plan_id",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      _vm.SelectPlan
+                                    ]
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("-- Seleccione --")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.getPlanes, function(pla) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: pla.id,
+                                        domProps: { value: pla.id }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                            " +
+                                            _vm._s(pla.descripcion) +
+                                            "\n                                                        "
+                                        )
+                                      ]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.dataPaciente.tipo == 2,
+                              expression: "dataPaciente.tipo == 2"
+                            }
+                          ],
+                          staticClass: "row"
+                        },
+                        [
+                          _c("div", { staticClass: "col-6" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "form-group form-group-default border border-primary"
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "text-primary font-weight-bold",
+                                    attrs: { for: "empresa" }
+                                  },
+                                  [
+                                    _vm._v("Empresa"),
+                                    _c(
+                                      "span",
+                                      { staticClass: "required-label" },
+                                      [_vm._v(" *")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value:
+                                          _vm.dataPaciente.empresapaciente_id,
+                                        expression:
+                                          "dataPaciente.empresapaciente_id"
+                                      }
+                                    ],
+                                    staticClass: "form-control form-control-sm",
+                                    attrs: { id: "empresa" },
+                                    on: {
+                                      change: [
+                                        function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.dataPaciente,
+                                            "empresapaciente_id",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        },
+                                        _vm.SelectEmpresa
+                                      ]
+                                    }
+                                  },
+                                  [
+                                    _c("option", { attrs: { value: "" } }, [
+                                      _vm._v("-- Seleccione --")
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.empresapacientesplanes, function(
+                                      emp
+                                    ) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: emp.empresapaciente.id,
+                                          domProps: {
+                                            value: emp.empresapaciente.id
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                            " +
+                                              _vm._s(
+                                                emp.empresapaciente.razon_social
+                                              ) +
+                                              "\n                                                        "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-6" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "form-group form-group-default border border-primary"
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "text-primary font-weight-bold",
+                                    attrs: { for: "poliza" }
+                                  },
+                                  [
+                                    _vm._v("Poliza"),
+                                    _c(
+                                      "span",
+                                      { staticClass: "required-label" },
+                                      [_vm._v(" *")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.dataPaciente.poliza_id,
+                                        expression: "dataPaciente.poliza_id"
+                                      }
+                                    ],
+                                    staticClass: "form-control form-control-sm",
+                                    attrs: { id: "estciv" },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.dataPaciente,
+                                          "poliza_id",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("option", { attrs: { value: "" } }, [
+                                      _vm._v("-- Seleccione --")
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.polizaspac, function(pol) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: pol.id,
+                                          domProps: { value: pol.id }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                            " +
+                                              _vm._s(pol.codigo) +
+                                              "\n                                                        "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-action" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit", disabled: _vm.ShowIcon }
+                    },
+                    [
+                      _c("span", { staticClass: "btn-label" }, [
+                        _c("i", { class: [_vm.IconClass] }),
+                        _vm._v(" " + _vm._s(_vm.labelButton))
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.$modal.hide("paciente")
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "btn-label" }, [
+                        _c("i", { staticClass: "la la-times-circle" }),
+                        _vm._v(" Cancelar")
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
+        ]
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "flaticon-profile" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "flaticon-search-2" })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -69457,7 +72523,7 @@ exports.push([module.i, "\n.v--modal-overlay[data-v-8460aeea] {\n    z-index:900
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_underscore__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -72289,7 +75355,7 @@ exports.push([module.i, "\n.v--modal-overlay[data-v-c419a57c] {\n    z-index:900
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_underscore__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -78469,7 +81535,7 @@ exports.push([module.i, "\n.v--modal-overlay[data-v-6fb70162] {\n    z-index:900
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_underscore__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -80862,7 +83928,7 @@ exports.push([module.i, "\n.v--modal-overlay[data-v-271cdd10] {\n    z-index:900
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_underscore__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_masked_input__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -93107,7 +96173,7 @@ function endOfHour (dirtyDate, dirtyOptions) {
 "use strict";
 /* unused harmony export default */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__endOfWeek_index_js__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_cloneObject_index_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_cloneObject_index_js__ = __webpack_require__(10);
 
 
 
@@ -94297,7 +97363,7 @@ function addUTCMinutes (dirtyDate, dirtyAmount, dirtyOptions) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__toDate_index_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__differenceInSeconds_index_js__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__differenceInMonths_index_js__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_cloneObject_index_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_cloneObject_index_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__locale_en_US_index_js__ = __webpack_require__(19);
 
 
@@ -94524,7 +97590,7 @@ function formatDistance (dirtyDate, dirtyBaseDate, dirtyOptions) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__compareAsc_index_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__toDate_index_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__differenceInSeconds_index_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_cloneObject_index_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_cloneObject_index_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__locale_en_US_index_js__ = __webpack_require__(19);
 
 
@@ -95789,7 +98855,7 @@ function isSameHour (dirtyDateLeft, dirtyDateRight, dirtyOptions) {
 "use strict";
 /* unused harmony export default */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__isSameWeek_index_js__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_cloneObject_index_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_cloneObject_index_js__ = __webpack_require__(10);
 
 
 
@@ -96402,7 +99468,7 @@ function isWithinInterval (dirtyDate, dirtyInterval, dirtyOptions) {
 "use strict";
 /* unused harmony export default */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lastDayOfWeek_index_js__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_cloneObject_index_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_cloneObject_index_js__ = __webpack_require__(10);
 
 
 
@@ -96767,7 +99833,7 @@ function min (dirtyDatesArray, dirtyOptions) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__locale_en_US_index_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_parsers_index_js__ = __webpack_require__(358);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_units_index_js__ = __webpack_require__(359);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_cloneObject_index_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_cloneObject_index_js__ = __webpack_require__(10);
 
 
 

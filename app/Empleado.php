@@ -72,5 +72,9 @@ class Empleado extends Model
     public function permisos()
     {
         return $this->hasMany('App\Permiso');
-    }              
+    }   
+    public function pacientes()
+    {
+        return $this->hasMany('App\Paciente');
+    }                 
 }

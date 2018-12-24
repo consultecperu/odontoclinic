@@ -20,7 +20,7 @@ class EmpresapacienteController extends Controller
      */
     public function index()
     {
-        $empresapacientes = Empresapaciente::orderBy('id','ASC')->where('activo',true)->get();
+        $empresapacientes = Empresapaciente::with('empresapacienteplanes')->orderBy('id','ASC')->where('activo',true)->get();
         return $empresapacientes; 
     }
 
@@ -163,6 +163,11 @@ class EmpresapacienteController extends Controller
         $empresapacienteplan = EmpresapacientePlane::with('plane')->where('empresapaciente_id',$id)->where('activo',true)->get();
         return $empresapacienteplan; 
     }
+
+    public function listaempresas($id){
+        $empresapacienteplan = EmpresapacientePlane::with('empresapaciente')->where('plane_id',$id)->where('activo',true)->get();
+        return $empresapacienteplan; 
+    }    
 
     public function addaseguradora(Request $request)
     {

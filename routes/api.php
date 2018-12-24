@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('empresapacientes','EmpresapacienteController'); 
     Route::post('/empresapacientes/aseguradoras', 'EmpresapacienteController@addaseguradora'); 
     Route::get('/empresapacientes/aseguradoras/{id}','EmpresapacienteController@listaaseguradoras');
+    Route::get('/empresapacientes/empresas/{id}','EmpresapacienteController@listaempresas');    
     Route::delete('/empresapacientes/aseguradoras/{id}','EmpresapacienteController@destroyaseguradora');  
     // polizas
     Route::resource('polizas','PolizaController'); 
@@ -81,5 +82,7 @@ Route::middleware(['auth'])->group(function(){
     // turnos-especiales
     Route::resource('turnos-especiales','TurnoEspecialController');   
     // permisos
-    Route::resource('permisos','PermisoController');                                                                                              
+    Route::resource('permisos','PermisoController');    
+    // pacientes
+    Route::resource('pacientes','PacienteController');                                                                                                 
 });

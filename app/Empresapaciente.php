@@ -33,6 +33,10 @@ class Empresapaciente extends Model
     public function campañas()
     {
         return $this->hasMany('App\Campaña');
-    }                 
+    } 
+    public function pacienteplanes()
+    {
+        return $this->hasMany('App\Pacienteplan');
+    }                     
         
 }

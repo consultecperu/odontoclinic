@@ -44,33 +44,33 @@ class CargoController extends Controller
         DB::beginTransaction();    
 
         try {
-          $rules = ['nombre_cargo' => 'required'];
-  
-          $validator = Validator::make($request->all(), $rules);
-          if ($validator->fails()) {
-              return response()->json(['errors'=>$validator->errors()]);
-          }
-          /*-- validacion del Nombre de empleado--*/
-          if($request->get('nombre_cargo')){
-              $nom = Str::upper($request->get('nombre_cargo'));         
-              $nomcar = Cargo::where('nombre_cargo',$nom)->count();
-              if($nomcar > 0){
-                  return response()->json(['errors'=>['Nombre de cargo' => 'Ya existe un cargo con estos datos']]);
-              }
-          }        
-  
-          $cargo = new Cargo($request->all());
-          $cargo->nombre_cargo = Str::upper($cargo->nombre_cargo);
-          $cargo->save();
-  
-          DB::commit();        
-          return;
+            $rules = ['nombre_cargo' => 'required'];
+    
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            }
+            /*-- validacion del Nombre de empleado--*/
+            if($request->get('nombre_cargo')){
+                $nom = Str::upper($request->get('nombre_cargo'));         
+                $nomcar = Cargo::where('nombre_cargo',$nom)->count();
+                if($nomcar > 0){
+                    return response()->json(['errors'=>['Nombre de cargo' => 'Ya existe un cargo con estos datos']]);
+                }
+            }        
+    
+            $cargo = new Cargo($request->all());
+            $cargo->nombre_cargo = Str::upper($cargo->nombre_cargo);
+            $cargo->save();
+    
+            DB::commit();        
+            return;
         }
         catch(Exception $e){
-          DB::rollback();
-          return response()->json(
-              ['status' => $e->getMessage()], 422
-          );
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
         }
 
     }
@@ -124,10 +124,10 @@ class CargoController extends Controller
           DB::commit();           
           return;
         } catch (Exception $e) {
-          DB::rollback();          
-          return response()->json(
-              ['status' => $e->getMessage()], 422
-          );
+            DB::rollback();          
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
         }
 
     }

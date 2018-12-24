@@ -167,6 +167,14 @@ export default {
             console.log(err)
         });
     },
+    LOAD_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST: function ({ commit } , payload) {  // empresas ligadas a las aseguradoras
+        var url = '/api/empresapacientes/empresas/' + payload.id
+        return axios.get(url).then((response) => {
+            commit('SET_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },    
     LOAD_POLIZAS_LIST: function ({ commit }) {
         var url = '/api/polizas';
         return axios.get(url).then((response) => {
@@ -278,5 +286,21 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                                             
+    }, 
+    LOAD_DATA_INIT_PACIENTES_LIST: function ({ commit }) {
+        var urlType = '/api/pacientes/create';
+        return axios.get(urlType).then((response) => {
+            commit('SET_DATA_INIT_PACIENTES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
+    LOAD_PACIENTES_LIST: function ({ commit }) {
+        var url = '/api/pacientes';
+        return axios.get(url).then((response) => {
+            commit('SET_PACIENTES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                                      
 }
