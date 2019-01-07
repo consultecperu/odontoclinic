@@ -32,6 +32,13 @@ import Detalleaseguradora from './components/seguros/detalleaseguradora.vue'
 import Detalleempresa from './components/seguros/detalleempresa.vue'
 
 import Pacientes from './components/entidades/pacientes.vue'
+import DetallePacientes from './components/entidades/detallepacientes/maindetalle.vue'
+import DetPacDatos from './components/entidades/detallepacientes/datos.vue'
+import DetPacDerivaciones from './components/entidades/detallepacientes/derivaciones.vue'
+import DetPacCitas from './components/entidades/detallepacientes/citas.vue'
+import DetPacMultimedia from './components/entidades/detallepacientes/multimedia.vue'
+import PptoOperatoria from './components/entidades/detallepacientes/ppto_operatoria.vue'
+import PptoOrtodoncia from './components/entidades/detallepacientes/ppto_ortodoncia.vue'
 import Medicos from './components/entidades/medicos.vue'
 import Detallemedicos from './components/entidades/detallemedicos.vue'
 import Personal from './components/entidades/personal.vue'
@@ -331,6 +338,56 @@ export default [
                     next();
                 }                  
             },  
+            {
+                path: '/detalle-paciente/:idpaciente',
+                name: 'detallepacientes',
+                component: DetallePacientes,
+                meta: { requiresAuth: true },
+                props: true,
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Detalle', second: 'Pacientes' , third : 'Entidades' , ruta_second :'pacientes' }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                },
+                children:[
+                    {
+                        path: 'datos',
+                        name: 'datos', 
+                        component: DetPacDatos, 
+                        props: true 
+                    },
+                    {
+                        path: 'derivaciones',
+                        name: 'derivaciones', 
+                        component: DetPacDerivaciones, 
+                        props: true                        
+                    },
+                    {
+                        path: 'citas',
+                        name: 'citas', 
+                        component: DetPacCitas, 
+                        props: true                        
+                    },
+                    {
+                        path: 'multimedia',
+                        name: 'multimedia', 
+                        component: DetPacMultimedia, 
+                        props: true                        
+                    },
+                    {
+                        path: 'ppto-operatoria',
+                        name: 'ppto-operatoria', 
+                        component: PptoOperatoria, 
+                        props: true                        
+                    },
+                    {
+                        path: 'ppto-ortodoncia',
+                        name: 'ppto-ortodoncia', 
+                        component: PptoOrtodoncia, 
+                        props: true                        
+                    }                                       
+                ]                  
+            },             
             {
                 path: '/medicos',
                 name: 'medicos',

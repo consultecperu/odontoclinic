@@ -76,5 +76,9 @@ class Empleado extends Model
     public function pacientes()
     {
         return $this->hasMany('App\Paciente');
-    }                 
+    }
+    public function derivaciones()
+    {
+        return $this->hasMany('App\Derivacion');
+    }                          
 }

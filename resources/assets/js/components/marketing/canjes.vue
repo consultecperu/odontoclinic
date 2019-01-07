@@ -233,8 +233,7 @@ export default {
                 user_id:this.user_system.id
             }           
             this.$modal.show('canje')
-        }, 
-        
+        },         
         ActionCanje: function(){
             if(typeof(this.dataCanje.id) === "undefined"){
                 this.createCanje()

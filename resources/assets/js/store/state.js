@@ -46,5 +46,8 @@ export default {
     pacientes:[],
     parentescos:[],
     asignaciones:[],
-    motivocaptaciones:[]
+    motivocaptaciones:[],
+    dependientes:[],
+    derivaciones:[],
+    dientes:[],
 }

@@ -302,5 +302,29 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                                                      
+    },  
+    LOAD_DEPENDIENTES_LIST: function ({ commit }) {
+        var url = '/api/dependientes';
+        return axios.get(url).then((response) => {
+            commit('SET_DEPENDIENTES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_DERIVACIONES_LIST: function ({ commit }) {
+        var url = '/api/derivaciones';
+        return axios.get(url).then((response) => {
+            commit('SET_DERIVACIONES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },        
+    LOAD_DIENTES_LIST: function ({ commit }) {
+        var url = '/api/dientes';
+        return axios.get(url).then((response) => {
+            commit('SET_DIENTES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                                         
 }

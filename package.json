@@ -22,6 +22,7 @@
         "vue-sweetalert2": "^1.5.9"
     },
     "dependencies": {
+        "pretty-checkbox-vue": "^1.1.9",
         "vee-validate": "^2.1.4",
         "vue-bootstrap-typeahead": "^0.2.6",
         "vue-directive-tooltip": "^1.5.0",

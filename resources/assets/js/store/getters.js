@@ -87,7 +87,21 @@ export default {
         return state.permisos.filter(per => per.empleado_id == id)
     },  
     getPolizas: (state) => (idemp , idpla) => {
-        console.log("datos",idemp,idpla)
         return state.polizas.filter(pol => pol.empresapaciente_id == idemp).filter(pol => pol.plane_id == idpla)
-    },                                                                   
+    },
+    getPacienteById: (state) => (id) => {
+        return state.pacientes.find(pac => pac.id == id)
+    },      
+    getDependientesById: (state) => (id) => {
+        return state.dependientes.filter(dep => dep.pacientetitular_id == id)
+    },   
+    getDerivacionesById: (state) => (id) => {
+        return state.derivaciones.filter(der => der.paciente_id == id)
+    },  
+    getDerivacionesById: (state) => (id) => {
+        return state.derivaciones.filter(der => der.paciente_id == id)
+    },  
+    getDientesByCuadrante: (state) => (cua) => {
+        return state.dientes.filter(die => die.cuadrante == cua)
+    },                                                                                 
 }

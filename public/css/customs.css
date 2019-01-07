@@ -11,6 +11,7 @@
 
 .enlace {
     vertical-align: middle!important;
+    font-size: 11px !important;
 }
 
 .vgt-left-align {
@@ -72,6 +73,12 @@ table.vgt-table {
   border-style: none !important;
 }
 
+.tooltip-content{
+  font-size: 9px !important;
+} 
+.vue-tooltip {
+  z-index: 9999!important;
+}
 .autocomplete__box {
   border: none !important;
 }
@@ -79,19 +86,15 @@ table.vgt-table {
 .multiselect__option--selected {
   font-weight: 200 !important;
 }
-
 .multiselect , .multiselect__input , .multiselect__single {
   font-size: 10px !important;
 }
-
 .multiselect__option--highlight {
   height: 15px !important;
 }
-
 .multiselect__tag {
   margin-bottom: 0 !important;
 }
-
 .multiselect__tags {
   font-size: 12px !important;
 }

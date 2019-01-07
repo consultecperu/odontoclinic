@@ -123,5 +123,9 @@ class User extends Authenticatable
     public function pacienteplanes()
     {
         return $this->hasMany('App\Pacienteplan');
-    }                                                               
+    } 
+    public function derivaciones()
+    {
+        return $this->hasMany('App\Derivacion');
+    }                                                                       
 }

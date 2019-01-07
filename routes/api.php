@@ -84,5 +84,14 @@ Route::middleware(['auth'])->group(function(){
     // permisos
     Route::resource('permisos','PermisoController');    
     // pacientes
-    Route::resource('pacientes','PacienteController');                                                                                                 
+    Route::resource('pacientes','PacienteController');  
+    Route::put('/pacientes/actualizahc/{id}','PacienteController@ActualizaHC');      
+    Route::put('/pacientes/actualizafoto/{id}','PacienteController@ActualizaFoto');  
+    // dependientes
+    Route::resource('dependientes','DependienteController'); 
+    Route::post('/dependientes/relacion', 'DependienteController@relacion'); 
+    // derivaciones
+    Route::resource('derivaciones','DerivacionController');  
+    // dientes
+    Route::resource('dientes','DienteController');                                                                                                                  
 });

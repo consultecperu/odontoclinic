@@ -30,7 +30,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $pacientes = Paciente::with('tipodocumento')->orderBy('id','DESC')->where('activo',true)->get();
+        $pacientes = Paciente::with('tipodocumento','sede','pacienteplanes','ubigeo')->orderBy('id','DESC')->where('activo',true)->get();
         return $pacientes;  
     }
 
@@ -107,14 +107,14 @@ class PacienteController extends Controller
             /*-- validacion del numero de documento --*/
             if($request->get('numero_documento')){
                 $numdoc = $request->get('numero_documento');
-                $empcon = Paciente::where('numero_documento',$numdoc)->count();
+                $empcon = Paciente::where('numero_documento',$numdoc)->where('activo',true)->count();
                 if($empcon > 0){
                     return response()->json(['errors'=>['Número de Documento' => 'Ya existe un paciente con este numero de DNI : '.$request->get('dni')]]);
                 }
             }            
             /*-- validacion del Nombre de paciente--*/
             $nom = Str::upper($request->get('nombres')).' '.Str::upper($request->get('apellido_paterno')).' '.Str::upper($request->get('apellido_materno'));         
-            $nomemp = Paciente::where('nombre_completo',$nom)->count();
+            $nomemp = Paciente::where('nombre_completo',$nom)->where('activo',true)->count();
             if($nomemp > 0){
                 return response()->json(['errors'=>['Nombre de Paciente' => 'Ya existe un paciente con estos datos']]);
             }
@@ -122,7 +122,7 @@ class PacienteController extends Controller
             if($request->get('image')){
                 $imageData = $request->get('image');
                 $fileName = $request->get('numero_documento') . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
-                Image::make($request->get('image'))->save(public_path('images/').$fileName);
+                Image::make($request->get('image'))->save(public_path('images/pacientes/').$fileName);
             }          
             $paciente = new Paciente($request->all());
             if(isset($fileName)){
@@ -133,15 +133,15 @@ class PacienteController extends Controller
             $paciente->nombres = Str::upper($paciente->nombres);
             $paciente->apellido_paterno = Str::upper($paciente->apellido_paterno);
             $paciente->apellido_materno = Str::upper($paciente->apellido_materno);
-            $paciente->nombre_completo = Str::upper($paciente->nombres).' '.Str::upper($paciente->apellido_paterno).' '.Str::upper($paciente->apellido_materno);                                    
-            $paciente->historiaclinica = Globales::HC_Correlativo($request->get('sede_id'));            
+            $paciente->nombre_completo = Str::upper($paciente->nombres).' '.Str::upper($paciente->apellido_paterno).' '.Str::upper($paciente->apellido_materno);                                              
             $paciente->save();
             /** --- creamos los datos en la tabla paciente_plan---**/
             $pacienteplan = new Pacienteplan($request->all());
             $pacienteplan->paciente_id = $paciente->id;
             $pacienteplan->save();
             DB::commit();        
-            return;                        
+            //return;   
+            return response()->json(['idpaciente' => $paciente->id], 200);                     
         }
         catch(Exception $e){
             DB::rollback();
@@ -183,7 +183,64 @@ class PacienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction(); 
+
+        try {
+            $rules = ['tipodocumento_id'        => 'required',
+                      'numero_documento'        => 'required',
+                      'sede_id'                 => 'required',
+                      'nombres'                 => 'required',
+                      'apellido_paterno'        => 'required',
+                      'apellido_materno'        => 'required',
+                      'sexo'                    => 'required',
+                      'empleado_id'             => 'required',
+                      'asignacion_id'           => 'required',
+                      'user_id'                 => 'required',
+                      'plan_id'                 => 'required',
+                      'tipo'                    => 'required'
+                      ];
+            if($request->get('tipo') == 2){
+                $rules = array_add($rules, 'empresapaciente_id', 'required');
+                $rules = array_add($rules, 'poliza_id', 'required');
+            }    
+            if($request->has('fecha_nacimiento')){
+                $rules = array_add($rules, 'fecha_nacimiento', 'date_format:d-m-Y');
+            }
+            if($request->has('fecha_ingreso')){
+                $rules = array_add($rules, 'fecha_ingreso', 'date_format:d-m-Y');  
+            }  
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            }
+  
+            $paciente = Paciente::find($id);
+            $paciente->fill($request->all());   
+            $paciente->fecha_nacimiento = Globales::FormatFecYMD($request->get('fecha_nacimiento'));
+            $paciente->fecha_ingreso = Globales::FormatFecYMD($request->get('fecha_ingreso'));
+            $paciente->nombres = Str::upper($paciente->nombres);
+            $paciente->apellido_paterno = Str::upper($paciente->apellido_paterno);
+            $paciente->apellido_materno = Str::upper($paciente->apellido_materno);
+            $paciente->nombre_completo = Str::upper($paciente->nombres).' '.Str::upper($paciente->apellido_paterno).' '.Str::upper($paciente->apellido_materno);                                              
+            $paciente->save();
+            /** --- actualizamos los datos en la tabla paciente_plan---**/
+            $pacienteplan = Pacienteplan::find($paciente->pacienteplanes[0]->id);
+            $pacienteplan->tipo = $request->get('tipo');
+            $pacienteplan->plan_id = $request->get('plan_id');
+            $pacienteplan->descripcion = $request->get('descripcion');
+            $pacienteplan->empresapaciente_id = ($request->get('empresapaciente_id')) ? $request->get('empresapaciente_id') : null;
+            $pacienteplan->poliza_id = ($request->get('poliza_id')) ?  $request->get('poliza_id') : null;            
+            $pacienteplan->save();            
+
+            DB::commit();           
+            return;
+        } catch (Exception $e) {
+            DB::rollback();          
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
+
     }
 
     /**
@@ -194,6 +251,44 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $paciente = Paciente::findOrFail($id);  
+            $paciente->nombre_completo = $paciente->nombre_completo . ' *** ' . Carbon::now()->timestamp;            
+            $paciente->activo = false;
+            $paciente->save();            
+        } catch (Exception $e) {
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
+    }
+
+    public function ActualizaHC(Request $request, $id)
+    {
+        $paciente = Paciente::find($id);
+        $paciente->historiaclinica = Globales::HC_Correlativo($request->get('sede_id'));
+        $paciente->save();        
+    }
+    public function ActualizaFoto(Request $request, $id)
+    {
+
+        try {
+            /*-- Validacion de la imagen --*/
+            if($request->get('image')){
+                $imageData = $request->get('image');
+                $fileName = $request->get('numero_documento') . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
+                Image::make($request->get('image'))->save(public_path('images/pacientes/').$fileName);         
+            } 
+            $paciente = Paciente::find($id);
+            if(isset($fileName)){
+                $paciente->foto = $fileName;
+                $paciente->save(); 
+            }  
+        } catch (Exception $e) {
+            return response()->json(
+                ['errors' => $e->getMessage()], 422
+            );
+        }
+                   
     }
 }

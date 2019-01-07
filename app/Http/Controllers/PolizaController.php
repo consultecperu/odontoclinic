@@ -20,7 +20,7 @@ class PolizaController extends Controller
      */
     public function index()
     {
-        $polizas = Poliza::with('moneda','planpoliza')->orderBy('id','ASC')->where('activo',true)->get();
+        $polizas = Poliza::with('moneda','planpoliza','plane')->orderBy('id','ASC')->where('activo',true)->get();
         return $polizas;   
     }
 

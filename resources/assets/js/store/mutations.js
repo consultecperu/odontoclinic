@@ -135,5 +135,14 @@ export default {
     }, 
     SET_PACIENTES_LIST: (state, { list }) => {      // PACIENTES
         state.pacientes = list
-    },                                                                                                                                
+    },     
+    SET_DEPENDIENTES_LIST: (state, { list }) => {      // DEPENDIENTES
+        state.dependientes = list
+    },  
+    SET_DERIVACIONES_LIST: (state, { list }) => {      // DERIVACIONES
+        state.derivaciones = list
+    }, 
+    SET_DIENTES_LIST: (state, { list }) => {      // DIENTES
+        state.dientes = list
+    },                                                                                                                                       
 }

@@ -24,6 +24,8 @@ import Tooltip from 'vue-directive-tooltip'
 import 'vue-directive-tooltip/css/index.css'
 import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
+import 'pretty-checkbox/src/pretty-checkbox.scss'
+import PrettyCheckbox from 'pretty-checkbox-vue'
 
 window.axios = require('axios');
 
@@ -41,4 +43,5 @@ Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 Vue.component('autocomplete',Autocomplete)
 Vue.use(Tooltip)
 Vue.component('multiselect', Multiselect)
+Vue.use(PrettyCheckbox)
 

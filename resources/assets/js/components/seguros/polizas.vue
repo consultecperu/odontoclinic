@@ -51,8 +51,8 @@
                                 <th scope="col">%CoaSeguradora</th>                                                                                                                          
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr v-for="(poliza,index) in polizasemp" v-if="polizasemp.length > 0" :key="poliza.id">
+                        <tbody v-if="polizasemp.length > 0">
+                            <tr v-for="(poliza,index) in polizasemp"  :key="poliza.id">
                                 <td>{{ index + 1 }}</td>
                                 <td>{{ poliza.codigo}}</td>
                                 <td>{{ poliza.planpoliza.nombre_planpoliza}}</td>

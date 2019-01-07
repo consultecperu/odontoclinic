@@ -12,11 +12,11 @@ class Dependiente extends Model
     
     public function pacientetitular()
     {
-        return $this->belongsTo('App\Paciente','id');
+        return $this->belongsTo('App\Paciente','pacientetitular_id');
     }
     public function pacientedependiente()
     {
-        return $this->belongsTo('App\Paciente','id');
+        return $this->belongsTo('App\Paciente','pacientedependiente_id');
     }  
     public function parentesco()
     {

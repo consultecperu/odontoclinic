@@ -403,12 +403,9 @@ export default {
             this.$modal.show('reg_empresa')
         },         
         ActionCampania: function(){
-            console.log("accion")
             if(typeof(this.dataCampania.id) === "undefined"){
-                console.log("crear")
                 this.createCampania()
             }else{
-                console.log("actualizar")
                 this.updateCampania()
             }
         },

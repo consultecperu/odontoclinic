@@ -27,7 +27,7 @@
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="{{ asset('css/fonts.css') }}">	 
 	<link rel="stylesheet" href="{{ asset('css/demo.css') }}">
-	<link rel="stylesheet" href="{{ asset('css/customs.css') }}">	
+	<link rel="stylesheet" href="{{ asset('css/customs.css') }}">
 <!-- 	<link rel="stylesheet" href="{{ asset('css/app.css') }}" >  -->
 	
 </head>

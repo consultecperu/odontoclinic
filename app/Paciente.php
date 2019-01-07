@@ -13,7 +13,7 @@ class Paciente extends Model
     'apellido_paterno','apellido_materno','fecha_nacimiento','sexo','ubigeo_id','direccion',
     'telefono','celular','email','estadocivil_id','motivocaptacion_id','telefono_mensajeria',
     'titular','mensajeria','foto','condicion_id','empleado_id','asignacion_id','fecha_ingreso',
-    'nombre_completo','carnet','convenio_id','campania_id','historiaclinica_id','observacion',
+    'nombre_completo','carnet','convenio_id','campania_id','historiaclinica','observacion',
     'apoderado','parentesco_apoderado_id','historial' ,'user_id', 'activo'];
 
     public function getFechaNacimientoAttribute($date){
@@ -85,5 +85,9 @@ class Paciente extends Model
     public function pacientemultimedias()
     {
         return $this->hasMany('App\Pacientemultimedia');
-    }                                                
+    } 
+    public function derivaciones()
+    {
+        return $this->hasMany('App\Derivacion');
+    }                                                    
 }
