@@ -16,7 +16,7 @@ export default {
 
     },
     methods: {
-        notificaciones: function(emessage,eicon,etype){
+        notificaciones(emessage,eicon,etype){
             this.notificacion.message = emessage
             this.notificacion.icon = eicon
             this.type = etype
@@ -30,7 +30,7 @@ export default {
                 time: this.time,
             });            
         },
-        showSearch: function(cols){
+        showSearch(cols){
             let f = 0
             for(f=0;f<cols.length;f++)
             {
@@ -39,6 +39,12 @@ export default {
                 }
 
             }            
-        }      
+        },
+        contains(arr, obj) {
+            var stringifiedObj = JSON.stringify(obj)
+            return arr.some(function (item) {
+                return JSON.stringify(item) === stringifiedObj;
+            });
+        }              
     }
 }

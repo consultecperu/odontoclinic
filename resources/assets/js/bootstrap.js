@@ -44,4 +44,3 @@ Vue.component('autocomplete',Autocomplete)
 Vue.use(Tooltip)
 Vue.component('multiselect', Multiselect)
 Vue.use(PrettyCheckbox)
-
