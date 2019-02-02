@@ -374,8 +374,7 @@ export default {
         this.$store.dispatch('LOAD_DATA_INIT_PACIENTES_LIST')
         this.$store.dispatch('LOAD_SEDES_LIST')      
         this.$store.dispatch('LOAD_EMPLEADOS_LIST')   
-        this.$store.dispatch('LOAD_PLANES_LIST')    
-        //this.$store.dispatch('LOAD_EMPRESAPACIENTES_PLANES_EMPRESAS_LIST')   
+        this.$store.dispatch('LOAD_PLANES_LIST')     
         this.$store.dispatch('LOAD_POLIZAS_LIST')    
         this.$store.dispatch('LOAD_PACIENTES_LIST').then(() => {
             this.isLoading = false

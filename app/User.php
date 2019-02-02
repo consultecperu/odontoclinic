@@ -127,5 +127,17 @@ class User extends Authenticatable
     public function derivaciones()
     {
         return $this->hasMany('App\Derivacion');
-    }                                                                       
+    }  
+    public function tipocambios()
+    {
+        return $this->hasMany('App\TipoCambio');
+    } 
+    public function presupuestosoperatorias()
+    {
+        return $this->hasMany('App\Presupuestooperatoria');
+    }       
+    public function presupuestosoperatoriasdetalles()
+    {
+        return $this->hasMany('App\Presupuestooperatoriadetalle');
+    }                                                                          
 }

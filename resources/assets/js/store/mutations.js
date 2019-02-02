@@ -15,6 +15,9 @@ export default {
         state.breadsecond = datos.second  
         state.breadthird = datos.third
         state.ruta_second = datos.ruta_second != 'undefined' ? datos.ruta_second : null
+        state.ruta_main = datos.ruta_main != 'undefined' ? datos.ruta_main : null
+        state._breadmain = datos._main !== 'undefined' ? datos._main : null
+
     },    
     SET_PERFIL_USER: (state, { list }) => {      // PERFIL DE USUARIO
         state.perfil_user = list
@@ -66,7 +69,6 @@ export default {
     }, 
     SET_EMPRESAPACIENTES_LIST: (state, { list }) => {      // EMPRESAPACIENTES
         state.empresapacientes = list
-        console.log("empresas",state.empresapacientes)
     }, 
     SET_EMPRESAPACIENTES_PLANES_LIST: (state, { list }) => {      // EMPRESAPACIENTES_PLANES
         state.empresapacientesplanes = list
@@ -144,5 +146,14 @@ export default {
     }, 
     SET_DIENTES_LIST: (state, { list }) => {      // DIENTES
         state.dientes = list
-    },                                                                                                                                       
+    },
+    SET_PRESUPUESTOS_OPERATORIAS_LIST: (state, { list }) => {      // PRESUPUESTOS_OPERATORIA
+        state.presupuestos_operatorias = list
+    },  
+    SET_PRESUPUESTOS_ORTODONCIAS_LIST: (state, { list }) => {      // PRESUPUESTOS_ORTODONCIA
+        state.presupuestos_ortodoncias = list
+    }, 
+    SET_TIPOCAMBIOS_LIST: (state, { list }) => {      // TIPOCAMBIOS
+        state.tipocambios = list
+    },                                                                                                                                                    
 }

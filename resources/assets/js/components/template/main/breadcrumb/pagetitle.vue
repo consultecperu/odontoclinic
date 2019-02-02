@@ -1,6 +1,6 @@
 <template>
     <!-- page-title -->
-    <h4 class="page-title">{{ breadmain }}</h4>
+    <h4 class="page-title" v-text="_breadmain == null ? breadmain : _breadmain"></h4>
     <!-- end page-title -->    
 </template>
 <script>
@@ -13,7 +13,7 @@ export default {
         }
     },  
     computed: {
-        ...mapState(['breadmain','breadsecond']),
+        ...mapState(['breadmain','_breadmain']),
     },
 
         

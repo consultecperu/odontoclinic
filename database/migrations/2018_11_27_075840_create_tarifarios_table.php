@@ -19,7 +19,7 @@ class CreateTarifariosTable extends Migration
             $table->integer('servicio_id')->unsigned();
             $table->integer('plan_id')->unsigned();
             $table->integer('moneda_id')->unsigned();
-            $table->float('costo',8,2);
+            $table->float('costo',8,2)->nullable();
             $table->integer('tipo')->default(1); // 1 aseguradora 2 particular
             $table->integer('solocoaseguro');
             $table->integer('cuotas')->nullable();

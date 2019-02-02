@@ -26,6 +26,18 @@ class Moneda extends Model
     {
         return $this->hasMany('App\Laboratorioservicio');
     }     
+    public function tipocambios()
+    {
+        return $this->hasMany('App\TipoCambio');
+    }
+    public function presupuestosoperatorias()
+    {
+        return $this->hasMany('App\TipoCambio');
+    }   
+    public function presupuestosoperatoriasdetalles()
+    {
+        return $this->hasMany('App\Presupuestooperatoriadetalle');
+    }             
     public function user()
     {
     	return $this->belongsTo('App\User');

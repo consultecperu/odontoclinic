@@ -60,6 +60,9 @@ input.minusculas{
 table.vgt-table {
     font-size: 13px !important;
 }
+table.vgt-table td {
+  vertical-align: middle !important;
+}
 
 .font-large {
     font-size: large !important;
@@ -82,6 +85,9 @@ table.vgt-table {
 .autocomplete__box {
   border: none !important;
 }
+.swal2-container {
+  z-index: 9100 !important;
+}  
 /***  MULTISELECT ****/
 .multiselect__option--selected {
   font-weight: 200 !important;

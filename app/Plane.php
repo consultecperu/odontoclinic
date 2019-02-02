@@ -29,5 +29,9 @@ class Plane extends Model
     public function pacienteplanes()
     {
         return $this->hasMany('App\Pacienteplane');
-    }       
+    }
+    public function presupuestosoperatorias()
+    {
+        return $this->hasMany('App\Presupuestooperatoria');
+    }            
 }

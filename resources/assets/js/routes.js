@@ -13,6 +13,7 @@ import Cargos from './components/configuracion/cargos.vue'
 import Gruposervicios from './components/configuracion/gruposervicios.vue'
 import Laboratorios from './components/configuracion/laboratorios.vue'
 import Detallelaboratorio from './components/configuracion/detallelaboratorios.vue'
+import DetallelaboratorioMultident from './components/configuracion/detallelaboratoriosmultident.vue'
 import Materiales from './components/configuracion/materiales.vue'
 import Detallematerial from './components/configuracion/detallemateriales.vue'
 import Sedes from './components/configuracion/sedes.vue'
@@ -35,14 +36,23 @@ import Pacientes from './components/entidades/pacientes.vue'
 import DetallePacientes from './components/entidades/detallepacientes/maindetalle.vue'
 import DetPacDatos from './components/entidades/detallepacientes/datos.vue'
 import DetPacDerivaciones from './components/entidades/detallepacientes/derivaciones.vue'
-import DetPacCitas from './components/entidades/detallepacientes/citas.vue'
+import DetPacCitas from './components/entidades/detallepacientes/citaspaciente.vue'
 import DetPacMultimedia from './components/entidades/detallepacientes/multimedia.vue'
+import ListaPptoOperatoria from './components/entidades/detallepacientes/lista_ppto_operatoria.vue'
+import ListaPptoOrtodoncia from './components/entidades/detallepacientes/lista_ppto_ortodoncia.vue'
 import PptoOperatoria from './components/entidades/detallepacientes/ppto_operatoria.vue'
 import PptoOrtodoncia from './components/entidades/detallepacientes/ppto_ortodoncia.vue'
 import Medicos from './components/entidades/medicos.vue'
 import Detallemedicos from './components/entidades/detallemedicos.vue'
 import Personal from './components/entidades/personal.vue'
 import Detallepersonal from './components/entidades/detallepersonal.vue'
+
+import Citas from './components/agenda/citas.vue'
+import Seguimientos from './components/agenda/seguimientos.vue'
+
+import TipoCambios from './components/caja/tipocambios.vue'
+import CierreCaja from './components/caja/cierrecaja.vue'
+import VentaDiaria from './components/caja/ventadiaria.vue'
 
 import NotFound from './components/errors/notfound.vue'
 
@@ -168,7 +178,19 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
-            },            
+            },   
+            {
+                path: '/detalle-laboratorio/servicios-mtd/:laboratorioservicio/:laboratorio',
+                name: 'detallelaboratoriomultident',
+                component: DetallelaboratorioMultident,
+                meta: { requiresAuth: true },
+                props: true,
+                beforeEnter:(to,from,next) => {
+                    var payload = { _main: 'Servicios Mtd' ,main: 'Servicios', second: 'Laboratorios' , third : 'Configuracion' , ruta_second : 'laboratorios' , ruta_main : 'detallelaboratorio' }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                  
+            },                     
             {
                 path: '/materiales',
                 name: 'materiales',
@@ -354,36 +376,56 @@ export default [
                         path: 'datos',
                         name: 'datos', 
                         component: DetPacDatos, 
+                        meta: { requiresAuth: true },
                         props: true 
                     },
                     {
                         path: 'derivaciones',
                         name: 'derivaciones', 
                         component: DetPacDerivaciones, 
+                        meta: { requiresAuth: true },
                         props: true                        
                     },
                     {
-                        path: 'citas',
-                        name: 'citas', 
+                        path: 'citaspacientes',
+                        name: 'citas-pacientes', 
                         component: DetPacCitas, 
+                        meta: { requiresAuth: true },
                         props: true                        
                     },
                     {
                         path: 'multimedia',
                         name: 'multimedia', 
                         component: DetPacMultimedia, 
+                        meta: { requiresAuth: true },
                         props: true                        
                     },
                     {
-                        path: 'ppto-operatoria',
+                        path: 'lista-ppto-operatoria',
+                        name: 'lista-ppto-operatoria', 
+                        component: ListaPptoOperatoria,
+                        meta: { requiresAuth: true }, 
+                        props: true                        
+                    },
+                    {
+                        path: 'lista-ppto-ortodoncia',
+                        name: 'lista-ppto-ortodoncia', 
+                        component: ListaPptoOrtodoncia,
+                        meta: { requiresAuth: true }, 
+                        props: true                        
+                    },                                        
+                    {
+                        path: 'ppto-operatoria/:idpresupuesto?',
                         name: 'ppto-operatoria', 
                         component: PptoOperatoria, 
+                        meta: { requiresAuth: true },
                         props: true                        
                     },
                     {
-                        path: 'ppto-ortodoncia',
+                        path: 'ppto-ortodoncia/:idpresupuesto?',
                         name: 'ppto-ortodoncia', 
                         component: PptoOrtodoncia, 
+                        meta: { requiresAuth: true },
                         props: true                        
                     }                                       
                 ]                  
@@ -433,7 +475,62 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
-            },                                                                                                                        
+            }, 
+            {
+                path: '/citas',
+                name: 'citas',
+                component: Citas,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Citas', second: 'Agenda', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },   
+            {
+                path: '/seguimientos',
+                name: 'seguimiento-cita',
+                component: Seguimientos,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Seguimientos', second: 'Agenda', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            }, 
+            {
+                path: '/tipocambio',
+                name: 'tipocambio',
+                component: TipoCambios,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Tipo Cambio', second: 'Caja', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },
+            {
+                path: '/cierrecaja',
+                name: 'cierre-caja',
+                component: CierreCaja,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Cierre Caja', second: 'Caja', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },
+            {
+                path: '/ventadiaria',
+                name: 'venta-diaria',
+                component: VentaDiaria,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Venta Diaria', second: 'Caja', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },                                                                                                                                                                                    
         ]
     },
     {

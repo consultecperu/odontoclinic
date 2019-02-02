@@ -18,17 +18,17 @@ class Servicio extends Model
     {
     	return $this->belongsTo('App\Simbologia');
     }     
-    public function serviciodetalles()
+    public function serviciodetalle()
     {
-        return $this->hasMany('App\Serviciodetalle');
+        return $this->hasOne('App\Serviciodetalle');
     }
     public function gruposervicios()
     {
         return $this->belongsToMany('App\Gruposervicio')->withTimestamps();
     }    
-    public function laboratorios()
+    public function laboratorioservicios()
     {
-        return $this->belongsToMany('App\Laboratorio')->withTimestamps();
+        return $this->belongsToMany('App\Laboratorioservicio')->withTimestamps();
     }   
     public function tarifarios()
     {

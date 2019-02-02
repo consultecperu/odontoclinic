@@ -14,4 +14,8 @@ class Simbologia extends Model
     {
         return $this->hasMany('App\Servicio');
     } 
+    public function presupuestosoperatoriasdetalles()
+    {
+        return $this->hasMany('App\PresupuestoOperatoriaDetalle');
+    }    
 }

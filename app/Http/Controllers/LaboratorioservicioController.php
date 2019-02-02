@@ -19,7 +19,7 @@ class LaboratorioservicioController extends Controller
      */
     public function index()
     {
-        $labservicios = Laboratorioservicio::with('moneda','laboratorio')->orderBy('id','ASC')->where('activo',true)->get();
+        $labservicios = Laboratorioservicio::with('moneda','laboratorio','servicios')->orderBy('id','ASC')->where('activo',true)->get();
         return $labservicios;   
     }
 
@@ -156,4 +156,17 @@ class LaboratorioservicioController extends Controller
             );
         }
     }
+
+    public function AgregarServicioMultident(Request $request, $id)
+    {
+        $labservicio = Laboratorioservicio::find($id);
+        // agrega los servicios 
+        $labservicio->servicios()->attach($request->get('servicio_id'), ['user_id' => $request->get('user_id')]);     
+    } 
+    public function EliminarServicioMultident(Request $request, $id)
+    {
+        $labservicio = Laboratorioservicio::find($id);
+        // elimina los servicios 
+        $labservicio->servicios()->detach($request->get('servicio_id'));     
+    }         
 }

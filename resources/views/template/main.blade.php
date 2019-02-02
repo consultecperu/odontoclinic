@@ -49,7 +49,17 @@
 
 	<!-- jQuery Scrollbar -->
 	<script src="{{ asset('js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+	
+	<!-- JQuery imagesLoaded -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>	
 
+	<!-- Required to convert named colors to RGB -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script>
+	<!-- Optional if you want blur -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.1/stackblur.min.js"></script>
+	<!-- Main canvg code -->
+	<script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
+	
 	<!-- Moment JS -->
 	<script src="{{ asset('js/plugin/moment/moment.min.js') }}"></script>
 	<script src="{{ asset('js/plugin/moment/moment-with-locales.min.js') }}"></script>	
@@ -81,6 +91,7 @@
 
 	<!-- Fullcalendar -->
 	<script src="{{ asset('js/plugin/fullcalendar/fullcalendar.min.js') }}"></script>
+	<script src="{{ asset('js/plugin/fullcalendar/locale-all.js') }}"></script>	
 
 	<!-- DateTimePicker -->
 	<script src="{{ asset('js/plugin/datepicker/bootstrap-datetimepicker.min.js') }}"></script>

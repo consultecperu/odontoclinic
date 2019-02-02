@@ -26,6 +26,7 @@ import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
 import 'pretty-checkbox/src/pretty-checkbox.scss'
 import PrettyCheckbox from 'pretty-checkbox-vue'
+import contextMenu from 'vue-context-menu'
 
 window.axios = require('axios');
 
@@ -36,7 +37,7 @@ Vue.use(VueGoodTable)
 Vue.use(VModal)
 Vue.use(ToggleButton)
 Vue.use(underscore)
-Vue.use(Loading);
+Vue.use(Loading)
 Vue.component('loading', Loading)
 Vue.use(VueSweetalert2)
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
@@ -44,3 +45,4 @@ Vue.component('autocomplete',Autocomplete)
 Vue.use(Tooltip)
 Vue.component('multiselect', Multiselect)
 Vue.use(PrettyCheckbox)
+Vue.component('context-menu',contextMenu)

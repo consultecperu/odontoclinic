@@ -55,7 +55,10 @@ export default {
     },  
     getMedicos: state => {
         return state.empleados.filter(emp => emp.tipo == 1)
-    },        
+    },  
+    getMedicosOrtodoncias: state => {
+        return state.empleados.filter(emp => emp.tipo == 1 && emp.especialidades.pivot.especialidade_id == 6)
+    },              
     getPersonal: state => {
         return state.empleados.filter(emp => emp.tipo == 2)
     }, 
@@ -103,5 +106,26 @@ export default {
     },  
     getDientesByCuadrante: (state) => (cua) => {
         return state.dientes.filter(die => die.cuadrante == cua)
-    },                                                                                 
+    },
+    getpptoOperatoriaPaciente: (state) => (id) => {
+        return state.presupuestos_operatorias.filter(ppt => ppt.paciente_id == id)
+    },  
+    getpptoOrtodonciaPaciente: (state) => (id) => {
+        return state.presupuestos_ortodoncias.filter(ppt => ppt.paciente_id == id)
+    },
+    getTipoCambioHoy: state => {
+        return state.tipocambios.find(tc => tc.fecha_registro == moment().format('DD-MM-YYYY'))
+    },
+    getTratamientosSimbolo: (state) => (idsim, idpla ,idsed) => {
+        return state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 
+    },
+    getTratamientosOrtodoncia: (state) => (idpla ,idsed) => {
+        return state.tarifarios.filter(tar => tar.ortodoncia == 1 && tar.plan_id == idpla && tar.sede_id == idsed) 
+    },    
+    getPresupuestoOperatoriaById: (state) => (id) => {
+        return state.presupuestos_operatorias.find(pid => pid.id == id)
+    }, 
+    getPresupuestoOrtodonciaById: (state) => (id) => {
+        return state.presupuestos_ortodoncias.find(pid => pid.id == id)
+    },                                                                                                 
 }

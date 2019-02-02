@@ -80,5 +80,13 @@ class Empleado extends Model
     public function derivaciones()
     {
         return $this->hasMany('App\Derivacion');
-    }                          
+    } 
+    public function presupuestosoperatorias()
+    {
+        return $this->hasMany('App\PresupuestoOperatoria');
+    }  
+    public function presupuestosoperatoriasdetalles()
+    {
+        return $this->hasMany('App\Presupuestooperatoriadetalle');
+    }                                
 }

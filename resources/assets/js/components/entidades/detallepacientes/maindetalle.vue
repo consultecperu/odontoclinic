@@ -27,11 +27,11 @@
                             <div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <router-link :to="{ name: 'datos' }" class="nav-link" id="v-pills-datos-tab" data-toggle="pill" href="#v-pills-datos" role="tab" aria-controls="v-pills-datos" aria-selected="true" exact>Datos Generales</router-link>
                                 <router-link :to="{ name: 'derivaciones' }" class="nav-link" id="v-pills-derivaciones-tab" data-toggle="pill" href="#v-pills-derivaciones" role="tab" aria-controls="v-pills-derivaciones" aria-selected="false" exact>Derivaciones</router-link>
-                                <router-link :to="{ name: 'citas' }" class="nav-link" id="v-pills-citas-tab" data-toggle="pill" href="#v-pills-citas" role="tab" aria-controls="v-pills-citas" aria-selected="false" exact>Citas</router-link>
+                                <router-link :to="{ name: 'citas-paciente' }" class="nav-link" id="v-pills-citas-tab" data-toggle="pill" href="#v-pills-citas" role="tab" aria-controls="v-pills-citas" aria-selected="false" exact>Citas</router-link>
                                 <router-link :to="{ name: 'multimedia' }" class="nav-link" id="v-pills-multimedia-tab" data-toggle="pill" href="#v-pills-multimedia" role="tab" aria-controls="v-pills-multimedia" aria-selected="false" exact>Imagenes y Archivos</router-link>
                                 <div class="seperator-solid"></div>
-                                <router-link :to="{ name: 'ppto-operatoria' }" class="nav-link" id="v-pills-operatoria-tab" data-toggle="pill" href="#v-pills-operatoria" role="tab" aria-controls="v-pills-operatoria" aria-selected="true" exact>Ppto. Operatoria</router-link>
-                                <router-link :to="{ name: 'ppto-ortodoncia' }" class="nav-link" id="v-pills-ortodoncia-tab" data-toggle="pill" href="#v-pills-ortodoncia" role="tab" aria-controls="v-pills-ortodoncia" aria-selected="false" exact>Ppto. Ortodoncia</router-link>
+                                <router-link :to="{ name: 'lista-ppto-operatoria' }" class="nav-link" id="v-pills-operatoria-tab" data-toggle="pill" href="#v-pills-operatoria" role="tab" aria-controls="v-pills-operatoria" aria-selected="true" exact>Ppto. Operatoria</router-link>
+                                <router-link :to="{ name: 'lista-ppto-ortodoncia' }" class="nav-link" id="v-pills-ortodoncia-tab" data-toggle="pill" href="#v-pills-ortodoncia" role="tab" aria-controls="v-pills-ortodoncia" aria-selected="false" exact>Ppto. Ortodoncia</router-link>
                             </div>
                         </div>
                     </div>

@@ -25,7 +25,15 @@ class Tarifario extends Model
     public function moneda()
     {
     	return $this->belongsTo('App\Moneda');
-    }   
+    } 
+    public function presupuestosoperatoriasdetalles()
+    {
+        return $this->hasMany('App\Presupuestooperatoriadetalle');
+    } 
+    public function presupuestosortodoncias()
+    {
+        return $this->hasMany('App\Presupuestoortodoncia');
+    }          
     public function user()
     {
     	return $this->belongsTo('App\User');

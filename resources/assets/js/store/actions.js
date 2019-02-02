@@ -78,7 +78,7 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },  
+    },    
     LOAD_MATERIALES_LIST: function ({ commit }) {
         var url = '/api/materiales';
         return axios.get(url).then((response) => {
@@ -126,7 +126,7 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },  
+    },      
     LOAD_SIMBOLOGIAS_LIST: function ({ commit }) {
         var url = '/api/simbologias';
         return axios.get(url).then((response) => {
@@ -326,5 +326,29 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                                                         
+    }, 
+    LOAD_PRESUPUESTOS_OPERATORIAS_LIST: function ({ commit }) {
+        var url = '/api/presupuestos-operatorias';
+        return axios.get(url).then((response) => {
+            commit('SET_PRESUPUESTOS_OPERATORIAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_PRESUPUESTOS_ORTODONCIAS_LIST: function ({ commit }) {
+        var url = '/api/presupuestos-ortodoncias';
+        return axios.get(url).then((response) => {
+            commit('SET_PRESUPUESTOS_ORTODONCIAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_TIPOCAMBIOS_LIST: function ({ commit }) {
+        var url = '/api/tipocambios';
+        return axios.get(url).then((response) => {
+            commit('SET_TIPOCAMBIOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                                                   
 }

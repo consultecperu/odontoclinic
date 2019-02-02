@@ -21,5 +21,9 @@ class Laboratorio extends Model
     public function laboratorioservicios()
     {
         return $this->hasMany('App\Laboratorioservicio');
-    }              
+    }  
+    public function presupuestosoperatoriasdetalles()
+    {
+        return $this->hasMany('App\PresupuestoOperatoriaDetalle');
+    }                 
 }

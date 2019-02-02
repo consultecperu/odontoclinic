@@ -30,7 +30,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $pacientes = Paciente::with('tipodocumento','sede','pacienteplanes','ubigeo')->orderBy('id','DESC')->where('activo',true)->get();
+        $pacientes = Paciente::with('tipodocumento','sede','pacienteplanes','pacienteplanes.plan','pacienteplanes.empresapaciente','pacienteplanes.poliza','empleado','ubigeo')->orderBy('id','DESC')->where('activo',true)->get();
         return $pacientes;  
     }
 

@@ -45,25 +45,30 @@
                 </div>
                 <!-- Menu Principal -->
                 <ul class="nav">
+                    <template v-for="route in listMenu">
+                        <router-link class="nav-item" v-if="route.options.length == 0" tag="li" :to="{ name: route.name_router}" :key="route.id">
+                            <a href="#"><i :class="[route.icono]"></i> <p>{{ route.name_template }}</p></a>
+                        </router-link>
+                    </template>
 
-                    <router-link class="nav-item" v-for="route in listMenu" v-if="route.options.length == 0" tag="li" :to="{ name: route.name_router}" :key="route.id">
-                        <a href="#"><i :class="[route.icono]"></i> <p>{{ route.name_template }}</p></a>
-                    </router-link>
 
-                    <li v-for="route in listMenu" v-if="route.options.length > 0" :key="route.id" class="nav-item">
-                        <a data-toggle="collapse" :href="'#'+ route.name_template">
-                            <i :class="[route.icono]"></i>
-                            <p>{{ route.name_template }}</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" :id="route.name_template">
-                            <ul class="nav nav-collapse">
-                                <router-link v-for="subroute in route.options" tag="li" :to="{ name: subroute.name_router}" :key="subroute.id" exact>
-                                    <a><span class="sub-item">{{ subroute.name_template }}</span></a>
-                                </router-link> 
-                            </ul>
-                        </div>
-                    </li>                    
+                    <template v-for="route in listMenu">
+                        <li v-if="route.options.length > 0"  :key="route.id" class="nav-item">
+                            <a data-toggle="collapse" :href="'#'+ route.name_template">
+                                <i :class="[route.icono]"></i>
+                                <p>{{ route.name_template }}</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" :id="route.name_template">
+                                <ul class="nav nav-collapse">
+                                    <router-link v-for="subroute in route.options" tag="li" :to="{ name: subroute.name_router}" :key="subroute.id" exact>
+                                        <a><span class="sub-item">{{ subroute.name_template }}</span></a>
+                                    </router-link> 
+                                </ul>
+                            </div>
+                        </li> 
+                    </template>
+                   
                 </ul>
                 <!-- Fin Menu Principal -->
             </div>

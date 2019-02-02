@@ -80,7 +80,7 @@ class Paciente extends Model
     } 
     public function pacienteplanes()
     {
-        return $this->hasMany('App\Pacienteplan');
+        return $this->hasOne('App\Pacienteplan');
     }   
     public function pacientemultimedias()
     {
@@ -89,5 +89,9 @@ class Paciente extends Model
     public function derivaciones()
     {
         return $this->hasMany('App\Derivacion');
-    }                                                    
+    } 
+    public function presupuestosoperatorias()
+    {
+        return $this->hasMany('App\Presupuestooperatoria');
+    }                                                        
 }

@@ -18,10 +18,13 @@ export default {
     ubigeos:[],
     empresas:[],
     breadmain:[],
+    _breadmain:[],
     breadsecond:[],
     breadthird:[],
+    ruta_main:[],
     ruta_second:[],    
     servicios:[],
+    servicios_laboratorio:[],
     simbologias:[],
     planes:[],
     tarifarios:[],
@@ -50,4 +53,7 @@ export default {
     dependientes:[],
     derivaciones:[],
     dientes:[],
+    presupuestos_operatorias:[],
+    presupuestos_ortodoncias:[],
+    tipocambios:[]
 }

@@ -38,7 +38,9 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('gruposervicios','GruposervicioController');  
     // laboratorios
     Route::resource('laboratorios','LaboratorioController');
-    Route::resource('laboratorioservicios','LaboratorioservicioController');       
+    Route::resource('laboratorioservicios','LaboratorioservicioController');
+    Route::put('/laboratorioservicios/agregarserviciomultident/{id}', 'LaboratorioservicioController@AgregarServicioMultident'); 
+    Route::put('/laboratorioservicios/eliminarserviciomultident/{id}', 'LaboratorioservicioController@EliminarServicioMultident');                
     // monedas
     Route::resource('monedas','MonedaController');   
     // materiales
@@ -93,5 +95,11 @@ Route::middleware(['auth'])->group(function(){
     // derivaciones
     Route::resource('derivaciones','DerivacionController');  
     // dientes
-    Route::resource('dientes','DienteController');                                                                                                                  
+    Route::resource('dientes','DienteController');   
+    // ppto operatoria
+    Route::resource('presupuestos-operatorias','PresupuestosoperatoriaController');  
+    // ppto ortodoncia
+    Route::resource('presupuestos-ortodoncias','PresupuestosortodonciaController'); 
+    // tipo cambios
+    Route::resource('tipocambios','TipocambioController');                                                                                                                            
 });

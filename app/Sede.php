@@ -45,5 +45,9 @@ class Sede extends Model
     public function historiaclinicas()
     {
         return $this->hasMany('App\Historiaclinica');
-    }                            
+    } 
+    public function presupuestosoperatorias()
+    {
+        return $this->hasMany('App\Presupuestooperatoria');
+    }                                
 }

@@ -17,7 +17,11 @@ class Laboratorioservicio extends Model
     public function moneda()
     {
         return $this->belongsTo('App\Moneda');
-    }  
+    } 
+    public function servicios()
+    {
+        return $this->belongsToMany('App\Servicio')->withTimestamps();
+    }      
     public function user()
     {
     	return $this->belongsTo('App\User');

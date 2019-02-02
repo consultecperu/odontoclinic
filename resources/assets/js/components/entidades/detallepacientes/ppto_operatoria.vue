@@ -1,66 +1,78 @@
 <template>
-    <div class="row" ref="contenedor">
-        <div class="col-12">
+    <div class="row">
+        <loading :active.sync="isLoading"
+            :background-color="'#000'" 
+            :color="'red'"
+            :can-cancel="false" 
+            :is-full-page="fullPage">
+        </loading>        
+        <div class="col-12 bg-white ml-10 pt-20">
             <div class="row">
                 <div class="col-9">
                     <div class="row">
                         <div class="col-8">
-                            <div class="form-group form-group-default border border-primary" >
+                            <div class="form-group form-group-default" >
                                 <label for="historia" class="text-primary font-weight-bold">Paciente </label>
-                                <p class="form-control-static font-weight-bold mb-0">{{ 'MANUEL JIMENO CANDELA' }}</p>
+                                <p class="form-control-static mb-0" v-text="dataPaciente.nombre_completo"></p>
                             </div>
                         </div>
                         <div class="col-4 pl-0 pr-0">
-                            <div class="form-group form-group-default border border-primary" >
+                            <div class="form-group form-group-default" >
                                 <label for="historia" class="text-primary font-weight-bold">Num. Historia </label>
-                                <p class="form-control-static font-weight-bold mb-0">{{ '4' }}</p>
+                                <p class="form-control-static text-center mb-0" v-text="dataPaciente.historiaclinica"></p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-4">
-                            <div class="form-group form-group-default border border-primary" >
+                            <div class="form-group form-group-default" >
                                 <label for="historia" class="text-primary font-weight-bold">Empresa </label>
-                                <p class="form-control-static font-weight-bold mb-0">{{ '-' }}</p>
+                                <p class="form-control-static text-truncate mb-0" v-text="dataPaciente.empresa"></p>
                             </div>
                         </div>
                         <div class="col-4 pl-0">
-                            <div class="form-group form-group-default border border-primary" >
+                            <div class="form-group form-group-default" >
                                 <label for="historia" class="text-primary font-weight-bold">Plan </label>
-                                <p class="form-control-static font-weight-bold mb-0">{{ 'PARTICULAR MAYOLO' }}</p>
+                                <p class="form-control-static text-truncate mb-0" v-text="dataPaciente.plan"></p>
                             </div>
                         </div>
                         <div class="col-4 pl-0 pr-0">
-                            <div class="form-group form-group-default border border-primary" >
-                                <label for="historia" class="text-primary font-weight-bold">Aseguradora </label>
-                                <p class="form-control-static font-weight-bold mb-0">{{ 'PARTICULAR MAYOLO' }}</p>
+                            <div class="form-group form-group-default" >
+                                <label for="aseguradora" class="text-primary font-weight-bold">Aseguradora </label>
+                                <p class="form-control-static text-truncate mb-0" v-text="dataPaciente.aseguradora"></p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-8">
-                            <div class="form-group form-group-default border border-primary" >
-                                <label for="historia" class="text-primary font-weight-bold">Profesional </label>
-                                <p class="form-control-static font-weight-bold mb-0">{{ 'CARLOS APARICIO ZAMBRANO' }}</p>
+                            <div class="form-group form-group-default" >
+                                <label for="medicos" class="text-primary font-weight-bold">Profesional </label>
+                                <select class="form-control mt-5" id="medicos" v-model="dataPaciente.empleado_id">
+                                    <option value="">-- Seleccione --</option>
+                                    <option v-for="med in getMedicos" :value="med.id" :key="med.id">
+                                        {{ med.nombre_completo}}
+                                    </option>
+                                </select>                                
                             </div>
                         </div>
                         <div class="col-2 pl-0 pr-0">
-                            <div class="form-group form-group-default border border-primary" >
+                            <div class="form-group form-group-default" >
                                 <label for="historia" class="text-primary font-weight-bold">Fecha </label>
-                                <p class="form-control-static font-weight-bold mb-0">{{ '12/01/2019' }}</p>
+                                <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.fecha"></p>
                             </div>
                         </div>
                         <div class="col-2 pr-0">
-                            <div class="form-group form-group-default border border-primary" >
+                            <div class="form-group form-group-default" >
                                 <label for="historia" class="text-primary font-weight-bold">T.C </label>
-                                <p class="form-control-static font-weight-bold mb-0">{{ '3.20' }}</p>
+                                <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.tipocambio"></p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-3">
-                    <button class="btn btn-info btn-block btn-sm"><span class="btn-label"><i class="la la-info"></i></span>Tx sin Piezas</button>
-                    <button class="btn btn-success btn-block btn-sm"><span class="btn-label"><i class="la la-check"></i></span>Grabar</button>
+                    <button class="btn btn-info btn-block btn-sm" @click.prevent="Tratamientos_sin_piezas"><span class="btn-label"><i class="la la-info"></i></span>Tx sin Piezas</button>
+                    <button class="btn btn-default btn-block btn-sm" @click.prevent="createPDF"><span class="btn-label"><i class="la la-info"></i></span>Imprimir</button>
+                    <button class="btn btn-success btn-block btn-sm" @click.prevent="CrearDatosPpto"><span class="btn-label"><i class="la la-check"></i></span>Grabar</button>
                     <button class="btn btn-warning btn-block btn-sm" v-if="!select_multi" @click.prevent="select_multi = true"><span class="btn-label"><i class="la la-exclamation-circle"></i></span>Seleccion Multiple</button>             
                     <button class="btn btn-danger btn-block btn-sm" v-if="select_multi" @click.prevent="cancelarMultiple"><span class="btn-label"><i class="la la-exclamation-circle"></i></span>Cancelar Multiple</button>             
                     <button class="btn btn-primary btn-block btn-sm" v-if="select_multi" :disabled="!(list_dent_multiple.length > 1)" @click.prevent="LoadServices"><span class="btn-label"><i class="la la-bookmark"></i></span>Cargar Servicios</button>
@@ -78,7 +90,7 @@
                 </div>              
             </div>
             <!-- Inicio de Odontograma -->
-            <div class="row">
+            <div class="row" ref="printMe">
                 <div class="col-12">
                     <p class="form-control-static text-center font-weight-bold mb-0" :class="{ 'text-warning': select_multi }">BUCAL</p>
                 </div>
@@ -95,25 +107,25 @@
                                     <div class="row d-flex justify-content-end" v-for="i in cuadrante_izquierdo_superior" :key="i">
                                         <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
                                             <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
-                                            <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3"> 
+                                            <input type="text" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]"> 
                                             <div>
-                                                <svg height="32" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del diente -->
-                                                    <polygon points="6,6 30,6 24,12 12,12" :class="BuscoCara(info,'V')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 1 Trapecio superior -->
-                                                    <polygon points="30,6 30,30 24,24 24,12" :class="BuscoCara(info,'M')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 2 Trapecio lateral derecho -->
-                                                    <polygon points="30,30 6,30 12,24 24,24" :class="BuscoCara(info,'P')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 3 Trapecio inferior -->
-                                                    <polygon points="6,30 12,24 12,12 6,6" :class="BuscoCara(info,'D')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 4 trapecio lateral izquierdo-->
-                                                    <polygon points="12,12 24,12 24,24 12,24" :class="BuscoCara(info,'O')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 5 Cuadrado Central -->
+                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')" /> <!-- CARA 1 Trapecio superior -->
+                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
+                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'P')" /> <!-- CARA 3 Trapecio inferior -->
+                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
+                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')" /> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
-                                                    <polygon points="16,8 20,8 20,28 16,28" :class="[BuscoDiente(info) == 2 ? 'marcadoEndodonciaO marcado' : 'endodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <circle cx="18" cy="18" r="10" :class="[BuscoDiente(info) == 3 ? 'marcadoCoronaO marcado' : 'corona']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <polygon points="6,10 10,6 30,26 26,30" :class="[BuscoDiente(info) == 4 ? 'marcadoExodonciaO marcado' : 'exodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>                                    
-                                                    <polygon points="26,6 30,10 10,30 6,26" :class="[BuscoDiente(info) == 4 ? 'marcadoExodonciaO marcado' : 'exodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <image v-if="BuscoDiente(info) == 5" xlink:href="/img/odontograma/perno4.png" x=6 y=6 width=26 height=26 class="perno" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <path d="M 8,20 a10,10 0 1,1 20,0" :class="[BuscoDiente(info) == 6 ? 'marcadoIonomeroO marcado' : 'ionomero']" @contextmenu.prevent.stop ="openMenu($event,info)"></path>
-                                                    <text x=8 y=29 :class="[BuscoDiente(info) == 7 ? 'marcadoSellanteO marcado' : 'sellante']" @contextmenu.prevent.stop ="openMenu($event,info)">S</text>                                                                        
-                                                    <ellipse cx="18" cy="18" rx="12" ry="7" :class="[BuscoDiente(info) == 8 ? 'marcadoGeneralO marcado' : 'general']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <line x1="8" y1="18" x2="30" y2="18" :class="[BuscoDiente(info) == 8 ? 'marcadoGeneralO marcado' : 'general']" @contextmenu.prevent.stop ="openMenu($event,info)"/>                                    
+                                                    <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
+                                                    <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
+                                                    <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
+                                                    <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
+                                                    <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
+                                                    <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
+                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
+                                                    <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
                                                 </svg>                                                                                                                                            
                                             </div>                                            
                                         </div>                                          
@@ -126,23 +138,23 @@
                                             <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
                                             <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3"> 
                                             <div>
-                                                <svg height="32" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente -->
-                                                    <polygon points="6,6 30,6 24,12 12,12" :class="BuscoCara(info,'V')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 1 Trapecio superior -->
-                                                    <polygon points="30,6 30,30 24,24 24,12" :class="BuscoCara(info,'M')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 2 Trapecio lateral derecho -->
-                                                    <polygon points="30,30 6,30 12,24 24,24" :class="BuscoCara(info,'P')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 3 Trapecio inferior -->
-                                                    <polygon points="6,30 12,24 12,12 6,6" :class="BuscoCara(info,'D')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 4 trapecio lateral izquierdo-->
-                                                    <polygon points="12,12 24,12 24,24 12,24" :class="BuscoCara(info,'O')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 5 Cuadrado Central -->
+                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
+                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
+                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'P')"/> <!-- CARA 3 Trapecio inferior -->
+                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
+                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
-                                                    <polygon points="16,8 20,8 20,28 16,28" :class="[BuscoDiente(info) == 2 ? 'marcadoEndodonciaO marcado' : 'endodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <circle cx="18" cy="18" r="10" :class="[BuscoDiente(info) == 3 ? 'marcadoCoronaO marcado' : 'corona']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <polygon points="6,10 10,6 30,26 26,30" :class="[BuscoDiente(info) == 4 ? 'marcadoExodonciaO marcado' : 'exodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>                                    
-                                                    <polygon points="26,6 30,10 10,30 6,26" :class="[BuscoDiente(info) == 4 ? 'marcadoExodonciaO marcado' : 'exodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <image v-if="BuscoDiente(info) == 5" xlink:href="/img/odontograma/perno4.png" x=6 y=6 width=26 height=26 class="perno" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <path d="M 8,20 a10,10 0 1,1 20,0" :class="[BuscoDiente(info) == 6 ? 'marcadoIonomeroO marcado' : 'ionomero']" @contextmenu.prevent.stop ="openMenu($event,info)"></path>
-                                                    <text x=8 y=29 :class="[BuscoDiente(info) == 7 ? 'marcadoSellanteO marcado' : 'sellante']" @contextmenu.prevent.stop ="openMenu($event,info)">S</text>                                                                        
-                                                    <ellipse cx="18" cy="18" rx="12" ry="7" :class="[BuscoDiente(info) == 8 ? 'marcadoGeneralO marcado' : 'general']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <line x1="8" y1="18" x2="30" y2="18" :class="[BuscoDiente(info) == 8 ? 'marcadoGeneralO marcado' : 'general']" @contextmenu.prevent.stop ="openMenu($event,info)"/>                                    
+                                                    <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
+                                                    <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
+                                                    <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
+                                                    <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
+                                                    <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
+                                                    <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
+                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
+                                                    <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
                                                 </svg>
                                             </div>
                                         </div>
@@ -161,23 +173,23 @@
                                             <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
                                             <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3"> 
                                             <div>
-                                                <svg height="32" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente -->
-                                                    <polygon points="6,6 30,6 24,12 12,12" :class="BuscoCara(info,'V')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 1 Trapecio superior -->
-                                                    <polygon points="30,6 30,30 24,24 24,12" :class="BuscoCara(info,'M')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 2 Trapecio lateral derecho -->
-                                                    <polygon points="30,30 6,30 12,24 24,24" :class="BuscoCara(info,'P')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 3 Trapecio inferior -->
-                                                    <polygon points="6,30 12,24 12,12 6,6" :class="BuscoCara(info,'D')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 4 trapecio lateral izquierdo-->
-                                                    <polygon points="12,12 24,12 24,24 12,24" :class="BuscoCara(info,'O')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 5 Cuadrado Central -->
+                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
+                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
+                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'P')"/> <!-- CARA 3 Trapecio inferior -->
+                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
+                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
-                                                    <polygon points="16,8 20,8 20,28 16,28" :class="[BuscoDiente(info) == 2 ? 'marcadoEndodonciaO marcado' : 'endodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <circle cx="18" cy="18" r="10" :class="[BuscoDiente(info) == 3 ? 'marcadoCoronaO marcado' : 'corona']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <polygon points="6,10 10,6 30,26 26,30" :class="[BuscoDiente(info) == 4 ? 'marcadoExodonciaO marcado' : 'exodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>                                    
-                                                    <polygon points="26,6 30,10 10,30 6,26" :class="[BuscoDiente(info) == 4 ? 'marcadoExodonciaO marcado' : 'exodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <image v-if="BuscoDiente(info) == 5" xlink:href="/img/odontograma/perno4.png" x=6 y=6 width=26 height=26 class="perno" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <path d="M 8,20 a10,10 0 1,1 20,0" :class="[BuscoDiente(info) == 6 ? 'marcadoIonomeroO marcado' : 'ionomero']" @contextmenu.prevent.stop ="openMenu($event,info)"></path>
-                                                    <text x=8 y=29 :class="[BuscoDiente(info) == 7 ? 'marcadoSellanteO marcado' : 'sellante']" @contextmenu.prevent.stop ="openMenu($event,info)">S</text>                                                                        
-                                                    <ellipse cx="18" cy="18" rx="12" ry="7" :class="[BuscoDiente(info) == 8 ? 'marcadoGeneralO marcado' : 'general']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <line x1="8" y1="18" x2="30" y2="18" :class="[BuscoDiente(info) == 8 ? 'marcadoGeneralO marcado' : 'general']" @contextmenu.prevent.stop ="openMenu($event,info)"/>                                    
+                                                    <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
+                                                    <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
+                                                    <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
+                                                    <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
+                                                    <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
+                                                    <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
+                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
+                                                    <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
                                                 </svg>
                                             </div>
                                         </div>
@@ -189,23 +201,23 @@
                                             <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
                                             <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3"> 
                                             <div>
-                                                <svg height="32" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente-->
-                                                    <polygon points="6,6 30,6 24,12 12,12" :class="BuscoCara(info,'V')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 1 Trapecio superior -->
-                                                    <polygon points="30,6 30,30 24,24 24,12" :class="BuscoCara(info,'M')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 2 Trapecio lateral derecho -->
-                                                    <polygon points="30,30 6,30 12,24 24,24" :class="BuscoCara(info,'P')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 3 Trapecio inferior -->
-                                                    <polygon points="6,30 12,24 12,12 6,6" :class="BuscoCara(info,'D')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 4 trapecio lateral izquierdo-->
-                                                    <polygon points="12,12 24,12 24,24 12,24" :class="BuscoCara(info,'O')" @contextmenu.prevent.stop ="openMenu($event,info)"/> <!-- CARA 5 Cuadrado Central -->
+                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
+                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
+                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'P')"/> <!-- CARA 3 Trapecio inferior -->
+                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
+                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
-                                                    <polygon points="16,8 20,8 20,28 16,28" :class="[BuscoDiente(info) == 2 ? 'marcadoEndodonciaO marcado' : 'endodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <circle cx="18" cy="18" r="10" :class="[BuscoDiente(info) == 3 ? 'marcadoCoronaO marcado' : 'corona']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <polygon points="6,10 10,6 30,26 26,30" :class="[BuscoDiente(info) == 4 ? 'marcadoExodonciaO marcado' : 'exodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>                                    
-                                                    <polygon points="26,6 30,10 10,30 6,26" :class="[BuscoDiente(info) == 4 ? 'marcadoExodonciaO marcado' : 'exodoncia']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <image v-if="BuscoDiente(info) == 5" xlink:href="/img/odontograma/perno4.png" x=6 y=6 width=26 height=26 class="perno" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <path d="M 8,20 a10,10 0 1,1 20,0" :class="[BuscoDiente(info) == 6 ? 'marcadoIonomeroO marcado' : 'ionomero']" @contextmenu.prevent.stop ="openMenu($event,info)"></path>
-                                                    <text x=8 y=29 :class="[BuscoDiente(info) == 7 ? 'marcadoSellanteO marcado' : 'sellante']" @contextmenu.prevent.stop ="openMenu($event,info)">S</text>                                                                        
-                                                    <ellipse cx="18" cy="18" rx="12" ry="7" :class="[BuscoDiente(info) == 8 ? 'marcadoGeneralO marcado' : 'general']" @contextmenu.prevent.stop ="openMenu($event,info)"/>
-                                                    <line x1="8" y1="18" x2="30" y2="18" :class="[BuscoDiente(info) == 8 ? 'marcadoGeneralO marcado' : 'general']" @contextmenu.prevent.stop ="openMenu($event,info)"/>                                    
+                                                    <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
+                                                    <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
+                                                    <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
+                                                    <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
+                                                    <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
+                                                    <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
+                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
+                                                    <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
                                                 </svg>
                                             </div>
                                         </div>
@@ -224,10 +236,7 @@
                     <p class="form-control-static text-center font-weight-bold mb-0" :class="{ 'text-warning': select_multi }">BUCAL</p>
                 </div>              
             </div>
-            <!-- Fin de Odontograma -->
-            <ul id="right-click-menu" tabindex="-1" ref="menu" v-if="viewMenu" @blur="closeMenu" v-bind:style="{top:top, left:left}">
-                <li @click.prevent="deleteItem">Eliminar</li>
-            </ul>            
+            <!-- Fin de Odontograma -->          
             <div class="row">
                 <table class="table table-bordered table-sm table-head-bg-info table-bordered-bd-info">
                     <thead>
@@ -243,7 +252,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="serv in lista_general_presupuesto" :key="serv.id">
+                        <tr v-for="(serv, index) in lista_general_presupuesto" :key="serv.id">
                             <td>{{ serv.letras }}</td>
                             <td>{{ serv.nombre_servicio}}</td>
                             <td>{{ serv.nombre_moneda}}</td>
@@ -251,8 +260,11 @@
                             <td>0</td>  
                             <td>0</td>   
                             <td>{{ serv.costo}}</td> 
-                            <td><button type="button" v-tooltip="'Eliminar Item'" class="btn btn-danger btn-xs" @click.prevent="borrarItem(serv)">
+                            <td><button type="button" v-tooltip="'Eliminar Item'" class="btn btn-danger btn-xs" @click.prevent="borrarItem(index)">
                                     <i class="la la-trash-o font-large"></i>
+                                </button>
+                                <button type="button" v-tooltip="'Descuento'" class="btn btn-success btn-xs" @click.prevent="AplicaDescuento(serv,index)">
+                                    <i class="la la-calculator font-large"></i>
                                 </button>
                             </td>                                                                                                                        
                         </tr>
@@ -345,11 +357,13 @@
                                             <th scope="col">Coaseguro</th>
                                             <th scope="col">P.Aseg</th>     
                                             <th scope="col">C.Total</th>
-                                            <th scope="col">Pago</th>                                                                                                                          
+                                            <th scope="col">Pago</th>  
+                                            <th scope="col">#</th>                                                                                                                        
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="serv in list_services_dent" :key="serv.id">
+                                        <!--<tr v-for="serv in list_services_dent" :key="serv.id">-->
+                                        <tr v-for="(serv, index) in list_services_anteriores" :key="serv.id">
                                             <td>{{ serv.letras }}</td>
                                             <td>{{ serv.nombre_servicio}}</td>
                                             <td>{{ serv.nombre_moneda}}</td>
@@ -357,10 +371,23 @@
                                             <td>0</td>  
                                             <td>0</td>   
                                             <td>{{ serv.costo}}</td>  
-                                            <td>{{ serv.costo}}</td>                                                                                                                         
+                                            <td>{{ serv.costo}}</td> 
+                                            <td><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" disabled>X</button></td>                                                                                                                        
                                         </tr>
-                                        <tr v-if="list_services_dent.length == 0">
-                                            <td colspan="8" class="text-center">NO HAY SERVICIOS CARGADOS ...</td>                                           
+                                        <tr v-for="(serv, index) in list_services_dent" :key="serv.id">
+                                            <td>{{ serv.letras }}</td>
+                                            <td>{{ serv.nombre_servicio}}</td>
+                                            <td>{{ serv.nombre_moneda}}</td>
+                                            <td>0</td>
+                                            <td>0</td>  
+                                            <td>0</td>   
+                                            <td>{{ serv.costo}}</td>  
+                                            <td>{{ serv.costo}}</td> 
+                                            <td><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)">X</button></td>                                                                                                                        
+                                        </tr>                                        
+                                        <!--<tr v-if="list_services_dent.length == 0">-->
+                                        <tr v-if="list_services_dent.length == 0 && list_services_anteriores.length == 0">
+                                            <td colspan="9" class="text-center">NO HAY SERVICIOS CARGADOS ...</td>                                           
                                         </tr>
                                     </tbody>
                                 </table>                                
@@ -388,7 +415,7 @@
                         <!-- START DEFAULT DATATABLE -->
                         <vue-good-table
                         :columns="columns_servicios"
-                        :rows="tarifarios"
+                        :rows="TratamientosSimbolo"
                         :paginationOptions="{
                             enabled: true,
                             dropdownAllowAll: false,
@@ -398,6 +425,7 @@
                             ofLabel: 'de',
                             allLabel: 'Todos',
                         }"
+                        @on-row-dblclick="selectServicio"
                         :rowStyleClass="'enlace'"
                         max-height="400px"
                         styleClass="vgt-table condensed bordered striped"> 
@@ -416,28 +444,166 @@
                      </div>
                 </div>
             </div>                                
-        </modal>                         
+        </modal> 
+        <modal id="tratamientos_sin_piezas" name="tratamientos_sin_piezas" :width="'60%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
+           <div class="card mb-0">
+                <div class="card-header">
+                    <div class="card-title d-inline">Seleccione un Servicio</div>
+                    <button type="button" class="close d-inline" aria-label="Close" @click.prevent="$modal.hide('tratamientos_sin_piezas')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                     <div class="col">
+                        <!-- START DEFAULT DATATABLE -->
+                        <vue-good-table
+                        :columns="columns_servicios"
+                        :rows="TratamientosSimbolo"
+                        :paginationOptions="{
+                            enabled: true,
+                            dropdownAllowAll: false,
+                            nextLabel: 'Sig',
+                            prevLabel: 'Ant',
+                            rowsPerPageLabel: 'Registros por Pagina',
+                            ofLabel: 'de',
+                            allLabel: 'Todos',
+                        }"
+                        @on-row-dblclick="selectServicioSinPiezas"
+                        :rowStyleClass="'enlace'"
+                        max-height="400px"
+                        styleClass="vgt-table condensed bordered striped"> 
+                        <template slot="table-row" slot-scope="props">
+                            <span v-if="props.column.field == 'btn'" class="center">
+                                <button type="button" data-toggle="tooltip" title="" class="btn btn-primary btn-xs" data-original-title="" @click.prevent="selectServicioSinPiezas(props)">
+                                    Seleccionar
+                                </button>                                                               
+                            </span>
+                            <span v-else>
+                                {{props.formattedRow[props.column.field]}}
+                            </span>
+                        </template>                                                    
+                        </vue-good-table>
+                        <!-- END DEFAULT DATATABLE -->  
+                     </div>
+                </div>
+            </div>                                
+        </modal>         
+        <modal name="descuento" :width="'25%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
+           <div class="card mb-0">
+                <div class="card-header">
+                    <div class="card-title">Aplicar Descuento</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check form-check-inline pt-0 pb-0">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" value="0" v-model="dataDescuento.tipo" @change="cambiaTipo">
+                                    <label class="custom-control-label" for="customRadio1">Por Monto Fijo</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" value="1" v-model="dataDescuento.tipo" @change="cambiaTipo">
+                                    <label class="custom-control-label" for="customRadio2">Por Porcentaje</label>
+                                </div>                             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group pt-0 pb-0">
+                                <label for="nombre" class="text-primary font-weight-bold">Monto Actual <span class="required-label"> *</span></label>
+                                <input type="text" id="nombre" class="form-control form-control-sm border border-primary" v-model="dataDescuento.monto_actual">
+                            </div> 
+                        </div>                        
+                    </div>
+                    <div class="row" v-if="dataDescuento.tipo == 1">
+                        <div class="col">
+                            <div class="form-group pt-10 pb-0">
+                                <label for="nombre" class="text-primary font-weight-bold">% descuento <span class="required-label"> *</span></label>
+                                <input type="text" id="nombre" class="form-control form-control-sm border border-primary" v-model="dataDescuento.porcentaje">
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group pt-10 pb-0">
+                                <label for="nombre" class="text-primary font-weight-bold">Nuevo Monto <span class="required-label"> *</span></label>
+                                <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataDescuento.nuevo_monto" :disabled="dataDescuento.tipo == 1">
+                            </div>  
+                        </div>                       
+                    </div>
+                </div>
+                <div class="card-action">
+                    <button class="btn btn-primary" @click.prevent="ActionDescuento" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+                    <button class="btn btn-danger" @click="$modal.hide('descuento')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                </div>                
+            </div>                                
+        </modal> 
+        <context-menu id="context-menu" ref="ctxMenu">
+            <li @click.prevent="deleteItem">Eliminar</li>
+            <li @click.prevent="ausenteItem" v-if="contains(odontograma,deleteDent.id)">Ausente</li>
+            <li @click.prevent="normalItem" v-if="contains(list_dent_missing,deleteDent.id)">Normal</li>
+        </context-menu>                                        
     </div>
 </template>
 <script>
 import mixin from '../../../mixins.js'
 import  {_} from 'vue-underscore'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 //import '../../jquery-js/jquery-odontograma.js'
 import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'ppto-operatoria',
     mixins: [mixin],   
-    created() {
+    created(){
         this.$store.dispatch('LOAD_DIENTES_LIST') 
         this.$store.dispatch('LOAD_SIMBOLOGIAS_LIST')   
-        this.$store.dispatch('LOAD_TARIFARIOS_LIST')                          
+        this.$store.dispatch('LOAD_TARIFARIOS_LIST') 
+        this.$store.dispatch('LOAD_EMPLEADOS_LIST')     
+        this.$store.dispatch('LOAD_TIPOCAMBIOS_LIST')          
+        this.dataPaciente = {
+            id:this.PacienteById.id,
+            nombre_completo:this.PacienteById.nombre_completo,
+            historiaclinica:this.PacienteById.historiaclinica,
+            empresa:this.PacienteById.pacienteplanes.tipo == 1 ? '-' : this.PacienteById.pacienteplanes.empresapaciente.razon_social,
+            plan:this.PacienteById.pacienteplanes.plan.descripcion ,
+            aseguradora:this.PacienteById.pacienteplanes.plan.descripcion ,
+            empleado_id:this.PacienteById.empleado_id,
+            fecha:moment().format('DD-MM-YYYY'),
+            tipocambio:this.getTipoCambioHoy.tipo_cambio
+        }        
     },  
     mounted(){
         this.cambioTipo(1)
+        let self = this
+        if(this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles != undefined){
+            this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles.map(function(value, key) {
+                let datadet = []
+                self.dataTratamiento = {
+                    tarifario_id : value.tarifario_id,
+                    diente_id: value.diente_id,
+                    diente_codigo: value.diente.codigo,
+                    texto_diente:value.texto_diente,
+                    caras:value.caras,
+                    simbologia:value.simbologia_id,
+                    letras:value.letras,
+                    servicio_id:value.tarifario.servicio_id,
+                    nombre_servicio:value.tarifario.servicio.nombre_servicio,
+                    costo_base:value.costo_base,
+                    costo:value.costo,
+                    moneda_id:value.moneda_id,
+                    nombre_moneda:value.moneda.nombre_moneda,
+                    descuento:value.descuento
+                }
+                datadet = _.clone(self.dataTratamiento)
+                self.lista_general_presupuesto.push(datadet)
+            })
+        }
     },   
     data(){
         return {
-            isLoading: true,
+            isLoading: false,
             fullPage: true,
 
             IconClass : 'la la-cloud-download',
@@ -448,30 +614,27 @@ export default {
                 {
                 label: 'Servicio',
                 field: 'servicio.nombre_servicio',
-                width:'30%',
+                filterOptions: {
+                    enabled: true, 
+                    placeholder: 'Buscar', 
+                },                
+                width:'40%',
                 }, 
                 {
                 label: 'Costo',
-                field: 'costo',
-                filterOptions: {
-                    enabled: false, 
-                    placeholder: 'Buscar', 
-                },             
-                width:'15%',
+                field: 'costo', 
+                type: 'decimal',            
+                width:'8%',
                 },
                 {
                 label: 'Moneda',
                 field: 'moneda.nombre_moneda',
-                width:'15%',
+                width:'10%',
                 },                 
                 {
                 label: 'Pago',
-                field: 'plan.descripcion',
-                filterOptions: {
-                    enabled: false, 
-                    placeholder: 'Buscar', 
-                },                 
-                width:'20%',
+                field: 'plan.descripcion',                
+                width:'27%',
                 },                                                                                                                                                                                                                       
                 {
                 label: 'Acción',
@@ -479,19 +642,94 @@ export default {
                 thClass: 'center',
                 tdClass: 'center',
                 html: true  ,
-                width:'20%',  
+                width:'15%',  
                 }                               
             ],
+            dataPresupuesto:{
+                fecha_registro:'',
+                paciente_id:'',
+                empleado_id:'',
+                moneda_id:'',
+                numero_prespuesto:'',
+                plan_id:'',
+                poliza_id:'',
+                tipo_presupuesto:'',
+                estado_seguimiento:'',
+                observaciones:'',
+                estadopresupuesto_id:'',
+                tipocambio_id:'',
+                sede_id:'',
+                pago_cliente:'',
+                pago_aseguradora:'',
+                pago_total:'',
+                user_id:'',
+                saldo:'',
+                detalle:[],
+                ausentes:[],
+                text_up_dent:[]
+            },
+            dataDetallePresupuesto:{
+                tarifario_id:'',
+                tarifa:'',
+                moneda_id:'',
+                deducible:'',
+                solocoaseguro:'',
+                pago_cliente:'',
+                pago_aseguradora:'',
+                costo:'',
+                costo_base:'',
+                descuento:'',
+                tipo_odontograma:'',
+                empleado_id:'',
+                realizado:'',
+                descargado:'',
+                pagado:'',
+                tipo_pagado:'',
+                laboratorio_id:'',
+                monto_lab:'',
+                material_id:'',
+                monto_mat:'',
+                solicitud:'',
+                user_id:'',
+                diente_id:'',
+                caras:'',
+                letras:'',
+                simbologia_id:'',
+                texto_diente:''
+            },
+            dataPaciente:{
+                id:'',
+                nombre_completo:'',
+                historiaclinica:'',
+                empresa:'',
+                plan:'',
+                aseguradora:'',
+                empleado:'',
+                fecha:'',
+                tipocambio:''
+            },
             dataTratamiento:{
+                tarifario_id:'',
                 diente_id: '',
                 diente_codigo: '',
+                texto_diente:'',
                 caras: '',
                 simbologia: '',
                 letras : '',
                 servicio_id : '',
                 nombre_servicio : '',
+                costo_base:'',
                 costo : '',
-                nombre_moneda : ''
+                moneda_id:'',
+                nombre_moneda : '',
+                descuento:''
+            },
+            dataDescuento:{
+                tipo:'0',
+                monto_actual:'',
+                porcentaje:'',
+                nuevo_monto:'',
+                descuento:''
             },
             tiposOdontograma:[
                 {id:1 , nombre:'permanente'},
@@ -505,25 +743,108 @@ export default {
             multicaras:[],
             select_multi: false,
             list_dent_multiple:[],
-            list_services_dent:[],
-            lista_general_presupuesto:[],
+            list_services_dent:[],          // nuevos servicios q se cargan al listado general del ppto
+            list_services_anteriores:[],     // lista general de servicios anteriores cargados al diente 
+            lista_general_presupuesto:[],   // listado general del presupuesto
             selected: undefined,
             odontograma:[],
             cuadrante_izquierdo_superior:[1,5],
             cuadrante_derecho_superior:[2,6],
             cuadrante_izquierdo_inferior:[8,4],
             cuadrante_derecho_inferior:[7,3],
-            viewMenu: false,
-            top: '0px',
-            left: '0px',
-            deleteDent:[]
+            deleteDent:[],
+            list_dent_missing:[],
+
+            diente: {
+                cursor:'pointer', 
+                cursor: 'hand' ,        
+                fillOpacity:'0',
+                stroke:'dimgrey',
+                strokeWidth:'1px'                
+            },
+
+            deshabilitado: {
+                fill:'dimgrey',
+                stroke: 'rgb(71, 71, 71)',
+                strokeWidth:'1px',
+                opacity: '0.3'
+            },
+
+            invisible: {
+                fill:'none',
+                opacity: '0'                
+            },
+            
+            marcadoRojo: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fill:'red',
+                stroke:'dimgrey',
+                strokeWidth:'1px'
+            },
+            
+            marcadoCoronaO: {
+                cursor:'pointer', 
+                cursor: 'hand' , 
+                fill:'none',
+                stroke:'red',
+                strokeWidth:'2px'                          
+            },
+            
+            marcadoEndodonciaO: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fill:'red',
+                stroke:'red',
+                strokeWidth:'1px'                 
+            },
+            
+            marcadoExodonciaO: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fill:'red',
+                stroke:'red',
+                strokeWidth:'1px'                      
+            },
+            
+            marcadoIonomeroO: {
+                cursor:'pointer', 
+                cursor: 'hand' ,         
+                stroke : 'red',
+                fillOpacity : '0',
+                strokeWidth: '2px'               
+            },
+            
+            marcadoSellanteO: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fontWeight: 'normal',
+                fill : 'red',
+                stroke : 'red',
+                strokeWidth: '1px',
+                fontSize : '2em'             
+            },
+            
+            marcadoGeneralO: {
+                cursor:'pointer', 
+                cursor: 'hand' ,         
+                fill:'none',
+                stroke:'red',
+                strokeWidth:'1px'        
+            }            
         }
     },
     computed: {
-        ...mapState(['dientes','simbologias','tarifarios']),
-        ...mapGetters(['getDientesByCuadrante']),  
+        ...mapState(['user_system','dientes','simbologias','tarifarios']),
+        ...mapGetters(['getDientesByCuadrante','getPacienteById','getMedicos','getTipoCambioHoy','getTratamientosSimbolo','getPresupuestoOperatoriaById']), 
+        PacienteById(){
+            return this.getPacienteById(this.$route.params.idpaciente)
+        },  
         simbolos(){
             return _.sortBy(this.simbologias, 'id');
+        },
+        TratamientosSimbolo(){
+            return this.getTratamientosSimbolo(this.simboloID,this.PacienteById.pacienteplanes.plan_id,1)
         },
         costoTotal(){
             let costo = 0
@@ -531,6 +852,12 @@ export default {
                 costo += parseFloat(value.costo)
             })
             return parseFloat(costo).toFixed(2)
+        },
+        presupuestoOperatoriaById(){
+            if(this.$route.params.idpresupuesto != undefined){
+                return this.getPresupuestoOperatoriaById(this.$route.params.idpresupuesto)                 
+            }
+            return []        
         }                 
     },  
     watch:{
@@ -538,9 +865,21 @@ export default {
             if(newVal != 1){
                 this.multicaras =[]
             }
+        },
+        'dataDescuento.porcentaje' (newVal,oldVal){
+            if(newVal != 0){
+                this.dataDescuento.nuevo_monto = this.dataDescuento.monto_actual * ( 1 - (this.dataDescuento.porcentaje / 100))
+            }else{
+                this.dataDescuento.nuevo_monto = ''
+            }
         }
-    },  
+    },   
     methods: {
+        StatusForm: function(eshow,eclass,elabel){
+            this.ShowIcon = eshow
+            this.IconClass = eclass        
+            this.labelButton = elabel            
+        },        
         ShowDiente(params){
             if(!this.contains(this.odontograma,params.id)) return
             this.infodent = params
@@ -560,24 +899,33 @@ export default {
             let self = this
             this.list_services_dent = []
             if(this.select_multi){
-
+                /** No se cargara  */
             }else{
-                let encontrado = self.lista_general_presupuesto.find(ser => ser.diente_id == self.infodent.id)
-                if(encontrado){
-                    this.list_services_dent.push(encontrado)
+                /** Cargo los servicios del diente */
+                let encontrado = self.lista_general_presupuesto.filter(ser => ser.diente_id == self.infodent.id)
+                if(encontrado.length > 0){
+                    encontrado.map(function(value, key) {
+                        //value.deleted = false
+                        self.list_services_anteriores.push(value)
+                    })
                 }
             }
 
             this.dataTratamiento = {
+                tarifario_id:'',
                 diente_id: '',
                 diente_codigo: '',
+                texto_diente:'',
                 caras: '',
                 simbologia: '',
                 letras : '',
                 servicio_id : '',
                 nombre_servicio : '',
+                costo_base:'',
                 costo : '',
-                nombre_moneda : ''              
+                moneda_id:'',
+                nombre_moneda : '',
+                descuento:''            
             }
             this.selected = undefined
             this.$modal.show('carga_servicios') 
@@ -615,35 +963,46 @@ export default {
             if(this.select_multi){
                 this.list_dent_multiple.map(function(value, key) {                                       
                     self.dataTratamiento = {
+                        tarifario_id:param.row.id,
                         diente_id: value.id,
                         diente_codigo: value.codigo,
+                        texto_diente:'',
                         caras: _letras,
                         simbologia: self.simboloID,
                         letras : value.codigo.replace('.', '') + '_' + _letras,
-                        servicio_id : param.row.id,
+                        servicio_id : param.row.servicio_id,
                         nombre_servicio : param.row.servicio.nombre_servicio,
+                        costo_base: param.row.costo,
                         costo : param.row.costo,
-                        nombre_moneda : param.row.moneda.nombre_moneda
+                        moneda_id:param.row.moneda.id,
+                        nombre_moneda : param.row.moneda.nombre_moneda,
+                        descuento:''
                     } 
                     datalist = _.clone(self.dataTratamiento)             
-                    self.list_services_dent.push(datalist)
+                    self.list_services_dent.push(datalist)      // nuevos servicios
                 })
             }else{
                 this.dataTratamiento = {
+                    tarifario_id:param.row.id,
                     diente_id: this.infodent.id,
                     diente_codigo: this.infodent.codigo,
+                    texto_diente:'',
                     caras: _letras,
                     simbologia: this.simboloID,
                     letras : this.infodent.codigo.replace('.', '') + '_' + _letras,
-                    servicio_id : param.row.id,
+                    servicio_id : param.row.servicio_id,
                     nombre_servicio : param.row.servicio.nombre_servicio,
+                    costo_base: param.row.costo,
                     costo : param.row.costo,
-                    nombre_moneda : param.row.moneda.nombre_moneda
+                    moneda_id:param.row.moneda.id,
+                    nombre_moneda : param.row.moneda.nombre_moneda,
+                    descuento:''
                 }                
-                this.list_services_dent.push(this.dataTratamiento)
+                this.list_services_dent.push(this.dataTratamiento)          // nuevos servicios
             }
             this.multicaras = []
-            this.selected = undefined
+            this.cambiotratamiento(undefined)
+            this.simboloID = ''
             this.$modal.hide('tratamientos');            
         },
         selectD(param){
@@ -657,6 +1016,10 @@ export default {
         salirDiente(){
             this.list_dent_multiple = []
             this.select_multi = false
+            this.simboloID = '' 
+            this.selected = undefined 
+            this.list_services_dent = []
+            this.list_services_anteriores = []                         
             this.$modal.hide('carga_servicios')
         },
         cambioTipo(param){
@@ -673,58 +1036,53 @@ export default {
             this.selected = undefined   
             this.list_services_dent.map(function(value, key) {
                 self.lista_general_presupuesto.push(value)
-            })     
+            })  
+            this.list_services_dent = []
+            this.list_services_anteriores = []   
             this.$modal.hide('carga_servicios')
         },
-        BuscoDiente(param){
-            let serdent = this.lista_general_presupuesto.find(ser => ser.diente_id == param.id)            
-            if(serdent){
-                return serdent.simbologia
+        BuscoDiente(param,numsim){
+            let valor = false
+            if(this.lista_general_presupuesto.length == 0) return valor
+            let serdent = this.lista_general_presupuesto.filter(ser => ser.diente_id == param.id)
+            if(serdent.length > 0){
+                serdent.map(function(value, key) {
+                    if(value.simbologia == numsim){
+                        valor = true
+                        return
+                    }
+                })
             }
-            return undefined
+            return valor
         },  
         BuscoCara(param,cara){
             let encontrado;
+            //let valor = 'deshabilitado'
+            let valor = this.deshabilitado
             self = this
             if(this.contains(this.odontograma,param.id)){
-                encontrado = self.lista_general_presupuesto.find(ser => ser.diente_id == param.id)
-                if(encontrado){                 
-                    if(encontrado.simbologia == 1){                       
-                        if(encontrado.caras.indexOf(cara) > -1){
-                            return 'marcadoRojo marcado'
+                //valor = 'diente'     
+                valor = self.diente           
+                encontrado = self.lista_general_presupuesto.filter(ser => ser.diente_id == param.id)
+                if(encontrado.length > 0){                 
+                    encontrado.map(function(value, key) {
+                        if((value.simbologia == 1) && (value.caras.indexOf(cara)) >-1) {
+                            //valor = 'marcadoRojo marcado'
+                            valor = self.marcadoRojo
+                            return
                         }
-                    }
+                    })
                 }
-                return 'diente'
             }
-            return 'deshabilitado'
+            return valor
         },
-        setMenu(top, left) {               
-/*             let largestHeight = window.innerHeight - this.$refs.menu.offsetHeight - 25;
-            let largestWidth = window.innerWidth - this.$refs.menu.offsetWidth - 25;
-            if (top > largestHeight) top = largestHeight;
-            if (left > largestWidth) left = largestWidth; */
-            this.top = (top - this.$refs.contenedor.getBoundingClientRect().top) + 'px'
-            this.left = (left - this.$refs.contenedor.getBoundingClientRect().left) + 'px'
-        },
-
-        closeMenu() {
-            this.viewMenu = false
-        },
-
-        openMenu(e,param) {
-            console.log("di click",param)
+        menuPopup(param){
             this.deleteDent = param
-            let self = this
-            this.viewMenu = true
-            this.$nextTick(function() {
-                self.$refs.menu.focus();
-                self.setMenu(e.y, e.x)
-            })
-            e.preventDefault();
+            if(this.contains(this.odontograma,param.id) || this.contains(this.list_dent_missing,param.id)){
+                this.$refs.ctxMenu.open()
+            }
         },
         deleteItem(){
-            console.log(this.deleteDent)
             let self = this
             let encontrado = this.lista_general_presupuesto.find(lis => lis.diente_id == self.deleteDent.id)
             if(encontrado){
@@ -732,9 +1090,19 @@ export default {
                     return val.diente_id == self.deleteDent.id
                 });
             }           
-            this.closeMenu()
         },
-        borrarItem(param){
+        ausenteItem(){
+            let self = this
+            this.list_dent_missing.push(this.deleteDent.id)
+            this.odontograma = _.reject(self.odontograma, function(d){ return d == self.deleteDent.id })
+
+        },
+        normalItem(){
+            let self = this
+            this.odontograma.push(this.deleteDent.id)
+            this.list_dent_missing = _.reject(self.list_dent_missing, function(d){ return d == self.deleteDent.id })
+        },
+        borrarItem(index){
             this.$swal({
                 title: 'Desea eliminar este registro?',
                 text: "No podras revertir esto!",
@@ -747,16 +1115,332 @@ export default {
                 }).then((result) => {
                     if (result.value) {
                         let self = this
-                        let encontrado = this.lista_general_presupuesto.find(lis => lis.diente_id == param.diente_id)
-                        if(encontrado){
-                            this.lista_general_presupuesto = _.reject(this.lista_general_presupuesto, function(val){
-                                return val.diente_id == param.diente_id
-                            });
-                        } 
+                        this.$delete(self.lista_general_presupuesto , index) 
                     }
                 });              
-        }
-
+        },
+        EliminaServicio(index){
+            this.$swal({
+                title: 'Desea eliminar este registro?',
+                text: "No podras revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let self = this
+                        this.$delete(self.list_services_dent , index)
+                    }
+                });              
+        },
+        AplicaDescuento(param,index){
+            this.dataDescuento = {
+                index:index,
+                tipo:'0',
+                monto_actual:param.costo,
+                porcentaje:'',
+                nuevo_monto:''
+            },
+            this.$modal.show('descuento')
+        },
+        ActionDescuento(){             
+            let desc = parseFloat(this.dataDescuento.monto_actual) - parseFloat(this.dataDescuento.nuevo_monto)
+            this.lista_general_presupuesto[this.dataDescuento.index].descuento = parseFloat(desc).toFixed(2)
+            this.lista_general_presupuesto[this.dataDescuento.index].costo = this.dataDescuento.nuevo_monto
+            this.$modal.hide('descuento')
+        },
+        cambiaTipo(){
+            this.dataDescuento.nuevo_monto = ''
+            this.dataDescuento.porcentaje = ''
+        },
+        Tratamientos_sin_piezas(){
+            this.simboloID = 8
+            this.$modal.show('tratamientos_sin_piezas')
+            
+        },
+        selectServicioSinPiezas(param){
+            this.dataTratamiento = {
+                tarifario_id:param.row.id,
+                diente_id: '',
+                diente_codigo: '',
+                texto_diente:'',
+                caras: '',
+                simbologia: this.simboloID,
+                letras : '00_0',
+                servicio_id : param.row.servicio_id,
+                nombre_servicio : param.row.servicio.nombre_servicio,
+                costo_base: param.row.costo,
+                costo : param.row.costo,
+                moneda_id:param.row.moneda.id,
+                nombre_moneda : param.row.moneda.nombre_moneda,
+                descuento:''
+            }                
+            this.lista_general_presupuesto.push(this.dataTratamiento)          // nuevos servicios
+            this.cambiotratamiento(undefined)
+            this.simboloID = ''
+            this.$modal.hide('tratamientos_sin_piezas');              
+        },
+        CrearDatosPpto(){
+            if(this.lista_general_presupuesto.length == 0){
+                this.notificaciones('No hay servicios cargados en el presupuesto','la la-thumbs-o-down','danger')                
+                return
+            }
+            let self = this
+            let cont_text = _.clone(this.dataPresupuesto.text_up_dent)         
+            this.dataPresupuesto = {
+                fecha_registro:moment().format('DD-MM-YYYY'),
+                paciente_id:this.PacienteById.id,
+                empleado_id:this.PacienteById.empleado_id,
+                moneda_id:'',
+                numero_prespuesto:'',
+                plan_id:this.PacienteById.pacienteplanes.plan_id ,
+                poliza_id:this.PacienteById.pacienteplanes.poliza_id != null ? this.PacienteById.pacienteplanes.poliza_id : null,
+                tipo_presupuesto:this.PacienteById.pacienteplanes.tipo,
+                estado_seguimiento:1,
+                observaciones:'',
+                estadopresupuesto_id:1,
+                tipocambio_id:this.getTipoCambioHoy.id,
+                sede_id:1,
+                pago_cliente:this.costoTotal,
+                pago_aseguradora:0,
+                pago_total:this.costoTotal,
+                user_id:this.user_system.id,
+                saldo:0,
+                detalle:[],
+                ausentes:[],
+                text_up_dent:cont_text
+            }
+            this.lista_general_presupuesto.map(function(value, key) {
+                let detpre = _.clone(self.dataDetallePresupuesto)
+                detpre = {
+                    tarifario_id:value.tarifario_id,
+                    tarifa:self.PacienteById.pacienteplanes.tipo,
+                    moneda_id:value.moneda_id,
+                    deducible:self.PacienteById.pacienteplanes.poliza_id != null ? self.PacienteById.pacienteplanes.poliza.deducible : null ,
+                    solocoaseguro: self.PacienteById.pacienteplanes.poliza_id != null ? self.PacienteById.pacienteplanes.poliza.coaseguro : null,
+                    pago_cliente:value.costo,
+                    pago_aseguradora:'',
+                    costo:value.costo,
+                    costo_base:value.costo_base,
+                    descuento:value.descuento,
+                    tipo_odontograma:1,
+                    empleado_id:self.PacienteById.empleado_id,
+                    realizado:0,
+                    descargado:0,
+                    pagado:0,
+                    tipo_pagado:'',
+                    laboratorio_id:'',
+                    monto_lab:'',
+                    material_id:'',
+                    monto_mat:'',
+                    solicitud:'',
+                    user_id:self.user_system.id,
+                    diente_id:value.diente_id,
+                    caras:value.caras,
+                    letras:value.letras,
+                    simbologia_id:value.simbologia,
+                    texto_diente:value.texto_diente
+                }
+                if(self.dataPresupuesto.text_up_dent[value.diente_id] != undefined){
+                    detpre.texto_diente = self.dataPresupuesto.text_up_dent[value.diente_id]
+                }                
+                self.dataPresupuesto.detalle.push(detpre)
+            })
+            if(this.list_dent_missing.length > 0){
+                this.list_dent_missing.map(function(value, key) { 
+                    self.dataPresupuesto.ausentes.push(value)
+                }) 
+            }          
+            this.createPresupuesto()
+        },
+        createPresupuesto(){
+            var url = '/api/presupuestos-operatorias';
+            this.StatusForm(true,'la la-spinner','Procesando')     
+            axios.post(url, this.dataPresupuesto).then(response => {
+            if(typeof(response.data.errors) != "undefined"){
+                this.errors = response.data.errors;
+                var resultado = "";
+                for (var i in this.errors) {
+                    if (this.errors.hasOwnProperty(i)) {
+                        resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                    }
+                }
+                this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                
+                this.StatusForm(false,'la la-cloud-download','Grabar Datos')                
+                return;
+            }
+            this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST')    
+            this.errors = [];
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')              
+            this.notificaciones('Nuevo Presupuesto creado con exito','la la-thumbs-up','success')  
+            this.$swal({
+                title: 'Desea Imprimir este presupuesto?',
+                text: "No podras revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, imprimir!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.isLoading = true
+                        this.createPDF()
+                    }
+            });
+            //this.$modal.hide('paciente');                         
+            }).catch(error => {
+            this.errors = error.response.data.status;
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
+            });
+        }, 
+        createPDF () {
+            this.take(this.$refs.printMe)
+        },
+        take(targetElem) {
+            let self = this
+            // Primero renderiza todos los SVGs a los lienzos
+            var elements = $(targetElem).find('svg').map(function() {
+                var svg = $(this);
+                var canvas = $('<canvas id="canvas"></canvas>');
+                svg.replaceWith(canvas);
+                var serializer = new XMLSerializer();
+                var svgString = serializer.serializeToString(svg[0]);
+                canvg(canvas[0], svgString);
+                return {
+                    svg: svg,
+                    canvas: canvas
+                };
+            });
+            $(targetElem).imagesLoaded(function() {
+                // En este punto, el contenedor no tiene SVG, solo tiene HTML y lienzos.
+                html2canvas($(targetElem)[0]).then(function(canvas) {
+                    // reemplazar los svg originales
+                    elements.each(function() {
+                        this.canvas.replaceWith(this.svg);
+                    });
+                    // Poner el lienzo creado en una imagen.
+                    var imgData = canvas.toDataURL("image/png");
+                    var doc = new jsPDF();
+                    var img = new Image()
+                    img.src = '/img/logo/multident.png'
+                    doc.addImage(img, 'png', 150, 10, 45, 5)                    
+                    doc.setFontSize(12)
+                    doc.setFont("helvetica")
+                    doc.setFontType("bold")
+                    doc.text(15,15,"PRESUPUESTO Nº 1265")
+                    doc.setFontSize(8)                   
+                    doc.text(15,20,'FECHA :')
+                    doc.text(40,20, self.dataPaciente.fecha)
+                    doc.setFontType("normal")   
+                    doc.text(85,20,'H.C Nº :')
+                    doc.text(100,20, self.dataPaciente.historiaclinica.toString())  
+                    doc.text(150,20, 'Sede:')
+                    doc.setFontType("bold")                     
+                    doc.text(165,20, 'MAYOLO') 
+                    doc.setFontType("normal")                                    
+                    doc.text(15,25,'Paciente:')
+                    doc.setFontSize(6)
+                    doc.setFontType("bold") 
+                    doc.text(40,25, self.dataPaciente.nombre_completo )
+                    doc.setFontSize(8)
+                    doc.setFontType("normal")                     
+                    doc.text(85,25,'Doctor:')
+                    doc.setFontSize(6)
+                    doc.setFontType("bold")                     
+                    doc.text(100,25, self.PacienteById.empleado.nombre_completo) 
+                    doc.setFontSize(8)
+                    doc.setFontType("normal")                                         
+                    doc.text(15,29,'Comp.de Seguros:')
+                    doc.text(40,29 , self.dataPaciente.plan)
+                    doc.text(85,29,'Empresa:')
+                    doc.text(100,29 , self.dataPaciente.empresa)                    
+                    doc.setFontType("bold")                    
+                    doc.text(25,36,'FORMA DE PAGO')
+                    doc.setFontType("normal")                    
+                    doc.text(15,40,'Deducible X Pza.')
+                    doc.text(15,45,'Coaseguro %')
+                    doc.setFontSize(14)
+                    doc.setFontType("bold")                     
+                    doc.text(80,55,'O D O N T O G R A M A')
+                    doc.setLineWidth(0.5);
+                    doc.line(80, 56, 135, 56);
+                    doc.setFontType("normal")                     
+                    doc.addImage(imgData, 'png', 20, 61, 180, 100)
+                    // DETALLE DEL PRESUPUESTO
+                    doc.setFontSize(7)
+                    doc.setFontType("normal")                     
+                    doc.line(8,170 , 205 ,170)
+                    doc.text(8,174 , 'Pieza')
+                    doc.text(23,174,'Superficie')
+                    doc.text(85,174 , 'Tratamientos')
+                    doc.text(145,174,'Deducible')  
+                    doc.text(165,174 , 'CoaSeguro')
+                    doc.text(198,174,'TOTAL','right')                                      
+                    doc.line(8,176 , 205 ,176)
+                    doc.setFontSize(8)
+                    doc.setFontType("bold")                      
+                    doc.text(8,180, 'TRATAMIENTOS PARTICULARES')
+                    // Carga de Datos
+                    doc.setFontSize(7)
+                    doc.setFontType("normal")                      
+                    let y = 180
+                    self.lista_general_presupuesto.map(function(value, key) {
+                        y += 4
+                        doc.text(8,y,value.diente_codigo)
+                        doc.text(23,y,value.caras)
+                        doc.text(38,y,value.nombre_servicio)
+                        doc.text(145,y,'0.00')
+                        doc.text(165,y,'0.00')
+                        doc.text(198,y,parseFloat(value.costo).toFixed(2),'right')
+                    }) 
+                    y += 2 
+                    doc.line(8,y , 205 ,y)
+                    y += 5
+                    doc.setFontSize(8)
+                    doc.setFontType("bold")                     
+                    doc.text(80,y,'TOTAL TRATAMIENTOS PARTICULARES')
+                    doc.text(198,y,self.costoTotal,'right')
+                    y += 8
+                    doc.text(140,y,'TOTAL A CANCELAR')
+                    doc.line(185,y , 205,y)
+                    doc.line(205,y-4 , 205, y)
+                    y += 30
+                    doc.line(8,y, 75,y)
+                    doc.line(145,y ,205,y)
+                    y += 5
+                    doc.setFontSize(9)
+                    doc.setFontType("bold")                    
+                    doc.text(13,y, 'Firma del Odontólogo tratante')
+                    doc.text(145,y,'Firma del Paciente - Apoderado')
+                    doc.setFontSize(6)
+                    doc.setFontType("normal")                     
+                    y += 12
+                    doc.text(13,y , 'Nota:')
+                    y += 3
+                    doc.text(18,y ,'- Los precios incluyen IGV')
+                    y += 3
+                    doc.text(18,y ,'- Presupuesto válido por 90 dias sin iniciar tratamiento')
+                    y += 3
+                    doc.text(18,y ,'- Los tratamientos optativos no estan incluidos en el Total a pagar por el paciente')
+                    y += 3
+                    doc.text(18,y ,'- Cancelar el total de los deducibles y coaseguro de los tratamientos terminados')
+                    y += 3
+                    doc.text(18,y, '- Consulte por el financiamiento odontólogico')
+                    y += 3
+                    doc.text(18,y, '- El precio de los servicios optativos es por pieza')
+                    //doc.save('sample-file.pdf'); 
+                    self.isLoading = false
+                    window.open(doc.output('bloburl'),'_blank') 
+                    self.$router.push({ name: 'lista-ppto-operatoria' })
+                    //window.open(strurl,'_blank')                   
+                })
+            })
+        },
     }
 }
 </script>
@@ -784,6 +1468,7 @@ export default {
     }
     .marcadoCoronaO
     {
+        stroke-width:2px !important;  
         stroke:red !important;        
     }
     .marcadoCoronaD
@@ -818,10 +1503,11 @@ export default {
         cursor: hand ;          
         stroke : dimgrey;
         fill-opacity : 0;
-        stroke-width: 4px 
+        stroke-width: 4px;
     }
     .marcadoIonomeroO
     {
+        stroke-width: 2px !important;
         stroke:red !important;
     }
     .marcadoIonomeroD{
@@ -841,8 +1527,11 @@ export default {
         font-size : 2.5em;
     }
     .marcadoSellanteO{
+        font-weight:normal !important;
+        stroke-width: 1px !important;
         fill : red !important;
         stroke:red !important;
+        font-size : 2em !important;
     }
     .marcadoSellanteD{
         cursor:pointer; 
@@ -861,6 +1550,7 @@ export default {
     }
     .marcadoGeneralO 
     {
+        stroke-width:1px !important;
         stroke:red !important;
     }
     .marcadoGeneralD{
@@ -940,7 +1630,7 @@ export default {
     }
     .v--modal-overlay {
         z-index:9000;     
-    }    
+    }      
     .vld-overlay.is-full-page {
         z-index: 99999;
     }
@@ -958,7 +1648,7 @@ export default {
     .btn-xs {
         padding: 2px !important;
     } 
-    #right-click-menu{
+    #context-menu{
         background: rgb(238, 237, 237);
         border: 1px solid #BDBDBD;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
@@ -966,12 +1656,9 @@ export default {
         list-style: none;
         margin: 0;
         padding: 0;
-        position: absolute;
-        width: 120px;
-        z-index: 999999;
     }
 
-    #right-click-menu li {
+    #context-menu li {
         cursor:pointer; 
         cursor: hand ;  
         border-bottom: 1px solid #E0E0E0;
@@ -979,12 +1666,15 @@ export default {
         padding: 5px 35px;
     }
 
-    #right-click-menu li:last-child {
+    #context-menu li:last-child {
         border-bottom: none;
     }
 
-    #right-click-menu li:hover {
+    #context-menu li:hover {
         background: #1E88E5;
         color: #FAFAFA;
-    }      
+        cursor:pointer; 
+        cursor: hand ; 
+    } 
+
 </style>

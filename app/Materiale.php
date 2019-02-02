@@ -14,7 +14,6 @@ class Materiale extends Model
     {
     	return $this->belongsTo('App\User');
     } 
-
     public function moneda()
     {
     	return $this->belongsTo('App\Moneda');
@@ -22,5 +21,9 @@ class Materiale extends Model
     public function materialservicios()
     {
         return $this->hasMany('App\Materialservicio');
-    }         
+    } 
+    public function presupuestosoperatoriasdetalles()
+    {
+        return $this->hasMany('App\PresupuestoOperatoriaDetalle');
+    }             
 }

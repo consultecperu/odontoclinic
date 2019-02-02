@@ -35,7 +35,10 @@
                     :lineNumbers="true"
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
-                            <span v-if="props.column.field == 'btn'" class="center">                                 
+                            <span v-if="props.column.field == 'btn'" class="center">  
+                                <button type="button" class="btn btn-border btn-primary btn-xs" v-tooltip="'Ver Servicios Multident'" @click.prevent="CargaServiciosMultident(props.row)">
+                                    <i class="la la-file-text font-large"></i>
+                                </button>                                                                 
                                 <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Actualizar Servicio'" @click.prevent="processEdit(props)">
                                     <i class="la la-edit font-large"></i>
                                 </button>                                
@@ -111,7 +114,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'detalle_laboratorios',
     mixins: [mixin],  
-    mounted() {     
+    mounted() {   
         this.$store.dispatch('LOAD_LABORATORIOS_LIST')        
         this.$store.dispatch('LOAD_MONEDAS_LIST')        
         this.$store.dispatch('LOAD_LABORATORIOSERVICIOS_LIST').then(() => {
@@ -314,8 +317,11 @@ export default {
                     }
                 });
         },
+        CargaServiciosMultident(valor){
+            this.$router.push({ name: 'detallelaboratoriomultident', params: { laboratorioservicio: valor.id , laboratorio : valor.laboratorio.id}})
+        },        
         fieldFn(rowObj) {
-            return 1
+            return rowObj.servicios.length
         }           
 
     }               

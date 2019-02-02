@@ -17,7 +17,7 @@ class CreateServiciosTable extends Migration
             $table->increments('id');
             $table->string('nombre_servicio')->unique();
             $table->integer('user_id')->unsigned();
-            $table->integer('simbologia_id')->unsigned();
+            $table->integer('simbologia_id')->unsigned()->nullable();
             $table->integer('tipo')->default(1);    // 1 operatoria 2 ortodoncia
             $table->integer('parentid_ortodoncia')->nullable();
             $table->boolean('activo')->default(true);   

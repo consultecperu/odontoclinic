@@ -10,6 +10,7 @@ use Validator;
 use Carbon\Carbon;
 use App\Servicio;
 use App\Serviciodetalle;
+use App\ServicioLaboratorio;
 
 class ServicioController extends Controller
 {
@@ -20,7 +21,7 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        $servicios = Servicio::with('gruposervicios','simbologia','serviciodetalles')->orderBy('id','ASC')->where('activo',true)->get();
+        $servicios = Servicio::with('gruposervicios','simbologia','serviciodetalle')->orderBy('id','ASC')->where('activo',true)->get();
         return $servicios; 
     }
 

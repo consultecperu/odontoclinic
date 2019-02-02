@@ -462,7 +462,6 @@ export default {
             this.$modal.show('empleado')                                                
         },         
         createEmpleado: function(){
-            console.log("enviando",this.dataEmpleado)
             var url = '/api/empleados';
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.post(url, this.dataEmpleado).then(response => {
