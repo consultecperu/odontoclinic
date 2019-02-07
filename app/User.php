@@ -139,5 +139,9 @@ class User extends Authenticatable
     public function presupuestosoperatoriasdetalles()
     {
         return $this->hasMany('App\Presupuestooperatoriadetalle');
-    }                                                                          
+    } 
+    public function recordatencionoperatorias()
+    {
+        return $this->hasMany('App\Recordatencionoperatoria');
+    }                                                                                
 }

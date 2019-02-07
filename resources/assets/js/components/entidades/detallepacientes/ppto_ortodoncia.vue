@@ -214,7 +214,58 @@
                      </div>
                 </div>
             </div>                                
-        </modal>        
+        </modal> 
+        <modal name="descuento" :width="'25%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
+           <div class="card mb-0">
+                <div class="card-header">
+                    <div class="card-title">Aplicar Descuento</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check form-check-inline pt-0 pb-0">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" value="0" v-model="dataDescuento.tipo" @change="cambiaTipo">
+                                    <label class="custom-control-label" for="customRadio1">Por Monto Fijo</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" value="1" v-model="dataDescuento.tipo" @change="cambiaTipo">
+                                    <label class="custom-control-label" for="customRadio2">Por Porcentaje</label>
+                                </div>                             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group pt-0 pb-0">
+                                <label for="nombre" class="text-primary font-weight-bold">Monto Actual <span class="required-label"> *</span></label>
+                                <input type="text" id="nombre" class="form-control form-control-sm border border-primary" v-model="dataDescuento.monto_actual">
+                            </div> 
+                        </div>                        
+                    </div>
+                    <div class="row" v-if="dataDescuento.tipo == 1">
+                        <div class="col">
+                            <div class="form-group pt-10 pb-0">
+                                <label for="nombre" class="text-primary font-weight-bold">% descuento <span class="required-label"> *</span></label>
+                                <input type="text" id="nombre" class="form-control form-control-sm border border-primary" v-model="dataDescuento.porcentaje">
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group pt-10 pb-0">
+                                <label for="nombre" class="text-primary font-weight-bold">Nuevo Monto <span class="required-label"> *</span></label>
+                                <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataDescuento.nuevo_monto" :disabled="dataDescuento.tipo == 1">
+                            </div>  
+                        </div>                       
+                    </div>
+                </div>
+                <div class="card-action">
+                    <button class="btn btn-primary" @click.prevent="ActionDescuento" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+                    <button class="btn btn-danger" @click="$modal.hide('descuento')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                </div>                
+            </div>                                
+        </modal>                
     </div>
 </template>
 <script>
@@ -570,6 +621,8 @@ export default {
                     if (result.value) {
                         this.isLoading = true
                         this.createPDF()
+                    }else{
+                        this.$router.push({ name: 'lista-ppto-ortodoncia' }) 
                     }
             });                       
             }).catch(error => {
@@ -664,35 +717,49 @@ export default {
             doc.text(13,y2, 'Firma del Odontólogo tratante')
             doc.text(145,y2,'Firma del Paciente - Apoderado')
               
-            /*
-            y += 2 
-            doc.line(8,y , 205 ,y)
-            y += 5
-            doc.setFontSize(8)
-            doc.setFontType("bold")                     
-            doc.text(80,y,'TOTAL TRATAMIENTOS PARTICULARES')
-            doc.text(198,y,self.costoTotal,'right')
-            y += 8
-            doc.text(140,y,'TOTAL A CANCELAR')
-            doc.line(185,y , 205,y)
-            doc.line(205,y-4 , 205, y)
-            y += 30
-            doc.line(8,y, 75,y)
-            doc.line(145,y ,205,y)
-            y += 5
-            doc.setFontSize(9)
-            doc.setFontType("bold")                    
-            doc.text(13,y, 'Firma del Odontólogo tratante')
-            doc.text(145,y,'Firma del Paciente - Apoderado')
-            doc.setFontSize(6)
-            doc.setFontType("normal")       */               
-
             this.isLoading = false
             window.open(doc.output('bloburl'),'_blank') 
-            //this.$router.push({ name: 'lista-ppto-operatoria' }) 
-
-        }                 
-    }
+            this.$router.push({ name: 'lista-ppto-ortodoncia' }) 
+        },
+        AplicaDescuento(param,index){
+            this.dataDescuento = {
+                index:index,
+                tipo:'0',
+                monto_actual:param.costo,
+                porcentaje:'',
+                nuevo_monto:''
+            },
+            this.$modal.show('descuento')
+        },
+        ActionDescuento(){             
+            let desc = parseFloat(this.dataDescuento.monto_actual) - parseFloat(this.dataDescuento.nuevo_monto)
+            this.lista_general_presupuesto[this.dataDescuento.index].descuento = parseFloat(desc).toFixed(2)
+            this.lista_general_presupuesto[this.dataDescuento.index].costo = this.dataDescuento.nuevo_monto
+            this.$modal.hide('descuento')
+        }, 
+        cambiaTipo(){
+            this.dataDescuento.nuevo_monto = ''
+            this.dataDescuento.porcentaje = ''
+        },
+        borrarItem(index){
+            this.$swal({
+                title: 'Desea eliminar este registro?',
+                text: "No podras revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let self = this
+                        this.$delete(self.lista_general_presupuesto , index) 
+                    }
+                });              
+        },                                        
+    },
+    
 }
 </script>
 <style scoped>

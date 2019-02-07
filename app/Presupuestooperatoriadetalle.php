@@ -45,5 +45,9 @@ class Presupuestooperatoriadetalle extends Model
     public function simbologia()
     {
         return $this->belongsTo('App\Simbologia');
-    }     
+    }  
+    public function recordatencionoperatorias()
+    {
+        return $this->hasMany('App\Recordatencionoperatoria');
+    }       
 }

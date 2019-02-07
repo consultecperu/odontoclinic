@@ -182,6 +182,14 @@ class PresupuestosortodonciaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $ppto = Presupuestoortodoncia::findOrFail($id);          
+            $ppto->activo = false;
+            $ppto->save();            
+        } catch (Exception $e) {
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
     }
 }

@@ -71,8 +71,8 @@
                 </div>
                 <div class="col-3">
                     <button class="btn btn-info btn-block btn-sm" @click.prevent="Tratamientos_sin_piezas"><span class="btn-label"><i class="la la-info"></i></span>Tx sin Piezas</button>
-                    <button class="btn btn-default btn-block btn-sm" @click.prevent="createPDF"><span class="btn-label"><i class="la la-info"></i></span>Imprimir</button>
-                    <button class="btn btn-success btn-block btn-sm" @click.prevent="CrearDatosPpto"><span class="btn-label"><i class="la la-check"></i></span>Grabar</button>
+                    <button class="btn btn-default btn-block btn-sm" v-if="$route.params.idpresupuesto != undefined" @click.prevent="createPDF"><span class="btn-label"><i class="la la-info"></i></span>Imprimir</button>
+                    <button class="btn btn-success btn-block btn-sm" v-if="$route.params.idpresupuesto == undefined" @click.prevent="CrearDatosPpto"><span class="btn-label"><i class="la la-check"></i></span>Grabar</button>
                     <button class="btn btn-warning btn-block btn-sm" v-if="!select_multi" @click.prevent="select_multi = true"><span class="btn-label"><i class="la la-exclamation-circle"></i></span>Seleccion Multiple</button>             
                     <button class="btn btn-danger btn-block btn-sm" v-if="select_multi" @click.prevent="cancelarMultiple"><span class="btn-label"><i class="la la-exclamation-circle"></i></span>Cancelar Multiple</button>             
                     <button class="btn btn-primary btn-block btn-sm" v-if="select_multi" :disabled="!(list_dent_multiple.length > 1)" @click.prevent="LoadServices"><span class="btn-label"><i class="la la-bookmark"></i></span>Cargar Servicios</button>
@@ -82,7 +82,7 @@
                 <div class="col-12">
                     <div class="form-group border border-primary pt-0 pb-0">
                         <p class="form-control-static text-primary font-weight-bold mb-10">Tipo de Odontograma</p>
-                        <p-radio v-for="tip in tiposOdontograma" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="tipoOdonto" @change="cambioTipo(tip.id)">
+                        <p-radio v-for="tip in tiposOdontograma" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="tipoOdonto" @change="cambioTipo(tip.id)" :disabled="$route.params.idpresupuesto != undefined">
                             <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">{{ tip.nombre }} </label>                              
                         </p-radio>  
                     </div>
@@ -107,7 +107,7 @@
                                     <div class="row d-flex justify-content-end" v-for="i in cuadrante_izquierdo_superior" :key="i">
                                         <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
                                             <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
-                                            <input type="text" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]"> 
+                                            <input type="text" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                             <div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del diente -->
@@ -136,7 +136,7 @@
                                     <div class="row" v-for="i in cuadrante_derecho_superior" :key="i">
                                         <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
                                             <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
-                                            <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3"> 
+                                            <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                             <div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente -->
@@ -171,7 +171,7 @@
                                     <div class="row d-flex justify-content-end" v-for="i in cuadrante_izquierdo_inferior" :key="i">
                                         <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
                                             <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
-                                            <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3"> 
+                                            <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                             <div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente -->
@@ -199,7 +199,7 @@
                                     <div class="row" v-for="i in cuadrante_derecho_inferior" :key="i">
                                         <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
                                             <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
-                                            <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3"> 
+                                            <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                             <div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente-->
@@ -260,10 +260,10 @@
                             <td>0</td>  
                             <td>0</td>   
                             <td>{{ serv.costo}}</td> 
-                            <td><button type="button" v-tooltip="'Eliminar Item'" class="btn btn-danger btn-xs" @click.prevent="borrarItem(index)">
+                            <td><button type="button" v-tooltip="'Eliminar Item'" class="btn btn-danger btn-xs" @click.prevent="borrarItem(serv,index)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>
-                                <button type="button" v-tooltip="'Descuento'" class="btn btn-success btn-xs" @click.prevent="AplicaDescuento(serv,index)">
+                                <button type="button" v-if="$route.params.idpresupuesto == undefined" v-tooltip="'Descuento'" class="btn btn-success btn-xs" @click.prevent="AplicaDescuento(serv,index)">
                                     <i class="la la-calculator font-large"></i>
                                 </button>
                             </td>                                                                                                                        
@@ -561,45 +561,37 @@ export default {
         this.$store.dispatch('LOAD_SIMBOLOGIAS_LIST')   
         this.$store.dispatch('LOAD_TARIFARIOS_LIST') 
         this.$store.dispatch('LOAD_EMPLEADOS_LIST')     
-        this.$store.dispatch('LOAD_TIPOCAMBIOS_LIST')          
-        this.dataPaciente = {
-            id:this.PacienteById.id,
-            nombre_completo:this.PacienteById.nombre_completo,
-            historiaclinica:this.PacienteById.historiaclinica,
-            empresa:this.PacienteById.pacienteplanes.tipo == 1 ? '-' : this.PacienteById.pacienteplanes.empresapaciente.razon_social,
-            plan:this.PacienteById.pacienteplanes.plan.descripcion ,
-            aseguradora:this.PacienteById.pacienteplanes.plan.descripcion ,
-            empleado_id:this.PacienteById.empleado_id,
-            fecha:moment().format('DD-MM-YYYY'),
-            tipocambio:this.getTipoCambioHoy.tipo_cambio
-        }        
+        this.$store.dispatch('LOAD_TIPOCAMBIOS_LIST') 
+        if(this.$route.params.idpresupuesto == undefined){
+            this.dataPaciente = {
+                id:this.PacienteById.id,
+                nombre_completo:this.PacienteById.nombre_completo,
+                historiaclinica:this.PacienteById.historiaclinica,
+                empresa:this.PacienteById.pacienteplanes.tipo == 1 ? '-' : this.PacienteById.pacienteplanes.empresapaciente.razon_social,
+                plan:this.PacienteById.pacienteplanes.plan.descripcion ,
+                aseguradora:this.PacienteById.pacienteplanes.plan.descripcion ,
+                empleado_id:this.PacienteById.empleado_id,
+                fecha:moment().format('DD-MM-YYYY'),
+                tipocambio:this.getTipoCambioHoy.tipo_cambio
+            } 
+        }else{
+            this.dataPaciente = {
+                id:this.presupuestoOperatoriaById.paciente_id,
+                nombre_completo:this.presupuestoOperatoriaById.paciente.nombre_completo,
+                historiaclinica:this.presupuestoOperatoriaById.paciente.historiaclinica,
+                empresa:this.presupuestoOperatoriaById.paciente.pacienteplanes.tipo == 1 ? '-' : this.presupuestoOperatoriaById.paciente.pacienteplanes.empresapaciente.razon_social,
+                plan:this.presupuestoOperatoriaById.paciente.pacienteplanes.plan.descripcion ,
+                aseguradora:this.presupuestoOperatoriaById.paciente.pacienteplanes.plan.descripcion ,
+                empleado_id:this.presupuestoOperatoriaById.paciente.empleado_id,
+                fecha:moment(this.presupuestoOperatoriaById.fecha_registro).format('DD-MM-YYYY'),
+                tipocambio:this.presupuestoOperatoriaById.tipocambio.tipo_cambio
+            }             
+        }         
+       
     },  
     mounted(){
         this.cambioTipo(1)
-        let self = this
-        if(this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles != undefined){
-            this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles.map(function(value, key) {
-                let datadet = []
-                self.dataTratamiento = {
-                    tarifario_id : value.tarifario_id,
-                    diente_id: value.diente_id,
-                    diente_codigo: value.diente.codigo,
-                    texto_diente:value.texto_diente,
-                    caras:value.caras,
-                    simbologia:value.simbologia_id,
-                    letras:value.letras,
-                    servicio_id:value.tarifario.servicio_id,
-                    nombre_servicio:value.tarifario.servicio.nombre_servicio,
-                    costo_base:value.costo_base,
-                    costo:value.costo,
-                    moneda_id:value.moneda_id,
-                    nombre_moneda:value.moneda.nombre_moneda,
-                    descuento:value.descuento
-                }
-                datadet = _.clone(self.dataTratamiento)
-                self.lista_general_presupuesto.push(datadet)
-            })
-        }
+        this.CargaDetalleEdit()
     },   
     data(){
         return {
@@ -709,6 +701,8 @@ export default {
                 tipocambio:''
             },
             dataTratamiento:{
+                id:'',
+                idppto:'',
                 tarifario_id:'',
                 diente_id: '',
                 diente_codigo: '',
@@ -722,7 +716,8 @@ export default {
                 costo : '',
                 moneda_id:'',
                 nombre_moneda : '',
-                descuento:''
+                descuento:'',
+                activo:''
             },
             dataDescuento:{
                 tipo:'0',
@@ -730,6 +725,12 @@ export default {
                 porcentaje:'',
                 nuevo_monto:'',
                 descuento:''
+            },
+            dataPpto:{
+                id:'',
+                pago_cliente:'',
+                pago_total:'',
+                idDetalle:''
             },
             tiposOdontograma:[
                 {id:1 , nombre:'permanente'},
@@ -754,6 +755,7 @@ export default {
             cuadrante_derecho_inferior:[7,3],
             deleteDent:[],
             list_dent_missing:[],
+            valor_texto_material:'',
 
             diente: {
                 cursor:'pointer', 
@@ -872,7 +874,7 @@ export default {
             }else{
                 this.dataDescuento.nuevo_monto = ''
             }
-        }
+        }       
     },   
     methods: {
         StatusForm: function(eshow,eclass,elabel){
@@ -1033,10 +1035,78 @@ export default {
             this.list_dent_multiple = []
             this.select_multi = false  
             this.simboloID = '' 
-            this.selected = undefined   
-            this.list_services_dent.map(function(value, key) {
-                self.lista_general_presupuesto.push(value)
-            })  
+            this.selected = undefined  
+            if(this.$route.params.idpresupuesto == undefined){
+                this.list_services_dent.map(function(value, key) {
+                    self.lista_general_presupuesto.push(value)
+                })  
+            }else{
+                let new_costo = 0
+                this.list_services_dent.map(function(value, key) {
+                    let detpre = _.clone(self.dataDetallePresupuesto)
+                    detpre = {
+                        tarifario_id:value.tarifario_id,
+                        tarifa:self.PacienteById.pacienteplanes.tipo,
+                        moneda_id:value.moneda_id,
+                        deducible:self.PacienteById.pacienteplanes.poliza_id != null ? self.PacienteById.pacienteplanes.poliza.deducible : null ,
+                        solocoaseguro: self.PacienteById.pacienteplanes.poliza_id != null ? self.PacienteById.pacienteplanes.poliza.coaseguro : null,
+                        pago_cliente:value.costo,
+                        pago_aseguradora:'',
+                        costo:value.costo,
+                        costo_base:value.costo_base,
+                        descuento:value.descuento,
+                        tipo_odontograma:1,
+                        empleado_id:self.PacienteById.empleado_id,
+                        realizado:0,
+                        descargado:0,
+                        pagado:0,
+                        tipo_pagado:'',
+                        laboratorio_id:'',
+                        monto_lab:'',
+                        material_id:'',
+                        monto_mat:'',
+                        solicitud:'',
+                        user_id:self.user_system.id,
+                        diente_id:value.diente_id,
+                        caras:value.caras,
+                        letras:value.letras,
+                        simbologia_id:value.simbologia,
+                        texto_diente:value.texto_diente
+                    }
+                    if(self.dataPresupuesto.text_up_dent[value.diente_id] != undefined){
+                        detpre.texto_diente = self.dataPresupuesto.text_up_dent[value.diente_id]
+                    }      
+                    new_costo += value.costo          
+                    self.dataPresupuesto.detalle.push(detpre)
+                })
+                // Grabamos los registros en la BD
+                self.dataPresupuesto.pago_cliente = (parseFloat(this.costoTotal) + parseFloat(new_costo)).toFixed(2)
+                self.dataPresupuesto.pago_total = (parseFloat(this.costoTotal) + parseFloat(new_costo)).toFixed(2)                
+                self.dataPresupuesto.user_id = self.user_system.id
+                var url = '/api/presupuestosoperatoriasdetalles/add/'+ self.$route.params.idpresupuesto;  
+                axios.put(url, self.dataPresupuesto).then(response => {
+                if(typeof(response.data.errors) != "undefined"){
+                    self.errors = response.data.errors;
+                    var resultado = "";
+                    for (var i in this.errors) {
+                        if (self.errors.hasOwnProperty(i)) {
+                            resultado += "error -> " + i + " = " + self.errors[i] + "\n";
+                        }
+                    }
+                    self.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                              
+                    return;
+                }
+                self.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                    self.CargaDetalleEdit()
+                    self.isLoading = false
+                })  
+                self.errors = [];            
+                self.notificaciones('Nuevo Registros creados con exito','la la-thumbs-up','success')                          
+                }).catch(error => {
+                self.errors = error.response.data.status;         
+                self.notificaciones('Hubo un error en el proceso: '+ self.errors.data.error,'la la-thumbs-o-down','danger')           
+                });
+            }
             this.list_services_dent = []
             this.list_services_anteriores = []   
             this.$modal.hide('carga_servicios')
@@ -1086,23 +1156,114 @@ export default {
             let self = this
             let encontrado = this.lista_general_presupuesto.find(lis => lis.diente_id == self.deleteDent.id)
             if(encontrado){
-                this.lista_general_presupuesto = _.reject(self.lista_general_presupuesto, function(val){
-                    return val.diente_id == self.deleteDent.id
-                });
+                if(this.$route.params.idpresupuesto == undefined){
+                    this.lista_general_presupuesto = _.reject(self.lista_general_presupuesto, function(val){
+                        return val.diente_id == self.deleteDent.id
+                    });
+                }else{
+                    this.dataTratamiento.diente_id = this.deleteDent.id
+                    var url = '/api/presupuestosoperatoriasdetalles/deltradie/'+this.$route.params.idpresupuesto
+                    axios.put(url, this.dataTratamiento).then(response => {
+                        if(typeof(response.data.errors) != "undefined"){
+                            this.errors = response.data.errors;
+                            var resultado = "";
+                            for (var i in this.errors) {
+                                if (this.errors.hasOwnProperty(i)) {
+                                    resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                                }
+                            }   
+                            this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
+                            return;
+                        }
+                        this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                            this.CargaDetalleEdit()
+                            this.isLoading = false
+                        })                  
+                        this.errors = []; 
+                        this.notificaciones('el Registro fue eliminado con exito','la la-thumbs-up','success')                  
+                        this.isLoading = false
+                    }).catch(error => {
+                        this.errors = error.response.data.status;  
+                        this.isLoading = false            
+                        this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                    });
+                }
+
             }           
         },
         ausenteItem(){
             let self = this
+            let encontrado = this.lista_general_presupuesto.find(lis => lis.diente_id == self.deleteDent.id)
+            if(encontrado){
+                this.notificaciones('El diente tiene tratamientos cargados debe eliminarlos primero','la la-thumbs-o-down','danger')                 
+                return
+            }
             this.list_dent_missing.push(this.deleteDent.id)
             this.odontograma = _.reject(self.odontograma, function(d){ return d == self.deleteDent.id })
+            if(this.$route.params.idpresupuesto != undefined){
+                this.dataPresupuesto.ausentes = this.list_dent_missing
+                var url = '/api/presupuestosoperatoriasdetalles/estdieaus/'+this.$route.params.idpresupuesto;
+                axios.put(url, this.dataPresupuesto).then(response => {
+                    if(typeof(response.data.errors) != "undefined"){
+                        this.errors = response.data.errors;
+                        var resultado = "";
+                        for (var i in this.errors) {
+                            if (this.errors.hasOwnProperty(i)) {
+                                resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                            }
+                        }   
+                        this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
+                        return;
+                    }
+                    this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                        this.CargaDetalleEdit()
+                        this.isLoading = false
+                    })                  
+                    this.errors = []; 
+                    this.notificaciones('el Registro fue actualizado con exito','la la-thumbs-up','success')                  
+                    this.isLoading = false
+                }).catch(error => {
+                    this.errors = error.response.data.status;  
+                    this.isLoading = false            
+                    this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                });
+            }
 
         },
         normalItem(){
             let self = this
             this.odontograma.push(this.deleteDent.id)
             this.list_dent_missing = _.reject(self.list_dent_missing, function(d){ return d == self.deleteDent.id })
+            if(this.$route.params.idpresupuesto != undefined){
+                this.dataPresupuesto.ausentes = this.list_dent_missing
+                var url = '/api/presupuestosoperatoriasdetalles/estdieaus/'+this.$route.params.idpresupuesto;
+                axios.put(url, this.dataPresupuesto).then(response => {
+                    if(typeof(response.data.errors) != "undefined"){
+                        this.errors = response.data.errors;
+                        var resultado = "";
+                        for (var i in this.errors) {
+                            if (this.errors.hasOwnProperty(i)) {
+                                resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                            }
+                        }   
+                        this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
+                        return;
+                    }
+                    this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                        this.CargaDetalleEdit()
+                        this.isLoading = false
+                    })                  
+                    this.errors = []; 
+                    this.notificaciones('el Registro fue actualizado con exito','la la-thumbs-up','success')                  
+                    this.isLoading = false
+                }).catch(error => {
+                    this.errors = error.response.data.status;  
+                    this.isLoading = false            
+                    this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                });
+            }            
         },
-        borrarItem(index){
+        borrarItem(param,index){
             this.$swal({
                 title: 'Desea eliminar este registro?',
                 text: "No podras revertir esto!",
@@ -1114,8 +1275,43 @@ export default {
                 confirmButtonText: 'Si, eliminar!'
                 }).then((result) => {
                     if (result.value) {
-                        let self = this
-                        this.$delete(self.lista_general_presupuesto , index) 
+                        if(this.$route.params.idpresupuesto == undefined){
+                            let self = this
+                            this.$delete(self.lista_general_presupuesto , index) 
+                        }else{
+                            this.isLoading = true
+                            this.dataPpto = {
+                                id: param.idppto,
+                                idDetalle:param.id,
+                                user_id:this.user_system.id
+                            }
+                            var url = '/api/presupuestosoperatoriasdetalles/delete/'+this.dataPpto.id;;
+                            axios.put(url, this.dataPpto).then(response => {
+                                if(typeof(response.data.errors) != "undefined"){
+                                    this.errors = response.data.errors;
+                                    var resultado = "";
+                                    for (var i in this.errors) {
+                                        if (this.errors.hasOwnProperty(i)) {
+                                            resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                                        }
+                                    }   
+                                    this.StatusForm(false,'la la-cloud-download','Grabar Datos')
+                                    this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
+                                    return;
+                                }
+                                this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                                    this.CargaDetalleEdit()
+                                    this.isLoading = false
+                                })                  
+                                this.errors = []; 
+                                this.notificaciones('el Registro fue eliminado con exito','la la-thumbs-up','success')                  
+                                this.isLoading = false
+                            }).catch(error => {
+                                this.errors = error.response.data.status;  
+                                this.isLoading = false            
+                                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                            });
+                        }
                     }
                 });              
         },
@@ -1158,8 +1354,7 @@ export default {
         },
         Tratamientos_sin_piezas(){
             this.simboloID = 8
-            this.$modal.show('tratamientos_sin_piezas')
-            
+            this.$modal.show('tratamientos_sin_piezas')            
         },
         selectServicioSinPiezas(param){
             this.dataTratamiento = {
@@ -1189,7 +1384,7 @@ export default {
                 return
             }
             let self = this
-            let cont_text = _.clone(this.dataPresupuesto.text_up_dent)         
+            let cont_text = _.clone(this.dataPresupuesto.text_up_dent)       
             this.dataPresupuesto = {
                 fecha_registro:moment().format('DD-MM-YYYY'),
                 paciente_id:this.PacienteById.id,
@@ -1228,7 +1423,7 @@ export default {
                     descuento:value.descuento,
                     tipo_odontograma:1,
                     empleado_id:self.PacienteById.empleado_id,
-                    realizado:0,
+                    realizado:1,
                     descargado:0,
                     pagado:0,
                     tipo_pagado:'',
@@ -1242,7 +1437,7 @@ export default {
                     caras:value.caras,
                     letras:value.letras,
                     simbologia_id:value.simbologia,
-                    texto_diente:value.texto_diente
+                    texto_diente:''
                 }
                 if(self.dataPresupuesto.text_up_dent[value.diente_id] != undefined){
                     detpre.texto_diente = self.dataPresupuesto.text_up_dent[value.diente_id]
@@ -1268,13 +1463,11 @@ export default {
                         resultado += "error -> " + i + " = " + this.errors[i] + "\n";
                     }
                 }
-                this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                
-                this.StatusForm(false,'la la-cloud-download','Grabar Datos')                
+                this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                               
                 return;
             }
             this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST')    
-            this.errors = [];
-            this.StatusForm(false,'la la-cloud-download','Grabar Datos')              
+            this.errors = [];             
             this.notificaciones('Nuevo Presupuesto creado con exito','la la-thumbs-up','success')  
             this.$swal({
                 title: 'Desea Imprimir este presupuesto?',
@@ -1289,12 +1482,12 @@ export default {
                     if (result.value) {
                         this.isLoading = true
                         this.createPDF()
+                    }else{
+                        this.$router.push({ name: 'lista-ppto-operatoria' }) 
                     }
-            });
-            //this.$modal.hide('paciente');                         
+            });                        
             }).catch(error => {
-            this.errors = error.response.data.status;
-            this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
+            this.errors = error.response.data.status;        
             this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
             });
         }, 
@@ -1441,6 +1634,90 @@ export default {
                 })
             })
         },
+        CargaDetalleEdit(){
+            let self = this
+            self.lista_general_presupuesto = []
+            if(this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles != undefined){
+                this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles.map(function(value, key) {
+                    let datadet = []
+                    self.dataTratamiento = {
+                        id: value.id,
+                        idppto:value.presupuestooperatoria_id,
+                        tarifario_id : value.tarifario_id,
+                        diente_id: value.diente_id,
+                        diente_codigo: value.diente.codigo,
+                        texto_diente:value.texto_diente,
+                        caras:value.caras,
+                        simbologia:value.simbologia_id,
+                        letras:value.letras,
+                        servicio_id:value.tarifario.servicio_id,
+                        nombre_servicio:value.tarifario.servicio.nombre_servicio,
+                        costo_base:value.costo_base,
+                        costo:value.costo,
+                        moneda_id:value.moneda_id,
+                        nombre_moneda:value.moneda.nombre_moneda,
+                        descuento:value.descuento,
+                        activo:value.activo
+                    }
+                    if(self.dataTratamiento.activo){
+                        datadet = _.clone(self.dataTratamiento)
+                        self.lista_general_presupuesto.push(datadet)
+                    }   
+                    if(value.texto_diente != null){
+                        self.dataPresupuesto.text_up_dent[value.diente_id] = value.texto_diente
+                    }                  
+                })
+                this.presupuestoOperatoriaById.dientes.map(function(value, key) {
+                    self.list_dent_missing.push(value.id)
+                    self.odontograma = _.reject(self.odontograma, function(d){ return d == value.id })                    
+                })
+            }
+        },
+        guardaDatoTexto(param){
+            this.valor_texto_material = ''
+            let encontrado = this.lista_general_presupuesto.filter(lis => lis.diente_id == param)
+            if(encontrado.length > 0){
+                this.valor_texto_material = this.dataPresupuesto.text_up_dent[param]
+            }
+        },
+        grabaDatoTexto(param){
+            let encontrado = this.lista_general_presupuesto.filter(lis => lis.diente_id == param) 
+            if(encontrado.length > 0){
+                if(this.valor_texto_material != this.dataPresupuesto.text_up_dent[param]){
+                    this.$swal({
+                        title: 'Desea grabar este cambio del registro?',
+                        text: "No podras revertir esto!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'Cancelar',
+                        confirmButtonText: 'Si, Grabar!'
+                        }).then((result) => {
+                            if (result.value) {
+                                this.dataTratamiento.texto_diente = this.dataPresupuesto.text_up_dent[param]
+                                this.dataTratamiento.diente_id = param
+                                this.isLoading = true
+                                var url = '/api/presupuestosoperatoriasdetalles/texsupdie/' + this.$route.params.idpresupuesto;
+                                axios.put(url,this.dataTratamiento).then(response=> {
+                                    this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                                        this.isLoading = false
+                                        this.CargaDetalleEdit()
+                                        this.$swal(
+                                        'Actualizado!',
+                                        'Este registro fue actualizado.',
+                                        'success'
+                                        )
+                                    })                    
+                                });
+                            }else{
+                                this.dataPresupuesto.text_up_dent[param] = this.valor_texto_material
+                            }
+                        });
+                }
+            }           
+
+        }
     }
 }
 </script>

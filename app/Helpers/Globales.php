@@ -25,6 +25,20 @@ class Globales
         // retorna formato YYYY-MM-DD
     }    
 
+    public static function FormatFecYMD_hms($valor) 
+    {
+        // recibe el formato DD-MM-YYYY
+        $ano = substr($valor,6,4);
+        $mes = substr($valor,3,2);
+        $dia = substr($valor,0,2);
+        $hora = substr($valor,11,2);
+        $minuto = substr($valor,14,2);
+        $segundo = substr($valor,17,2);     
+        $formato = empty($valor) ? null : Carbon::create($ano, $mes, $dia, $hora, $minuto, $segundo);
+        return $formato;
+        // retorna formato YYYY-MM-DD hh:mm:ss
+    }      
+
     public static function DifFechas($valor1,$valor2)
     {
         $dias = $valor1->diffInDays($valor2, false);    // diferencia en dias

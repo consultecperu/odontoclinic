@@ -25,5 +25,9 @@ class Materiale extends Model
     public function presupuestosoperatoriasdetalles()
     {
         return $this->hasMany('App\PresupuestoOperatoriaDetalle');
-    }             
+    }  
+    public function recordatencionoperatorias()
+    {
+        return $this->hasMany('App\Recordatencionoperatoria');
+    }               
 }

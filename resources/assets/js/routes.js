@@ -41,6 +41,7 @@ import DetPacMultimedia from './components/entidades/detallepacientes/multimedia
 import ListaPptoOperatoria from './components/entidades/detallepacientes/lista_ppto_operatoria.vue'
 import ListaPptoOrtodoncia from './components/entidades/detallepacientes/lista_ppto_ortodoncia.vue'
 import PptoOperatoria from './components/entidades/detallepacientes/ppto_operatoria.vue'
+import VerPptoOperatoria from './components/entidades/detallepacientes/ver_ppto_operatoria.vue'
 import PptoOrtodoncia from './components/entidades/detallepacientes/ppto_ortodoncia.vue'
 import Medicos from './components/entidades/medicos.vue'
 import Detallemedicos from './components/entidades/detallemedicos.vue'
@@ -427,7 +428,14 @@ export default [
                         component: PptoOrtodoncia, 
                         meta: { requiresAuth: true },
                         props: true                        
-                    }                                       
+                    },
+                    {
+                        path: 'ver-ppto-operatoria/:idpresupuesto?',
+                        name: 'ver-ppto-operatoria', 
+                        component: VerPptoOperatoria, 
+                        meta: { requiresAuth: true },
+                        props: true                        
+                    },                                                          
                 ]                  
             },             
             {

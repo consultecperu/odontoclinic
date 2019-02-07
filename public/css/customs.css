@@ -13,7 +13,16 @@
     vertical-align: middle!important;
     font-size: 11px !important;
 }
-
+.seleccionado:hover, .no-seleccionado:hover{
+  cursor:pointer; cursor: hand  
+}
+.seleccionado, .no-seleccionado{
+    vertical-align: middle!important;
+    font-size: 11px !important;    
+}
+.seleccionado{
+  background-color:#b7d4ec !important; 
+}
 .vgt-left-align {
     vertical-align: middle!important;
 }

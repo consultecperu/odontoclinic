@@ -97,9 +97,16 @@ Route::middleware(['auth'])->group(function(){
     // dientes
     Route::resource('dientes','DienteController');   
     // ppto operatoria
-    Route::resource('presupuestos-operatorias','PresupuestosoperatoriaController');  
+    Route::resource('presupuestos-operatorias','PresupuestosoperatoriaController');
+    Route::put('/presupuestosoperatoriasdetalles/delete/{id}','PresupuestosoperatoriaController@deleteitem');        
+    Route::put('/presupuestosoperatoriasdetalles/add/{id}','PresupuestosoperatoriaController@additem');  
+    Route::put('/presupuestosoperatoriasdetalles/deltradie/{id}','PresupuestosoperatoriaController@deleteTratamientosDiente');
+    Route::put('/presupuestosoperatoriasdetalles/estdieaus/{id}','PresupuestosoperatoriaController@estadoDientesAusentes');              
+    Route::put('/presupuestosoperatorias/cambioestado/{id}','PresupuestosoperatoriaController@cambioEstado');              
     // ppto ortodoncia
     Route::resource('presupuestos-ortodoncias','PresupuestosortodonciaController'); 
     // tipo cambios
-    Route::resource('tipocambios','TipocambioController');                                                                                                                            
+    Route::resource('tipocambios','TipocambioController');   
+    // record atencion
+    Route::resource('recordatencion-operatorias','RecordatencionoperatoriaController');                                                                                                                              
 });

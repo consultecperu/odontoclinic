@@ -88,5 +88,9 @@ class Empleado extends Model
     public function presupuestosoperatoriasdetalles()
     {
         return $this->hasMany('App\Presupuestooperatoriadetalle');
-    }                                
+    }
+    public function recordatencionoperatorias()
+    {
+        return $this->hasMany('App\Recordatencionoperatoria');
+    }                                       
 }
