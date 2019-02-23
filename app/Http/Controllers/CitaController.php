@@ -213,6 +213,7 @@ class CitaController extends Controller
             }      
     
             $segcita = new Seguimientocita($request->all());
+            $segcita->fecha_incidencia = Globales::FormatFecYMD_hms($request->get('fecha_incidencia'));
             $segcita->save();
     
             DB::commit();        
