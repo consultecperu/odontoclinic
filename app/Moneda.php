@@ -42,5 +42,8 @@ class Moneda extends Model
     {
     	return $this->belongsTo('App\User');
     } 
-           
+    public function pagos()
+    {
+        return $this->hasMany('App\Pago');
+    }             
 }

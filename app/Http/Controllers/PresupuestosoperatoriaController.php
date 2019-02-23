@@ -21,7 +21,7 @@ class PresupuestosoperatoriaController extends Controller
      */
     public function index()
     {
-        $pptosoperatorias = Presupuestooperatoria::with('paciente','paciente.pacienteplanes.plan','empleado','estadopresupuesto','tipocambio','presupuestosoperatoriasdetalles','presupuestosoperatoriasdetalles.diente','presupuestosoperatoriasdetalles.tarifario.servicio','presupuestosoperatoriasdetalles.moneda','presupuestosoperatoriasdetalles.recordatencionoperatorias','dientes')->orderBy('id','DESC')->where('activo',true)->get();
+        $pptosoperatorias = Presupuestooperatoria::with('paciente','paciente.pacienteplanes.plan','empleado','estadopresupuesto','tipocambio','presupuestosoperatoriasdetalles','presupuestosoperatoriasdetalles.diente','presupuestosoperatoriasdetalles.tarifario.servicio','presupuestosoperatoriasdetalles.moneda','presupuestosoperatoriasdetalles.recordatencionoperatorias','presupuestosoperatoriasdetalles.recordatencionoperatorias.empleado','dientes')->orderBy('id','DESC')->where('activo',true)->get();
         return $pptosoperatorias;  
     }
 
@@ -290,4 +290,71 @@ class PresupuestosoperatoriaController extends Controller
             );
         }
     }
+    public function descargaTx(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            foreach ($request->get('presupuestodetalles') as $det) {
+                $pptodet = Presupuestooperatoriadetalle::findOrFail($det);
+                if($pptodet->descargado == 0){
+                    $pptodet->descargado = 1;
+                    $pptodet->fecha_descarga = Globales::FormatFecYMD_hms($request->get('fecha_descarga'));
+                    $pptodet->save();
+                }
+            } 
+            DB::commit();      
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }        
+    }
+    public function descargaSaldo(Request $request, $id)
+    {
+        try {
+            $TxPendiente = 0;
+            foreach ($request->get('presupuestodetalles') as $det) {
+                $pptodet = Presupuestooperatoriadetalle::findOrFail($det);
+                if($pptodet->descargado == 0){
+                    $TxPendiente += floatval($pptodet->costo);
+                }
+            }
+            $ppto = Presupuestooperatoria::findOrFail($id);  
+            if(floatval($ppto->saldo) < floatval($TxPendiente)){
+                return response()->json(['errors'=>['Saldo' => 'El Saldo no cubre el pago de los tratamientos seleccionados']]);
+            }
+            //validando tratamientos si estan terminados  
+            $sinTerminar = 0;
+            foreach ($request->get('presupuestodetalles') as $det) {
+                $pptodet = Presupuestooperatoriadetalle::findOrFail($det);
+                if($pptodet->realizado <> 3){
+                    $sinTerminar = 1;
+                }
+            }            
+            if($sinTerminar == 1){
+                return response()->json(['errors'=>['Terminados' => 'Algunos registros no estan terminados ... verifique por favor']]);
+            }
+            DB::beginTransaction();
+            $descargado = 0;
+            foreach ($request->get('presupuestodetalles') as $det) {
+                $pptodet = Presupuestooperatoriadetalle::findOrFail($det);
+                if($pptodet->descargado == 0){
+                    $pptodet->fecha_descarga = Globales::FormatFecYMD_hms($request->get('fecha_descarga'));
+                    $pptodet->descargado = 1;
+                    $pptodet->pagado = 1;
+                    $pptodet->tipo_pagado = 2;
+                    $pptodet->save();
+                }
+            } 
+            $ppto->saldo = floatval($ppto->saldo) - floatval($TxPendiente);
+            $ppto->save();            
+            DB::commit();                       
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }  
+    }    
 }

@@ -123,7 +123,34 @@ table.vgt-table td {
   width: 120px !important;
   height: 120px !important;
 }
-
+/* ctx-menu --- menu content-menu --*/
+.ctx-menu {
+  font-size: 0.8em !important;
+  min-width: 130px !important;
+  padding: 5px 0 !important;
+  cursor: not-allowed !important;
+}
+.ctx-item.disabled{
+  pointer-events: none !important;
+}
+.ctx-item.disabled:hover{
+  cursor: none !important;
+}
+.ctx-item {
+  padding: 3px 10px !important;
+  font-weight: 500 !important;
+}
+/* popover del fullcalendar */
+.popover-header {
+  background-color: #73AD21 !important; 
+  color: #FFFFFF !important; 
+  font-size: 11px !important;
+  text-align:center !important;
+} 
+.popover-body {
+  font-size: 9px !important;
+  text-align: center !important;
+} 
 /* utilitarios margin padding */
 
   .p-0 {

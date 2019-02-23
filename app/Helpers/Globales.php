@@ -59,6 +59,13 @@ class Globales
         $numcor = DB::table('historiaclinicas')->where('sede_id',$sede_id)->select('correlativo_sede')->first();
         return $numcor->correlativo_sede;
     }
+
+    public static function comprobantesedes_correlativo($sede_id,$tipdoc_id,$pto,$serie)
+    {
+        DB::table('comprobantesedes')->where(['sede_id' => $sede_id, 'tipodocumento_id' => $tipdoc_id, 'ptoventa' => $pto , 'serie' => $serie])->increment('correlativo');        
+        $numcor = DB::table('comprobantesedes')->where(['sede_id' => $sede_id, 'tipodocumento_id' => $tipdoc_id, 'ptoventa' => $pto , 'serie' => $serie])->select('correlativo')->first();
+        return $numcor->correlativo;
+    }    
     // User::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get(); usuarios creados el dia de hoy
     // Ticket::whereTime('end_date', '>=', '12:00:00')->get();   Todos los tickets cerrados después de las 12:00 horas
 }

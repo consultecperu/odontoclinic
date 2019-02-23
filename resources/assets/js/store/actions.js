@@ -14,6 +14,9 @@ export default {
     SAVE_TOKEN({ commit }, payload) {
         commit('SAVE_TOKEN', { datos: payload })
     },
+    CAMBIO_SEDE({ commit }, payload){
+        commit('CAMBIO_SEDE', {datos: payload})
+    },
     UPDATE_BREADCRUMB({ commit }, payload) {
         commit('SET_BREADCRUMB', { datos: payload })
     },    
@@ -350,5 +353,37 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                                                                   
+    },  
+    LOAD_TIPOPAGOS_LIST: function ({ commit }) {
+        var url = '/api/tipopagos';
+        return axios.get(url).then((response) => {
+            commit('SET_TIPOPAGOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
+    LOAD_PAGOS_LIST: function ({ commit }) {
+        var url = '/api/pagos';
+        return axios.get(url).then((response) => {
+            commit('SET_PAGOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_CITAS_LIST: function ({ commit }) {
+        var url = '/api/citas';
+        return axios.get(url).then((response) => {
+            commit('SET_CITAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_CITAS_FECHAS_LIST: function ({ commit }, payload) {
+        var url = '/api/citas/fechas/'+ payload.fecini + '/'+ payload.fecfin;
+        return axios.get(url).then((response) => {
+            commit('SET_CITAS_FECHAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                                                                  
 }

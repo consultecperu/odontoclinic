@@ -21,7 +21,7 @@ class PresupuestosortodonciaController extends Controller
      */
     public function index()
     {
-        $pptosortodoncias = Presupuestoortodoncia::with('paciente','empleado','estadopresupuesto','presupuestosortodonciasdetalles','presupuestosortodonciasdetalles.tarifario.servicio','presupuestosortodonciasdetalles.moneda','tarifario.servicio')->orderBy('id','DESC')->where('activo',true)->get();
+        $pptosortodoncias = Presupuestoortodoncia::with('paciente','paciente.pacienteplanes.plan','empleado','estadopresupuesto','tipocambio','presupuestosortodonciasdetalles','presupuestosortodonciasdetalles.tarifario.servicio','presupuestosortodonciasdetalles.moneda','presupuestosortodonciasdetalles.recordatencionortodoncias','tarifario.servicio')->orderBy('id','DESC')->where('activo',true)->get();
         return $pptosortodoncias;  
     }
 
@@ -78,7 +78,7 @@ class PresupuestosortodonciaController extends Controller
             $pptodet->costo = $request->get('cuota_inicial');
             $pptodet->costo_base = $request->get('cuota_inicial_base');            
             $pptodet->tipoplan = 1;
-            $pptodet->realizado = 0;
+            $pptodet->realizado = 1;
             $pptodet->descargado = 0;
             $pptodet->pagado = 0;
             $pptodet->tipo_pagado = 0; 
@@ -97,7 +97,7 @@ class PresupuestosortodonciaController extends Controller
                 $pptodet->costo = $request->get('control_mensual');
                 $pptodet->costo_base = $request->get('control_mensual_base');
                 $pptodet->tipoplan = 1;
-                $pptodet->realizado = 0;
+                $pptodet->realizado = 1;
                 $pptodet->descargado = 0;
                 $pptodet->pagado = 0;
                 $pptodet->tipo_pagado = 0;                 
@@ -192,4 +192,127 @@ class PresupuestosortodonciaController extends Controller
             );
         }
     }
+
+    public function cambioEstado(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $ppto = Presupuestoortodoncia::findOrFail($id);          
+            $ppto->estadopresupuesto_id = $request->get('estadopresupuesto_id');
+            $ppto->save(); 
+            DB::commit();      
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
+    }
+    public function descargaTx(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            foreach ($request->get('presupuestodetalles') as $det) {
+                $pptodet = Presupuestoortodonciadetalle::findOrFail($det);
+                if($pptodet->descargado == 0){
+                    $pptodet->descargado = 1;
+                    $pptodet->fecha_descarga = Globales::FormatFecYMD_hms($request->get('fecha_descarga'));
+                    $pptodet->save();
+                }
+            } 
+            DB::commit();      
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }        
+    }
+    public function descargaSaldo(Request $request, $id)
+    {
+        try {
+            $TxPendiente = 0;
+            foreach ($request->get('presupuestodetalles') as $det) {
+                $pptodet = Presupuestoortodonciadetalle::findOrFail($det);
+                if($pptodet->descargado == 0){
+                    $TxPendiente += floatval($pptodet->costo);
+                }
+            }
+            $ppto = Presupuestoortodoncia::findOrFail($id);  
+            if(floatval($ppto->saldo) < floatval($TxPendiente)){
+                return response()->json(['errors'=>['Saldo' => 'El Saldo no cubre el pago de los tratamientos seleccionados']]);
+            }
+            //validando tratamientos si estan terminados  
+            $sinTerminar = 0;
+            foreach ($request->get('presupuestodetalles') as $det) {
+                $pptodet = Presupuestoortodonciadetalle::findOrFail($det);
+                if($pptodet->realizado <> 3){
+                    $sinTerminar = 1;
+                }
+            }            
+            if($sinTerminar == 1){
+                return response()->json(['errors'=>['Terminados' => 'Algunos registros no estan terminados ... verifique por favor']]);
+            }
+            DB::beginTransaction();
+            $descargado = 0;
+            foreach ($request->get('presupuestodetalles') as $det) {
+                $pptodet = Presupuestoortodonciadetalle::findOrFail($det);
+                if($pptodet->descargado == 0){
+                    $pptodet->fecha_descarga = Globales::FormatFecYMD_hms($request->get('fecha_descarga'));
+                    $pptodet->descargado = 1;
+                    $pptodet->pagado = 1;
+                    $pptodet->tipo_pagado = 2;
+                    $pptodet->save();
+                }
+            } 
+            $ppto->saldo = floatval($ppto->saldo) - floatval($TxPendiente);
+            $ppto->save();            
+            DB::commit();                       
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }  
+    } 
+    
+    public function addAdicionales(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            foreach ($request->get('items') as $det) {
+                $rules2 = [ 'tarifario_id'      =>  'required',
+                            'moneda_id'         =>  'required',
+                            'empleado_id'       =>  'required',
+                            'costo'             =>  'required',
+                            'costo_base'        =>  'required',
+                            'adicional'         =>  'required'
+                          ]; 
+                          
+                $validator2 = Validator::make($det, $rules2);
+                if ($validator2->fails()) {
+                    DB::rollback();
+                    return response()->json(['errors'=>$validator2->errors()]);
+                } 
+
+                $pptodet = new Presupuestoortodonciadetalle($det);
+                $pptodet->presupuestoortodoncia_id = $id;
+                $pptodet->save();
+            }  
+
+            $ppto = Presupuestoortodoncia::findOrFail($id);
+            $ppto->total_soles = floatval($ppto->total_soles) + floatval($request->get('total_soles'));
+            $ppto->total_dolares = floatval($ppto->total_dolares) + floatval($request->get('total_dolares'));
+            $ppto->save();                      
+
+            DB::commit();        
+            return;
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        } 
+    }
+
 }

@@ -43,6 +43,8 @@ import ListaPptoOrtodoncia from './components/entidades/detallepacientes/lista_p
 import PptoOperatoria from './components/entidades/detallepacientes/ppto_operatoria.vue'
 import VerPptoOperatoria from './components/entidades/detallepacientes/ver_ppto_operatoria.vue'
 import PptoOrtodoncia from './components/entidades/detallepacientes/ppto_ortodoncia.vue'
+import VerPptoOrtodoncia from './components/entidades/detallepacientes/ver_ppto_ortodoncia.vue'
+import RecordAtencion from './components/entidades/detallepacientes/ver_record_atencion.vue'
 import Medicos from './components/entidades/medicos.vue'
 import Detallemedicos from './components/entidades/detallemedicos.vue'
 import Personal from './components/entidades/personal.vue'
@@ -435,7 +437,21 @@ export default [
                         component: VerPptoOperatoria, 
                         meta: { requiresAuth: true },
                         props: true                        
-                    },                                                          
+                    }, 
+                    {
+                        path: 'ver-ppto-ortodoncia/:idpresupuesto?',
+                        name: 'ver-ppto-ortodoncia', 
+                        component: VerPptoOrtodoncia, 
+                        meta: { requiresAuth: true },
+                        props: true                        
+                    }, 
+                    {
+                        path: 'record-atencion/:idpresupuesto?',
+                        name: 'record-atencion', 
+                        component: RecordAtencion, 
+                        meta: { requiresAuth: true },
+                        props: true                        
+                    },                                                                                                   
                 ]                  
             },             
             {

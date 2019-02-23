@@ -56,8 +56,19 @@ export default {
     getMedicos: state => {
         return state.empleados.filter(emp => emp.tipo == 1)
     },  
-    getMedicosOrtodoncias: state => {
-        return state.empleados.filter(emp => emp.tipo == 1 && emp.especialidades.pivot.especialidade_id == 6)
+    getMedicosOrtodoncias: (state, getters) => {
+        //return getters.getMedicos.especialidades.filter(med => med.id == 6)
+        let ortodoncistas = [] 
+        let medicos = this.getMedicos
+        _.each(medicos, function(value,key){
+            _.each(value.especialidades, function(value2,key2){
+                if(value2.id == 6){
+                    ortodoncistas.push(value)
+                }
+            })
+        })
+        return ortodoncistas         
+        //return state.empleados.filter(emp => emp.tipo == 1 && emp.especialidades.pivot.especialidade_id == 6)
     },              
     getPersonal: state => {
         return state.empleados.filter(emp => emp.tipo == 2)
@@ -127,5 +138,14 @@ export default {
     }, 
     getPresupuestoOrtodonciaById: (state) => (id) => {
         return state.presupuestos_ortodoncias.find(pid => pid.id == id)
-    },                                                                                                 
+    },
+    getTipopagosForma: (state) => (param) => {
+        return state.tipopagos.filter(tp => tp.tipo == param)
+    },
+    getPagosPresupuestoOperatoriaById: (state) => (id) => {
+        return state.pagos.filter(pag => pag.presupuestooperatoria_id == id)
+    }, 
+    getPagosPresupuestoOrtodonciaById: (state) => (id) => {
+        return state.pagos.filter(pag => pag.presupuestoortodoncia_id == id)
+    },                                                                                                              
 }

@@ -6,9 +6,13 @@ export default {
     },
     SAVE_TOKEN(state, { datos }) {
         state.authenticated = true
-        state.user_system = datos.user.user[0]  // aca estan los datos del usuario loggeado          
+        state.user_system = datos.user.user[0]  // aca estan los datos del usuario loggeado  
+        //state.sede_system = null        
         localStorage.setItem('autentificado', true)
         localStorage.setItem('user', JSON.stringify(datos.user.user[0]))
+    },
+    CAMBIO_SEDE(state, { datos}){
+        state.sede_system = state.sedes.find(sed => sed.id == datos)
     },
     SET_BREADCRUMB(state, { datos }) {
         state.breadmain = datos.main
@@ -17,7 +21,6 @@ export default {
         state.ruta_second = datos.ruta_second != 'undefined' ? datos.ruta_second : null
         state.ruta_main = datos.ruta_main != 'undefined' ? datos.ruta_main : null
         state._breadmain = datos._main !== 'undefined' ? datos._main : null
-
     },    
     SET_PERFIL_USER: (state, { list }) => {      // PERFIL DE USUARIO
         state.perfil_user = list
@@ -108,6 +111,7 @@ export default {
         state.horas = list.horas
         state.dias = list.dias
         state.especialidades = list.especialidades
+        state.estadocitas = list.estadocitas
     },
     SET_EMPLEADOS_LIST: (state, { list }) => {      // EMPLEADOS
         state.empleados = list
@@ -155,5 +159,17 @@ export default {
     }, 
     SET_TIPOCAMBIOS_LIST: (state, { list }) => {      // TIPOCAMBIOS
         state.tipocambios = list
-    },                                                                                                                                                    
+    },   
+    SET_TIPOPAGOS_LIST: (state, { list }) => {      // TIPOPAGOS
+        state.tipopagos = list
+    },  
+    SET_PAGOS_LIST: (state, { list }) => {      // PAGOS
+        state.pagos = list
+    },  
+    SET_CITAS_LIST: (state, { list }) => {      // CITAS
+        state.citas = list
+    },   
+    SET_CITAS_FECHAS_LIST: (state, { list }) => {      // CITAS x FECHAS
+        state.citasfechas = list
+    },                                                                                                                                                              
 }

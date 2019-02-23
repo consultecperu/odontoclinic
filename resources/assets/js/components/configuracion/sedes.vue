@@ -98,7 +98,7 @@
                         </div>   
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group pt-0">
                                     <label class="text-primary font-weight-bold">Departamento <span class="required-label"> *</span></label>
                                     <div class="select2-input">
                                         <select id="basic" name="basic" class="form-control form-control-sm border-primary" v-model="coddepa" @change="onchangeDepa">
@@ -111,7 +111,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group pt-0">
                                     <label class="text-primary font-weight-bold">Provincia <span class="required-label"> *</span></label>
                                     <div class="select2-input">
                                         <select id="basic2" name="basic" class="form-control form-control-sm border-primary" v-model="codprov" @change="onchangeProv">
@@ -124,7 +124,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group pt-0">
                                     <label class="text-primary font-weight-bold">Distrito <span class="required-label"> *</span></label>
                                     <div class="select2-input">
                                         <select id="basic3" name="basic" class="form-control form-control-sm border-primary" v-model="dataSede.ubigeo_id" @change="onchangeDist">
@@ -144,7 +144,26 @@
                                     <input type="text" id="direccion" placeholder="Dirección" class="form-control form-control-sm border border-primary" v-model="dataSede.direccion" />
                                 </div>                              
                             </div>                        
-                        </div>                                             
+                        </div> 
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="tipoplan" class="text-primary font-weight-bold">Tipo Plan por defecto</label>
+                                    <p class="form-control-static mt-5 mb-0" >PLAN PARTICULAR</p>
+                                </div>                                              
+                            </div> 
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="plan" class="text-primary font-weight-bold">Elige el Plan <span class="required-label"> *</span></label>
+                                    <select class="form-control form-control-sm" id="plan" v-model="dataSede.plan_id">
+                                        <option value="">-- Seleccione --</option>
+                                        <option v-for="pla in getPlanes" :value="pla.id" :key="pla.id">
+                                            {{ pla.descripcion}}
+                                        </option>
+                                    </select>
+                                </div>                                              
+                            </div>                                                                                                                                                    
+                        </div>                                                                    
 
                     </div>
                     <div class="card-action">
@@ -163,6 +182,7 @@ export default {
     name: 'sedes',
     mixins: [mixin],      
     mounted() {   
+        this.$store.dispatch('LOAD_PLANES_LIST')  
         this.$store.dispatch('LOAD_UBIGEOS_LIST')
         this.$store.dispatch('LOAD_SEDES_LIST').then(() => {
             this.isLoading = false
@@ -233,13 +253,14 @@ export default {
                 telef_adicional:'',
                 correo:'',
                 codigo:'',
-                user_id:''
+                user_id:'',
+                plan_id:''
             },                                                               
             errors:[]                          
         }
     },
     computed: {
-        ...mapState(['sedes','user_system']),
+        ...mapState(['sedes','user_system','planes']),
         ...mapGetters(['getubigeos']),
         departamentos: function(){
             return this.getubigeos.filter((ubigeo) => ubigeo.codprov == '00').filter((ubigeo) => ubigeo.coddist == '00');
@@ -249,6 +270,9 @@ export default {
         },
         distritos: function(){
             return this.getubigeos.filter((ubigeo) => ubigeo.coddepa == this.coddepa).filter((ubigeo) => ubigeo.codprov == this.codprov).filter((ubigeo) => ubigeo.coddist != '00');
+        },
+        getPlanes(){
+            return this.planes.filter((pla) => pla.tipo == 1)            
         }        
     }, 
     methods: {
@@ -273,7 +297,8 @@ export default {
                 telef_adicional:'',
                 correo:'',
                 codigo:'',
-                user_id:this.user_system.id
+                user_id:this.user_system.id,
+                plan_id:''
             }   
             this.labelAccion = "Registro"                  
             this.$modal.show('sede')
@@ -353,7 +378,8 @@ export default {
                 telef_adicional: datased.telef_adicional,
                 correo: datased.correo,
                 codigo: datased.codigo,
-                user_id: datased.user_id
+                user_id: datased.user_id,
+                plan_id:datased.plan_id
             }      
             
             this.coddepa = datased.ubigeo.coddepa;

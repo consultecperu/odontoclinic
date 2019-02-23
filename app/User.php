@@ -98,7 +98,7 @@ class User extends Authenticatable
     } 
     public function __empleado()
     {
-        return $this->belongsTo('App\Empleado');
+        return $this->belongsTo('App\Empleado','empleado_id');
     } 
     public function turnos()
     {
@@ -143,5 +143,25 @@ class User extends Authenticatable
     public function recordatencionoperatorias()
     {
         return $this->hasMany('App\Recordatencionoperatoria');
-    }                                                                                
+    } 
+    public function recordatencionortodoncias()
+    {
+        return $this->hasMany('App\Recordatencionortodoncia');
+    }        
+    public function tipopagos()
+    {
+        return $this->hasMany('App\Tipopago');
+    }  
+    public function pagos()
+    {
+        return $this->hasMany('App\Pago');
+    }  
+    public function citas()
+    {
+        return $this->hasMany('App\Cita');
+    } 
+    public function seguimientocitas()
+    {
+        return $this->hasMany('App\Seguimientocita');
+    }                                                                                                
 }

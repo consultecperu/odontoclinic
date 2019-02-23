@@ -78,9 +78,9 @@
                                 <div class="row d-flex justify-content-end" v-for="i in cuadrante_izquierdo_superior" :key="i">
                                     <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
                                         <p class="form-control-static text-center mb-0" :id="'t'+info.id">{{ info.codigo }}</p>
-                                        <input type="text" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]"> 
+                                        <input type="text" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                         <div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                 <!-- Caras del diente -->
                                                 <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')" /> <!-- CARA 1 Trapecio superior -->
                                                 <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
@@ -88,15 +88,16 @@
                                                 <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
                                                 <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')" /> <!-- CARA 5 Cuadrado Central -->
                                                 <!-- Tratamientos / Estados del diente -->
-                                                <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
-                                                <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
-                                                <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
-                                                <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
-                                                <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
-                                                <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
-                                                <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
-                                                <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
-                                                <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
+                                                <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
+                                                <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
+                                                <polygon points="8,40 8,39 30,61 30,61" :style="BuscoDiente(info,4)" />                                    
+                                                <polygon points="30,39 30,39 8,61 8,60" :style="BuscoDiente(info,4)" />
+                                                <image v-if="BuscoDiente(info,5) == 'marcadoPernoO'" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                <image v-if="BuscoDiente(info,5) == 'marcadoPernoO_Azul'" xlink:href="/img/odontograma/perno5.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                <path d="M 8,50 a10,10 0 1,1 20,0" :style="BuscoDiente(info,6)" ></path>
+                                                <text x=16 y=32 :style="BuscoDiente(info,7)" >S</text>                                                                        
+                                                <ellipse cx="18" cy="50" rx="12" ry="7" :style="BuscoDiente(info,8)" />
+                                                <line x1="6" y1="50" x2="30" y2="50" :style="BuscoDiente(info,8)" />                                    
                                             </svg>                                                                                                                                            
                                         </div>                                            
                                     </div>                                          
@@ -107,9 +108,9 @@
                                 <div class="row" v-for="i in cuadrante_derecho_superior" :key="i">
                                     <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
                                         <p class="form-control-static text-center mb-0" :id="'t'+info.id">{{ info.codigo }}</p>
-                                        <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]"> 
+                                        <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                         <div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32"  :id="info.id" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                 <!-- Caras del Diente -->
                                                 <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
                                                 <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
@@ -117,15 +118,16 @@
                                                 <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
                                                 <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
                                                 <!-- Tratamientos / Estados del diente -->
-                                                <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
-                                                <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
-                                                <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
-                                                <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
-                                                <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
-                                                <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
-                                                <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
-                                                <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
-                                                <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
+                                                <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
+                                                <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
+                                                <polygon points="8,40 8,39 30,61 30,61" :style="BuscoDiente(info,4)" />                                    
+                                                <polygon points="30,39 30,39 8,61 8,60" :style="BuscoDiente(info,4)" />
+                                                <image v-if="BuscoDiente(info,5) == 'marcadoPernoO'" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                <image v-if="BuscoDiente(info,5) == 'marcadoPernoO_Azul'" xlink:href="/img/odontograma/perno5.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                <path d="M 8,50 a10,10 0 1,1 20,0" :style="BuscoDiente(info,6)" ></path>
+                                                <text x=16 y=32 :style="BuscoDiente(info,7)" >S</text>                                                                        
+                                                <ellipse cx="18" cy="50" rx="12" ry="7" :style="BuscoDiente(info,8)" />
+                                                <line x1="6" y1="50" x2="30" y2="50" :style="BuscoDiente(info,8)" />                                    
                                             </svg>
                                         </div>
                                     </div>
@@ -142,9 +144,9 @@
                                 <div class="row d-flex justify-content-end" v-for="i in cuadrante_izquierdo_inferior" :key="i">
                                     <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
                                         <p class="form-control-static text-center mb-0" :id="'t'+info.id">{{ info.codigo }}</p>
-                                        <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]"> 
+                                        <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                         <div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                 <!-- Caras del Diente -->
                                                 <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
                                                 <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
@@ -152,15 +154,16 @@
                                                 <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
                                                 <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
                                                 <!-- Tratamientos / Estados del diente -->
-                                                <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
-                                                <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
-                                                <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
-                                                <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
-                                                <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
-                                                <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
-                                                <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
-                                                <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
-                                                <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
+                                                <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
+                                                <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
+                                                <polygon points="8,40 8,39 30,61 30,61" :style="BuscoDiente(info,4)" />                                    
+                                                <polygon points="30,39 30,39 8,61 8,60" :style="BuscoDiente(info,4)" />
+                                                <image v-if="BuscoDiente(info,5) == 'marcadoPernoO'" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                <image v-if="BuscoDiente(info,5) == 'marcadoPernoO_Azul'" xlink:href="/img/odontograma/perno5.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                <path d="M 8,50 a10,10 0 1,1 20,0" :style="BuscoDiente(info,6)" ></path>
+                                                <text x=16 y=32 :style="BuscoDiente(info,7)" >S</text>                                                                        
+                                                <ellipse cx="18" cy="50" rx="12" ry="7" :style="BuscoDiente(info,8)" />
+                                                <line x1="6" y1="50" x2="30" y2="50" :style="BuscoDiente(info,8)" />                                    
                                             </svg>
                                         </div>
                                     </div>
@@ -170,9 +173,9 @@
                                 <div class="row" v-for="i in cuadrante_derecho_inferior" :key="i">
                                     <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
                                         <p class="form-control-static text-center mb-0" :id="'t'+info.id">{{ info.codigo }}</p>
-                                        <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]"> 
+                                        <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                         <div>
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                 <!-- Caras del Diente-->
                                                 <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
                                                 <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
@@ -180,15 +183,16 @@
                                                 <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
                                                 <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
                                                 <!-- Tratamientos / Estados del diente -->
-                                                <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
-                                                <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
-                                                <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
-                                                <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
-                                                <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
-                                                <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
-                                                <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
-                                                <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
-                                                <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
+                                                <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
+                                                <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
+                                                <polygon points="8,40 8,39 30,61 30,61" :style="BuscoDiente(info,4)" />                                    
+                                                <polygon points="30,39 30,39 8,61 8,60" :style="BuscoDiente(info,4)" />
+                                                <image v-if="BuscoDiente(info,5) == 'marcadoPernoO'" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                <image v-if="BuscoDiente(info,5) == 'marcadoPernoO_Azul'" xlink:href="/img/odontograma/perno5.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                <path d="M 8,50 a10,10 0 1,1 20,0" :style="BuscoDiente(info,6)" ></path>
+                                                <text x=16 y=32 :style="BuscoDiente(info,7)" >S</text>                                                                        
+                                                <ellipse cx="18" cy="50" rx="12" ry="7" :style="BuscoDiente(info,8)" />
+                                                <line x1="6" y1="50" x2="30" y2="50" :style="BuscoDiente(info,8)" />                                    
                                             </svg>
                                         </div>
                                     </div>
@@ -336,6 +340,8 @@ export default {
                 descuento:'',
                 activo:''
             },
+            costo_Total:0.00,
+            presupuesto_id:'',
             
             diente: {
                 cursor:'pointer', 
@@ -364,7 +370,15 @@ export default {
                 stroke:'dimgrey',
                 strokeWidth:'1px'
             },
-            
+
+            marcadoAzul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fill:'blue',
+                stroke:'dimgrey',
+                strokeWidth:'1px'
+            },
+
             marcadoCoronaO: {
                 cursor:'pointer', 
                 cursor: 'hand' , 
@@ -373,6 +387,14 @@ export default {
                 strokeWidth:'2px'                          
             },
             
+            marcadoCoronaO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' , 
+                fill:'none',
+                stroke:'blue',
+                strokeWidth:'2px'                          
+            },            
+            
             marcadoEndodonciaO: {
                 cursor:'pointer', 
                 cursor: 'hand' ,          
@@ -380,7 +402,15 @@ export default {
                 stroke:'red',
                 strokeWidth:'1px'                 
             },
-            
+
+            marcadoEndodonciaO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fill:'red',
+                stroke:'blue',
+                strokeWidth:'1px'                 
+            },  
+
             marcadoExodonciaO: {
                 cursor:'pointer', 
                 cursor: 'hand' ,          
@@ -388,6 +418,14 @@ export default {
                 stroke:'red',
                 strokeWidth:'1px'                      
             },
+
+            marcadoExodonciaO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fill:'red',
+                stroke:'blue',
+                strokeWidth:'1px'                      
+            },            
             
             marcadoIonomeroO: {
                 cursor:'pointer', 
@@ -396,6 +434,14 @@ export default {
                 fillOpacity : '0',
                 strokeWidth: '2px'               
             },
+
+            marcadoIonomeroO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,         
+                stroke : 'blue',
+                fillOpacity : '0',
+                strokeWidth: '2px'               
+            },            
             
             marcadoSellanteO: {
                 cursor:'pointer', 
@@ -406,6 +452,16 @@ export default {
                 strokeWidth: '1px',
                 fontSize : '2em'             
             },
+
+            marcadoSellanteO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fontWeight: 'normal',
+                fill : 'blue',
+                stroke : 'red',
+                strokeWidth: '1px',
+                fontSize : '2em'             
+            },            
             
             marcadoGeneralO: {
                 cursor:'pointer', 
@@ -413,7 +469,17 @@ export default {
                 fill:'none',
                 stroke:'red',
                 strokeWidth:'1px'        
-            }            
+            },
+
+            marcadoGeneralO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,         
+                fill:'none',
+                stroke:'blue',
+                strokeWidth:'1px'        
+            },                         
+            
+            errors:[]
 
         }
     },
@@ -471,14 +537,37 @@ export default {
             if(param == 3) this.odontograma = [1,2,3,14,15,16,17,18,19,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52]
         },
         BuscoDiente(param,numsim){
-            let valor = false
+            //let valor = false
+            let self = this
+            let valor = this.invisible
             if(this.lista_general_presupuesto.length == 0) return valor
             let serdent = this.lista_general_presupuesto.filter(ser => ser.diente_id == param.id)
             if(serdent.length > 0){
                 serdent.map(function(value, key) {
                     if(value.simbologia == numsim){
-                        valor = true
-                        return
+                        switch (numsim) {
+                            case 2 : 
+                                valor = value.realizado == 3 ? self.marcadoEndodonciaO_Azul : self.marcadoEndodonciaO 
+                                break;                    
+                            case 3 : 
+                                valor = value.realizado == 3 ? self.marcadoCoronaO_Azul : self.marcadoCoronaO 
+                                break;                    
+                            case 4 : 
+                                valor = value.realizado == 3 ? self.marcadoExodonciaO_Azul : self.marcadoExodonciaO  
+                                break;                    
+                            case 5 : 
+                                valor = value.realizado == 3 ? self.marcadoPernoO_Azul : self.marcadoPernoO  
+                                break;                    
+                            case 6 : 
+                                valor = value.realizado == 3 ? self.marcadoIonomeroO_Azul : self.marcadoIonomeroO 
+                                break;
+                            case 7 :
+                                valor = value.realizado == 3 ? self.marcadoSellanteO_Azul : self.marcadoSellanteO 
+                                break;
+                            case 8 :
+                                valor = value.realizado == 3 ? self.marcadoGeneralO_Azul : self.marcadoGeneralO 
+                                break;                    
+                        }                         
                     }
                 })
             }
@@ -497,14 +586,19 @@ export default {
                     encontrado.map(function(value, key) {
                         if((value.simbologia == 1) && (value.caras.indexOf(cara)) >-1) {
                             //valor = 'marcadoRojo marcado'
-                            valor = self.marcadoRojo
-                            return
+                            if(value.realizado == 3){
+                                valor = self.marcadoAzul
+                                return
+                            }else{
+                                valor = self.marcadoRojo
+                                return
+                            }
                         }
                     })
                 }
             }
             return valor
-        },                
+        },               
         processEdit(param){
             this.$router.push({ name: 'ppto-operatoria' , params: { idpresupuesto: param } })
         },
@@ -568,6 +662,7 @@ export default {
                     moneda_id:value.moneda_id,
                     nombre_moneda:value.moneda.nombre_moneda,
                     descuento:value.descuento,
+                    realizado: value.realizado,
                     activo:value.activo
                 }
                 if(self.dataTratamiento.activo){
@@ -579,6 +674,8 @@ export default {
                 self.list_dent_missing.push(value.id)
                 self.odontograma = _.reject(self.odontograma, function(d){ return d == value.id })                    
             }) 
+            this.costo_Total = param.pago_total
+            this.presupuesto_id = param.id
             this.$swal({
                 title: 'Desea imprimir este Presupuesto?',
                 text: "Impresión del Presupuesto!",
@@ -627,7 +724,8 @@ export default {
                     doc.setFontSize(12)
                     doc.setFont("helvetica")
                     doc.setFontType("bold")
-                    doc.text(15,15,"PRESUPUESTO Nº 1265")
+                    doc.text(15,15,"PRESUPUESTO Nº")
+                    doc.text(56,15,self.presupuesto_id.toString())
                     doc.setFontSize(8)                   
                     doc.text(15,20,'FECHA :')
                     doc.text(40,20, self.dataPaciente.fecha)
@@ -699,7 +797,7 @@ export default {
                     doc.setFontSize(8)
                     doc.setFontType("bold")                     
                     doc.text(80,y,'TOTAL TRATAMIENTOS PARTICULARES')
-                    //doc.text(198,y,self.costoTotal,'right')
+                    doc.text(198,y,parseFloat(self.costo_Total).toFixed(2),'right')
                     y += 8
                     doc.text(140,y,'TOTAL A CANCELAR')
                     doc.line(185,y , 205,y)

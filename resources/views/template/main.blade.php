@@ -90,8 +90,8 @@
 	<script src="{{ asset('js/plugin/dropzone/dropzone.min.js') }}"></script>
 
 	<!-- Fullcalendar -->
-	<script src="{{ asset('js/plugin/fullcalendar/fullcalendar.min.js') }}"></script>
-	<script src="{{ asset('js/plugin/fullcalendar/locale-all.js') }}"></script>	
+	<script src="{{ asset('js/plugin/fullcalendar/fullcalendar.min.js') }}"></script>	
+	<script src="{{ asset('js/plugin/fullcalendar/locale-all.js') }}"></script>		
 
 	<!-- DateTimePicker -->
 	<script src="{{ asset('js/plugin/datepicker/bootstrap-datetimepicker.min.js') }}"></script>

@@ -11,7 +11,7 @@
             <div class="card text-white bg-white mb-3">
                 <div class="card-header">                        
                     <div class="col pl-0 pr-0">
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-profile"></i></span> Nuevo Paciente</button>
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-add-user"></i></span> Nuevo Paciente</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
@@ -322,8 +322,7 @@
                                                     </option>
                                                 </select>
                                             </div>                                              
-                                        </div>
-                                                                                                                                                                            
+                                        </div>                                                                                                                                                    
                                     </div>
                                     <div class="row" v-show="dataPaciente.tipo == 2">
                                         <div class="col-6">

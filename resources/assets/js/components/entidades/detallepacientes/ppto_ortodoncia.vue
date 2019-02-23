@@ -455,6 +455,15 @@ export default {
         }                 
 
     },
+    watch:{
+        'dataDescuento.porcentaje' (newVal,oldVal){
+            if(newVal != 0){
+                this.dataDescuento.nuevo_monto = this.dataDescuento.monto_actual * ( 1 - (this.dataDescuento.porcentaje / 100))
+            }else{
+                this.dataDescuento.nuevo_monto = ''
+            }
+        }       
+    },    
     methods:{
         StatusForm: function(eshow,eclass,elabel){
             this.ShowIcon = eshow
@@ -559,7 +568,7 @@ export default {
                     costo_base:value.costo_base,
                     descuento:value.descuento,
                     empleado_id:self.dataPresupuesto.empleado_id,
-                    realizado:0,
+                    realizado:1,
                     descargado:0,
                     pagado:0,
                     tipo_pagado:'',
@@ -585,8 +594,8 @@ export default {
             this.dataPresupuesto.total_dolares = (parseFloat(costoTotal) / parseFloat(this.getTipoCambioHoy.tipo_cambio)).toFixed(2)
             this.dataPresupuesto.total_soles = costoTotal.toFixed(2)                  
 
-            //this.createPresupuesto()
-            this.createPDF()     
+            this.createPresupuesto()
+            //this.createPDF()     
         },
         createPresupuesto(){
             var url = '/api/presupuestos-ortodoncias';

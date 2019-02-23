@@ -27,6 +27,8 @@ import 'vue-multiselect/dist/vue-multiselect.min.css'
 import 'pretty-checkbox/src/pretty-checkbox.scss'
 import PrettyCheckbox from 'pretty-checkbox-vue'
 import contextMenu from 'vue-context-menu'
+import FullCalendar from 'vue-full-calendar'
+import 'fullcalendar/dist/fullcalendar.css'
 
 window.axios = require('axios');
 
@@ -46,3 +48,4 @@ Vue.use(Tooltip)
 Vue.component('multiselect', Multiselect)
 Vue.use(PrettyCheckbox)
 Vue.component('context-menu',contextMenu)
+Vue.use(FullCalendar)

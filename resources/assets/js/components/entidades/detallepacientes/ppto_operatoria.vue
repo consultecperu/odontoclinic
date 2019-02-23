@@ -82,7 +82,7 @@
                 <div class="col-12">
                     <div class="form-group border border-primary pt-0 pb-0">
                         <p class="form-control-static text-primary font-weight-bold mb-10">Tipo de Odontograma</p>
-                        <p-radio v-for="tip in tiposOdontograma" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="tipoOdonto" @change="cambioTipo(tip.id)" :disabled="$route.params.idpresupuesto != undefined">
+                        <p-radio v-for="tip in tiposOdontograma" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="dataPresupuesto.tipo_odontograma" @change="cambioTipo(tip.id)" :disabled="$route.params.idpresupuesto != undefined">
                             <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">{{ tip.nombre }} </label>                              
                         </p-radio>  
                     </div>
@@ -117,15 +117,16 @@
                                                     <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
                                                     <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')" /> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
-                                                    <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
-                                                    <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
-                                                    <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
-                                                    <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
-                                                    <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
-                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
-                                                    <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
-                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
-                                                    <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
+                                                    <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
+                                                    <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
+                                                    <polygon points="8,40 8,39 30,61 30,61" :style="BuscoDiente(info,4)" />                                    
+                                                    <polygon points="30,39 30,39 8,61 8,60" :style="BuscoDiente(info,4)" />
+                                                    <image v-if="BuscoDiente(info,5) == 'marcadoPernoO'" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <image v-if="BuscoDiente(info,5) == 'marcadoPernoO_Azul'" xlink:href="/img/odontograma/perno5.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="BuscoDiente(info,6)" ></path>
+                                                    <text x=16 y=32 :style="BuscoDiente(info,7)" >S</text>                                                                        
+                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="BuscoDiente(info,8)" />
+                                                    <line x1="6" y1="50" x2="30" y2="50" :style="BuscoDiente(info,8)" />                                    
                                                 </svg>                                                                                                                                            
                                             </div>                                            
                                         </div>                                          
@@ -146,15 +147,16 @@
                                                     <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
                                                     <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
-                                                    <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
-                                                    <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
-                                                    <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
-                                                    <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
-                                                    <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
-                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
-                                                    <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
-                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
-                                                    <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
+                                                    <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
+                                                    <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
+                                                    <polygon points="8,40 8,39 30,61 30,61" :style="BuscoDiente(info,4)" />                                    
+                                                    <polygon points="30,39 30,39 8,61 8,60" :style="BuscoDiente(info,4)" />
+                                                    <image v-if="BuscoDiente(info,5) == 'marcadoPernoO'" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <image v-if="BuscoDiente(info,5) == 'marcadoPernoO_Azul'" xlink:href="/img/odontograma/perno5.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="BuscoDiente(info,6)" ></path>
+                                                    <text x=16 y=32 :style="BuscoDiente(info,7)" >S</text>                                                                        
+                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="BuscoDiente(info,8)" />
+                                                    <line x1="6" y1="50" x2="30" y2="50" :style="BuscoDiente(info,8)" />                                    
                                                 </svg>
                                             </div>
                                         </div>
@@ -181,15 +183,16 @@
                                                     <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
                                                     <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
-                                                    <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
-                                                    <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
-                                                    <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
-                                                    <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
-                                                    <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
-                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
-                                                    <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
-                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
-                                                    <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
+                                                    <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
+                                                    <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
+                                                    <polygon points="8,40 8,39 30,61 30,61" :style="BuscoDiente(info,4)" />                                    
+                                                    <polygon points="30,39 30,39 8,61 8,60" :style="BuscoDiente(info,4)" />
+                                                    <image v-if="BuscoDiente(info,5) == 'marcadoPernoO'" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <image v-if="BuscoDiente(info,5) == 'marcadoPernoO_Azul'" xlink:href="/img/odontograma/perno5.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="BuscoDiente(info,6)" ></path>
+                                                    <text x=16 y=32 :style="BuscoDiente(info,7)" >S</text>                                                                        
+                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="BuscoDiente(info,8)" />
+                                                    <line x1="6" y1="50" x2="30" y2="50" :style="BuscoDiente(info,8)" />                                    
                                                 </svg>
                                             </div>
                                         </div>
@@ -209,15 +212,16 @@
                                                     <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
                                                     <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
-                                                    <polygon points="17,40 19,40 19,60 17,60" :style="[BuscoDiente(info,2) ? marcadoEndodonciaO : invisible]" />
-                                                    <circle cx="18" cy="50" r="10" :style="[BuscoDiente(info,3)  ? marcadoCoronaO : invisible]" />
-                                                    <polygon points="8,40 8,39 30,61 30,61" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />                                    
-                                                    <polygon points="30,39 30,39 8,61 8,60" :style="[BuscoDiente(info,4) ? marcadoExodonciaO : invisible]" />
-                                                    <image v-if="BuscoDiente(info,5)" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
-                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="[BuscoDiente(info,6) ? marcadoIonomeroO : invisible]" ></path>
-                                                    <text x=16 y=32 :style="[BuscoDiente(info,7) ? marcadoSellanteO : invisible]" >S</text>                                                                        
-                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />
-                                                    <line x1="6" y1="50" x2="30" y2="50" :style="[BuscoDiente(info,8) ? marcadoGeneralO : invisible]" />                                    
+                                                    <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
+                                                    <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
+                                                    <polygon points="8,40 8,39 30,61 30,61" :style="BuscoDiente(info,4)" />                                    
+                                                    <polygon points="30,39 30,39 8,61 8,60" :style="BuscoDiente(info,4)" />
+                                                    <image v-if="BuscoDiente(info,5) == 'marcadoPernoO'" xlink:href="/img/odontograma/perno4.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <image v-if="BuscoDiente(info,5) == 'marcadoPernoO_Azul'" xlink:href="/img/odontograma/perno5.png" x=-2 y=10 width=26 height=26 class="perno" />
+                                                    <path d="M 8,50 a10,10 0 1,1 20,0" :style="BuscoDiente(info,6)" ></path>
+                                                    <text x=16 y=32 :style="BuscoDiente(info,7)" >S</text>                                                                        
+                                                    <ellipse cx="18" cy="50" rx="12" ry="7" :style="BuscoDiente(info,8)" />
+                                                    <line x1="6" y1="50" x2="30" y2="50" :style="BuscoDiente(info,8)" />                                    
                                                 </svg>
                                             </div>
                                         </div>
@@ -290,13 +294,15 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12">
-                                <div v-for="sim in simbolos" class="col-1 form-check form-check-inline pl-0" :key="sim.id" :class="{trata_selected:sim.id == selected}">
+                            <div v-for="sim in simbolos" :key="sim.id"  class="col-1 d-inline pr-0">
+                                <div class="title-simbologia text-center">{{ sim.id == 1 ? 'NORMAL' : sim.nombre_simbologia}}                                    
+                                </div>
+                                <div class="form-check form-check-inline pl-0" :class="{trata_selected:sim.id == selected}">
                                     <p-radio class="p-icon p-curve p-tada mr-0" :value="sim.id" name="radio66" color="primary-o" v-model="simboloID" @change="cambiotratamiento(sim.id)">
                                         <i slot="extra" class="icon la la-check"></i>                                
                                     </p-radio>
                                     <div>
-                                        <svg height="42" width="42" v-tooltip.top="sim.nombre_simbologia" :id="'tratam_' + sim.id">
+                                        <svg height="42" width="42" :id="'tratam_' + sim.id">
                                             <!-- Caras del Diente -->
                                             <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
                                             <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
@@ -318,7 +324,7 @@
                                     </div>
 
                                 </div>
-                            </div>                                                                                                                                                                           
+                            </div>                                                                                                                                                                          
                         </div>
                         <div class="row">
                             <div class="col-12">
@@ -347,7 +353,7 @@
                                 </svg>
                             </div>
                             <div class="col-9 pl-0">
-                                <table class="table table-bordered table-sm table-head-bg-info table-bordered-bd-info">
+                                <table class="table table-bordered table-sm table-head-bg-primary table-bordered-bd-primary">
                                     <thead>
                                         <tr>
                                             <th scope="col">Diente</th>
@@ -358,7 +364,7 @@
                                             <th scope="col">P.Aseg</th>     
                                             <th scope="col">C.Total</th>
                                             <th scope="col">Pago</th>  
-                                            <th scope="col">#</th>                                                                                                                        
+                                            <th scope="col" align="center">*</th>                                                                                                                        
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -372,7 +378,7 @@
                                             <td>0</td>   
                                             <td>{{ serv.costo}}</td>  
                                             <td>{{ serv.costo}}</td> 
-                                            <td><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" disabled>X</button></td>                                                                                                                        
+                                            <td align="center"><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" disabled><i class="la la-close"></i></button></td>                                                                                                                        
                                         </tr>
                                         <tr v-for="(serv, index) in list_services_dent" :key="serv.id">
                                             <td>{{ serv.letras }}</td>
@@ -383,7 +389,7 @@
                                             <td>0</td>   
                                             <td>{{ serv.costo}}</td>  
                                             <td>{{ serv.costo}}</td> 
-                                            <td><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)">X</button></td>                                                                                                                        
+                                            <td align="center"><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" v-tooltip.top="'Eliminar'"><i class="la la-close"></i></button></td>                                                                                                                        
                                         </tr>                                        
                                         <!--<tr v-if="list_services_dent.length == 0">-->
                                         <tr v-if="list_services_dent.length == 0 && list_services_anteriores.length == 0">
@@ -586,13 +592,16 @@ export default {
                 fecha:moment(this.presupuestoOperatoriaById.fecha_registro).format('DD-MM-YYYY'),
                 tipocambio:this.presupuestoOperatoriaById.tipocambio.tipo_cambio
             }             
-        }         
-       
+        }
+        window.addEventListener('scroll', this.handleScroll);                           
     },  
     mounted(){
         this.cambioTipo(1)
         this.CargaDetalleEdit()
-    },   
+    }, 
+    destroyed(){
+        window.removeEventListener('scroll', this.handleScroll);
+    },      
     data(){
         return {
             isLoading: false,
@@ -656,6 +665,7 @@ export default {
                 pago_total:'',
                 user_id:'',
                 saldo:'',
+                tipo_odontograma:1,
                 detalle:[],
                 ausentes:[],
                 text_up_dent:[]
@@ -717,6 +727,7 @@ export default {
                 moneda_id:'',
                 nombre_moneda : '',
                 descuento:'',
+                realizado:'',
                 activo:''
             },
             dataDescuento:{
@@ -738,7 +749,7 @@ export default {
                 {id:3 , nombre:'mixta'}
             ],
             simboloID:'',
-            tipoOdonto:1,
+            //tipoOdonto:1,
             denteselect:'',
             infodent:'',
             multicaras:[],
@@ -784,7 +795,15 @@ export default {
                 stroke:'dimgrey',
                 strokeWidth:'1px'
             },
-            
+
+            marcadoAzul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fill:'blue',
+                stroke:'dimgrey',
+                strokeWidth:'1px'
+            },
+
             marcadoCoronaO: {
                 cursor:'pointer', 
                 cursor: 'hand' , 
@@ -793,6 +812,14 @@ export default {
                 strokeWidth:'2px'                          
             },
             
+            marcadoCoronaO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' , 
+                fill:'none',
+                stroke:'blue',
+                strokeWidth:'2px'                          
+            },            
+            
             marcadoEndodonciaO: {
                 cursor:'pointer', 
                 cursor: 'hand' ,          
@@ -800,7 +827,15 @@ export default {
                 stroke:'red',
                 strokeWidth:'1px'                 
             },
-            
+
+            marcadoEndodonciaO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fill:'red',
+                stroke:'blue',
+                strokeWidth:'1px'                 
+            },  
+
             marcadoExodonciaO: {
                 cursor:'pointer', 
                 cursor: 'hand' ,          
@@ -808,6 +843,14 @@ export default {
                 stroke:'red',
                 strokeWidth:'1px'                      
             },
+
+            marcadoExodonciaO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fill:'red',
+                stroke:'blue',
+                strokeWidth:'1px'                      
+            },            
             
             marcadoIonomeroO: {
                 cursor:'pointer', 
@@ -816,6 +859,14 @@ export default {
                 fillOpacity : '0',
                 strokeWidth: '2px'               
             },
+
+            marcadoIonomeroO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,         
+                stroke : 'blue',
+                fillOpacity : '0',
+                strokeWidth: '2px'               
+            },            
             
             marcadoSellanteO: {
                 cursor:'pointer', 
@@ -826,6 +877,16 @@ export default {
                 strokeWidth: '1px',
                 fontSize : '2em'             
             },
+
+            marcadoSellanteO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,          
+                fontWeight: 'normal',
+                fill : 'blue',
+                stroke : 'red',
+                strokeWidth: '1px',
+                fontSize : '2em'             
+            },            
             
             marcadoGeneralO: {
                 cursor:'pointer', 
@@ -833,11 +894,19 @@ export default {
                 fill:'none',
                 stroke:'red',
                 strokeWidth:'1px'        
-            }            
+            },
+
+            marcadoGeneralO_Azul: {
+                cursor:'pointer', 
+                cursor: 'hand' ,         
+                fill:'none',
+                stroke:'blue',
+                strokeWidth:'1px'        
+            }                         
         }
     },
     computed: {
-        ...mapState(['user_system','dientes','simbologias','tarifarios']),
+        ...mapState(['user_system','sede_system','dientes','simbologias','tarifarios']),
         ...mapGetters(['getDientesByCuadrante','getPacienteById','getMedicos','getTipoCambioHoy','getTratamientosSimbolo','getPresupuestoOperatoriaById']), 
         PacienteById(){
             return this.getPacienteById(this.$route.params.idpaciente)
@@ -927,7 +996,8 @@ export default {
                 costo : '',
                 moneda_id:'',
                 nombre_moneda : '',
-                descuento:''            
+                descuento:'',
+                realizado:''           
             }
             this.selected = undefined
             this.$modal.show('carga_servicios') 
@@ -978,7 +1048,8 @@ export default {
                         costo : param.row.costo,
                         moneda_id:param.row.moneda.id,
                         nombre_moneda : param.row.moneda.nombre_moneda,
-                        descuento:''
+                        descuento:'',
+                        realizado:''
                     } 
                     datalist = _.clone(self.dataTratamiento)             
                     self.list_services_dent.push(datalist)      // nuevos servicios
@@ -998,7 +1069,8 @@ export default {
                     costo : param.row.costo,
                     moneda_id:param.row.moneda.id,
                     nombre_moneda : param.row.moneda.nombre_moneda,
-                    descuento:''
+                    descuento:'',
+                    realizado:''
                 }                
                 this.list_services_dent.push(this.dataTratamiento)          // nuevos servicios
             }
@@ -1057,7 +1129,7 @@ export default {
                         descuento:value.descuento,
                         tipo_odontograma:1,
                         empleado_id:self.PacienteById.empleado_id,
-                        realizado:0,
+                        realizado:1,
                         descargado:0,
                         pagado:0,
                         tipo_pagado:'',
@@ -1112,14 +1184,37 @@ export default {
             this.$modal.hide('carga_servicios')
         },
         BuscoDiente(param,numsim){
-            let valor = false
+            //let valor = false
+            let self = this
+            let valor = this.invisible
             if(this.lista_general_presupuesto.length == 0) return valor
             let serdent = this.lista_general_presupuesto.filter(ser => ser.diente_id == param.id)
             if(serdent.length > 0){
                 serdent.map(function(value, key) {
                     if(value.simbologia == numsim){
-                        valor = true
-                        return
+                        switch (numsim) {
+                            case 2 : 
+                                valor = value.realizado == 3 ? self.marcadoEndodonciaO_Azul : self.marcadoEndodonciaO 
+                                break;                    
+                            case 3 : 
+                                valor = value.realizado == 3 ? self.marcadoCoronaO_Azul : self.marcadoCoronaO 
+                                break;                    
+                            case 4 : 
+                                valor = value.realizado == 3 ? self.marcadoExodonciaO_Azul : self.marcadoExodonciaO  
+                                break;                    
+                            case 5 : 
+                                valor = value.realizado == 3 ? self.marcadoPernoO_Azul : self.marcadoPernoO  
+                                break;                    
+                            case 6 : 
+                                valor = value.realizado == 3 ? self.marcadoIonomeroO_Azul : self.marcadoIonomeroO 
+                                break;
+                            case 7 :
+                                valor = value.realizado == 3 ? self.marcadoSellanteO_Azul : self.marcadoSellanteO 
+                                break;
+                            case 8 :
+                                valor = value.realizado == 3 ? self.marcadoGeneralO_Azul : self.marcadoGeneralO 
+                                break;                    
+                        }                         
                     }
                 })
             }
@@ -1138,8 +1233,13 @@ export default {
                     encontrado.map(function(value, key) {
                         if((value.simbologia == 1) && (value.caras.indexOf(cara)) >-1) {
                             //valor = 'marcadoRojo marcado'
-                            valor = self.marcadoRojo
-                            return
+                            if(value.realizado == 3){
+                                valor = self.marcadoAzul
+                                return
+                            }else{
+                                valor = self.marcadoRojo
+                                return
+                            }
                         }
                     })
                 }
@@ -1147,6 +1247,7 @@ export default {
             return valor
         },
         menuPopup(param){
+            $('#context-menu').css({'display':'block'}) 
             this.deleteDent = param
             if(this.contains(this.odontograma,param.id) || this.contains(this.list_dent_missing,param.id)){
                 this.$refs.ctxMenu.open()
@@ -1371,7 +1472,8 @@ export default {
                 costo : param.row.costo,
                 moneda_id:param.row.moneda.id,
                 nombre_moneda : param.row.moneda.nombre_moneda,
-                descuento:''
+                descuento:'',
+                realizado:''
             }                
             this.lista_general_presupuesto.push(this.dataTratamiento)          // nuevos servicios
             this.cambiotratamiento(undefined)
@@ -1384,6 +1486,7 @@ export default {
                 return
             }
             let self = this
+            let tipo_odo = this.dataPresupuesto.tipo_odontograma
             let cont_text = _.clone(this.dataPresupuesto.text_up_dent)       
             this.dataPresupuesto = {
                 fecha_registro:moment().format('DD-MM-YYYY'),
@@ -1398,12 +1501,13 @@ export default {
                 observaciones:'',
                 estadopresupuesto_id:1,
                 tipocambio_id:this.getTipoCambioHoy.id,
-                sede_id:1,
+                sede_id:this.sede_system.id,
                 pago_cliente:this.costoTotal,
                 pago_aseguradora:0,
                 pago_total:this.costoTotal,
                 user_id:this.user_system.id,
                 saldo:0,
+                tipo_odontograma: tipo_odo,
                 detalle:[],
                 ausentes:[],
                 text_up_dent:cont_text
@@ -1657,6 +1761,7 @@ export default {
                         moneda_id:value.moneda_id,
                         nombre_moneda:value.moneda.nombre_moneda,
                         descuento:value.descuento,
+                        realizado:value.realizado,
                         activo:value.activo
                     }
                     if(self.dataTratamiento.activo){
@@ -1717,7 +1822,10 @@ export default {
                 }
             }           
 
-        }
+        },
+        handleScroll(){
+            $('#context-menu').css({'display':'none'}) 
+        },        
     }
 }
 </script>
@@ -1952,6 +2060,10 @@ export default {
         color: #FAFAFA;
         cursor:pointer; 
         cursor: hand ; 
+    }
+    .title-simbologia {
+        font-size: 0.65em !important; 
+        font-weight: 700 !important;       
     } 
 
 </style>

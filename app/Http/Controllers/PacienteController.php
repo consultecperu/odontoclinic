@@ -213,7 +213,6 @@ class PacienteController extends Controller
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
             }
-  
             $paciente = Paciente::find($id);
             $paciente->fill($request->all());   
             $paciente->fecha_nacimiento = Globales::FormatFecYMD($request->get('fecha_nacimiento'));
@@ -224,7 +223,7 @@ class PacienteController extends Controller
             $paciente->nombre_completo = Str::upper($paciente->nombres).' '.Str::upper($paciente->apellido_paterno).' '.Str::upper($paciente->apellido_materno);                                              
             $paciente->save();
             /** --- actualizamos los datos en la tabla paciente_plan---**/
-            $pacienteplan = Pacienteplan::find($paciente->pacienteplanes[0]->id);
+            $pacienteplan = Pacienteplan::find($request->get('pacienteplanid'));
             $pacienteplan->tipo = $request->get('tipo');
             $pacienteplan->plan_id = $request->get('plan_id');
             $pacienteplan->descripcion = $request->get('descripcion');
@@ -291,4 +290,18 @@ class PacienteController extends Controller
         }
                    
     }
+
+    public function Actualizacelular(Request $request, $id)
+    {
+        try {
+            $paciente = Paciente::find($id);
+            $paciente->celular = $request->get('celular');
+            $paciente->save();  
+        } catch (Exception $e) {
+            return response()->json(
+                ['errors' => $e->getMessage()], 422
+            );
+        }
+      
+    }    
 }

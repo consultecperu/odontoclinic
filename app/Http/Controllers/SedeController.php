@@ -44,9 +44,10 @@ class SedeController extends Controller
         DB::beginTransaction();    
 
         try {
-            $rules =    ['nombre_sede'      => 'required',
+            $rules =    ['nombre_sede'          => 'required',
                         'ubigeo_id'             => 'required',
-                        'user_id'               => 'required'
+                        'user_id'               => 'required',
+                        'plan_id'               => 'required'
                         ];
   
           $validator = Validator::make($request->all(), $rules);
@@ -112,9 +113,10 @@ class SedeController extends Controller
         DB::beginTransaction(); 
 
         try {
-            $rules =    ['nombre_sede'      => 'required',
+            $rules =    ['nombre_sede'          => 'required',
                         'ubigeo_id'             => 'required',
-                        'user_id'               => 'required'
+                        'user_id'               => 'required',
+                        'plan_id'               => 'required'
                         ];
     
             $validator = Validator::make($request->all(), $rules);

@@ -21,7 +21,15 @@ class Presupuestoortodoncia extends Model
     public function moneda()
     {
         return $this->belongsTo('App\Moneda');
-    }  
+    } 
+    public function plan()
+    {
+        return $this->belongsTo('App\Plane');
+    }    
+    public function poliza()
+    {
+        return $this->belongsTo('App\Poliza');
+    }      
     public function estadopresupuesto()
     {
         return $this->belongsTo('App\Estadopresupuesto');
@@ -46,5 +54,8 @@ class Presupuestoortodoncia extends Model
     {
     	return $this->belongsTo('App\User');
     } 
-   
+    public function pagos()
+    {
+        return $this->hasMany('App\Pago');
+    }     
 }

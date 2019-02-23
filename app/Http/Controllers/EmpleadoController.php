@@ -22,6 +22,7 @@ use App\Hora;
 use App\User;
 use App\Dia;
 use App\Especialidade;
+use App\Estadocita;
 use Globales; // son los helpers
 
 class EmpleadoController extends Controller
@@ -53,7 +54,8 @@ class EmpleadoController extends Controller
         $perfiles = Perfile::where('activo',true)->orderBy('id','ASC')->get();
         $horas = Hora::where('activo',true)->orderBy('id','ASC')->get();   
         $dias = Dia::where('activo',true)->orderBy('id','ASC')->get();               
-        $especialidades = Especialidade::where('activo',true)->orderBy('id','ASC')->get();   
+        $especialidades = Especialidade::with('empleados')->where('activo',true)->orderBy('id','ASC')->get(); 
+        $estadocitas = EstadoCita::where('activo',true)->orderBy('id','ASC')->get();  
         return [
               'estadosciviles'          => $estadosciviles,
               'ubigeos'                 => $ubigeos,
@@ -64,7 +66,8 @@ class EmpleadoController extends Controller
               'perfiles'                => $perfiles,
               'horas'                   => $horas,
               'dias'                    => $dias,
-              'especialidades'          => $especialidades
+              'especialidades'          => $especialidades,
+              'estadocitas'             => $estadocitas
           ];
     }
 

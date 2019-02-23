@@ -24,7 +24,7 @@ class AuthenticateController extends Controller
             if (Auth::attempt(['name' => $request->name, 'password' => $request->password , 'activo' => 1 ,'acceso' => true])) {
                 $request->session()->regenerate();
                 $id = Auth::id();
-                $user = User::where('id',$id)->get();
+                $user = User::with('__empleado','perfile','__empleado.sedes')->where('id',$id)->get();
 /*                 $user = User::with('empleado','empleado.perfil')->where('id',$id)->get();
     
                 if($user[0]->empleado->habilitado == 0){

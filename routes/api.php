@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('pacientes','PacienteController');  
     Route::put('/pacientes/actualizahc/{id}','PacienteController@ActualizaHC');      
     Route::put('/pacientes/actualizafoto/{id}','PacienteController@ActualizaFoto');  
+    Route::put('/pacientes/actualizacelular/{id}', 'PacienteController@Actualizacelular');
     // dependientes
     Route::resource('dependientes','DependienteController'); 
     Route::post('/dependientes/relacion', 'DependienteController@relacion'); 
@@ -103,10 +104,30 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/presupuestosoperatoriasdetalles/deltradie/{id}','PresupuestosoperatoriaController@deleteTratamientosDiente');
     Route::put('/presupuestosoperatoriasdetalles/estdieaus/{id}','PresupuestosoperatoriaController@estadoDientesAusentes');              
     Route::put('/presupuestosoperatorias/cambioestado/{id}','PresupuestosoperatoriaController@cambioEstado');              
+    Route::put('/presupuestosoperatoriasdetalles/descargatx/{id}','PresupuestosoperatoriaController@descargaTx');              
+    Route::put('/presupuestosoperatoriasdetalles/descargasaldo/{id}','PresupuestosoperatoriaController@descargaSaldo');              
     // ppto ortodoncia
     Route::resource('presupuestos-ortodoncias','PresupuestosortodonciaController'); 
+    Route::put('/presupuestosortodoncias/cambioestado/{id}','PresupuestosortodonciaController@cambioEstado');              
+    Route::put('/presupuestosortodonciasdetalles/descargatx/{id}','PresupuestosortodonciaController@descargaTx');              
+    Route::put('/presupuestosortodonciasdetalles/descargasaldo/{id}','PresupuestosortodonciaController@descargaSaldo');              
+    Route::put('/presupuestosortodonciasdetalles/addadicionales/{id}','PresupuestosortodonciaController@addAdicionales');              
     // tipo cambios
     Route::resource('tipocambios','TipocambioController');   
-    // record atencion
-    Route::resource('recordatencion-operatorias','RecordatencionoperatoriaController');                                                                                                                              
+    // tipo pagos
+    Route::resource('tipopagos','TipopagoController');     
+    // record atencion operatoria
+    Route::resource('recordatencion-operatorias','RecordatencionoperatoriaController'); 
+    Route::put('recordatencion-operatorias/finalizar/{id}','RecordatencionoperatoriaController@finalizaTratamiento');
+    // record atencio ortodoncia
+    Route::resource('recordatencion-ortodoncias','RecordatencionortodonciaController'); 
+    Route::put('recordatencion-ortodoncias/finalizar/{id}','RecordatencionortodonciaController@finalizaTratamiento');
+    // pagos
+    Route::resource('pagos','PagoController');    
+    // citas
+    Route::resource('citas','CitaController');      
+    Route::get('/citas/fechas/{fecini}/{fecfin}','CitaController@cargacitas'); 
+    Route::post('/citas/cambioestado', 'CitaController@cambioestadocitas'); 
+    Route::put('/citas/reprogramacion/{id}', 'CitaController@reprogramarcitas');    
+    Route::put('/citas/modificacion/{id}', 'CitaController@modificarcitas');                                                                                                                                       
 });

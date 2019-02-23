@@ -93,5 +93,9 @@ class Paciente extends Model
     public function presupuestosoperatorias()
     {
         return $this->hasMany('App\Presupuestooperatoria');
-    }                                                        
+    } 
+    public function citas()
+    {
+        return $this->hasMany('App\Cita');
+    }                                                            
 }

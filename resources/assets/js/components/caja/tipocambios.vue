@@ -11,7 +11,7 @@
             <div class="card text-white bg-white mb-3">
                 <div class="card-header pl-0 pr-0">                        
                     <div class="col">
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-agenda-1"></i></span> Nuevo</button>
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="la la-calculator"></i></span> Nuevo</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">
@@ -59,7 +59,7 @@
                                 <div class="form-group pt-0">
                                     <label for="moneda_d" class="text-primary font-weight-bold pb-10">De :</label>
                                     <div class="select2-input">
-                                        <select id="moneda_d" name="basic" class="form-control form-control border border-primary" v-model="dataTipocambio.monedade_id">
+                                        <select id="moneda_d" name="basic" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.monedade_id" disabled>
                                             <option v-for="mon in monedas" :value="mon.id" :key="mon.id">
                                                 {{ mon.nombre_moneda}}
                                             </option>
@@ -71,7 +71,7 @@
                                 <div class="form-group pt-0">
                                     <label for="moneda_a" class="text-primary font-weight-bold pb-10">A :</label>
                                     <div class="select2-input">
-                                        <select id="moneda_a" name="basic" class="form-control form-control border border-primary" v-model="dataTipocambio.monedaa_id">
+                                        <select id="moneda_a" name="basic" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.monedaa_id" disabled>
                                             <option v-for="mon in monedas" :value="mon.id" :key="mon.id">
                                                 {{ mon.nombre_moneda}}
                                             </option>
@@ -81,10 +81,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group pt-0">
                                     <label for="valor_sistema" class="text-primary font-weight-bold">Valor del Sistema </label>
-                                    <input type="text" id="valor_sistema" class="form-control border border-primary" v-model="dataTipocambio.tipo_cambio">
+                                    <input type="number" step="0.01" id="valor_sistema" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.tipo_cambio" @keyup.enter="$refs.compra.focus" placeholder="0.00">
                                 </div>                            
                             </div>                            
                         </div>
@@ -92,19 +92,19 @@
                             <div class="col-6">
                                 <div class="form-group pt-0">
                                     <label for="compra" class="text-primary font-weight-bold">Compra </label>
-                                    <input type="text" id="compra" class="form-control border border-primary" v-model="dataTipocambio.valor_compra">
+                                    <input type="number" step="0.01" ref="compra" id="compra" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.valor_compra" @keyup.enter="$refs.venta.focus" placeholder="0.00">
                                 </div>                            
                             </div>
                             <div class="col-6">
                                 <div class="form-group pt-0">
                                     <label for="venta" class="text-primary font-weight-bold">Venta </label>
-                                    <input type="text" id="venta" class="form-control border border-primary" v-model="dataTipocambio.valor_venta">
+                                    <input type="number" step="0.01" ref="venta" id="venta" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.valor_venta" @keyup.enter="$refs.accion.focus" placeholder="0.00">
                                 </div>                            
                             </div>
                         </div>                         
                     </div>
                     <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionTipocambio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+                        <button ref="accion" class="btn btn-primary" @click.prevent="ActionTipocambio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                         <button class="btn btn-danger" @click="$modal.hide('tipocambio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                     </div>
                 </div>
@@ -207,8 +207,8 @@ export default {
                valor_compra:'',
                valor_venta:'',
                tipo_cambio:'',
-               monedade_id:'',
-               monedaa_id:'',
+               monedade_id:2,
+               monedaa_id:1,
                user_id:''
            } 
         }
@@ -230,8 +230,8 @@ export default {
                 valor_compra:'',
                 valor_venta:'',
                 tipo_cambio:'',
-                monedade_id:'',
-                monedaa_id:'',
+                monedade_id:2,
+                monedaa_id:1,
                 user_id:this.user_system.id
             }        
             this.$modal.show('tipocambio')

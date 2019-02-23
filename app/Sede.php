@@ -8,7 +8,7 @@ class Sede extends Model
 {
     protected $table = "sedes";
 
-    protected $fillable = ['id', 'nombre_sede', 'ubigeo_id', 'direccion','telefono','celular','telef_adicional','correo','codigo','user_id', 'activo'];
+    protected $fillable = ['id', 'nombre_sede', 'ubigeo_id', 'direccion','telefono','celular','telef_adicional','correo','codigo','user_id', 'activo','plan_id'];
     
     public function user()
     {
@@ -17,7 +17,11 @@ class Sede extends Model
     public function ubigeo()
     {
     	return $this->belongsTo('App\Ubigeo');
-    }      
+    } 
+    public function plan()
+    {
+    	return $this->belongsTo('App\Plane');
+    }          
     public function tarifarios()
     {
         return $this->hasMany('App\Tarifario');
@@ -49,5 +53,13 @@ class Sede extends Model
     public function presupuestosoperatorias()
     {
         return $this->hasMany('App\Presupuestooperatoria');
-    }                                
+    }  
+    public function pagos()
+    {
+        return $this->hasMany('App\Pago');
+    } 
+    public function citas()
+    {
+        return $this->hasMany('App\Cita');
+    }                                       
 }

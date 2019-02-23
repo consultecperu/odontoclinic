@@ -32,10 +32,10 @@
                     styleClass="vgt-table condensed bordered striped">
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
-                                <button type="button" v-if="props.row.estadopresupuesto_id == 2" v-tooltip="'Ver Presupuesto'" class="btn btn-border btn-primary btn-xs" @click.prevent="verPpto(props.row)">
+                                <button type="button" v-if="props.row.estadopresupuesto_id == 2" v-tooltip="'Ver Presupuesto'" class="btn btn-border btn-primary btn-xs" @click.prevent="verPresupuesto(props.row.id)">
                                     <i class="la la-eye font-large"></i>
                                 </button> 
-                                <button type="button" v-if="props.row.estadopresupuesto_id == 1" v-tooltip="'Iniciar Tratamiento'" class="btn btn-border btn-primary btn-xs" @click.prevent="verPpto(props.row)">
+                                <button type="button" v-if="props.row.estadopresupuesto_id == 1" v-tooltip="'Iniciar Tratamiento'" class="btn btn-border btn-primary btn-xs" @click.prevent="iniciarTratamiento(props.row.id)">
                                     <i class="la la-check font-large"></i>
                                 </button>                                 
                                 <button type="button" v-tooltip="'Imprimir Presupuesto'" class="btn btn-border btn-warning btn-xs" @click.prevent="ImprimirPresupuesto(props.row)">
@@ -121,11 +121,46 @@ export default {
                 width:'20%',  
                 }                               
             ],
+            dataPresupuesto:{
+                fecha_registro:'',
+                paciente_id:'',
+                empleado_id:'',
+                moneda_id:'',
+                numero_prespuesto:'',
+                plan_id:'',
+                poliza_id:'',
+                tipo_presupuesto:'',
+                estado_seguimiento:'',
+                observaciones:'',
+                estadopresupuesto_id:'',
+                tipocambio_id:'',
+                sede_id:'',
+                pago_cliente:'',
+                pago_aseguradora:'',
+                pago_total:'',
+                user_id:'',
+                saldo:'',
+                detalle:[],
+                ausentes:[],
+                text_up_dent:[]
+            },
+            dataPaciente:{
+                id:'',
+                nombre_completo:'',
+                historiaclinica:'',
+                empresa:'',
+                plan:'',
+                aseguradora:'',
+                empleado:'',
+                fecha:'',
+                tipocambio:''
+            },
+            errors:[]
 
         }
     },
     computed:{
-        ...mapState(['user_system','presupuestos_operatorias']),
+        ...mapState(['user_system','presupuestos_ortodoncias']),
         ...mapGetters(['getpptoOrtodonciaPaciente','getTipoCambioHoy']),             
         ppto_ortodoncia_paciente(){
             return this.getpptoOrtodonciaPaciente(this.$route.params.idpaciente)
@@ -140,6 +175,37 @@ export default {
             }
             this.$router.push({ name: 'ppto-ortodoncia' , params: { idpresupuesto: null } })
         },
+        iniciarTratamiento(param){
+            this.$swal({
+                title: 'Desea iniciar el tratamiento del presupuesto?',
+                text: "No podras revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, Iniciar!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.isLoading = true
+                        this.dataPresupuesto.estadopresupuesto_id = 2
+                        var url = '/api/presupuestosortodoncias/cambioestado/' + param;
+                        axios.put(url,this.dataPresupuesto).then(response=> {
+                            this.$store.dispatch('LOAD_PRESUPUESTOS_ORTODONCIAS_LIST').then(() => {
+                                this.isLoading = false
+                                this.$swal(
+                                'Actualizado!',
+                                'Este registro fue actualizado.',
+                                'success'
+                                )
+                            })                    
+                        });
+                    }
+                });
+        },
+        verPresupuesto(param){
+            this.$router.push({ name: 'ver-ppto-ortodoncia' , params: { idpresupuesto: param } })
+        },        
         ImprimirPresupuesto(param){
             let total_cuotas = (parseFloat(param.control_mensual) * parseFloat(param.cuotas)).toFixed(2)
             var doc = new jsPDF();

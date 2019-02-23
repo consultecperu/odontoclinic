@@ -37,5 +37,9 @@ class Poliza extends Model
     public function presupuestosoperatorias()
     {
         return $this->hasMany('App\Presupuestooperatoria');
-    }            
+    }     
+    public function presupuestosortodoncias()
+    {
+        return $this->hasMany('App\Presupuestoortodoncia');
+    }              
 }

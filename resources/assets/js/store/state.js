@@ -1,5 +1,6 @@
 export default {
-    user_system: null,    
+    user_system: null, 
+    sede_system:[],   
     authenticated: false,
     perfil_user: [],      
     perfiles:[],
@@ -55,5 +56,10 @@ export default {
     dientes:[],
     presupuestos_operatorias:[],
     presupuestos_ortodoncias:[],
-    tipocambios:[]
+    tipocambios:[],
+    tipopagos:[],
+    pagos:[],
+    citas:[],
+    citasfechas:[],
+    estadocitas:[],
 }

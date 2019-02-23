@@ -53,5 +53,9 @@ class Presupuestooperatoria extends Model
     public function user()
     {
     	return $this->belongsTo('App\User');
-    } 
+    }
+    public function pagos()
+    {
+        return $this->hasMany('App\Pago');
+    }      
 }

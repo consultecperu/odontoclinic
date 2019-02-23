@@ -31,7 +31,7 @@
                                             <div class="col-4 pr-0">
                                                 <div class="form-group form-group-default border border-primary" >
                                                     <label for="historia" class="text-primary font-weight-bold">Historia Clínica </label>
-                                                    <p class="form-control-static text-danger text-center font-weight-bold mb-10">{{ dataPaciente.historiaclinica }}</p>
+                                                    <p class="form-control-static text-danger text-center font-weight-bold mb-10">{{ dataPaciente.historiaclinica == null ? '--' : dataPaciente.historiaclinica }}</p>
                                                 </div>
                                             </div>
                                             <div class="col-4">
@@ -904,6 +904,7 @@ export default {
                 user_id:'',
                 tipo:'' ,
                 plan_id:'',
+                pacienteplanid:'',
                 empresapaciente_id:'',
                 poliza_id:'',
                 descripcion:'',
@@ -1071,6 +1072,7 @@ export default {
                     historial:datos.historial,
                     user_id:datos.user_id,
                     // --- datos de planes paciente ---//
+                    pacienteplanid: datos.pacienteplanes.id,
                     tipo:datos.pacienteplanes.tipo,
                     plan_id:datos.pacienteplanes.plan_id,
                     empresapaciente_id:datos.pacienteplanes.empresapaciente_id,

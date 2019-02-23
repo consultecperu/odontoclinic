@@ -37,6 +37,10 @@ class Presupuestoortodonciadetalle extends Model
     public function user()
     {
     	return $this->belongsTo('App\User');
-    }     
+    }  
+    public function recordatencionortodoncias()
+    {
+        return $this->hasMany('App\Recordatencionortodoncia');
+    }        
 
 }

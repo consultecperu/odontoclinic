@@ -5,53 +5,43 @@
             Tip 1: You can change the background color of the sidebar using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
             Tip 2: you can also add an image using data-image attribute
         -->
+        <loading :active.sync="isLoading"
+            :background-color="'#000'" 
+            :color="'red'"
+            :can-cancel="false" 
+            :is-full-page="fullPage">
+        </loading>         
         <div class="sidebar-background"></div>
         <div class="sidebar-wrapper scrollbar-inner">
             <div class="sidebar-content">
-                <div class="user">
+                <div class="user ml-0 mr-0">
                     <div class="photo">
                         <img src="/img/profile.jpg" alt="image profile">
                     </div>
                     <div class="info">
-                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                            <span>
-                                Hizrian
-                                <span class="user-level">Administrador</span>
-                                <span class="caret"></span>
-                            </span>
-                        </a>
-                        <div class="clearfix"></div>
-
-                        <div class="collapse in" id="collapseExample">
-                            <ul class="nav">
-                                <li>
-                                    <a href="#profile">
-                                        <span class="link-collapse">My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#edit">
-                                        <span class="link-collapse">Edit Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#settings">
-                                        <span class="link-collapse">Settings</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        <span class="user_system">
+                            {{ user_system.__empleado.nombres + ' ' + user_system.__empleado.apellido_paterno}}
+                            <span class="user-level font-weight-bold" v-text="user_system.perfile.nombre_perfil"></span>
+                        </span>
+                    </div>
+                    <div class="pt-10">
+                        <div class="form-group form-floating-label pb-0">
+                            <select class="form-control input-border-bottom" id="selectSedes" v-model="sede" @change="cambioSede">
+                                <option v-for="sed in user_system.__empleado.sedes" :value="sed.id" :key="sed.id">
+                                    {{ sed.nombre_sede}}
+                                </option>
+                            </select>
+                            <label for="selectSedes" class="placeholder font-weight-bold">SEDE : </label>
+                        </div>                        
                     </div>
                 </div>
                 <!-- Menu Principal -->
-                <ul class="nav">
+                <ul class="nav mt-0">
                     <template v-for="route in listMenu">
                         <router-link class="nav-item" v-if="route.options.length == 0" tag="li" :to="{ name: route.name_router}" :key="route.id">
                             <a href="#"><i :class="[route.icono]"></i> <p>{{ route.name_template }}</p></a>
                         </router-link>
                     </template>
-
-
                     <template v-for="route in listMenu">
                         <li v-if="route.options.length > 0"  :key="route.id" class="nav-item">
                             <a data-toggle="collapse" :href="'#'+ route.name_template">
@@ -81,8 +71,13 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'sidebar',
     created() {
-      this.$store.dispatch('LOAD_PERFIL_USER')      
-    },      
+        this.$store.dispatch('LOAD_SEDES_LIST')        
+        this.$store.dispatch('LOAD_PERFIL_USER')   
+    },
+    mounted(){
+        this.sede = this.user_system.__empleado.sedes[0].id
+        this.$store.dispatch('CAMBIO_SEDE', this.sede)
+    },   
     updated(){
         $(".nav-item a").on('click', (function(){
             if ( $(this).parent().find('.collapse').hasClass("show") ) { // si es show
@@ -96,11 +91,14 @@ export default {
     },
     data () {
       return {
-        listMenu : []
+        listMenu : [],
+        sede:'',
+        isLoading: false,
+        fullPage: true,        
       }
     },
     computed: {
-        ...mapState(['perfil_user','user_system']),
+        ...mapState(['perfil_user','user_system','sedes','sede_system']),
     },   
 
     watch:{
@@ -112,7 +110,24 @@ export default {
           this.listMenu = []
         }
       }
-    },            
+    }, 
+    methods:{
+        cambioSede(){
+            this.isLoading = true
+            this.$store.dispatch('CAMBIO_SEDE', this.sede).then(() => {
+                this.isLoading = false
+            })
+        }
+    }           
    
 }
 </script>
+<style scoped>
+    .info {
+        color:black !important;
+    }
+    .user_system {
+        font-weight: 400 !important;
+        font-size: 10px !important;
+    }
+</style>

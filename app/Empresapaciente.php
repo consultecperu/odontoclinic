@@ -37,6 +37,10 @@ class Empresapaciente extends Model
     public function pacienteplanes()
     {
         return $this->hasMany('App\Pacienteplan');
-    }                     
+    }  
+    public function pagos()
+    {
+        return $this->hasMany('App\Pago');
+    }                          
         
 }

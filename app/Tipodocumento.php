@@ -18,5 +18,8 @@ class Tipodocumento extends Model
     {
         return $this->hasMany('App\Paciente');
     }           
-    
+    public function pagos()
+    {
+        return $this->hasMany('App\Pago');
+    }      
 }

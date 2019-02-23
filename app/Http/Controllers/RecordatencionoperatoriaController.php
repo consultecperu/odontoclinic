@@ -77,8 +77,6 @@ class RecordatencionoperatoriaController extends Controller
                 ['status' => $e->getMessage()], 422
             );
         }
-
-
     }
 
     /**
@@ -125,4 +123,16 @@ class RecordatencionoperatoriaController extends Controller
     {
         //
     }
+    public function finalizaTratamiento(Request $request, $id)
+    {
+        try {
+            $pptodet = Presupuestooperatoriadetalle::findOrFail($id);         
+            $pptodet->realizado = 3;
+            $pptodet->save();            
+        } catch (Exception $e) {
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }        
+    }    
 }

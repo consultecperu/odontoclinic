@@ -345,7 +345,7 @@ export default {
         this.$store.dispatch('LOAD_CARGOS_LIST')                
         this.$store.dispatch('LOAD_EMPLEADOS_LIST').then(() => {
             this.isLoading = false
-        })                              
+        })                        
     }, 
     data() {
         return {
