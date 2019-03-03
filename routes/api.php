@@ -106,6 +106,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/presupuestosoperatorias/cambioestado/{id}','PresupuestosoperatoriaController@cambioEstado');              
     Route::put('/presupuestosoperatoriasdetalles/descargatx/{id}','PresupuestosoperatoriaController@descargaTx');              
     Route::put('/presupuestosoperatoriasdetalles/descargasaldo/{id}','PresupuestosoperatoriaController@descargaSaldo');              
+    Route::put('/presupuestosoperatoriasdetalles/texsupdie/{id}','PresupuestosoperatoriaController@textoSuperiorDiente');
     // ppto ortodoncia
     Route::resource('presupuestos-ortodoncias','PresupuestosortodonciaController'); 
     Route::put('/presupuestosortodoncias/cambioestado/{id}','PresupuestosortodonciaController@cambioEstado');              
@@ -129,5 +130,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/citas/fechas/{fecini}/{fecfin}','CitaController@cargacitas'); 
     Route::post('/citas/cambioestado', 'CitaController@cambioestadocitas'); 
     Route::put('/citas/reprogramacion/{id}', 'CitaController@reprogramarcitas');    
-    Route::put('/citas/modificacion/{id}', 'CitaController@modificarcitas');                                                                                                                                       
+    Route::put('/citas/modificacion/{id}', 'CitaController@modificarcitas'); 
+    // laboratoriotrabajos
+    Route::resource('laboratoriotrabajos','LaboratoriotrabajoController'); 
+    Route::put('/laboratoriotrabajos/envio/{id}', 'LaboratoriotrabajoController@envioTrabajo');                                                                                                                                  
 });

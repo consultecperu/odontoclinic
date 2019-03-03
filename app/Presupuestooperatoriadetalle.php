@@ -48,6 +48,10 @@ class Presupuestooperatoriadetalle extends Model
     }  
     public function recordatencionoperatorias()
     {
-        return $this->hasMany('App\Recordatencionoperatoria');
+        return $this->hasMany('App\Recordatencionoperatoria')->orderBy('id');
+    }     
+    public function laboratoriotrabajos()
+    {
+        return $this->hasMany('App\Laboratoriotrabajo')->orderBy('id');
     }       
 }

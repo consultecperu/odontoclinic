@@ -8,7 +8,7 @@ class Presupuestooperatoria extends Model
 {
     protected $table = "presupuestosoperatorias";
 
-    protected $fillable = ['id', 'fecha_registro','paciente_id','empleado_id','moneda_id','numero_presupuesto','plan_id','poliza_id','tipo_presupuesto','estado_seguimiento','observaciones','estadopresupuesto_id','tipocambio_id','sede_id','pago_cliente','pago_aseguradora','pago_total','user_id','saldo','activo'];
+    protected $fillable = ['id', 'fecha_registro','paciente_id','empleado_id','moneda_id','numero_presupuesto','plan_id','poliza_id','tipo_presupuesto','estado_seguimiento','observaciones','estadopresupuesto_id','tipocambio_id','sede_id','pago_cliente','pago_aseguradora','pago_total','user_id','saldo','tipo_odontograma','activo'];
     
     public function paciente()
     {
@@ -44,7 +44,7 @@ class Presupuestooperatoria extends Model
     }
     public function presupuestosoperatoriasdetalles()
     {
-        return $this->hasMany('App\Presupuestooperatoriadetalle');
+        return $this->hasMany('App\Presupuestooperatoriadetalle')->orderBy('id');
     } 
     public function dientes()
     {

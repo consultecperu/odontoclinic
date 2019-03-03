@@ -264,13 +264,22 @@ class PacienteController extends Controller
 
     public function ActualizaHC(Request $request, $id)
     {
-        $paciente = Paciente::find($id);
-        $paciente->historiaclinica = Globales::HC_Correlativo($request->get('sede_id'));
-        $paciente->save();        
+        try {
+            $paciente = Paciente::find($id);
+            if($paciente->historiaclinica == null){
+                $paciente->historiaclinica = Globales::HC_Correlativo($request->get('sede_id'));
+                $paciente->save(); 
+            }
+            return;
+        } catch (Exception $e) {
+            return response()->json(
+                ['errors' => $e->getMessage()], 422
+            );
+        }
+       
     }
     public function ActualizaFoto(Request $request, $id)
     {
-
         try {
             /*-- Validacion de la imagen --*/
             if($request->get('image')){

@@ -29,6 +29,8 @@ import PrettyCheckbox from 'pretty-checkbox-vue'
 import contextMenu from 'vue-context-menu'
 import FullCalendar from 'vue-full-calendar'
 import 'fullcalendar/dist/fullcalendar.css'
+import {VTable,VPagination} from 'vue-easytable'
+import 'vue-easytable/libs/themes-base/index.css'
 
 window.axios = require('axios');
 
@@ -49,3 +51,5 @@ Vue.component('multiselect', Multiselect)
 Vue.use(PrettyCheckbox)
 Vue.component('context-menu',contextMenu)
 Vue.use(FullCalendar)
+Vue.component(VTable.name, VTable)
+Vue.component(VPagination.name, VPagination)

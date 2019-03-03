@@ -591,7 +591,8 @@ export default {
                 empleado_id:this.presupuestoOperatoriaById.paciente.empleado_id,
                 fecha:moment(this.presupuestoOperatoriaById.fecha_registro).format('DD-MM-YYYY'),
                 tipocambio:this.presupuestoOperatoriaById.tipocambio.tipo_cambio
-            }             
+            }
+            this.newidPresupuesto = this.presupuestoOperatoriaById.id             
         }
         window.addEventListener('scroll', this.handleScroll);                           
     },  
@@ -902,7 +903,9 @@ export default {
                 fill:'none',
                 stroke:'blue',
                 strokeWidth:'1px'        
-            }                         
+            },
+
+            newidPresupuesto:''                         
         }
     },
     computed: {
@@ -1570,6 +1573,7 @@ export default {
                 this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                               
                 return;
             }
+            this.newidPresupuesto = response.data.idpresupuesto
             this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST')    
             this.errors = [];             
             this.notificaciones('Nuevo Presupuesto creado con exito','la la-thumbs-up','success')  
@@ -1629,7 +1633,8 @@ export default {
                     doc.setFontSize(12)
                     doc.setFont("helvetica")
                     doc.setFontType("bold")
-                    doc.text(15,15,"PRESUPUESTO Nº 1265")
+                    doc.text(15,15,"PRESUPUESTO Nº")
+                    doc.text(56,15,self.newidPresupuesto.toString())
                     doc.setFontSize(8)                   
                     doc.text(15,20,'FECHA :')
                     doc.text(40,20, self.dataPaciente.fecha)
@@ -1749,9 +1754,9 @@ export default {
                         idppto:value.presupuestooperatoria_id,
                         tarifario_id : value.tarifario_id,
                         diente_id: value.diente_id,
-                        diente_codigo: value.diente.codigo,
+                        diente_codigo: value.diente == null ? '--' : value.diente.codigo,
                         texto_diente:value.texto_diente,
-                        caras:value.caras,
+                        caras:value.caras == null ? '--' : value.caras,
                         simbologia:value.simbologia_id,
                         letras:value.letras,
                         servicio_id:value.tarifario.servicio_id,

@@ -61,5 +61,9 @@ class Sede extends Model
     public function citas()
     {
         return $this->hasMany('App\Cita');
-    }                                       
+    }
+    public function laboratoriotrabajos()
+    {
+        return $this->hasMany('App\Laboratoriotrabajo')->orderBy('id');
+    }                                             
 }

@@ -250,7 +250,7 @@
                                     </p>
                                 </div>
                                 <div class="col-2">
-                                    <button class="btn btn-primary btn-xs float-right" v-tooltip.top="'Agregar Evolución'" @click.prevent="numid = rec.id"><i class="la la-plus"></i></button>
+                                    <button class="btn btn-primary btn-xs float-right" v-tooltip.top="'Agregar Evolución'" @click.prevent="AgregaEvolucion(rec.id)"><i class="la la-plus"></i></button>
                                     <button class="btn btn-success btn-xs float-right mr-10" v-tooltip.top="'Finalizar Tratamiento'" @click.prevent="finalizarTratamiento(rec.id)"><i class="la la-check"></i></button>
                                 </div>
                             </div>
@@ -278,6 +278,22 @@
                                         <div class="form-group form-group-default">
                                             <label for="descripcion" class="text-primary font-weight-bold">Descripcion</label>
                                             <textarea name="descripcion" id="descripcion" rows="4" v-model="dataServicio.descripcion[rec.id]"></textarea>
+                                            <div class="row" v-if="rec.tarifario.servicio.laboratorioservicios.length > 0">
+                                                <div class="col-12">
+                                                    <label for="laboratorio" class="text-primary font-weight-bold pt-10">{{ rec.laboratorio_id == null ? 'Asignar Laboratorio :' : 'Laboratorio Asignado :'}}</label>
+                                                    <div class="select2-input" v-if="rec.laboratorio_id == null">
+                                                        <select id="laboratorio" name="laboratorio" class="col-4 form-control form-control-sm border" v-model="dataServicio.laboratorioservicio_id" @change="cambioLaboratorio">
+                                                            <option value="">--seleccione--</option>
+                                                            <option v-for="lab in rec.tarifario.servicio.laboratorioservicios" :value="lab.id" :key="lab.id">
+                                                                {{ lab.laboratorio.nombre_laboratorio}}
+                                                            </option>
+                                                        </select>
+                                                    </div> 
+                                                    <div class="text-primary font-weight-bold" v-if="rec.laboratorio_id != null">
+                                                        <label for="descripcion" class="text-danger font-weight-bold">{{ rec.laboratorio.nombre_laboratorio}}</label>
+                                                    </div>                                                    
+                                                </div>
+                                            </div>
                                             <button type="button" class="btn btn-danger btn-sm float-right" @click.prevent="numid = 0"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                                             <button type="button" class="btn btn-primary btn-sm float-right mr-10" @click.prevent="GrabarRecord(rec)" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                                         </div>                                                                                     
@@ -833,6 +849,7 @@ export default {
     mixins: [mixin],  
     created(){
         this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST')        
+        this.$store.dispatch('LOAD_LABORATORIOSERVICIOS_LIST')        
         this.$store.dispatch('LOAD_TIPOPAGOS_LIST') 
         this.$store.dispatch('LOAD_PAGOS_LIST')
         this.$store.dispatch('LOAD_TIPOCAMBIOS_LIST') 
@@ -971,7 +988,11 @@ export default {
                 fecha_realizacion:'',
                 user_id:'',
                 laboratorio_id:'',
-                material:''
+                monto_lab:0.00,
+                material:'',
+                servicio_id:'',
+                sede_id:'',
+                laboratorioservicio_id:''
             },
             dataDetalleOperatoria:[],
             seleccionados:[],
@@ -980,7 +1001,11 @@ export default {
             dataServicio:{
                 detalle:'',
                 estado:'',
-                descripcion:[]
+                descripcion:[],
+                laboratorioservicio_id:'',
+                laboratorio_id:'',
+                nombre_laboratorio:'',
+                monto_lab:0.00
             },
             dataPresupuesto:{
                 costo_total:'',
@@ -1245,7 +1270,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['user_system','sede_system','monedas','empresapacientes']),
+        ...mapState(['user_system','sede_system','monedas','empresapacientes','laboratorioservicios']),
         ...mapGetters(['getDientesByCuadrante','getMedicos','getTipoCambioHoy','getPresupuestoOperatoriaById','getTipopagosForma','getPagosPresupuestoOperatoriaById']), 
         presupuestoOperatoriaById(){
             if(this.$route.params.idpresupuesto != undefined){
@@ -1386,6 +1411,7 @@ export default {
         },        
         RealizarTratamiento(){
             this.seleccionados = this.$refs['tabla_detalle'].selectedRows
+            this.numid = 0
             this.$modal.show('record_atencion')
         },
         GrabarRecord(param){
@@ -1398,8 +1424,16 @@ export default {
                 empleado_id:this.dataPaciente.empleado_id,
                 fecha_realizacion:moment().format('DD-MM-YYYY hh:mm:ss'),
                 user_id:this.user_system.id,
-                laboratorio_id:'',
-                material:''                
+                laboratorio_id:this.dataServicio.laboratorio_id,
+                monto_lab:this.dataServicio.monto_lab,
+                material:'',
+                servicio_id:param.tarifario.servicio_id,
+                sede_id:this.sede_system.id,
+                laboratorioservicio_id:this.dataServicio.laboratorioservicio_id,
+                fecha_separacion:moment().format('DD-MM-YYYY hh:mm:ss'),
+                costo:this.dataServicio.monto_lab,
+                tipo:1,
+                liquidable:1                         
             }
 
             var url = '/api/recordatencion-operatorias';
@@ -1840,9 +1874,6 @@ export default {
                     this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
                 });
         },        
-        verRecord(){
-            console.log("record......")
-        },
         cambioModoPago(){
             this.dataPago.monto_efectivo = 0
             this.dataPago.monto_tarjeta = 0
@@ -1870,9 +1901,9 @@ export default {
                     idppto:value.presupuestooperatoria_id,
                     tarifario_id : value.tarifario_id,
                     diente_id: value.diente_id,
-                    diente_codigo: value.diente.codigo,
+                    diente_codigo: value.diente == null ? '--' : value.diente.codigo,
                     texto_diente:value.texto_diente,
-                    caras:value.caras,
+                    caras:value.caras == null ? '--' : value.caras,
                     simbologia:value.simbologia_id,
                     letras:value.letras,
                     servicio_id:value.tarifario.servicio_id,
@@ -1983,7 +2014,17 @@ export default {
             if(param == 1) this.odontograma = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
             if(param == 2) this.odontograma = [33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52]
             if(param == 3) this.odontograma = [1,2,3,14,15,16,17,18,19,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52]
-        },        
+        }, 
+        cambioLaboratorio(){
+            let lab = this.laboratorioservicios.find(la => la.id == this.dataServicio.laboratorioservicio_id)
+            this.dataServicio.laboratorio_id = lab.laboratorio_id
+            this.dataServicio.monto_lab = lab.costo_lab
+            console.log('servicios',this.dataServicio)
+        },
+        AgregaEvolucion(param){
+            this.numid = param
+            this.dataServicio.descripcion[param] = ''
+        },    
         createPDF () {
             let self = this
             this.$swal({

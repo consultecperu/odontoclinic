@@ -10,6 +10,7 @@ use Validator;
 use Carbon\Carbon;
 use App\Recordatencionoperatoria;
 use App\Presupuestooperatoriadetalle;
+use App\Laboratoriotrabajo;
 use Globales;   // helpers
 
 class RecordatencionoperatoriaController extends Controller
@@ -67,6 +68,29 @@ class RecordatencionoperatoriaController extends Controller
             $recope->save();
 
             Presupuestooperatoriadetalle::where(['id' => $request->get('presupuestooperatoriadetalle_id'),'realizado' => 1])->update(['realizado' => 2]);
+
+            if($request->filled('laboratorio_id')){
+
+                $rules2 = [ 'presupuestooperatoriadetalle_id'   =>  'required',
+                            'servicio_id'                       =>  'required',
+                            'empleado_id'                       =>  'required',
+                            'sede_id'                           =>  'required',
+                            'laboratorioservicio_id'            =>  'required',
+                            'user_id'                           =>  'required',
+                            'fecha_separacion'                  =>  'required'
+                          ]; 
+                          
+                $validator2 = Validator::make($request->all(), $rules2);
+                if ($validator2->fails()) {
+                    DB::rollback();
+                    return response()->json(['errors'=>$validator2->errors()]);
+                }  
+                $labtra = new Laboratoriotrabajo($request->all());
+                $labtra->fecha_separacion = Globales::FormatFecYMD_hms($request->get('fecha_separacion'));            
+                $labtra->save();                
+
+                Presupuestooperatoriadetalle::where(['id' => $request->get('presupuestooperatoriadetalle_id')])->update(['laboratorio_id' => $request->get('laboratorio_id'),'monto_lab' => $request->get('monto_lab')]);
+            }
     
             DB::commit();        
             return;

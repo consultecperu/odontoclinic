@@ -57,6 +57,11 @@ import TipoCambios from './components/caja/tipocambios.vue'
 import CierreCaja from './components/caja/cierrecaja.vue'
 import VentaDiaria from './components/caja/ventadiaria.vue'
 
+import LiquidacionOperatoria from './components/liquidaciones/liquidacionoperatoria.vue'
+import LiquidacionOrtodoncia from './components/liquidaciones/liquidacionortodoncia.vue'
+import LiquidacionLaboratorio from './components/liquidaciones/liquidacionlaboratorio.vue'
+import LiquidacionAseguradora from './components/liquidaciones/liquidacionaseguradora.vue'
+
 import NotFound from './components/errors/notfound.vue'
 
 export default [
@@ -554,7 +559,51 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
-            },                                                                                                                                                                                    
+            },  
+            {
+                path: '/liquidacionoperatoria',
+                name: 'liquidacionoperatoria',
+                component: LiquidacionOperatoria,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Liquidacion', second: 'Operatoria', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            }, 
+            {
+                path: '/liquidacionortodoncia',
+                name: 'liquidacionortodoncia',
+                component: LiquidacionOrtodoncia,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Liquidacion', second: 'Ortodoncia', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            }, 
+            {
+                path: '/liquidacionlaboratorio',
+                name: 'liquidacionlaboratorio',
+                component: LiquidacionLaboratorio,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Liquidacion', second: 'Laboratorio', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            }, 
+            {
+                path: '/liquidacionaseguradora',
+                name: 'pacientesaseguradoras',
+                component: LiquidacionAseguradora,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Liquidacion', second: 'Aseguradora', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },                                                                                                                                                                                                                                    
         ]
     },
     {

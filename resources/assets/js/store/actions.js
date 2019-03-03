@@ -385,5 +385,13 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                                                                                  
+    }, 
+    LOAD_LABORATORIO_TRABAJOS_LIST: function ({ commit }) {
+        var url = '/api/laboratoriotrabajos/';
+        return axios.get(url).then((response) => {
+            commit('SET_LABORATORIO_TRABAJOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                                                                     
 }

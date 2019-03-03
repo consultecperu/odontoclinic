@@ -21,7 +21,7 @@ class PresupuestosoperatoriaController extends Controller
      */
     public function index()
     {
-        $pptosoperatorias = Presupuestooperatoria::with('paciente','paciente.pacienteplanes.plan','empleado','estadopresupuesto','tipocambio','presupuestosoperatoriasdetalles','presupuestosoperatoriasdetalles.diente','presupuestosoperatoriasdetalles.tarifario.servicio','presupuestosoperatoriasdetalles.moneda','presupuestosoperatoriasdetalles.recordatencionoperatorias','presupuestosoperatoriasdetalles.recordatencionoperatorias.empleado','dientes')->orderBy('id','DESC')->where('activo',true)->get();
+        $pptosoperatorias = Presupuestooperatoria::with('paciente','paciente.pacienteplanes.plan','empleado','estadopresupuesto','tipocambio','presupuestosoperatoriasdetalles','presupuestosoperatoriasdetalles.diente','presupuestosoperatoriasdetalles.laboratorio','presupuestosoperatoriasdetalles.tarifario.servicio','presupuestosoperatoriasdetalles.tarifario.servicio.laboratorioservicios.laboratorio','presupuestosoperatoriasdetalles.moneda','presupuestosoperatoriasdetalles.recordatencionoperatorias','presupuestosoperatoriasdetalles.recordatencionoperatorias.empleado','dientes')->orderBy('id','DESC')->where('activo',true)->get();
         return $pptosoperatorias;  
     }
 
@@ -95,7 +95,8 @@ class PresupuestosoperatoriaController extends Controller
                 $ppto->dientes()->sync($request->get('ausentes'));
             }
             DB::commit();        
-            return;
+            //return;
+            return response()->json(['idpresupuesto' => $ppto->id], 200);   
         }
         catch(Exception $e){
             DB::rollback();

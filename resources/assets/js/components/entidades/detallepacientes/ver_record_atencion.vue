@@ -36,7 +36,7 @@
             </table>     
         </div>
         <div class="card-action">
-            <button class="btn btn-success float-right" @click.prevent="$router.go(-1)"><span class="btn-label"><i class="la la-arrow-circle-left"></i> Regresar</span></button>
+            <button class="btn btn-danger float-right" @click.prevent="$router.go(-1)"><span class="btn-label"><i class="la la-arrow-circle-left"></i> Regresar</span></button>
         </div>
     </div>
     <!-- /. form de registro de cargos -->    

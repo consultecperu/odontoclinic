@@ -395,6 +395,8 @@ export default {
                 {
                 label: 'Doc',
                 field: 'tipodocumento.abreviatura',
+                thClass: 'center',
+                tdClass: 'center',
                 width:'10%',
                 }, 
                 {
@@ -409,6 +411,7 @@ export default {
                 {
                 label: 'Hist.Clinica',
                 field: 'historiaclinica',
+                tdClass: 'center',                
                 width:'10%',
                 },                 
                 {

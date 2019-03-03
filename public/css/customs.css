@@ -114,6 +114,12 @@ table.vgt-table td {
   font-size: 12px !important;
 }
 /*** FIN MULTISELECT ***/
+/** TABLA VUE EASYTABLE **/
+
+.v-table-row {
+  font-size: 85% !important;
+}
+/** FIN TABLA VUE EASYTABLE **/
 
 .card-profile .profile-picture {
   bottom: -60px !important;

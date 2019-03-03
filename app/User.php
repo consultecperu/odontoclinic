@@ -163,5 +163,9 @@ class User extends Authenticatable
     public function seguimientocitas()
     {
         return $this->hasMany('App\Seguimientocita');
-    }                                                                                                
+    }  
+    public function laboratoriotrabajos()
+    {
+        return $this->hasMany('App\Laboratoriotrabajo')->orderBy('id');
+    }                                                                                                    
 }

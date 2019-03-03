@@ -40,7 +40,11 @@ class Presupuestoortodonciadetalle extends Model
     }  
     public function recordatencionortodoncias()
     {
-        return $this->hasMany('App\Recordatencionortodoncia');
-    }        
+        return $this->hasMany('App\Recordatencionortodoncia')->orderBy('id');
+    } 
+    public function laboratoriotrabajos()
+    {
+        return $this->hasMany('App\Laboratoriotrabajo')->orderBy('id');
+    }             
 
 }

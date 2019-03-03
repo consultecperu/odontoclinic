@@ -171,5 +171,8 @@ export default {
     },   
     SET_CITAS_FECHAS_LIST: (state, { list }) => {      // CITAS x FECHAS
         state.citasfechas = list
-    },                                                                                                                                                              
+    },  
+    SET_LABORATORIO_TRABAJOS_LIST: (state, { list }) => {      // LABORATORIO - TRABAJOS
+        state.laboratoriotrabajos = list
+    },                                                                                                                                                                
 }

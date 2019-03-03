@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 div-left">
             <div class="card card-profile card-secondary">
                 <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
                     <div class="profile-picture">
@@ -53,6 +53,9 @@ export default {
     mixins: [mixin], 
     created(){
         this.dataPacienteMain = _.clone(this.PacienteById)
+        if(this.dataPacienteMain.foto == null){
+            this.dataPacienteMain.foto = "no-image.jpg"
+        }
     },
     data(){
         return {
@@ -60,7 +63,9 @@ export default {
             fullPage: true, 
 
             dataPacienteMain: {},
-            imagenPerfil:null
+            imagenPerfil:null,
+
+            errors:[]
         }
     },
     computed: {
@@ -110,12 +115,31 @@ export default {
                         this.isLoading = true
                         var url = '/api/pacientes/actualizafoto/' + this.dataPacienteMain.id;
                         axios.put(url,this.dataPacienteMain).then(response=> {
+                        if(typeof(response.data.errors) != "undefined"){
+                            this.errors = response.data.errors;
+                            var resultado = "";
+                            for (var i in this.errors) {
+                                if (this.errors.hasOwnProperty(i)) {
+                                    resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                                }
+                            }
                             this.isLoading = false
-                            this.$swal(
+                            this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                              
+                            return;
+                        }
+                        //this.$store.dispatch('LOAD_PACIENTES_LIST')    
+                        this.errors = [];              
+                        //this.notificaciones('Paciente actualizado con exito','la la-thumbs-up','success') 
+                        this.isLoading = false
+                        this.$swal(
                             'Actualizado!',
                             'Este registro fue actualizado.',
                             'success'
-                            )                   
+                        )                                                 
+                        }).catch(error => {
+                            this.errors = error.response.data.status;
+                            this.isLoading = false
+                            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
                         });
                     }else{
                         this.imagenPerfil = null
@@ -134,6 +158,17 @@ export default {
     .sansSerif {
         font-family:sans-serif !important;
     }  
+    .contenedor {
+        overflow: hidden;
+    }
+    .div-left {
+        padding-bottom: 100%;
+        margin-bottom: -100%;        
+    }
+    .div-right {
+        padding-bottom: 100%;
+        margin-bottom: -100%;
+    }
 
 </style>
 

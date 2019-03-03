@@ -41,6 +41,10 @@ class Servicio extends Model
     public function derivaciones()
     {
         return $this->hasMany('App\Derivacion');
-    }                   
+    }  
+    public function laboratoriotrabajos()
+    {
+        return $this->hasMany('App\Laboratoriotrabajo')->orderBy('id');
+    }                       
     
 }

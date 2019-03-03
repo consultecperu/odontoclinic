@@ -26,5 +26,9 @@ class Laboratorioservicio extends Model
     {
     	return $this->belongsTo('App\User');
     } 
+    public function laboratoriotrabajos()
+    {
+        return $this->hasMany('App\Laboratoriotrabajo')->orderBy('id');
+    }      
 
 }

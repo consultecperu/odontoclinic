@@ -14,7 +14,7 @@
                         <button type="button" class="btn btn-primary float-right" @click.prevent="NuevoPresupuesto"><span class="btn-label"><i class="flaticon-profile"></i></span> Nuevo Presupuesto</button>
                     </div>                                                        
                 </div>
-                <div class="card-body">
+                <div class="card-body table-ppto">
                     <vue-good-table
                     :columns="columns"
                     :rows="ppto_operatoria_paciente"
@@ -484,7 +484,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['user_system','presupuestos_operatorias']),
+        ...mapState(['user_system','presupuestos_operatorias','pacientes']),
         ...mapGetters(['getDientesByCuadrante','getpptoOperatoriaPaciente','getTipoCambioHoy']),             
         ppto_operatoria_paciente(){
             return this.getpptoOperatoriaPaciente(this.$route.params.idpaciente)
@@ -493,6 +493,55 @@ export default {
     methods:{
         NuevoPresupuesto(){
             let tipcam = this.getTipoCambioHoy
+            let paciente = this.pacientes.find(pac => pac.id == this.$route.params.idpaciente )
+            if(paciente.historiaclinica == null){
+                //this.notificaciones('El Paciente no tiene número de historia','la la-thumbs-o-down','danger')
+                //return 
+                this.$swal({
+                    title: 'Paciente sin número de Historia Clinica',
+                    text: "Desea Generar el número de historia clinica??",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Si, Generar!'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.isLoading = true
+                            var url = '/api/pacientes/actualizahc/' + paciente.id
+                            axios.put(url, paciente).then(response => {
+                            if(typeof(response.data.errors) != "undefined"){
+                                this.errors = response.data.errors;
+                                var resultado = "";
+                                for (var i in this.errors) {
+                                    if (this.errors.hasOwnProperty(i)) {
+                                        resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                                    }
+                                }
+                                this.isLoading = false
+                                this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                
+                                return;
+                            }
+                            this.$store.dispatch('LOAD_PACIENTES_LIST')    
+                            this.errors = [];
+                            this.isLoading = false
+                            this.$swal(
+                                'Actualizado!',
+                                'La información fue registrada correctamente.',
+                                'success'
+                            )                             
+                            this.$modal.hide('paciente');                         
+                            }).catch(error => {
+                            this.isLoading = false
+                            this.errors = error.response.data.status;      
+                            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
+                            });                                
+                        }
+                    });
+                    return
+
+            }
             if(tipcam == undefined){
                 this.notificaciones('Debe registrar el Tipo de cambio de Hoy','la la-thumbs-o-down','danger')
                 return
@@ -518,10 +567,11 @@ export default {
                             this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
                                 this.isLoading = false
                                 this.$swal(
-                                'Actualizado!',
-                                'Este registro fue actualizado.',
+                                'Iniciado!',
+                                'Este Presupuesto fue iniciado.',
                                 'success'
                                 )
+                                this.$router.push({ name: 'ver-ppto-operatoria' , params: { idpresupuesto: param } })
                             })                    
                         });
                     }
@@ -650,9 +700,9 @@ export default {
                     idppto:value.presupuestooperatoria_id,
                     tarifario_id : value.tarifario_id,
                     diente_id: value.diente_id,
-                    diente_codigo: value.diente.codigo,
+                    diente_codigo: value.diente == null ? '--' : value.diente.codigo,
                     texto_diente:value.texto_diente,
-                    caras:value.caras,
+                    caras:value.caras == null ? '--' : value.caras,
                     simbologia:value.simbologia_id,
                     letras:value.letras,
                     servicio_id:value.tarifario.servicio_id,
@@ -884,7 +934,11 @@ export default {
         position: absolute;
         white-space: nowrap;
         width: 1px;
-    }    
+    }   
+
+    .table-ppto {
+        min-height: 600px !important;
+    } 
 
 </style>
 

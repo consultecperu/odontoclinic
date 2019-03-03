@@ -197,7 +197,7 @@
                                 </div>
                             </div>
                             <div class="col-4 pr-20">
-                                <img :src="'/img/odontograma/'+rutaSimbolo" alt="" class="float-right pr-10">
+                                <img v-if="rutaSimbolo != ''" :src="'/img/odontograma/'+rutaSimbolo" alt="" class="float-right pr-10">
                             </div>
                         </div>
                         <div class="row pl-20">
@@ -310,7 +310,9 @@ export default {
 
             rutaSimbolo:'',
             showGroups: true ,
-            showService: false            
+            showService: false,
+            
+            errors:[]
         }
     },
     computed: {
@@ -324,7 +326,8 @@ export default {
             this.labelButton = elabel            
         },
         LoadFormOper: function(){  
-            this.StatusForm(false,'la la-cloud-download','Grabar Datos')         
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')   
+            this.rutaSimbolo = ''      
             this.showGroups = true
             this.showService = false
             this.dataServicio = {
@@ -345,7 +348,8 @@ export default {
             this.$modal.show('servicio')
         }, 
         LoadFormOrto: function(){  
-            this.StatusForm(false,'la la-cloud-download','Grabar Datos')         
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')
+            this.rutaSimbolo = ''                     
             this.showGroups = false
             this.showService = false            
             this.dataServicio = {
@@ -378,7 +382,7 @@ export default {
             this.StatusForm(true,'la la-spinner','Procesando') 
             if(this.dataServicio.tipo === 2){
                 this.CargaOrtodoncia()
-            }    
+            }   
             axios.post(url, this.dataServicio).then(response => {
             if(typeof(response.data.errors) != "undefined"){
                 this.errors = response.data.errors;
@@ -398,9 +402,9 @@ export default {
             this.$modal.hide('servicio');   
             this.notificaciones('Nuevo servicio creado con exito','la la-thumbs-up','success')       
             }).catch(error => {
-            this.errors = error.response.data.status;
+            this.errors = error.response.data.status;           
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
             });
         },
         updateServicio: function(){
@@ -428,7 +432,7 @@ export default {
             }).catch(error => {
                 this.errors = error.response.data.status;  
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
-                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')
             });
         },
         processEdit(params){

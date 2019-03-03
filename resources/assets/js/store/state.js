@@ -62,4 +62,5 @@ export default {
     citas:[],
     citasfechas:[],
     estadocitas:[],
+    laboratoriotrabajos:[],
 }
