@@ -11,7 +11,8 @@
             <div class="card text-white bg-white mb-3">
                 <div class="card-header pl-0 pr-0">                        
                     <div class="col">
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="la la-calculator"></i></span> Nuevo</button>
+                        <button type="button" class="btn btn-primary float-right ml-10" @click.prevent="LoadForm"><span class="btn-label"><i class="la la-calculator"></i></span> Nuevo x Dia</button>
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="la la-calculator"></i></span> Nuevo Mensual</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">

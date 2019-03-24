@@ -91,6 +91,10 @@ class RecordatencionoperatoriaController extends Controller
 
                 Presupuestooperatoriadetalle::where(['id' => $request->get('presupuestooperatoriadetalle_id')])->update(['laboratorio_id' => $request->get('laboratorio_id'),'monto_lab' => $request->get('monto_lab')]);
             }
+
+            if($request->filled('material_id')){
+                Presupuestooperatoriadetalle::where(['id' => $request->get('presupuestooperatoriadetalle_id')])->update(['material_id' => $request->get('material_id'),'monto_mat' => $request->get('monto_mat')]);
+            }            
     
             DB::commit();        
             return;

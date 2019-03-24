@@ -107,12 +107,17 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/presupuestosoperatoriasdetalles/descargatx/{id}','PresupuestosoperatoriaController@descargaTx');              
     Route::put('/presupuestosoperatoriasdetalles/descargasaldo/{id}','PresupuestosoperatoriaController@descargaSaldo');              
     Route::put('/presupuestosoperatoriasdetalles/texsupdie/{id}','PresupuestosoperatoriaController@textoSuperiorDiente');
+    Route::get('/presupuestosoperatoriasdetalles/liquidacion-doctor/{empleado}/{sede}/{fechacorte}','PresupuestosoperatoriaController@liquidacion_doctor');
+
+    Route::get('presupuestos-operatorias/detalles','PresupuestosoperatoriaController@listaDetalles');    
     // ppto ortodoncia
     Route::resource('presupuestos-ortodoncias','PresupuestosortodonciaController'); 
     Route::put('/presupuestosortodoncias/cambioestado/{id}','PresupuestosortodonciaController@cambioEstado');              
     Route::put('/presupuestosortodonciasdetalles/descargatx/{id}','PresupuestosortodonciaController@descargaTx');              
     Route::put('/presupuestosortodonciasdetalles/descargasaldo/{id}','PresupuestosortodonciaController@descargaSaldo');              
     Route::put('/presupuestosortodonciasdetalles/addadicionales/{id}','PresupuestosortodonciaController@addAdicionales');              
+
+    Route::get('presupuestos-ortodoncias/detalles','PresupuestosortodonciaController@listaDetalles'); 
     // tipo cambios
     Route::resource('tipocambios','TipocambioController');   
     // tipo pagos
@@ -133,5 +138,14 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/citas/modificacion/{id}', 'CitaController@modificarcitas'); 
     // laboratoriotrabajos
     Route::resource('laboratoriotrabajos','LaboratoriotrabajoController'); 
-    Route::put('/laboratoriotrabajos/envio/{id}', 'LaboratoriotrabajoController@envioTrabajo');                                                                                                                                  
+    Route::put('/laboratoriotrabajos/envio/{id}', 'LaboratoriotrabajoController@envioTrabajo');   
+    Route::put('/laboratoriotrabajos/recibir/{id}', 'LaboratoriotrabajoController@recibirTrabajo');
+    // liquidacionlaboratorios 
+    Route::resource('liquidacionlaboratorios','LiquidacionlaboratorioController'); 
+    Route::put('/liquidacionlaboratorios/facturar/{id}', 'LiquidacionlaboratorioController@facturarLiquidacion');                                                                                                                                             
+    // conceptos
+    Route::resource('conceptos','ConceptoController');
+    // transacciones doctor
+    Route::resource('transaccionesdoctor','TransacciondoctorController');
+
 });

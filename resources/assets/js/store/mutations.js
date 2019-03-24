@@ -154,9 +154,15 @@ export default {
     SET_PRESUPUESTOS_OPERATORIAS_LIST: (state, { list }) => {      // PRESUPUESTOS_OPERATORIA
         state.presupuestos_operatorias = list
     },  
+    SET_PRESUPUESTOS_OPERATORIAS_DETALLES_LIST: (state, { list }) => {      // PRESUPUESTOS_OPERATORIA_DETALLES
+        state.presupuestos_operatorias_detalles = list
+    },     
     SET_PRESUPUESTOS_ORTODONCIAS_LIST: (state, { list }) => {      // PRESUPUESTOS_ORTODONCIA
         state.presupuestos_ortodoncias = list
     }, 
+    SET_PRESUPUESTOS_ORTODONCIAS_DETALLES_LIST: (state, { list }) => {      // PRESUPUESTOS_ORTODONCIA_DETALLES
+        state.presupuestos_ortodoncias_detalles = list
+    },     
     SET_TIPOCAMBIOS_LIST: (state, { list }) => {      // TIPOCAMBIOS
         state.tipocambios = list
     },   
@@ -174,5 +180,17 @@ export default {
     },  
     SET_LABORATORIO_TRABAJOS_LIST: (state, { list }) => {      // LABORATORIO - TRABAJOS
         state.laboratoriotrabajos = list
-    },                                                                                                                                                                
+    },   
+    SET_LIQUIDACION_LABORATORIOS_LIST: (state, { list }) => {      // LIQUIDACION - LABORATORIO
+        state.liquidacionlaboratorios = list
+    },   
+    SET_CONCEPTOS_LIST: (state, { list }) => {      // CONCEPTOS
+        state.conceptos = list
+    },        
+    SET_TRANSACCIONES_DOCTOR_LIST: (state, { list }) => {      // CONCEPTOS
+        state.transacciones_doctor = list
+    }, 
+    SET_PRELIQUIDACIONES_DOCTORES_LIST: (state, { list }) => {
+        state.preliquidaciondoctor = list
+    }                                                                                                                                                                    
 }

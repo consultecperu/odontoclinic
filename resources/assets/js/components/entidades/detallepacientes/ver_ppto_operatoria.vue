@@ -182,7 +182,7 @@
                     <div class="card">
                         <div class="card-header">
                             <p class="form-control-static text-danger text-right title mb-0">Tx Pendientes : {{ TxPendientes}}</p>  
-                            <p class="form-control-static text-right title mb-0">Saldo disponible : {{ presupuestoOperatoriaById.saldo | fixed}}</p>                           
+                            <p class="form-control-static text-right title mb-0">Saldo disponible : {{ MontoSaldoTotal | fixed}}</p>                           
                         </div>
                         <div class="card-body">
                             <button class="btn btn-primary btn-block btn-sm" @click.prevent="pagoAdelantado"><span class="btn-label"><i class="la la-money"></i></span>Pago Adelantado</button>
@@ -278,11 +278,11 @@
                                         <div class="form-group form-group-default">
                                             <label for="descripcion" class="text-primary font-weight-bold">Descripcion</label>
                                             <textarea name="descripcion" id="descripcion" rows="4" v-model="dataServicio.descripcion[rec.id]"></textarea>
-                                            <div class="row" v-if="rec.tarifario.servicio.laboratorioservicios.length > 0">
-                                                <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-6" v-if="rec.tarifario.servicio.laboratorioservicios.length > 0">
                                                     <label for="laboratorio" class="text-primary font-weight-bold pt-10">{{ rec.laboratorio_id == null ? 'Asignar Laboratorio :' : 'Laboratorio Asignado :'}}</label>
                                                     <div class="select2-input" v-if="rec.laboratorio_id == null">
-                                                        <select id="laboratorio" name="laboratorio" class="col-4 form-control form-control-sm border" v-model="dataServicio.laboratorioservicio_id" @change="cambioLaboratorio">
+                                                        <select id="laboratorio" name="laboratorio" class="col-8 form-control form-control-sm border" v-model="dataServicio.laboratorioservicio_id" @change="cambioLaboratorio">
                                                             <option value="">--seleccione--</option>
                                                             <option v-for="lab in rec.tarifario.servicio.laboratorioservicios" :value="lab.id" :key="lab.id">
                                                                 {{ lab.laboratorio.nombre_laboratorio}}
@@ -293,6 +293,21 @@
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.laboratorio.nombre_laboratorio}}</label>
                                                     </div>                                                    
                                                 </div>
+                                                <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
+                                                    <label for="material" class="text-primary font-weight-bold pt-10">{{ rec.material_id == null ? 'Asignar Material :' : 'Material Asignado :'}}</label>
+                                                    <div class="select2-input" v-if="rec.material_id == null">
+                                                        <select id="material" name="material" class="col-8 form-control form-control-sm border" v-model="dataServicio.materialservicio_id" @change="cambioMaterial">
+                                                            <option value="">--seleccione--</option>
+                                                            <option v-for="mat in rec.tarifario.servicio.materialservicios" :value="mat.id" :key="mat.id">
+                                                                {{ mat.material.nombre_material}}
+                                                            </option>
+                                                        </select>
+                                                    </div> 
+                                                    <div class="text-primary font-weight-bold" v-if="rec.material_id != null">
+                                                        <label for="descripcion" class="text-danger font-weight-bold">{{ rec.material.nombre_material}}</label>
+                                                    </div>                                                     
+                                                </div>
+
                                             </div>
                                             <button type="button" class="btn btn-danger btn-sm float-right" @click.prevent="numid = 0"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                                             <button type="button" class="btn btn-primary btn-sm float-right mr-10" @click.prevent="GrabarRecord(rec)" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
@@ -310,7 +325,7 @@
         </modal>     
         <!-- PAGE CONTENT MODAL PAGO DIRECTO-->  
         <modal name="pago_directo" :width="'70%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
-            <!-- form de registro de cargos -->
+            <!-- form de registro de pago directo -->
                 <div class="card mb-0">
                     <div class="card-header pb-0">
                         <div class="card-title">
@@ -342,6 +357,21 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group pt-0">
+                                                <label for="basic" class="text-primary font-weight-bold">Tipo de Pago :</label>
+                                                <div class="select2-input">
+                                                    <select id="basic" name="basic" class="form-control form-control-sm" v-model="dataPago.modo" @change="cambioModoPago">
+                                                        <option value="">--seleccione--</option>
+                                                        <option v-for="tip in tipopagos" :value="tip.id" :key="tip.id">
+                                                            {{ tip.descripcion}}
+                                                        </option>
+                                                   </select>
+                                                </div>                                            
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <div class="row" v-if="dataPago.modo == 1 || dataPago.modo == 3">
                                         <div class="col-7 pr-0">
                                             <div class="form-group pt-0 pr-0 pb-0 text-right font-weight-bold">
                                                 <p class="form-control-static mb-5">EFECTIVO</p>                                            
@@ -349,23 +379,11 @@
                                         </div>
                                         <div class="col-5">
                                             <div class="form-group pt-0">
-                                                <input type="number" step="0.01" id="valor_efectivo" class="form-control form-control-sm" v-model="dataPago.monto_efectivo" placeholder="0.00">
+                                                <input type="number" step="0.01" id="valor_efectivo" class="form-control form-control-sm text-right" v-model="dataPago.monto_efectivo" placeholder="0.00" :disabled="dataPago.modo == 1">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-7 pr-0">
-                                            <div class="form-group pt-0 pr-0 text-right font-weight-bold">
-                                                <p class="form-control-static mb-0">VUELTO</p>                                            
-                                            </div>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="form-group pt-0 pb-0">
-                                                <input type="number" step="0.01" id="valor_efectivo" class="form-control form-control-sm" v-model="dataPago.vuelto" disabled placeholder="0.00">
-                                            </div>
-                                        </div>
-                                    </div> 
-                                    <div class="row">
+                                    <div class="row" v-if="dataPago.modo == 2 || dataPago.modo == 3">
                                         <div class="col-7 pr-0">
                                             <div class="form-group pt-0 pr-0">
                                                 <label for="tarjeta" class="text-primary font-weight-bold">Tarjeta :</label>
@@ -381,7 +399,7 @@
                                         </div>
                                         <div class="col-5">
                                             <div class="form-group pt-20 mt-5">
-                                                <input type="number" step="0.01" id="valor_efectivo_tarjeta" class="form-control form-control-sm" v-model="dataPago.monto_tarjeta" placeholder="0.00" :disabled="dataPago.tipopago_id == ''">
+                                                <input type="number" step="0.01" id="valor_efectivo_tarjeta" class="form-control form-control-sm text-right" v-model="dataPago.monto_tarjeta" placeholder="0.00" :disabled="dataPago.modo == 2">
                                             </div>
                                         </div>
                                     </div> 
@@ -406,7 +424,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-4 pl-0 pr-0">
-                                            <div class="form-group pr-0 pt-0 pb-0">
+                                            <div class="form-group pr-0 pt-0">
                                                 <label for="ruc" class="text-primary font-weight-bold mb-0">Facturar a:</label>
                                                 <input type="text" id="ruc" class="form-control form-control-sm" v-model="dataPago.ruc" disabled>
                                             </div>
@@ -423,21 +441,37 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-4 pl-10 pt-20 pr-0">
-                                            <div class="form-group pl-0 pr-0">
-                                                <label for="precios_soles" class="text-primary font-weight-bold">Precios Soles:</label>
-                                                <input type="text" id="precios_soles" class="form-control form-control-sm text-right" :class="{ 'color-yellow' : dataPago.moneda_id == 1 }" v-model="dataPago.total" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-4 pr-0 pt-20">
-                                            <div class="form-group pl-0 pr-0">
-                                                <label for="precio_dolares" class="text-primary font-weight-bold">Precio Dolares:</label>
-                                                <input type="text" id="precio_dolares" class="form-control form-control-sm text-right" :class="{ 'color-yellow' : dataPago.moneda_id == 2 }" v-model="dataPago.total_dolares" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
+                                <div class="container border border-default mt-10">
+                                    <div class="row">
+                                        <div class="col-12 pl-0 pr-0">
+                                            <div class="form-group text-right ">
+                                                <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN SOLES : {{ dataPago.total}}</label>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 pl-0 pr-0">
+                                            <div class="form-group pt-0 text-right ">
+                                                <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN DOLARES : {{ dataPago.total_dolares}}</label>
+                                            </div>
+                                        </div> 
+                                    </div>                                      
+                                    <div class="row">
+                                        <div class="col-12 pr-0 pl-0 text-right">
+                                            <label for="" class="d-inline text-primary font-weight-bold text-right col-8">ENTREGO EFECTIVO :</label> 
+                                            <input type="number" step="0.01" id="valor_efectivo" class="d-inline col-4 form-control text-right form-control-sm mr-10" v-model="entrego_efectivo" :disabled="dataPago.modo == 2" placeholder="0.00">        
+                                        </div>                                          
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 pl-0 pr-0">
+                                            <div class="form-group pt-0 text-right">
+                                                <label for="" class="text-primary font-weight-bold mb-0 mt-10">VUELTO : {{ VueltoAdelantado}}</label>
+                                            </div>
+                                        </div>
+                                    </div>                                                                                                        
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -448,9 +482,9 @@
                 </div>
             <!-- /. form de registro de pago directo -->
         </modal>   
-        <!-- PAGE CONTENT MODAL PAGO DIRECTO-->  
+        <!-- PAGE CONTENT MODAL PAGO ADELANTADO-->  
         <modal name="pago_adelantado" :width="'60%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
-            <!-- form de registro de cargos -->
+            <!-- form de registro de pago adelantado -->
                 <div class="card mb-0">
                     <div class="card-header pb-0">
                         <div class="card-title">
@@ -486,7 +520,7 @@
                                             <div class="form-group pt-0">
                                                 <label for="basic" class="text-primary font-weight-bold">Tipo de Pago :</label>
                                                 <div class="select2-input">
-                                                    <select id="basic" name="basic" class="form-control form-control-sm" v-model="modo_pago" @change="cambioModoPago">
+                                                    <select id="basic" name="basic" class="form-control form-control-sm" v-model="dataPago.modo" @change="cambioModoPago">
                                                         <option value="">--seleccione--</option>
                                                         <option v-for="tip in tipopagos" :value="tip.id" :key="tip.id">
                                                             {{ tip.descripcion}}
@@ -496,7 +530,7 @@
                                             </div>
                                         </div>
                                     </div>                                    
-                                    <div class="row" v-if="modo_pago == 1 || modo_pago == 3">
+                                    <div class="row" v-if="dataPago.modo == 1 || dataPago.modo == 3">
                                         <div class="col-7 pr-0 pb-15">
                                             <div class="form-group pt-0 pr-0 pb-0 text-right font-weight-bold">
                                                 <p class="form-control-static mb-5 text-primary">EFECTIVO</p>                                            
@@ -508,7 +542,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" v-if="modo_pago == 2 || modo_pago == 3">
+                                    <div class="row" v-if="dataPago.modo == 2 || dataPago.modo == 3">
                                         <div class="col-7 pr-0">
                                             <div class="form-group pt-0 pr-0">
                                                 <label for="tarjeta" class="text-primary font-weight-bold">Tarjeta :</label>
@@ -524,7 +558,7 @@
                                         </div>
                                         <div class="col-5">
                                             <div class="form-group pt-20 mt-5">
-                                                <input type="text" id="valor_efectivo_tarjeta" class="form-control form-control-sm" v-model="dataPago.monto_tarjeta" placeholder="0.00" :disabled="dataPago.tipopago_id == ''">
+                                                <input type="number" step="0.01" id="valor_efectivo_tarjeta" class="form-control form-control-sm" v-model="dataPago.monto_tarjeta" placeholder="0.00" :disabled="dataPago.tipopago_id == ''">
                                             </div>
                                         </div>
                                     </div> 
@@ -594,8 +628,7 @@
                                                 <label for="" class="text-primary font-weight-bold mb-0 mt-10">VUELTO : {{ VueltoAdelantado}}</label>
                                             </div>
                                         </div>
-                                    </div>                                                                        
-                                
+                                    </div>                                                                                                        
                                 </div>
                             </div>
                         </div>
@@ -849,7 +882,8 @@ export default {
     mixins: [mixin],  
     created(){
         this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST')        
-        this.$store.dispatch('LOAD_LABORATORIOSERVICIOS_LIST')        
+        this.$store.dispatch('LOAD_LABORATORIOSERVICIOS_LIST')   
+        this.$store.dispatch('LOAD_MATERIALSERVICIOS_LIST')              
         this.$store.dispatch('LOAD_TIPOPAGOS_LIST') 
         this.$store.dispatch('LOAD_PAGOS_LIST')
         this.$store.dispatch('LOAD_TIPOCAMBIOS_LIST') 
@@ -1005,7 +1039,11 @@ export default {
                 laboratorioservicio_id:'',
                 laboratorio_id:'',
                 nombre_laboratorio:'',
-                monto_lab:0.00
+                monto_lab:0.00,
+                materialservicio_id:'',
+                material_id:'',
+                nombre_material:'',                
+                monto_mat:0.00
             },
             dataPresupuesto:{
                 costo_total:'',
@@ -1093,6 +1131,7 @@ export default {
                 disponible_tarjeta:'',
                 contable:'',
                 fecha_descarga:'',
+                modo:1,     // 1.efectivo   2.tarjeta   3.mixto 
                 presupuestodetalles:[]
             },
             numid:'',
@@ -1118,7 +1157,7 @@ export default {
                 user_id:'',
                 codigo:'',
             }, 
-            modo_pago:1 ,   // modo 1-efectivo 2-tarjeta 3-mixto   
+            //modo_pago:1 ,   // modo 1-efectivo 2-tarjeta 3-mixto   
             entrego_efectivo: 0.00, 
             // variables del odontograma
             lista_general_presupuesto:[],             
@@ -1270,7 +1309,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['user_system','sede_system','monedas','empresapacientes','laboratorioservicios']),
+        ...mapState(['user_system','sede_system','monedas','empresapacientes','laboratorioservicios','materialservicios']),
         ...mapGetters(['getDientesByCuadrante','getMedicos','getTipoCambioHoy','getPresupuestoOperatoriaById','getTipopagosForma','getPagosPresupuestoOperatoriaById']), 
         presupuestoOperatoriaById(){
             if(this.$route.params.idpresupuesto != undefined){
@@ -1323,8 +1362,15 @@ export default {
             pendientes = parseFloat(this.presupuestoOperatoriaById.pago_total) - parseFloat(pagados)
             return parseFloat(pendientes).toFixed(2)
         },
+        MontoSaldoTotal(){
+            let saldo = this.presupuestoOperatoriaById.saldo == null ? 0 : this.presupuestoOperatoriaById.saldo
+            let saldo_tarjeta = this.presupuestoOperatoriaById.saldo_tarjeta == null ? 0 : this.presupuestoOperatoriaById.saldo_tarjeta
+            let saldo_total = parseFloat(saldo) + parseFloat(saldo_tarjeta)
+            return saldo_total
+        },
         TotalSolesAdelantado(){
-            let tot = 0            
+            let tot = 0
+            if(this.dataPago.tipo == 1) return;             
             if(this.dataPago.moneda_id == 1){
                 tot = parseFloat(this.dataPago.monto_efectivo) + parseFloat(this.dataPago.monto_tarjeta)
             }else{
@@ -1339,6 +1385,7 @@ export default {
         },
         TotalDolaresAdelantado(){
             let tot = 0
+            if(this.dataPago.tipo == 1) return;             
             if(this.dataPago.moneda_id == 1){
                 if(this.getTipoCambioHoy == undefined){
                     tot = parseFloat(this.dataPago.monto_efectivo) + parseFloat(this.dataPago.monto_tarjeta)
@@ -1353,6 +1400,9 @@ export default {
         },
         VueltoAdelantado(){
             let vuelto = parseFloat(this.entrego_efectivo) - parseFloat(this.dataPago.monto_efectivo)
+            if(parseInt(this.entrego_efectivo) == 0){
+                return 0
+            }
             return parseFloat(vuelto).toFixed(2)
         }              
     }, 
@@ -1381,7 +1431,7 @@ export default {
                 }
                 this.dataPago.vuelto = parseFloat(this.dataPago.vuelto).toFixed(2)
             }
-        }         
+        }       
     },
     methods:{
         StatusForm: function(eshow,eclass,elabel){
@@ -1426,7 +1476,8 @@ export default {
                 user_id:this.user_system.id,
                 laboratorio_id:this.dataServicio.laboratorio_id,
                 monto_lab:this.dataServicio.monto_lab,
-                material:'',
+                material_id:this.dataServicio.material_id,
+                monto_mat:this.dataServicio.monto_mat,
                 servicio_id:param.tarifario.servicio_id,
                 sede_id:this.sede_system.id,
                 laboratorioservicio_id:this.dataServicio.laboratorioservicio_id,
@@ -1576,7 +1627,13 @@ export default {
             this.dataPago.presupuestodetalles = []
             _.each(this.seleccionados, function(value,key){
                 if(value.pagado == 0){
-                    valor_total += parseFloat(value.costo)
+                    // verificar si hay valores en dolares para pasarlos a soles
+                    if(value.moneda_id == 1){
+                        valor_total += parseFloat(value.costo)
+                    }else {
+                        let newcosto = parseFloat(value.costo) * parseFloat(tipcam.tipo_cambio)
+                        valor_total += parseFloat(newcosto)
+                    }                    
                     list_detalles.push(value.id)
                 }
             })
@@ -1618,7 +1675,7 @@ export default {
                 monto_tarjeta:0.00,
                 moneda_id:1,
                 tipocambio_id:this.getTipoCambioHoy.id,
-                tipo:1,
+                tipo:1,     // 1. directo 2.adelantado
                 paciente_pago:'',
                 disponible:'',
                 vuelto:0.00,
@@ -1627,6 +1684,7 @@ export default {
                 disponible_tarjeta:'',
                 contable:'',
                 fecha_descarga:'',
+                modo:1,                 // 1. efectivo 2. tarjeta 3. mixto
                 presupuestodetalles:[]
             },
             this.dataPago.total = valor_total
@@ -1636,12 +1694,13 @@ export default {
                 this.notificaciones('Los registros seleccionados ya estan pagados','la la-thumbs-o-down','danger')
                 return                
             }
+            this.entrego_efectivo = 0
             this.$modal.show('pago_directo')            
         },
         pagoAdelantado(){
             let self = this
             let tipcam = this.getTipoCambioHoy            
-            this.modo_pago = 1
+            //this.dataPago.modo = 1
             if(tipcam == undefined){
                 this.notificaciones('Debe registrar el Tipo de cambio de Hoy','la la-thumbs-o-down','danger')
                 return
@@ -1685,13 +1744,21 @@ export default {
                 disponible_efectivo:'',
                 disponible_tarjeta:'',
                 contable:'',
+                modo:1,             // 1. efectivo 2. tarjeta 3. mixto
                 fecha_descarga:''
             },
             this.entrego_efectivo = 0
             this.$modal.show('pago_adelantado')  
         },
         createPago: function(){
-            if(this.dataPago.tipo == 2){
+            if(this.dataPago.tipo == 1){    // Pago directo
+                let monto_total = parseFloat(this.dataPago.monto_efectivo) + parseFloat(this.dataPago.monto_tarjeta)
+                if(parseFloat(this.dataPago.total) > parseFloat(monto_total)){
+                    this.notificaciones('El Pago directo no puede ser menor al costo total de los procedimientos','la la-thumbs-o-down','danger')
+                    return
+                }
+            }
+            if(this.dataPago.tipo == 2){    // Pago adelantado
                 let debe = parseFloat(this.TxPendientes) - parseFloat(this.presupuestoOperatoriaById.saldo)
                 if(parseFloat(this.dataPago.total) > parseFloat(debe)){
                     this.notificaciones('El Pago adelantado no puede ser mayor al Costo pendiente del presupuesto','la la-thumbs-o-down','danger')
@@ -1812,7 +1879,7 @@ export default {
                     sinterminar = true
                 }              
                 if(value.pagado == 0 && value.realizado == 3){
-                    verif_saldo += value.costo
+                    verif_saldo += parseFloat(value.costo)
                     list_detalles.push(value.id)
                 }
             })
@@ -1825,7 +1892,8 @@ export default {
                 this.notificaciones('Los registros no pueden ser descargados ... deben estar terminados!!','la la-thumbs-o-down','danger')
                 return                
             }
-            if(parseFloat(this.presupuestoOperatoriaById.saldo) < parseFloat(verif_saldo)){
+            console.log("saldo",this.MontoSaldoTotal,verif_saldo)
+            if(parseFloat(this.MontoSaldoTotal) < parseFloat(verif_saldo)){
                 this.notificaciones('El Saldo no cubre el costo de todos los tratamientos seleccionados!!','la la-thumbs-o-down','danger')
                 return                 
             }
@@ -1878,6 +1946,13 @@ export default {
             this.dataPago.monto_efectivo = 0
             this.dataPago.monto_tarjeta = 0
             this.dataPago.tipopago_id = ''
+            if(this.dataPago.tipo == 1){
+                if(this.dataPago.modo == 1){
+                    this.dataPago.monto_efectivo = this.dataPresupuesto.costo_total
+                }else if(this.dataPago.modo == 2){
+                    this.dataPago.monto_tarjeta = this.dataPresupuesto.costo_total
+                }
+            }
         },
         verOdontograma(){
             this.$router.push({ name: 'ppto-operatoria' , params: { idpresupuesto: this.presupuestoOperatoriaById.id } })           
@@ -2021,6 +2096,12 @@ export default {
             this.dataServicio.monto_lab = lab.costo_lab
             console.log('servicios',this.dataServicio)
         },
+        cambioMaterial(){
+            let mat = this.materialservicios.find(mat => mat.id == this.dataServicio.materialservicio_id)
+            this.dataServicio.material_id = mat.material_id
+            this.dataServicio.monto_mat = mat.material.costo
+            console.log('servicios',this.dataServicio)
+        },        
         AgregaEvolucion(param){
             this.numid = param
             this.dataServicio.descripcion[param] = ''

@@ -10,6 +10,7 @@ use Validator;
 use Carbon\Carbon;
 use App\Presupuestooperatoria;
 use App\Presupuestooperatoriadetalle;
+use App\TipoCambio;
 use Globales;   // helpers
 
 class PresupuestosoperatoriaController extends Controller
@@ -21,7 +22,7 @@ class PresupuestosoperatoriaController extends Controller
      */
     public function index()
     {
-        $pptosoperatorias = Presupuestooperatoria::with('paciente','paciente.pacienteplanes.plan','empleado','estadopresupuesto','tipocambio','presupuestosoperatoriasdetalles','presupuestosoperatoriasdetalles.diente','presupuestosoperatoriasdetalles.laboratorio','presupuestosoperatoriasdetalles.tarifario.servicio','presupuestosoperatoriasdetalles.tarifario.servicio.laboratorioservicios.laboratorio','presupuestosoperatoriasdetalles.moneda','presupuestosoperatoriasdetalles.recordatencionoperatorias','presupuestosoperatoriasdetalles.recordatencionoperatorias.empleado','dientes')->orderBy('id','DESC')->where('activo',true)->get();
+        $pptosoperatorias = Presupuestooperatoria::with('paciente','paciente.pacienteplanes.plan','empleado','estadopresupuesto','tipocambio','presupuestosoperatoriasdetalles','presupuestosoperatoriasdetalles.diente','presupuestosoperatoriasdetalles.laboratorio','presupuestosoperatoriasdetalles.tarifario.servicio','presupuestosoperatoriasdetalles.tarifario.servicio.laboratorioservicios.laboratorio','presupuestosoperatoriasdetalles.material','presupuestosoperatoriasdetalles.tarifario.servicio.materialservicios.material','presupuestosoperatoriasdetalles.moneda','presupuestosoperatoriasdetalles.recordatencionoperatorias','presupuestosoperatoriasdetalles.recordatencionoperatorias.empleado','dientes')->orderBy('id','DESC')->where('activo',true)->get();
         return $pptosoperatorias;  
     }
 
@@ -322,7 +323,8 @@ class PresupuestosoperatoriaController extends Controller
                 }
             }
             $ppto = Presupuestooperatoria::findOrFail($id);  
-            if(floatval($ppto->saldo) < floatval($TxPendiente)){
+            $saldo_total = floatval($ppto->saldo) + floatval($ppto->saldo_tarjeta);
+            if(floatval($saldo_total) < floatval($TxPendiente)){
                 return response()->json(['errors'=>['Saldo' => 'El Saldo no cubre el pago de los tratamientos seleccionados']]);
             }
             //validando tratamientos si estan terminados  
@@ -338,6 +340,9 @@ class PresupuestosoperatoriaController extends Controller
             }
             DB::beginTransaction();
             $descargado = 0;
+            $tarjeta_id = $ppto->tipopago_id;
+            $valor_saldo_efectivo = $ppto->saldo;
+            $valor_saldo_tarjeta = $ppto->saldo_tarjeta;
             foreach ($request->get('presupuestodetalles') as $det) {
                 $pptodet = Presupuestooperatoriadetalle::findOrFail($det);
                 if($pptodet->descargado == 0){
@@ -345,10 +350,33 @@ class PresupuestosoperatoriaController extends Controller
                     $pptodet->descargado = 1;
                     $pptodet->pagado = 1;
                     $pptodet->tipo_pagado = 2;
+                    // rutina para aplicar el pago de los tratamientos con este descarga (con saldo)
+                    if($valor_saldo_tarjeta > 0){
+                        $pptodet->tipopago_id = $tarjeta_id;
+                        if($valor_saldo_tarjeta >= $pptodet->costo){
+                            $pptodet->monto_tarjeta = $pptodet->costo;
+                            $pptodet->monto_efectivo = 0;
+                            $valor_saldo_tarjeta = floatval($valor_saldo_tarjeta) - floatval($pptodet->costo);
+                        }else{
+                            $pptodet->monto_tarjeta = $valor_saldo_tarjeta;
+                            $pptodet->monto_efectivo = floatval($pptodet->costo) - floatval($valor_saldo_tarjeta);
+                            $valor_saldo_efectivo = floatval($valor_saldo_efectivo) - (floatval($pptodet->costo) - floatval($valor_saldo_tarjeta));
+                            $valor_saldo_tarjeta = 0;
+                        } 
+                    }else{
+                        if($valor_saldo_efectivo >= $pptodet->costo){
+                            $pptodet->tipopago_id = 1;
+                            $pptodet->monto_efectivo = $pptodet->costo;
+                            $pptodet->monto_tarjeta = 0;
+                            $valor_saldo_efectivo = floatval($valor_saldo_efectivo) - floatval($pptodet->costo);
+                        }  
+                    } 
                     $pptodet->save();
                 }
             } 
-            $ppto->saldo = floatval($ppto->saldo) - floatval($TxPendiente);
+            //$ppto->saldo = floatval($ppto->saldo) - floatval($TxPendiente);
+            $ppto->saldo = floatval($valor_saldo_efectivo);
+            $ppto->saldo_tarjeta = floatval($valor_saldo_tarjeta);
             $ppto->save();            
             DB::commit();                       
         } catch (Exception $e) {
@@ -357,5 +385,101 @@ class PresupuestosoperatoriaController extends Controller
                 ['status' => $e->getMessage()], 422
             );
         }  
-    }    
+    } 
+    
+    public function liquidacion_doctor($emp,$sed,$fec)
+    {
+        $fec_cor = Carbon::create(substr($fec,4,4), substr($fec,2,2),substr($fec,0,2));
+        // filtramos los presupuestosoperatoriasdetalle por medico , sede y por fecha y que no esten liquidados
+        $datos_ppto = array();
+        //$pptodet = Presupuestooperatoriadetalle::where(['empleado_id' => $emp , 'sede_id' => $sed , 'realizado' => 3,'descargado' => 1,'liquidado' => 0, 'activo' => true])->whereDate('fecha_descarga','<=',$fec);
+        $pptodet = Presupuestooperatoriadetalle::where(['empleado_id' => $emp , 'realizado' => 3,'descargado' => 1,'liquidado' => 0, 'activo' => true])->whereDate('fecha_descarga','<=',$fec_cor)->get();
+        //$pptodet = Presupuestooperatoriadetalle::where('activo',true)->get();
+        //return $pptodet;
+        
+        if(!empty($pptodet)){
+            foreach ($pptodet as $det) {
+                // recorremos los seleccionados
+                $moneda = 's/.';
+                //$costo_total = floatval($det->monto_efectivo) + floatval($det->monto_tarjeta);
+                $tipo_cambio = TipoCambio::where('fecha_registro',date('Y-m-d'));
+                $monto_tarjeta = $det->monto_tarjeta == null ? 0 : floatval($det->monto_tarjeta);
+                $monto_tarjeta = number_format($monto_tarjeta,2);
+                $monto_efectivo = $det->monto_efectivo == null ? 0 : floatval($det->monto_efectivo);
+                $monto_efectivo = number_format($monto_efectivo);
+                $costo_total = floatval($monto_tarjeta) + floatval($monto_efectivo);
+                $costo_total = number_format($costo_total,2);
+
+                if($det->moneda_id == 2){
+                    $costo_total = $costo_total * $tipo_cambio;
+                    $costo_total = number_format($costo_total,2);
+
+                    $monto_tarjeta = floatval($monto_tarjeta) * $tipo_cambio;
+                    $monto_tarjeta = number_format($monto_tarjeta,2);
+
+                    $monto_efectivo = floatval($monto_efectivo) * $tipo_cambio;
+                    $monto_efectivo = number_format($monto_efectivo,2);                    
+                }
+
+                if($det->material_id != null){
+                    $devolucionMat = $det->material->devolucion;
+                }else{
+                    $devolucionMat = false;
+                }
+
+                if($det->monto_tarjeta != null && $det->monto_tarjeta != 0){
+                    $comision_tarjeta = Globales::comision_tarjeta($det->monto_tarjeta,$det->tipopago->comision);
+                }else{
+                    $comision_tarjeta = 0;
+                }
+                if($det->caras != null){
+                    $superf = strlen($det->caras) == 5 ? 'PZA.': $det->caras;
+                }else{
+                    $superf = '';
+                }
+
+                $sunat = Globales::comision_sunat($costo_total,18,$det->empleado->tipocontrato_id);
+                $lab = $det->monto_lab == null ? 0 : $det->monto_lab;
+                $matDoctor = $det->monto_mat == null ? 0 : $det->monto_mat;
+                $matProveedor = 0.00;
+                $comision = $det->empleado->porcentaje_interno;
+                $descuentos = [$comision_tarjeta,$sunat,$lab,$matDoctor,$matProveedor];
+                $tmpNeto = Globales::pago_doctor($costo_total, $comision , $descuentos, $matDoctor, $devolucionMat); 
+                $neto = number_format($tmpNeto, 2, '.', '');
+                $plan = 'PART.';
+
+                $status = Globales::quitar_servicios_liquidacion($det->tarifario->servicio_id);
+                if($status){
+                    $servicio = array(
+                        'paciente_id' => $det->presupuestooperatoria->paciente_id,
+                        'presupuestodetalle_id' => $det->id,
+                        'presupuesto_id' => $det->presupuestooperatoria->id,
+                        'paciente' => $det->presupuestooperatoria->paciente->nombre_completo,
+                        'nombre_servicio' => $det->tarifario->servicio->nombre_servicio,
+                        'pieza' =>  $det->diente_id == null ? '' : $det->diente->codigo,
+                        'superficie' => $superf,
+                        'fecha' => date('d-m-Y', strtotime($det->fecha_descarga)),
+                        'costo' => floatval($costo_total),
+                        'monto_efectivo' => $det->monto_efectivo != null ? $det->monto_efectivo : 0.00,
+                        'monto_tarjeta' => $det->monto_tarjeta != null ? $det->monto_tarjeta : 0.00,
+                        'moneda' => $moneda,
+                        'comision' => (int)$comision,
+                        'plan' => $plan, //'PART',
+                        'comision_tarjeta' => $comision_tarjeta,
+                        'tipo_pago' => Globales::tipo_pago($det->monto_efectivo,$det->monto_tarjeta,$det->tipopago_id),
+                        'sunat' => $sunat,
+                        'laboratorio' => $lab,
+                        'mat_doctor' => $matDoctor,
+                        'mat_proveedor' => 0.00,
+                        'neto' => floatval($neto)
+                    );
+                    array_push($datos_ppto,$servicio);                    
+
+                }
+            }
+        }
+
+        return $datos_ppto;
+
+    }
 }

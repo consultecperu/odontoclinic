@@ -62,6 +62,10 @@ import LiquidacionOrtodoncia from './components/liquidaciones/liquidacionortodon
 import LiquidacionLaboratorio from './components/liquidaciones/liquidacionlaboratorio.vue'
 import LiquidacionAseguradora from './components/liquidaciones/liquidacionaseguradora.vue'
 
+import PagosLiquidacionOperatoria from './components/pagos/cancelacion_operatoria.vue'
+import PagosLiquidacionOrtodoncia from './components/pagos/cancelacion_ortodoncia.vue'
+import PagosLiquidacionLaboratorio from './components/pagos/cancelacion_laboratorios.vue'
+
 import NotFound from './components/errors/notfound.vue'
 
 export default [
@@ -217,7 +221,7 @@ export default [
                 meta: { requiresAuth: true },
                 props: true,
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Servicios', second: 'Materiales' , third : 'Configuracion' , ruta_second : 'laboratorios' }
+                    var payload = { main: 'Servicios', second: 'Materiales' , third : 'Configuracion' , ruta_second : 'materiales' }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  
@@ -603,7 +607,40 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
-            },                                                                                                                                                                                                                                    
+            },   
+            {
+                path: '/pagosliquidacionoperatoria',
+                name: 'cancelacionoperatoria',
+                component: PagosLiquidacionOperatoria,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Liquidación Operatoria', second: 'Pagos', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },  
+            {
+                path: '/pagosliquidacionortodoncia',
+                name: 'cancelacionortodoncia',
+                component: PagosLiquidacionOrtodoncia,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Liquidación Ortodoncia', second: 'Pagos', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            }, 
+            {
+                path: '/pagosliquidacionlaboratorio',
+                name: 'cancelacionlaboratorio',
+                component: PagosLiquidacionLaboratorio,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Liquidación Laboratorio', second: 'Pagos', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },                                                                                                                                                                                                                                                                    
         ]
     },
     {

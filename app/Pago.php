@@ -9,7 +9,7 @@ class Pago extends Model
 {
     protected $table = "pagos";
 
-    protected $fillable = ['id','sede_id','ptoventa','origen','presupuestooperatoria_id','presupuestoortodoncia_id','empleado_id','empresapaciente_id','tipodocumento_id','serie','numero','deducible','coaseguro','cliente','valor','igv','total','total_dolares','tipopago_id','user_id','fecha_pago','transferencia','ultimos_digitos','lote','monto_efectivo','monto_tarjeta','moneda_id','tipocambio_id','tipo','paciente_pago','disponible','vuelto','indicador','disponible_efectivo','disponible_tarjeta','contable', 'activo'];
+    protected $fillable = ['id','sede_id','ptoventa','origen','presupuestooperatoria_id','presupuestoortodoncia_id','empleado_id','empresapaciente_id','tipodocumento_id','serie','numero','deducible','coaseguro','cliente','valor','igv','total','total_dolares','tipopago_id','user_id','fecha_pago','transferencia','ultimos_digitos','lote','monto_efectivo','monto_tarjeta','moneda_id','tipocambio_id','tipo','paciente_pago','disponible','vuelto','indicador','disponible_efectivo','disponible_tarjeta','contable','modo','activo'];
 
     public function getFechaPagoAttribute($date){
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y H:i:s');   //formateo de la fecha para verlo en el frontend
@@ -53,5 +53,13 @@ class Pago extends Model
     public function tipocambio()
     {
         return $this->belongsTo('App\TipoCambio');
-    }                             
+    }  
+    public function presupuestosoperatoriasdetalles()
+    {
+        return $this->hasMany('App\Presupuestooperatoriadetalle');
+    }  
+    public function presupuestosortodonciasdetalles()
+    {
+        return $this->hasMany('App\Presupuestoortodonciadetalle');
+    }                                   
 }

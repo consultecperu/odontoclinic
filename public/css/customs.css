@@ -114,12 +114,6 @@ table.vgt-table td {
   font-size: 12px !important;
 }
 /*** FIN MULTISELECT ***/
-/** TABLA VUE EASYTABLE **/
-
-.v-table-row {
-  font-size: 85% !important;
-}
-/** FIN TABLA VUE EASYTABLE **/
 
 .card-profile .profile-picture {
   bottom: -60px !important;
@@ -157,6 +151,42 @@ table.vgt-table td {
   font-size: 9px !important;
   text-align: center !important;
 } 
+/* vue2 table datatable */
+
+.v2-table-fixed {
+  box-shadow: 0 0 0 rgba(0,0,0,.12) !important;   
+  border-left: 1px solid rgba(0,0,0,.12) !important;
+  border-right: 1px solid rgba(0,0,0,.12) !important;
+  height: 260px !important; 
+}
+.v2-table__body.v2-table__border .v2-table__cell, .v2-table__footer.v2-table__border .v2-table__cell, .v2-table__header.v2-table__border .v2-table__cell {
+  padding-left: 5px !important;
+  padding-right: 10px !important;
+}
+.v2-table__body td .cell, .v2-table__footer td .cell {
+  font-size: 10px !important;
+}
+.v2-checkbox-list-wrap.wrap-border {
+  border-bottom: 1px solid #ebeef5 !important;
+  height: 260px !important;
+}
+.v2-table__empty-data.v2-table__empty-border {
+  height: 220px !important;
+}
+.beautify-scroll-container {
+  border-bottom: 1px solid #ebeef5 !important;
+}
+.v2-checkbox-list-wrap.wrap-border {
+  border-right: 0 !important;
+}
+.v2-table-fixed__body-wrapper {
+  border:0 !important;
+}
+.v2-table-fixed__right-empty-border {
+  border-bottom: 0 !important;
+}
+
+
 /* utilitarios margin padding */
 
   .p-0 {

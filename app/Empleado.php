@@ -112,5 +112,17 @@ class Empleado extends Model
     public function laboratoriotrabajos()
     {
         return $this->hasMany('App\Laboratoriotrabajo')->orderBy('id');
-    }                                                      
+    }    
+    public function liquidacionoperatorias()
+    {
+        return $this->hasMany('App\Liquidacionoperatoria');
+    }   
+    public function liquidacionortodoncias()
+    {
+        return $this->hasMany('App\Liquidacionortodoncia');
+    } 
+    public function transaccionesdoctor()
+    {
+        return $this->hasMany('App\Transacciondoctor');
+    }                                                              
 }

@@ -19,7 +19,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        $materiales = Materiale::with('moneda')->orderBy('id','ASC')->where('activo',true)->get();
+        $materiales = Materiale::with('moneda','materialservicios')->orderBy('nombre_material','ASC')->where('activo',true)->get();
         return $materiales;  
     }
 

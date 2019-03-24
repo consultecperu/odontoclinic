@@ -17,5 +17,21 @@ class Tipopago extends Model
     public function pagos()
     {
         return $this->hasMany('App\Pago');
-    }         
+    }  
+    public function presupuestosoperatorias()
+    {
+        return $this->hasMany('App\Presupuestooperatoria');
+    }   
+    public function presupuestosoperatoriasdetalles()
+    {
+        return $this->hasMany('App\Presupuestooperatoriadetalle');
+    }
+    public function presupuestosortodoncias()
+    {
+        return $this->hasMany('App\Presupuestoortodoncia');
+    }   
+    public function presupuestosortodonciasdetalles()
+    {
+        return $this->hasMany('App\Presupuestoortodonciadetalle');
+    }                 
 }

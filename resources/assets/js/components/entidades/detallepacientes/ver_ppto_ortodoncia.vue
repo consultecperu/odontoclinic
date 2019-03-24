@@ -230,7 +230,7 @@
         </div> 
         <!-- PAGE CONTENT MODAL ATENCIONES-->  
         <modal name="record_atencion" :width="'65%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
-            <!-- form de registro de cargos -->
+            <!-- form de registro de record atencion -->
                 <div class="card mb-0">
                     <div class="card-header">
                         <div class="card-title">Realización de Tratamientos</div>
@@ -250,8 +250,8 @@
                                     </p>
                                 </div>
                                 <div class="col-2">
-                                    <button class="btn btn-primary btn-xs float-right" v-tooltip.top="'Agregar Evolución'" @click.prevent="numid = rec.id"><i class="la la-plus"></i></button>
-                                    <button class="btn btn-success btn-xs float-right mr-10" v-tooltip.top="'Finalizar Tratamiento'" @click.prevent="finalizarTratamiento(rec.id)"><i class="la la-check"></i></button>
+                                    <button class="btn btn-primary btn-xs btn-no-xs float-right" v-tooltip.top="'Agregar Evolución'" @click.prevent="numid = rec.id"><i class="la la-plus"></i></button>
+                                    <button class="btn btn-success btn-xs btn-no-xs float-right mr-10" v-tooltip.top="'Finalizar Tratamiento'" @click.prevent="finalizarTratamiento(rec.id)"><i class="la la-check"></i></button>
                                 </div>
                             </div>
                             <!-- Record de Atenciones -->
@@ -278,6 +278,37 @@
                                         <div class="form-group form-group-default">
                                             <label for="descripcion" class="text-primary font-weight-bold">Descripcion</label>
                                             <textarea name="descripcion" id="descripcion" rows="4" v-model="dataServicio.descripcion[rec.id]"></textarea>
+                                            <div class="row">
+                                                <div class="col-6" v-if="rec.tarifario.servicio.laboratorioservicios.length > 0">
+                                                    <label for="laboratorio" class="text-primary font-weight-bold pt-10">{{ rec.laboratorio_id == null ? 'Asignar Laboratorio :' : 'Laboratorio Asignado :'}}</label>
+                                                    <div class="select2-input" v-if="rec.laboratorio_id == null">
+                                                        <select id="laboratorio" name="laboratorio" class="col-8 form-control form-control-sm border" v-model="dataServicio.laboratorioservicio_id" @change="cambioLaboratorio">
+                                                            <option value="">--seleccione--</option>
+                                                            <option v-for="lab in rec.tarifario.servicio.laboratorioservicios" :value="lab.id" :key="lab.id">
+                                                                {{ lab.laboratorio.nombre_laboratorio}}
+                                                            </option>
+                                                        </select>
+                                                    </div> 
+                                                    <div class="text-primary font-weight-bold" v-if="rec.laboratorio_id != null">
+                                                        <label for="descripcion" class="text-danger font-weight-bold">{{ rec.laboratorio.nombre_laboratorio}}</label>
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
+                                                    <label for="material" class="text-primary font-weight-bold pt-10">{{ rec.material_id == null ? 'Asignar Material :' : 'Material Asignado :'}}</label>
+                                                    <div class="select2-input" v-if="rec.material_id == null">
+                                                        <select id="material" name="material" class="col-8 form-control form-control-sm border" v-model="dataServicio.materialservicio_id" @change="cambioMaterial">
+                                                            <option value="">--seleccione--</option>
+                                                            <option v-for="mat in rec.tarifario.servicio.materialservicios" :value="mat.id" :key="mat.id">
+                                                                {{ mat.material.nombre_material}}
+                                                            </option>
+                                                        </select>
+                                                    </div> 
+                                                    <div class="text-primary font-weight-bold" v-if="rec.material_id != null">
+                                                        <label for="descripcion" class="text-danger font-weight-bold">{{ rec.material.nombre_material}}</label>
+                                                    </div>                                                     
+                                                </div>
+
+                                            </div>                                            
                                             <button type="button" class="btn btn-danger btn-sm float-right" @click.prevent="numid = 0"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                                             <button type="button" class="btn btn-primary btn-sm float-right mr-10" @click.prevent="GrabarRecord(rec)" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                                         </div>                                                                                     
@@ -290,11 +321,11 @@
                         <button class="btn btn-warning float-right" @click="$modal.hide('record_atencion')"><span class="btn-label"><i class="la la-times-circle"></i> Salir</span></button>
                     </div>
                 </div>
-            <!-- /. form de registro de cargos -->
+            <!-- /. form de registro de record atencion -->
         </modal>     
         <!-- PAGE CONTENT MODAL PAGO DIRECTO-->  
         <modal name="pago_directo" :width="'70%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
-            <!-- form de registro de cargos -->
+            <!-- form de registro de pago directo -->
                 <div class="card mb-0">
                     <div class="card-header pb-0">
                         <div class="card-title">
@@ -326,6 +357,21 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group pt-0">
+                                                <label for="basic" class="text-primary font-weight-bold">Tipo de Pago :</label>
+                                                <div class="select2-input">
+                                                    <select id="basic" name="basic" class="form-control form-control-sm" v-model="dataPago.modo" @change="cambioModoPago">
+                                                        <option value="">--seleccione--</option>
+                                                        <option v-for="tip in tipopagos" :value="tip.id" :key="tip.id">
+                                                            {{ tip.descripcion}}
+                                                        </option>
+                                                   </select>
+                                                </div>                                            
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <div class="row" v-if="dataPago.modo == 1 || dataPago.modo == 3">
                                         <div class="col-7 pr-0">
                                             <div class="form-group pt-0 pr-0 pb-0 text-right font-weight-bold">
                                                 <p class="form-control-static mb-5">EFECTIVO</p>                                            
@@ -333,23 +379,11 @@
                                         </div>
                                         <div class="col-5">
                                             <div class="form-group pt-0">
-                                                <input type="number" step="0.01" id="valor_efectivo" class="form-control form-control-sm" v-model="dataPago.monto_efectivo" placeholder="0.00">
+                                                <input type="number" step="0.01" id="valor_efectivo" class="form-control form-control-sm text-right" v-model="dataPago.monto_efectivo" placeholder="0.00" :disabled="dataPago.modo == 1">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-7 pr-0">
-                                            <div class="form-group pt-0 pr-0 text-right font-weight-bold">
-                                                <p class="form-control-static mb-0">VUELTO</p>                                            
-                                            </div>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="form-group pt-0 pb-0">
-                                                <input type="number" step="0.01" id="valor_efectivo" class="form-control form-control-sm" v-model="dataPago.vuelto" disabled placeholder="0.00">
-                                            </div>
-                                        </div>
-                                    </div> 
-                                    <div class="row">
+                                    <div class="row" v-if="dataPago.modo == 2 || dataPago.modo == 3">
                                         <div class="col-7 pr-0">
                                             <div class="form-group pt-0 pr-0">
                                                 <label for="tarjeta" class="text-primary font-weight-bold">Tarjeta :</label>
@@ -365,7 +399,7 @@
                                         </div>
                                         <div class="col-5">
                                             <div class="form-group pt-20 mt-5">
-                                                <input type="number" step="0.01" id="valor_efectivo_tarjeta" class="form-control form-control-sm" v-model="dataPago.monto_tarjeta" placeholder="0.00" :disabled="dataPago.tipopago_id == ''">
+                                                <input type="number" step="0.01" id="valor_efectivo_tarjeta" class="form-control form-control-sm text-right" v-model="dataPago.monto_tarjeta" placeholder="0.00" :disabled="dataPago.modo == 2">
                                             </div>
                                         </div>
                                     </div> 
@@ -390,7 +424,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-4 pl-0 pr-0">
-                                            <div class="form-group pr-0 pt-0 pb-0">
+                                            <div class="form-group pr-0 pt-0">
                                                 <label for="ruc" class="text-primary font-weight-bold mb-0">Facturar a:</label>
                                                 <input type="text" id="ruc" class="form-control form-control-sm" v-model="dataPago.ruc" disabled>
                                             </div>
@@ -407,21 +441,37 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-4 pl-10 pt-20 pr-0">
-                                            <div class="form-group pl-0 pr-0">
-                                                <label for="precios_soles" class="text-primary font-weight-bold">Precios Soles:</label>
-                                                <input type="text" id="precios_soles" class="form-control form-control-sm text-right" :class="{ 'color-yellow' : dataPago.moneda_id == 1 }" v-model="dataPago.total" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-4 pr-0 pt-20">
-                                            <div class="form-group pl-0 pr-0">
-                                                <label for="precio_dolares" class="text-primary font-weight-bold">Precio Dolares:</label>
-                                                <input type="text" id="precio_dolares" class="form-control form-control-sm text-right" :class="{ 'color-yellow' : dataPago.moneda_id == 2 }" v-model="dataPago.total_dolares" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
+                                <div class="container border border-default mt-10">
+                                    <div class="row">
+                                        <div class="col-12 pl-0 pr-0">
+                                            <div class="form-group text-right ">
+                                                <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN SOLES : {{ dataPago.total}}</label>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 pl-0 pr-0">
+                                            <div class="form-group pt-0 text-right ">
+                                                <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN DOLARES : {{ dataPago.total_dolares}}</label>
+                                            </div>
+                                        </div> 
+                                    </div>                                      
+                                    <div class="row">
+                                        <div class="col-12 pr-0 pl-0 text-right">
+                                            <label for="" class="d-inline text-primary font-weight-bold text-right col-8">ENTREGO EFECTIVO :</label> 
+                                            <input type="number" step="0.01" id="valor_efectivo" class="d-inline col-4 form-control text-right form-control-sm mr-10" v-model="entrego_efectivo" :disabled="dataPago.modo == 2" placeholder="0.00">        
+                                        </div>                                          
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 pl-0 pr-0">
+                                            <div class="form-group pt-0 text-right">
+                                                <label for="" class="text-primary font-weight-bold mb-0 mt-10">VUELTO : {{ VueltoAdelantado}}</label>
+                                            </div>
+                                        </div>
+                                    </div>                                                                                                        
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -431,7 +481,7 @@
                     </div>
                 </div>
             <!-- /. form de registro de pago directo -->
-        </modal>   
+        </modal>  
         <!-- PAGE CONTENT MODAL PAGO DIRECTO-->  
         <modal name="pago_adelantado" :width="'60%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de cargos -->
@@ -470,7 +520,7 @@
                                             <div class="form-group pt-0">
                                                 <label for="basic" class="text-primary font-weight-bold">Tipo de Pago :</label>
                                                 <div class="select2-input">
-                                                    <select id="basic" name="basic" class="form-control form-control-sm" v-model="modo_pago" @change="cambioModoPago">
+                                                    <select id="basic" name="basic" class="form-control form-control-sm" v-model="dataPago.modo" @change="cambioModoPago">
                                                         <option value="">--seleccione--</option>
                                                         <option v-for="tip in tipopagos" :value="tip.id" :key="tip.id">
                                                             {{ tip.descripcion}}
@@ -480,7 +530,7 @@
                                             </div>
                                         </div>
                                     </div>                                    
-                                    <div class="row" v-if="modo_pago == 1 || modo_pago == 3">
+                                    <div class="row" v-if="dataPago.modo == 1 || dataPago.modo == 3">
                                         <div class="col-7 pr-0 pb-15">
                                             <div class="form-group pt-0 pr-0 pb-0 text-right font-weight-bold">
                                                 <p class="form-control-static mb-5 text-primary">EFECTIVO</p>                                            
@@ -492,7 +542,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" v-if="modo_pago == 2 || modo_pago == 3">
+                                    <div class="row" v-if="dataPago.modo == 2 || dataPago.modo == 3">
                                         <div class="col-7 pr-0">
                                             <div class="form-group pt-0 pr-0">
                                                 <label for="tarjeta" class="text-primary font-weight-bold">Tarjeta :</label>
@@ -829,7 +879,9 @@ export default {
     name: 'ver-ppto-ortodoncia',
     mixins: [mixin],  
     created(){
-        this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST')        
+        this.$store.dispatch('LOAD_EMPRESAPACIENTES_LIST') 
+        this.$store.dispatch('LOAD_LABORATORIOSERVICIOS_LIST')   
+        this.$store.dispatch('LOAD_MATERIALSERVICIOS_LIST')                 
         this.$store.dispatch('LOAD_TIPOPAGOS_LIST') 
         this.$store.dispatch('LOAD_PAGOS_LIST')
         this.$store.dispatch('LOAD_TIPOCAMBIOS_LIST') 
@@ -1007,7 +1059,15 @@ export default {
             dataServicio:{
                 detalle:'',
                 estado:'',
-                descripcion:[]
+                descripcion:[],
+                laboratorioservicio_id:'',
+                laboratorio_id:'',
+                nombre_laboratorio:'',
+                monto_lab:0.00,
+                materialservicio_id:'',
+                material_id:'',
+                nombre_material:'',                
+                monto_mat:0.00                
             },
             dataPresupuesto:{
                 costo_total:'',
@@ -1053,6 +1113,7 @@ export default {
                 disponible_tarjeta:'',
                 contable:'',
                 fecha_descarga:'',
+                modo:1,
                 presupuestodetalles:[]
             },
             numid:'',
@@ -1120,7 +1181,7 @@ export default {
                 descripcion:''
             },
 
-            modo_pago:1 ,   // modo 1-efectivo 2-tarjeta 3-mixto   
+            //modo_pago:1 ,   // modo 1-efectivo 2-tarjeta 3-mixto   
             entrego_efectivo: 0.00,  
             lista_tx:[],
             dataDetalleTX :{
@@ -1132,7 +1193,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['user_system','sede_system','monedas','empresapacientes','tarifarios']),
+        ...mapState(['user_system','sede_system','monedas','empresapacientes','tarifarios','laboratorioservicios','materialservicios']),
         ...mapGetters(['getMedicos','getTipoCambioHoy','getPresupuestoOrtodonciaById','getTipopagosForma','getPagosPresupuestoOrtodonciaById']), 
         presupuestoOrtodonciaById(){
             if(this.$route.params.idpresupuesto != undefined){
@@ -1186,7 +1247,8 @@ export default {
             return parseFloat(pendientes).toFixed(2)
         },
         TotalSolesAdelantado(){
-            let tot = 0            
+            let tot = 0   
+            if(this.dataPago.tipo == 1) return;           
             if(this.dataPago.moneda_id == 1){
                 tot = parseFloat(this.dataPago.monto_efectivo) + parseFloat(this.dataPago.monto_tarjeta)
             }else{
@@ -1201,6 +1263,7 @@ export default {
         },
         TotalDolaresAdelantado(){
             let tot = 0
+            if(this.dataPago.tipo == 1) return;              
             if(this.dataPago.moneda_id == 1){
                 if(this.getTipoCambioHoy == undefined){
                     tot = parseFloat(this.dataPago.monto_efectivo) + parseFloat(this.dataPago.monto_tarjeta)
@@ -1283,6 +1346,7 @@ export default {
         },        
         RealizarTratamiento(){
             this.seleccionados = this.$refs['tabla_detalle'].selectedRows
+            console.log("seleccionados",this.seleccionados)
             this.$modal.show('record_atencion')
         },
         GrabarRecord(param){
@@ -1295,9 +1359,18 @@ export default {
                 empleado_id:this.dataPaciente.empleado_id,
                 fecha_realizacion:moment().format('DD-MM-YYYY hh:mm:ss'),
                 user_id:this.user_system.id,
-                laboratorio_id:'',
-                material:''                
-            }
+                laboratorio_id:this.dataServicio.laboratorio_id,
+                monto_lab:this.dataServicio.monto_lab,
+                material_id:this.dataServicio.material_id,
+                monto_mat:this.dataServicio.monto_mat,
+                servicio_id:param.tarifario.servicio_id,
+                sede_id:this.sede_system.id,
+                laboratorioservicio_id:this.dataServicio.laboratorioservicio_id,
+                fecha_separacion:moment().format('DD-MM-YYYY hh:mm:ss'),
+                costo:this.dataServicio.monto_lab,
+                tipo:1,
+                liquidable:1                         
+            }            
 
             var url = '/api/recordatencion-ortodoncias';
             this.StatusForm(true,'la la-spinner','Procesando')     
@@ -1439,7 +1512,14 @@ export default {
             this.dataPago.presupuestodetalles = []
             _.each(this.seleccionados, function(value,key){
                 if(value.pagado == 0){
-                    valor_total += parseFloat(value.costo)
+                    //valor_total += parseFloat(value.costo)
+                    // verificar si hay valores en dolares para pasarlos a soles
+                    if(value.moneda_id == 1){
+                        valor_total += parseFloat(value.costo)
+                    }else {
+                        let newcosto = parseFloat(value.costo) * parseFloat(tipcam.tipo_cambio)
+                        valor_total += parseFloat(newcosto)
+                    }                     
                     list_detalles.push(value.id)
                 }
             })
@@ -1490,6 +1570,7 @@ export default {
                 disponible_tarjeta:'',
                 contable:'',
                 fecha_descarga:'',
+                modo:1,
                 presupuestodetalles:[]
             },
             this.dataPago.total = valor_total
@@ -1499,12 +1580,13 @@ export default {
                 this.notificaciones('Los registros seleccionados ya estan pagados','la la-thumbs-o-down','danger')
                 return                
             }
+            this.entrego_efectivo = 0            
             this.$modal.show('pago_directo')            
         },
         pagoAdelantado(){
             let self = this
             let tipcam = this.getTipoCambioHoy            
-            this.modo_pago = 1
+            //this.modo_pago = 1
             if(tipcam == undefined){
                 this.notificaciones('Debe registrar el Tipo de cambio de Hoy','la la-thumbs-o-down','danger')
                 return
@@ -1548,12 +1630,20 @@ export default {
                 disponible_efectivo:'',
                 disponible_tarjeta:'',
                 contable:'',
-                fecha_descarga:''
+                fecha_descarga:'',
+                modo:1
             },
             this.entrego_efectivo = 0
             this.$modal.show('pago_adelantado')  
         },
         createPago: function(){
+            if(this.dataPago.tipo == 1){    // Pago directo
+                let monto_total = parseFloat(this.dataPago.monto_efectivo) + parseFloat(this.dataPago.monto_tarjeta)
+                if(parseFloat(this.dataPago.total) > parseFloat(monto_total)){
+                    this.notificaciones('El Pago directo no puede ser menor al costo total de los procedimientos','la la-thumbs-o-down','danger')
+                    return
+                }
+            }            
             if(this.dataPago.tipo == 2){
                 let debe = parseFloat(this.TxPendientes) - parseFloat(this.presupuestoOrtodonciaById.saldo)
                 if(parseFloat(this.dataPago.total) > parseFloat(debe)){
@@ -1828,6 +1918,18 @@ export default {
             this.dataDescuento.nuevo_monto = ''
             this.dataDescuento.porcentaje = ''
         }, 
+        cambioLaboratorio(){
+            let lab = this.laboratorioservicios.find(la => la.id == this.dataServicio.laboratorioservicio_id)
+            this.dataServicio.laboratorio_id = lab.laboratorio_id
+            this.dataServicio.monto_lab = lab.costo_lab
+            console.log('servicios',this.dataServicio)
+        },
+        cambioMaterial(){
+            let mat = this.materialservicios.find(mat => mat.id == this.dataServicio.materialservicio_id)
+            this.dataServicio.material_id = mat.material_id
+            this.dataServicio.monto_mat = mat.material.costo
+            console.log('servicios',this.dataServicio)
+        },         
         createAdicionales(){
             this.isLoading = true
             let self = this
@@ -2065,5 +2167,9 @@ export default {
     } 
     .btn-xs {
         padding: 2px !important;
+    }
+    .btn-no-xs {
+        font-size: 10px !important;
+        padding: 5px 9px !important;
     }          
 </style>

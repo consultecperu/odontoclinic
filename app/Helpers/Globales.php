@@ -68,5 +68,86 @@ class Globales
     }    
     // User::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get(); usuarios creados el dia de hoy
     // Ticket::whereTime('end_date', '>=', '12:00:00')->get();   Todos los tickets cerrados después de las 12:00 horas
-}
 
+    // PARA PAGOS A DOCTORES
+    public static function comision_tarjeta($monto, $comision){
+        if($monto != 0){
+            $_tmp = $comision / 100;
+            $_mont = $monto * $_tmp;
+            return number_format($_mont, 2);
+        }else{
+            return 0.00;
+        }
+    } 
+    
+    public static function comision_sunat($monto, $comision, $contrato){
+        if($contrato == 2){
+            $_tmp = $comision / 100;
+            $_mont = ($monto / 1.18) * $_tmp;
+            $newMonto = $monto - $_mont;
+            return number_format($_mont, 2);
+        
+        }else{
+            return 0.00;
+        }
+    }   
+    
+    public static function pago_doctor($bruto, $comision, $descuento, $materiales, $devoluvionMat = FALSE){
+        $_descuento = 0;
+        if(is_array($descuento)){
+            foreach ($descuento as $value) {
+                $_descuento += $value;
+            }
+        }
+        $_sub = $bruto - $_descuento;        
+        $_sub = $_sub * ($comision / 100);
+        //var_dump($_sub);
+        if($devoluvionMat){
+          $_sub = $_sub + $materiales;  
+        }
+        //return number_format($_sub, 2);
+        return number_format($_sub, 2, '.', '');
+    }   
+    
+    public static function quitar_servicios_liquidacion($idservicio){
+        $servicios = [14, 15, 16, 17, 18, 19, 422, 423, 424];  
+        $status = true;  
+        for ($i=0; $i < count($servicios); $i++) { 
+          if($idservicio == $servicios[$i]){
+            $status = false;
+            break;
+          }
+        }        
+        return $status;  
+    } 
+    
+    public static function tipo_pago($efectivo, $tarjeta, $idtarjeta){
+        if($efectivo != 0 & $tarjeta == 0){
+            return 'EFEC';
+        }elseif($efectivo != 0 & $tarjeta != 0){
+            return 'MIXT';
+        }elseif($efectivo == 0 & $tarjeta != 0){
+            if($idtarjeta == '2'){
+                return 'MasterC';
+            }
+            if($idtarjeta == '3'){
+                return 'VISA';
+            }
+            if($idtarjeta == '4'){
+                return 'P.VIDA';
+            }
+            if($idtarjeta == '6'){
+                return 'AMEX';
+            }
+            if($idtarjeta == '5'){
+                return 'AB.BN';
+            }
+            if($idtarjeta == '7'){
+                return 'DINNE';
+            }
+            if($idtarjeta == '8'){
+                return 'CMR';
+            }
+        }
+    }    
+}

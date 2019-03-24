@@ -20,18 +20,18 @@ class Materiale extends Model
     }   
     public function materialservicios()
     {
-        return $this->hasMany('App\Materialservicio');
+        return $this->hasMany('App\Materialservicio','material_id');
     } 
     public function presupuestosoperatoriasdetalles()
     {
-        return $this->hasMany('App\PresupuestoOperatoriaDetalle');
+        return $this->hasMany('App\PresupuestoOperatoriaDetalle','material_id');
     }  
     public function recordatencionoperatorias()
     {
-        return $this->hasMany('App\Recordatencionoperatoria');
+        return $this->hasMany('App\Recordatencionoperatoria','material_id');
     } 
     public function recordatencionortodoncias()
     {
-        return $this->hasMany('App\Recordatencionortodoncia');
+        return $this->hasMany('App\Recordatencionortodoncia','material_id');
     }                    
 }

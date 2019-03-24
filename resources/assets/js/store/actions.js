@@ -338,6 +338,14 @@ export default {
             console.log(err)
         });
     }, 
+    LOAD_PRESUPUESTOS_OPERATORIAS_DETALLES_LIST: function ({ commit }) {
+        var url = '/api/presupuestos-operatorias/detalles';
+        return axios.get(url).then((response) => {
+            commit('SET_PRESUPUESTOS_OPERATORIAS_DETALLES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },    
     LOAD_PRESUPUESTOS_ORTODONCIAS_LIST: function ({ commit }) {
         var url = '/api/presupuestos-ortodoncias';
         return axios.get(url).then((response) => {
@@ -345,7 +353,15 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    }, 
+    },
+    LOAD_PRESUPUESTOS_ORTODONCIAS_DETALLES_LIST: function ({ commit }) {
+        var url = '/api/presupuestos-ortodoncias/detalles';
+        return axios.get(url).then((response) => {
+            commit('SET_PRESUPUESTOS_ORTODONCIAS_DETALLES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },      
     LOAD_TIPOCAMBIOS_LIST: function ({ commit }) {
         var url = '/api/tipocambios';
         return axios.get(url).then((response) => {
@@ -393,5 +409,37 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                                                                                     
+    },   
+    LOAD_LIQUIDACION_LABORATORIOS_LIST: function ({ commit }) {
+        var url = '/api/liquidacionlaboratorios/';
+        return axios.get(url).then((response) => {
+            commit('SET_LIQUIDACION_LABORATORIOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
+    LOAD_CONCEPTOS_LIST: function ({ commit }) {
+        var url = '/api/conceptos';
+        return axios.get(url).then((response) => {
+            commit('SET_CONCEPTOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
+    LOAD_TRANSACCIONES_DOCTOR_LIST: function ({ commit }) {
+        var url = '/api/transaccionesdoctor';
+        return axios.get(url).then((response) => {
+            commit('SET_TRANSACCIONES_DOCTOR_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    }, 
+    LOAD_PRELIQUIDACIONES_DOCTORES_LIST: function ({ commit } , payload) {  // aseguradoras ligadas a las empresas
+        var url = '/api/presupuestosoperatoriasdetalles/liquidacion-doctor/' + payload.empleado_id+'/'+payload.sede_id+'/'+payload.fecha_corte
+        return axios.get(url).then((response) => {
+            commit('SET_PRELIQUIDACIONES_DOCTORES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                                                                                 
 }

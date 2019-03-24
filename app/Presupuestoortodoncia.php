@@ -8,7 +8,7 @@ class Presupuestoortodoncia extends Model
 {
     protected $table = "presupuestosortodoncias";
 
-    protected $fillable = ['id', 'fecha_registro','paciente_id','empleado_id','codigo','cuotas','cuota_inicial','descuento','control_mensual','observaciones','tipocambio_id','estadopresupuesto_id','moneda_id','total_dolares','total_soles','total','sede_id','estado_seguimiento','cuota_inicial_base','control_mensual_base','user_id','saldo','activo','tarifario_id','cuota_inicial_dolares','control_mensual_dolares','cuota_inicial_base_dolares','control_mensual_base_dolares'];
+    protected $fillable = ['id', 'fecha_registro','paciente_id','empleado_id','codigo','cuotas','cuota_inicial','descuento','control_mensual','observaciones','tipocambio_id','estadopresupuesto_id','moneda_id','total_dolares','total_soles','total','sede_id','estado_seguimiento','cuota_inicial_base','control_mensual_base','user_id','saldo','activo','tarifario_id','cuota_inicial_dolares','control_mensual_dolares','cuota_inicial_base_dolares','control_mensual_base_dolares','saldo_tarjeta','tipopago_id'];
     
     public function paciente()
     {
@@ -46,6 +46,10 @@ class Presupuestoortodoncia extends Model
     {
         return $this->belongsTo('App\Sede');
     }
+    public function tipopago()
+    {
+        return $this->belongsTo('App\Tipopago');
+    }      
     public function presupuestosortodonciasdetalles()
     {
         return $this->hasMany('App\Presupuestoortodonciadetalle');

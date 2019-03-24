@@ -167,5 +167,29 @@ class User extends Authenticatable
     public function laboratoriotrabajos()
     {
         return $this->hasMany('App\Laboratoriotrabajo')->orderBy('id');
-    }                                                                                                    
+    } 
+    public function liquidacionlaboratorios()
+    {
+        return $this->hasMany('App\Liquidacionlaboratorio')->orderBy('id');
+    }   
+    public function liquidacionlaboratoriodetalles()
+    {
+        return $this->hasMany('App\Liquidacionlaboratoriodetalle');
+    }
+    public function conceptos()
+    {
+        return $this->hasMany('App\Concepto');
+    } 
+    public function liquidacionoperatorias()
+    {
+        return $this->hasMany('App\Liquidacionoperatoria');
+    }  
+    public function liquidacionortodoncias()
+    {
+        return $this->hasMany('App\Liquidacionortodoncia');
+    } 
+    public function transaccionesdoctor()
+    {
+        return $this->hasMany('App\Transacciondoctor');
+    }                                                                                                                            
 }

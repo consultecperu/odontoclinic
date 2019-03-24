@@ -106,10 +106,10 @@
                                 <div class="col-6" :class="[ select_multi ? 'borde-derecho-multi' : 'borde-derecho' ]">
                                     <div class="row d-flex justify-content-end" v-for="i in cuadrante_izquierdo_superior" :key="i">
                                         <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
-                                            <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
+                                            <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" v-tooltip.top-start="info.nombre_diente" :id="'t'+info.id">{{ info.codigo }}</p>
                                             <input type="text" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                             <div>
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del diente -->
                                                     <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')" /> <!-- CARA 1 Trapecio superior -->
                                                     <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
@@ -136,10 +136,10 @@
                                 <div class="col-6">
                                     <div class="row" v-for="i in cuadrante_derecho_superior" :key="i">
                                         <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
-                                            <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
+                                            <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" v-tooltip.top-start="info.nombre_diente" :id="'t'+info.id">{{ info.codigo }}</p>
                                             <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                             <div>
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente -->
                                                     <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
                                                     <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
@@ -172,10 +172,10 @@
                                 <div class="col-6" :class="[ select_multi ? 'borde-derecho-multi' : 'borde-derecho' ]">
                                     <div class="row d-flex justify-content-end" v-for="i in cuadrante_izquierdo_inferior" :key="i">
                                         <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
-                                            <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
+                                            <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" v-tooltip.top-start="info.nombre_diente" :id="'t'+info.id">{{ info.codigo }}</p>
                                             <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                             <div>
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente -->
                                                     <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
                                                     <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
@@ -201,10 +201,10 @@
                                 <div class="col-6">
                                     <div class="row" v-for="i in cuadrante_derecho_inferior" :key="i">
                                         <div v-for="info in getDientesByCuadrante(i)" :key="info.id" class="dientito">
-                                            <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" :id="'t'+info.id">{{ info.codigo }}</p>
+                                            <p class="form-control-static text-center mb-0" :class="{seleccionado:contains(list_dent_multiple,info),'text-danger':contains(list_dent_multiple,info)}" v-tooltip.top-start="info.nombre_diente" :id="'t'+info.id">{{ info.codigo }}</p>
                                             <input type="text" name="" :id="'d'+info.id" class="texto-dientito" maxlength="3" v-model="dataPresupuesto.text_up_dent[info.id]" @focus="guardaDatoTexto(info.id)" @blur="grabaDatoTexto(info.id)"> 
                                             <div>
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" v-tooltip.top-start="info.nombre_diente" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente-->
                                                     <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
                                                     <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
@@ -1206,7 +1206,7 @@ export default {
                                 valor = value.realizado == 3 ? self.marcadoExodonciaO_Azul : self.marcadoExodonciaO  
                                 break;                    
                             case 5 : 
-                                valor = value.realizado == 3 ? self.marcadoPernoO_Azul : self.marcadoPernoO  
+                                valor = value.realizado == 3 ? 'marcadoPernoO_Azul' : 'marcadoPernoO'  
                                 break;                    
                             case 6 : 
                                 valor = value.realizado == 3 ? self.marcadoIonomeroO_Azul : self.marcadoIonomeroO 

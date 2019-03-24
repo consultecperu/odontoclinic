@@ -55,7 +55,9 @@ export default {
     derivaciones:[],
     dientes:[],
     presupuestos_operatorias:[],
+    presupuestos_operatorias_detalles:[],
     presupuestos_ortodoncias:[],
+    presupuestos_ortodoncias_detalles:[],
     tipocambios:[],
     tipopagos:[],
     pagos:[],
@@ -63,4 +65,8 @@ export default {
     citasfechas:[],
     estadocitas:[],
     laboratoriotrabajos:[],
+    liquidacionlaboratorios:[],
+    conceptos:[],
+    transacciones_doctor:[],
+    preliquidaciondoctor:[],
 }

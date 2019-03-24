@@ -33,5 +33,9 @@ class Laboratorio extends Model
     public function recordatencionortodoncias()
     {
         return $this->hasMany('App\Recordatencionortodoncia');
-    }                          
+    }  
+    public function liquidacionlaboratorios()
+    {
+        return $this->hasMany('App\Liquidacionlaboratorio');
+    }                             
 }

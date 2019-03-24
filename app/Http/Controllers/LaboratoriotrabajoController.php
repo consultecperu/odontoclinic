@@ -94,7 +94,9 @@ class LaboratoriotrabajoController extends Controller
         try {
             DB::beginTransaction();
 
-            $rules = [ 'fecha_envio'   =>  'required']; 
+            $rules = [ 'fecha_envio'   =>  'required',
+                       'fecha_entrega'  => 'required'
+                    ]; 
           
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -106,6 +108,34 @@ class LaboratoriotrabajoController extends Controller
                 $labtra = Laboratoriotrabajo::findOrFail($det); 
                 $labtra->seguimiento = 2;         
                 $labtra->fecha_envio =  Globales::FormatFecYMD_hms($request->get('fecha_envio'));
+                $labtra->fecha_entrega =  Globales::FormatFecYMD_hms($request->get('fecha_entrega'));                
+                $labtra->save(); 
+            }
+            DB::commit();      
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }        
+    } 
+    public function recibirTrabajo(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $rules = [ 'fecha_recepcion'   =>  'required']; 
+          
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                DB::rollback();
+                return response()->json(['errors'=>$validator->errors()]);
+            }    
+
+            foreach ($request->get('detalle') as $det) {
+                $labtra = Laboratoriotrabajo::findOrFail($det); 
+                $labtra->seguimiento = 3;         
+                $labtra->fecha_recepcion =  Globales::FormatFecYMD_hms($request->get('fecha_recepcion'));               
                 $labtra->save(); 
             }
             DB::commit();      
@@ -116,4 +146,5 @@ class LaboratoriotrabajoController extends Controller
             );
         }        
     }    
+
 }

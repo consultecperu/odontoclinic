@@ -21,5 +21,13 @@ class Tipodocumento extends Model
     public function pagos()
     {
         return $this->hasMany('App\Pago');
-    }      
+    }
+    public function liquidacionlaboratorios()
+    {
+        return $this->hasMany('App\Liquidacionlaboratorio');
+    }
+    public function liquidacionlaboratoriofacturas()
+    {
+        return $this->hasMany('App\Liquidacionlaboratoriofactura');
+    }                
 }

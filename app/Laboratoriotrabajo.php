@@ -14,18 +14,30 @@ class Laboratoriotrabajo extends Model
     public function getFechaSeparacionAttribute($date){
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y H:i:s');   //formateo de la fecha para verlo en el frontend
     }
-/*     public function getFechaEnvioAttribute($date){
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y H:i:s');   //formateo de la fecha para verlo en el frontend
+    public function getFechaEnvioAttribute($date){
+        if(!is_null($date)){
+            return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y H:i:s');   //formateo de la fecha para verlo en el frontend
+        }
+        return null;
     }  
     public function getFechaRecepcionAttribute($date){
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y H:i:s');   //formateo de la fecha para verlo en el frontend
+        if(!is_null($date)){
+            return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y H:i:s');   //formateo de la fecha para verlo en el frontend
+        }
+        return null;            
     }  
     public function getFechaEntregaAttribute($date){
-        return Carbon::createFromFormat('Y-m-d', $date)->format('d-m-Y');   //formateo de la fecha para verlo en el frontend
+        if(!is_null($date)){
+            return Carbon::createFromFormat('Y-m-d', $date)->format('d-m-Y');   //formateo de la fecha para verlo en el frontend
+        }
+        return null;             
     }  
     public function getFechaLiquidacionAttribute($date){
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y H:i:s');   //formateo de la fecha para verlo en el frontend
-    } */                       
+        if(!is_null($date)){        
+            return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y H:i:s');   //formateo de la fecha para verlo en el frontend
+        }
+        return null;               
+    }                       
     public function presupuestooperatoriadetalle()
     {
     	return $this->belongsTo('App\Presupuestooperatoriadetalle');
@@ -54,4 +66,8 @@ class Laboratoriotrabajo extends Model
     {
     	return $this->belongsTo('App\User');
     } 
+    public function liquidacionlaboratoriodetalles()
+    {
+        return $this->hasMany('App\Liquidacionlaboratoriodetalle');
+    }       
 }

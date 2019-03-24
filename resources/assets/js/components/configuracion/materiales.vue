@@ -131,19 +131,21 @@ export default {
                 width:'30%',
                 }, 
                 {
-                label: 'Nro Servicios',
-                field: 'numero_servicios',
-                width:'15%',
+                label: 'Nro.Servicios',
+                field: this.fieldFn,
+                tdClass: 'center',
+                thClass: 'center',                 
+                width:'10%',
                 },
                 {
                 label: 'Moneda',
                 field: 'moneda.nombre_moneda',
-                width:'10%',
+                width:'17%',
                 },
                 {
                 label: 'Costo',
                 field: 'costo',
-                width:'10%',
+                width:'8%',
                 },
                 {
                 label: 'Devolucion al Doc',
@@ -296,7 +298,10 @@ export default {
                         });
                     }
                 });
-        }, 
+        },
+        fieldFn(rowObj) {
+            return rowObj.materialservicios.length
+        },          
         cargaServicios: function(id){
             this.$router.push({ name: 'detallematerial', params: { material: id }})
         },        

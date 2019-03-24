@@ -45,5 +45,21 @@ class Moneda extends Model
     public function pagos()
     {
         return $this->hasMany('App\Pago');
-    }             
+    }
+    public function liquidacionlaboratorios()
+    {
+        return $this->hasMany('App\Liquidacionlaboratorio');
+    } 
+    public function liquidacionoperatorias()
+    {
+        return $this->hasMany('App\Liquidacionoperatoria');
+    }    
+    public function liquidacionortodoncias()
+    {
+        return $this->hasMany('App\Liquidacionortodoncia');
+    } 
+    public function transaccionesdoctor()
+    {
+        return $this->hasMany('App\Transacciondoctor');
+    }                            
 }

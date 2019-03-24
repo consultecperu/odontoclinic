@@ -21,7 +21,7 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        $servicios = Servicio::with('gruposervicios','simbologia','serviciodetalle')->orderBy('id','ASC')->where('activo',true)->get();
+        $servicios = Servicio::with('gruposervicios','simbologia','serviciodetalle')->orderBy('nombre_servicio','ASC')->where('activo',true)->get();
         return $servicios; 
     }
 
