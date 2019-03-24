@@ -116,6 +116,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/presupuestosortodonciasdetalles/descargatx/{id}','PresupuestosortodonciaController@descargaTx');              
     Route::put('/presupuestosortodonciasdetalles/descargasaldo/{id}','PresupuestosortodonciaController@descargaSaldo');              
     Route::put('/presupuestosortodonciasdetalles/addadicionales/{id}','PresupuestosortodonciaController@addAdicionales');              
+    Route::get('/presupuestosortodonciasdetalles/liquidacion-doctor/{empleado}/{sede}/{fechacorte}','PresupuestosortodonciaController@liquidacion_doctor');
 
     Route::get('presupuestos-ortodoncias/detalles','PresupuestosortodonciaController@listaDetalles'); 
     // tipo cambios

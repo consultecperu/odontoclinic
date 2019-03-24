@@ -192,5 +192,8 @@ export default {
     }, 
     SET_PRELIQUIDACIONES_DOCTORES_LIST: (state, { list }) => {
         state.preliquidaciondoctor = list
-    }                                                                                                                                                                    
+    },
+    SET_PRELIQUIDACIONES_ORTODONCIAS_DOCTORES_LIST: (state, { list }) => {
+        state.preliquidaciondoctor_ortodoncia = list
+    }                                                                                                                                                                        
 }

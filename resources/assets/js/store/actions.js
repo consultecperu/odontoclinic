@@ -441,5 +441,13 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                                                                                                 
+    }, 
+    LOAD_PRELIQUIDACIONES_ORTODONCIAS_DOCTORES_LIST: function ({ commit } , payload) {  // aseguradoras ligadas a las empresas
+        var url = '/api/presupuestosortodonciasdetalles/liquidacion-doctor/' + payload.empleado_id+'/'+payload.sede_id+'/'+payload.fecha_corte
+        return axios.get(url).then((response) => {
+            commit('SET_PRELIQUIDACIONES_ORTODONCIAS_DOCTORES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                                                                                     
 }

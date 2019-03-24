@@ -69,4 +69,5 @@ export default {
     conceptos:[],
     transacciones_doctor:[],
     preliquidaciondoctor:[],
+    preliquidaciondoctor_ortodoncia:[],
 }

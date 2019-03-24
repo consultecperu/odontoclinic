@@ -10,6 +10,7 @@ use Validator;
 use Carbon\Carbon;
 use App\Presupuestoortodoncia;
 use App\Presupuestoortodonciadetalle;
+use App\TipoCambio;
 use Globales;   // helpers
 
 class PresupuestosortodonciaController extends Controller
@@ -314,5 +315,101 @@ class PresupuestosortodonciaController extends Controller
             );
         } 
     }
+
+    public function liquidacion_doctor($emp,$sed,$fec)
+    {
+        $fec_cor = Carbon::create(substr($fec,4,4), substr($fec,2,2),substr($fec,0,2));
+        // filtramos los presupuestosoperatoriasdetalle por medico , sede y por fecha y que no esten liquidados
+        $datos_ppto = array();
+        //$pptodet = Presupuestooperatoriadetalle::where(['empleado_id' => $emp , 'sede_id' => $sed , 'realizado' => 3,'descargado' => 1,'liquidado' => 0, 'activo' => true])->whereDate('fecha_descarga','<=',$fec);
+        $pptodet = Presupuestoortodonciadetalle::where(['empleado_id' => $emp , 'realizado' => 3,'descargado' => 1,'liquidado' => 0, 'activo' => true])->whereDate('fecha_descarga','<=',$fec_cor)->get();
+        //$pptodet = Presupuestooperatoriadetalle::where('activo',true)->get();
+        //return $pptodet;
+        
+        if(!empty($pptodet)){
+            foreach ($pptodet as $det) {
+                // recorremos los seleccionados
+                $moneda = 's/.';
+                //$costo_total = floatval($det->monto_efectivo) + floatval($det->monto_tarjeta);
+                $tipo_cambio = TipoCambio::where('fecha_registro',date('Y-m-d'));
+                $monto_tarjeta = $det->monto_tarjeta == null ? 0 : floatval($det->monto_tarjeta);
+                $monto_tarjeta = number_format($monto_tarjeta,2);
+                $monto_efectivo = $det->monto_efectivo == null ? 0 : floatval($det->monto_efectivo);
+                $monto_efectivo = number_format($monto_efectivo);
+                $costo_total = floatval($monto_tarjeta) + floatval($monto_efectivo);
+                $costo_total = number_format($costo_total,2);
+
+                if($det->moneda_id == 2){
+                    $costo_total = $costo_total * $tipo_cambio;
+                    $costo_total = number_format($costo_total,2);
+
+                    $monto_tarjeta = floatval($monto_tarjeta) * $tipo_cambio;
+                    $monto_tarjeta = number_format($monto_tarjeta,2);
+
+                    $monto_efectivo = floatval($monto_efectivo) * $tipo_cambio;
+                    $monto_efectivo = number_format($monto_efectivo,2);                    
+                }
+
+                if($det->material_id != null){
+                    $devolucionMat = $det->material->devolucion;
+                }else{
+                    $devolucionMat = false;
+                }
+
+                if($det->monto_tarjeta != null && $det->monto_tarjeta != 0){
+                    $comision_tarjeta = Globales::comision_tarjeta($det->monto_tarjeta,$det->tipopago->comision);
+                }else{
+                    $comision_tarjeta = 0;
+                }
+/*                 if($det->caras != null){
+                    $superf = strlen($det->caras) == 5 ? 'PZA.': $det->caras;
+                }else{
+                    $superf = '';
+                } */
+
+                $sunat = Globales::comision_sunat($costo_total,18,$det->empleado->tipocontrato_id);
+                $lab = $det->monto_lab == null ? 0 : $det->monto_lab;
+                $matDoctor = $det->monto_mat == null ? 0 : $det->monto_mat;
+                $matProveedor = 0.00;
+                $comision = $det->empleado->porcentaje_interno;
+                $descuentos = [$comision_tarjeta,$sunat,$lab,$matDoctor,$matProveedor];
+                $tmpNeto = Globales::pago_doctor($costo_total, $comision , $descuentos, $matDoctor, $devolucionMat); 
+                $neto = number_format($tmpNeto, 2, '.', '');
+                $plan = 'PART.';
+
+                $status = Globales::quitar_servicios_liquidacion($det->tarifario->servicio_id);
+                if($status){
+                    $servicio = array(
+                        'paciente_id' => $det->presupuestoortodoncia->paciente_id,
+                        'presupuestodetalle_id' => $det->id,
+                        'presupuesto_id' => $det->presupuestoortodoncia->id,
+                        'paciente' => $det->presupuestoortodoncia->paciente->nombre_completo,
+                        'nombre_servicio' => $det->descripcion,
+                        //'pieza' =>  $det->diente_id == null ? '' : $det->diente->codigo,
+                        //'superficie' => $superf,
+                        'fecha' => date('d-m-Y', strtotime($det->fecha_descarga)),
+                        'costo' => floatval($costo_total),
+                        'monto_efectivo' => $det->monto_efectivo != null ? $det->monto_efectivo : 0.00,
+                        'monto_tarjeta' => $det->monto_tarjeta != null ? $det->monto_tarjeta : 0.00,
+                        'moneda' => $moneda,
+                        'comision' => (int)$comision,
+                        'plan' => $plan, //'PART',
+                        'comision_tarjeta' => $comision_tarjeta,
+                        'tipo_pago' => Globales::tipo_pago($det->monto_efectivo,$det->monto_tarjeta,$det->tipopago_id),
+                        'sunat' => $sunat,
+                        'laboratorio' => $lab,
+                        'mat_doctor' => $matDoctor,
+                        'mat_proveedor' => 0.00,
+                        'neto' => floatval($neto)
+                    );
+                    array_push($datos_ppto,$servicio);                    
+
+                }
+            }
+        }
+        return $datos_ppto;
+
+    }
+
 
 }
