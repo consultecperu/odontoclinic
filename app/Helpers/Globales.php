@@ -27,7 +27,7 @@ class Globales
 
     public static function FormatFecYMD_hms($valor) 
     {
-        // recibe el formato DD-MM-YYYY
+        // recibe el formato DD-MM-YYYY hh:mm:ss
         $ano = substr($valor,6,4);
         $mes = substr($valor,3,2);
         $dia = substr($valor,0,2);
@@ -121,7 +121,7 @@ class Globales
         return $status;  
     } 
     
-    public static function tipo_pago($efectivo, $tarjeta, $idtarjeta){
+    public static function type_cash($efectivo, $tarjeta, $idtarjeta){
         if($efectivo != 0 & $tarjeta == 0){
             return 'EFEC';
         }elseif($efectivo != 0 & $tarjeta != 0){
@@ -149,5 +149,15 @@ class Globales
                 return 'CMR';
             }
         }
-    }    
+    } 
+    
+    public static function tipo_pago($efectivo, $tarjeta, $idtarjeta){
+        if($efectivo != 0 & $tarjeta == 0){
+            return 1;
+        }elseif($efectivo != 0 & $tarjeta != 0){
+            return 3;
+        }elseif($efectivo == 0 & $tarjeta != 0){
+            return 2;
+        }
+    }     
 }

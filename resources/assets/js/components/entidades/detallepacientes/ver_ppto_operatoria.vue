@@ -1794,7 +1794,7 @@ export default {
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
 
             });
         },
@@ -2366,5 +2366,4 @@ export default {
         text-align:center;
         font-weight: 600;
     }   
-
 </style>

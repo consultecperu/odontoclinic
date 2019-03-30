@@ -127,7 +127,7 @@ class PagoController extends Controller
 
             if($request->get('origen') == 1){       // operatoria
                 if($request->get('tipo') == 1){     // pago directo
-                    Presupuestooperatoria::where('id',$id)->update(['tipopago_id' => $request->get('tipopago_id')]);
+                    Presupuestooperatoria::where('id',$request->get('presupuestooperatoria_id'))->update(['tipopago_id' => $request->get('tipopago_id')]);
                     $valor_monto_tarjeta = $request->get('monto_tarjeta');
                     $valor_monto_efectivo = $request->get('monto_efectivo');                    
                     /*-- actualizar los registros detalle de operatorias --*/
@@ -191,7 +191,7 @@ class PagoController extends Controller
             }
             if($request->get('origen') == 2){       // ortodoncia
                 if($request->get('tipo') == 1){     // pago directo
-                    Presupuestoortodoncia::where('id',$id)->update(['tipopago_id' => $request->get('tipopago_id')]);
+                    Presupuestoortodoncia::where('id',$request->get('presupuestoortodoncia_id'))->update(['tipopago_id' => $request->get('tipopago_id')]);
                     $valor_monto_tarjeta = $request->get('monto_tarjeta');
                     $valor_monto_efectivo = $request->get('monto_efectivo');                    
                     /*-- actualizar los registros detalle de ortodoncias --*/

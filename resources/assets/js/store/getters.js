@@ -149,7 +149,6 @@ export default {
         return state.pagos.filter(pag => pag.presupuestoortodoncia_id == id)
     }, 
     getConceptosAbonos: (state) => {
-        console.log("state",state.conceptos)
         return state.conceptos.filter(con => con.type == 1)
     }, 
     getConceptosDescuentos: (state) => {

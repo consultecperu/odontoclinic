@@ -196,7 +196,7 @@
             </div>                                 
             <div class="row">
                 <div class="col-12">
-                    <p>Total Abonado Soles : <span class="font-weight-bold">{{ PagoTotalSoles}}</span></p>
+                    <p>Total Abonado Soles : <span class="font-weight-bold">{{ PagoTotalSoles }}</span></p>
                     <p>Total Abonado Dolares : <span class="font-weight-bold">{{ PagoTotalDolares}}</span></p>
                 </div> 
             </div>
@@ -240,7 +240,7 @@
                             <!-- Cabecera de los servicios-->
                             <div class="row">
                                 <div class="col-7">
-                                    <p class="form-control-static"><span class="font-weight-bold">Tratamiento : </span>{{ rec.tarifario.servicio.nombre_servicio }}</p>
+                                    <p class="form-control-static"><span class="font-weight-bold">Tratamiento : </span>{{ rec.descripcion }}</p>
                                 </div>
                                 <div class="col-3">
                                     <p class="form-control-static"><span class="font-weight-bold">Estado : </span>
@@ -293,7 +293,7 @@
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.laboratorio.nombre_laboratorio}}</label>
                                                     </div>                                                    
                                                 </div>
-                                                <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
+<!--                                                 <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
                                                     <label for="material" class="text-primary font-weight-bold pt-10">{{ rec.material_id == null ? 'Asignar Material :' : 'Material Asignado :'}}</label>
                                                     <div class="select2-input" v-if="rec.material_id == null">
                                                         <select id="material" name="material" class="col-8 form-control form-control-sm border" v-model="dataServicio.materialservicio_id" @change="cambioMaterial">
@@ -306,7 +306,7 @@
                                                     <div class="text-primary font-weight-bold" v-if="rec.material_id != null">
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.material.nombre_material}}</label>
                                                     </div>                                                     
-                                                </div>
+                                                </div> -->
 
                                             </div>                                            
                                             <button type="button" class="btn btn-danger btn-sm float-right" @click.prevent="numid = 0"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
@@ -1218,7 +1218,7 @@ export default {
             if(this.PagosPresupuestoOrtodonciaById.length > 0){
                 _.each(this.PagosPresupuestoOrtodonciaById, function(value,key){
                     if(value.moneda_id == 1){
-                        totpagos += parseFloat(value.total_soles)
+                        totpagos += parseFloat(value.total)
                     }
                 })
             }
@@ -1407,7 +1407,7 @@ export default {
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
 
             });
         },
@@ -1681,7 +1681,7 @@ export default {
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
 
             });
         },
@@ -1825,7 +1825,7 @@ export default {
                 }).catch(error => {
                     this.isLoading = false
                     this.errors = error.response.data.status;               
-                    this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                    this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')
                 });
         },        
         verRecord(){

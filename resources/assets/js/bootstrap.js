@@ -29,13 +29,10 @@ import PrettyCheckbox from 'pretty-checkbox-vue'
 import contextMenu from 'vue-context-menu'
 import FullCalendar from 'vue-full-calendar'
 import 'fullcalendar/dist/fullcalendar.css'
-/* import {VTable,VPagination} from 'vue-easytable'
-import 'vue-easytable/libs/themes-base/index.css' */
-//import DatatableFactory from 'vuejs-datatable'
-/* import DatatableFactory from 'vuejs-datatable/dist/vuejs-datatable.esm.js' */
 import 'beautify-scrollbar/dist/index.css';
 import 'v2-table/dist/index.css';
 import V2Table from 'v2-table';
+import V3Table from 'v2-table';
 
 window.axios = require('axios');
 
@@ -56,8 +53,5 @@ Vue.component('multiselect', Multiselect)
 Vue.use(PrettyCheckbox)
 Vue.component('context-menu',contextMenu)
 Vue.use(FullCalendar)
-/* Vue.component(VTable.name, VTable)
-Vue.component(VPagination.name, VPagination) */
-/* Vue.use(DatatableFactory) */
-//Vue.use(require('vuejs-datatable'))
-Vue.use(V2Table);
+Vue.use(V2Table)
+Vue.use(V3Table)

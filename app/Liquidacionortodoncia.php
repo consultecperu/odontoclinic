@@ -8,7 +8,7 @@ class Liquidacionortodoncia extends Model
 {
     protected $table = "liquidacionortodoncias";
 
-    protected $fillable = ['id','empleado_id','sede_id','fecha_corte','monto_total_atenciones','monto_total_abonos','monto_total_descuentos','monto_total_liquidar','motivo_eliminacion','tipo','moneda_id','pagado','user_id', 'activo'];
+    protected $fillable = ['id','empleado_id','sede_id','fecha_corte','monto_total_atenciones','monto_total_abonos','monto_total_descuentos','monto_total_liquidar','motivo_eliminacion','tipo','moneda_id','pagado','user_id','fecha_cancelacion', 'activo'];
     
     public function empleado()
     {
@@ -29,5 +29,17 @@ class Liquidacionortodoncia extends Model
     public function transaccionesdoctor()
     {
         return $this->hasMany('App\Transacciondoctor');
-    }       
+    }
+    public function liquidacionortodonciasdetalles()
+    {
+        return $this->hasMany('App\Liquidacionortodonciadetalle');
+    }
+    public function liquidacionortodonciastransacciones()
+    {
+        return $this->hasMany('App\Liquidacionortodonciatransaccione');
+    }  
+    public function liquidacionortodonciasfacturas()
+    {
+        return $this->hasMany('App\Liquidacionortodonciafactura');
+    }              
 }

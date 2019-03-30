@@ -29,5 +29,17 @@ class Liquidacionoperatoria extends Model
     public function transaccionesdoctor()
     {
         return $this->hasMany('App\Transacciondoctor');
-    }      
+    } 
+    public function liquidacionoperatoriasdetalles()
+    {
+        return $this->hasMany('App\Liquidacionoperatoriadetalle');
+    }
+    public function liquidacionoperatoriastransacciones()
+    {
+        return $this->hasMany('App\Liquidacionoperatoriatransaccione');
+    }  
+    public function liquidacionoperatoriasfacturas()
+    {
+        return $this->hasMany('App\Liquidacionoperatoriafactura');
+    }                    
 }

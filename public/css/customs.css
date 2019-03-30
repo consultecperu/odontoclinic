@@ -152,29 +152,56 @@ table.vgt-table td {
   text-align: center !important;
 } 
 /* vue2 table datatable */
-
+.v2-table__cell {
+  border-bottom-color: darkslategray !important;
+  border-left-color: darkslategray !important;
+  border-right-color: darkslategray !important;
+}
+.v2-table__body.v2-table__header-border, .v2-table__footer.v2-table__header-border, .v2-table__header.v2-table__header-border {
+  border-top-color: darkslategray !important;
+}
+.v2-checkbox-item {
+  border-bottom-color: darkslategray !important;
+  margin-bottom: 1px !important;
+  background-color: #44A3D5 !important;
+}
+.v2-table__cell.v2-table__column-cell {
+  background-color: #44A3D5 !important;
+  color:white !important;
+}
+.v2-table__sort-caret.ascending-caret {
+  border-bottom-color: white !important;
+}
+.v2-table__sort-caret.descending-caret {
+  border-top-color: white !important;
+}
+.v2-table__table-container {
+  border-right: 1px solid darkslategray;
+}
 .v2-table-fixed {
   box-shadow: 0 0 0 rgba(0,0,0,.12) !important;   
-  border-left: 1px solid rgba(0,0,0,.12) !important;
-  border-right: 1px solid rgba(0,0,0,.12) !important;
-  height: 260px !important; 
+  border-left: 1px solid darkslategray !important;
+  border-right: 1px solid darkslategray !important;
+  height: 240px !important;
 }
 .v2-table__body.v2-table__border .v2-table__cell, .v2-table__footer.v2-table__border .v2-table__cell, .v2-table__header.v2-table__border .v2-table__cell {
   padding-left: 5px !important;
   padding-right: 10px !important;
 }
 .v2-table__body td .cell, .v2-table__footer td .cell {
-  font-size: 10px !important;
+  font-size: 11px !important;
+  color:darkslategray !important;
 }
 .v2-checkbox-list-wrap.wrap-border {
-  border-bottom: 1px solid #ebeef5 !important;
-  height: 260px !important;
+  height: 240px !important;
+  border-left-color: darkslategray !important;
+  border-top-color: darkslategray !important;
 }
 .v2-table__empty-data.v2-table__empty-border {
   height: 220px !important;
 }
 .beautify-scroll-container {
-  border-bottom: 1px solid #ebeef5 !important;
+  border-bottom: 1px solid darkslategray !important;
 }
 .v2-checkbox-list-wrap.wrap-border {
   border-right: 0 !important;
@@ -185,7 +212,19 @@ table.vgt-table td {
 .v2-table-fixed__right-empty-border {
   border-bottom: 0 !important;
 }
-
+.v2-table__pagination-box .pagination-text-info {
+  font-size: 13px !important;
+  color:red !important;
+  padding-left: 50px !important;
+  /*position: relative !important;*/
+}
+.v2-table__pagination ul .cur-page {
+  border-color: red !important;
+  background-color: red !important;
+}
+.v2-table__pagination-box {
+  margin-top: 10px !important;
+}
 
 /* utilitarios margin padding */
 

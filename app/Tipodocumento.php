@@ -29,5 +29,9 @@ class Tipodocumento extends Model
     public function liquidacionlaboratoriofacturas()
     {
         return $this->hasMany('App\Liquidacionlaboratoriofactura');
-    }                
+    }  
+    public function liquidacionoperatoriasfacturas()
+    {
+        return $this->hasMany('App\Liquidacionoperatoriafactura');
+    }                   
 }

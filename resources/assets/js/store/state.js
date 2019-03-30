@@ -70,4 +70,6 @@ export default {
     transacciones_doctor:[],
     preliquidaciondoctor:[],
     preliquidaciondoctor_ortodoncia:[],
+    liquidacionessedes:[],
+    liquidacionessedes_ortodoncia:[],
 }

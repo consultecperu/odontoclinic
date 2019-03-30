@@ -41,5 +41,9 @@ class Transacciondoctor extends Model
     public function user()
     {
     	return $this->belongsTo('App\User');
-    }    
+    } 
+    public function liquidacionoperatoriastransacciones()
+    {
+        return $this->hasMany('App\Liquidacionoperatoriatransaccione');
+    }        
 }

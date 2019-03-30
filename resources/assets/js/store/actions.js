@@ -449,5 +449,21 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                                                                                                     
+    },
+    LOAD_LIQUIDACIONES_SEDES_LIST: function ({ commit } , payload) {  // 
+        var url = '/api/liquidacionesoperatorias/sedes/' + payload.sede_id+'/'+payload.fecha_desde+'/'+payload.fecha_hasta
+        return axios.get(url).then((response) => {
+            commit('SET_LIQUIDACIONES_SEDES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
+    LOAD_LIQUIDACIONES_SEDES_ORTODONCIA_LIST: function ({ commit } , payload) {  // 
+        var url = '/api/liquidacionesortodoncias/sedes/' + payload.sede_id+'/'+payload.fecha_desde+'/'+payload.fecha_hasta
+        return axios.get(url).then((response) => {
+            commit('SET_LIQUIDACIONES_SEDES_ORTODONCIA_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                                                                                              
 }

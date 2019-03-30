@@ -195,5 +195,11 @@ export default {
     },
     SET_PRELIQUIDACIONES_ORTODONCIAS_DOCTORES_LIST: (state, { list }) => {
         state.preliquidaciondoctor_ortodoncia = list
-    }                                                                                                                                                                        
+    },
+    SET_LIQUIDACIONES_SEDES_LIST: (state, { list }) => {
+        state.liquidacionessedes = list
+    },  
+    SET_LIQUIDACIONES_SEDES_ORTODONCIA_LIST: (state, { list }) => {
+        state.liquidacionessedes_ortodoncia = list
+    },                                                                                                                                                                              
 }

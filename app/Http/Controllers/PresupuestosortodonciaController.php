@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use App\Presupuestoortodoncia;
 use App\Presupuestoortodonciadetalle;
 use App\TipoCambio;
+use App\Tarifario;
+use App\Materialservicio;
 use Globales;   // helpers
 
 class PresupuestosortodonciaController extends Controller
@@ -70,6 +72,19 @@ class PresupuestosortodonciaController extends Controller
             $ppto = new Presupuestoortodoncia($request->all());
             $ppto->fecha_registro = Globales::FormatFecYMD($request->get('fecha_registro'));
             $ppto->save();
+            // sacamos el valor del material si es que lo hay en el tratamiento
+            $tipo_cambio = TipoCambio::where('fecha_registro',date('Y-m-d'))->first();
+            $_tarifa = Tarifario::findOrFail($request->get('tarifario_id')); 
+            $_material = Materialservicio::with('material')->where(['servicio_id' => $_tarifa->servicio_id , 'activo' => true])->first();
+
+            if(!empty($_material)){
+                $_costo_mat = $_material->material->costo;
+                $_id_mat = $_material->material_id;
+                if($_material->material->moneda_id == 2){
+                    $_costo_mat = floatval($_costo_mat) * floatval($tipo_cambio->tipo_cambio);
+                }
+                $_costo_mat = number_format($_costo_mat,2);
+            }
             // Agregamos el detalle de la cuota inicial al presupuesto
             $pptodet = new Presupuestoortodonciadetalle();
             $pptodet->presupuestoortodoncia_id = $ppto->id;            
@@ -106,6 +121,20 @@ class PresupuestosortodonciaController extends Controller
                 $pptodet->numero_cuota = $i;
                 $pptodet->descripcion = "CONTROL MENSUAL ".$i." de ".$request->get('cuotas');
                 $pptodet->user_id = $request->get('user_id');
+                if(!empty($_material)){
+                    if($_costo_mat > 0){
+                        $pptodet->material_id = $_id_mat;
+                        if(floatval($_costo_mat) > floatval($request->get('control_mensual'))){
+                            $pptodet->monto_mat = floatval($request->get('control_mensual'));
+                            $pptodet->monto_mat = number_format($pptodet->monto_mat,2);
+                            $_costo_mat -= floatval($request->get('control_mensual'));
+                        }else{
+                            $pptodet->monto_mat = floatval($_costo_mat);
+                            $pptodet->monto_mat = number_format($pptodet->monto_mat,2);
+                            $_costo_mat = 0.00;                        
+                        }
+                    }
+                }
                 $pptodet->save();
             }
             // Agregamos el detalle de los adicionales del presupuesto
@@ -381,7 +410,7 @@ class PresupuestosortodonciaController extends Controller
                 if($status){
                     $servicio = array(
                         'paciente_id' => $det->presupuestoortodoncia->paciente_id,
-                        'presupuestodetalle_id' => $det->id,
+                        'presupuestoortodonciadetalle_id' => $det->id,
                         'presupuesto_id' => $det->presupuestoortodoncia->id,
                         'paciente' => $det->presupuestoortodoncia->paciente->nombre_completo,
                         'nombre_servicio' => $det->descripcion,
@@ -396,10 +425,11 @@ class PresupuestosortodonciaController extends Controller
                         'plan' => $plan, //'PART',
                         'comision_tarjeta' => $comision_tarjeta,
                         'tipo_pago' => Globales::tipo_pago($det->monto_efectivo,$det->monto_tarjeta,$det->tipopago_id),
+                        'type_cash' => Globales::type_cash($det->monto_efectivo,$det->monto_tarjeta,$det->tipopago_id),    // letras
                         'sunat' => $sunat,
                         'laboratorio' => $lab,
-                        'mat_doctor' => $matDoctor,
-                        'mat_proveedor' => 0.00,
+                        'material_doctor' => $matDoctor,
+                        'material_proveedor' => 0.00,
                         'neto' => floatval($neto)
                     );
                     array_push($datos_ppto,$servicio);                    

@@ -61,5 +61,9 @@ class Presupuestooperatoriadetalle extends Model
     public function laboratoriotrabajos()
     {
         return $this->hasMany('App\Laboratoriotrabajo')->orderBy('id');
-    }       
+    } 
+    public function liquidacionoperatoriasdetalles()
+    {
+        return $this->hasMany('App\Liquidacionoperatoriadetalle');
+    }              
 }

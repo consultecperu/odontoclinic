@@ -19,7 +19,7 @@ class SedeController extends Controller
      */
     public function index()
     {
-        $sedes = Sede::with('ubigeo')->orderBy('id','ASC')->where('activo',true)->get();
+        $sedes = Sede::with('ubigeo','empleados')->orderBy('id','ASC')->where('activo',true)->get();
         return $sedes;  
     }
 

@@ -148,5 +148,13 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('conceptos','ConceptoController');
     // transacciones doctor
     Route::resource('transaccionesdoctor','TransacciondoctorController');
+    // liquidacion operatoria
+    Route::resource('liquidacionoperatoria','LiquidacionoperatoriaController');
+    Route::get('/liquidacionesoperatorias/sedes/{sede}/{fechadesde}/{fechahasta}','LiquidacionoperatoriaController@carga_liquidaciones_sede');
+    Route::put('/liquidacionesoperatorias/facturar/{id}', 'LiquidacionoperatoriaController@facturarLiquidacion');                                                                                                                                             
+    // liquidacion ortodoncia
+    Route::resource('liquidacionortodoncia','LiquidacionortodonciaController');
+    Route::get('/liquidacionesortodoncias/sedes/{sede}/{fechadesde}/{fechahasta}','LiquidacionortodonciaController@carga_liquidaciones_sede');
+    Route::put('/liquidacionesortodoncias/facturar/{id}', 'LiquidacionortodonciaController@facturarLiquidacion');                                                                                                                                             
 
 });

@@ -1494,7 +1494,7 @@ export default {
             this.dataPresupuesto = {
                 fecha_registro:moment().format('DD-MM-YYYY'),
                 paciente_id:this.PacienteById.id,
-                empleado_id:this.PacienteById.empleado_id,
+                empleado_id:this.dataPaciente.empleado_id,
                 moneda_id:'',
                 numero_prespuesto:'',
                 plan_id:this.PacienteById.pacienteplanes.plan_id ,
@@ -1529,7 +1529,7 @@ export default {
                     costo_base:value.costo_base,
                     descuento:value.descuento,
                     tipo_odontograma:1,
-                    empleado_id:self.PacienteById.empleado_id,
+                    empleado_id:self.dataPaciente.empleado_id,
                     realizado:1,
                     descargado:0,
                     pagado:0,

@@ -452,7 +452,7 @@ class PresupuestosoperatoriaController extends Controller
                 if($status){
                     $servicio = array(
                         'paciente_id' => $det->presupuestooperatoria->paciente_id,
-                        'presupuestodetalle_id' => $det->id,
+                        'presupuestooperatoriadetalle_id' => $det->id,
                         'presupuesto_id' => $det->presupuestooperatoria->id,
                         'paciente' => $det->presupuestooperatoria->paciente->nombre_completo,
                         'nombre_servicio' => $det->tarifario->servicio->nombre_servicio,
@@ -466,11 +466,12 @@ class PresupuestosoperatoriaController extends Controller
                         'comision' => (int)$comision,
                         'plan' => $plan, //'PART',
                         'comision_tarjeta' => $comision_tarjeta,
-                        'tipo_pago' => Globales::tipo_pago($det->monto_efectivo,$det->monto_tarjeta,$det->tipopago_id),
+                        'tipo_pago' => Globales::tipo_pago($det->monto_efectivo,$det->monto_tarjeta,$det->tipopago_id),    // entero
+                        'type_cash' => Globales::type_cash($det->monto_efectivo,$det->monto_tarjeta,$det->tipopago_id),    // letras
                         'sunat' => $sunat,
                         'laboratorio' => $lab,
-                        'mat_doctor' => $matDoctor,
-                        'mat_proveedor' => 0.00,
+                        'material_doctor' => $matDoctor,
+                        'material_proveedor' => 0.00,
                         'neto' => floatval($neto)
                     );
                     array_push($datos_ppto,$servicio);                    
