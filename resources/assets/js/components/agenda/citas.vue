@@ -491,8 +491,8 @@ export default {
                 width:'20%',  
                 }                               
             ],
-            events: [],
-            config: {               
+            events: [],           
+            config: {                                           
                 weekends: true,
                 selectable : true,
                 selectHelper: true, 
@@ -510,7 +510,7 @@ export default {
                     month : {
                         eventLimit : 3
                     }
-                },                 
+                },                                
                 selectOverlap: function(event) {
                     return event.rendering !== 'background' || event.especial == 'si';
                 },                                                                                        
