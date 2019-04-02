@@ -318,7 +318,8 @@ export default {
                 });
         },
         CargaServiciosMultident(valor){
-            this.$router.push({ name: 'detallelaboratoriomultident', params: { laboratorioservicio: valor.id , laboratorio : valor.laboratorio.id}})
+            console.log("valor",valor)
+            this.$router.push({ name: 'detallelaboratoriomultident', params: { laboratorioservicio: valor.id , laboratorio : valor.laboratorio.id , servicio: valor.nombre_servicio}})
         },        
         fieldFn(rowObj) {
             return rowObj.servicios.length

@@ -57,10 +57,10 @@
                     <div class="card-header">
                         <div class="card-title">{{ labelAccion }} de Grupo de Servicio</div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body pb-0">
                         <div class="form-group pt-0">
-                            <label for="nombre" class="text-primary font-weight-bold">Nombre de Grupo de Servicio</label>
-                            <input type="text" id="nombre" placeholder="Nombre de Grupo" class="form-control form-control-sm mayusculas" v-model="dataGruposervicio.nombre_gruposervicio">
+                            <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Grupo de Servicio</label>
+                            <input type="text" id="nombre" class="form-control form-control-sm mayusculas" v-model="dataGruposervicio.nombre_gruposervicio">
                         </div>
                         <div class="form-check form-check-inline">
                             <div class="custom-control custom-radio">
@@ -73,9 +73,9 @@
                             </div>
                         </div>                                              
                     </div>                    
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionGrupo" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('gruposervicio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pb-20 pt-20">
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('gruposervicio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionGrupo" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de perfiles -->

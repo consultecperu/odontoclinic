@@ -55,17 +55,17 @@
             <!-- form de registro de cargos -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} de Cargo</div>
+                        <div class="card-title pl-10">{{ labelAccion }} de Cargo</div>
                     </div>
                     <div class="card-body">
                         <div class="form-group pt-0">
-                            <label for="nombre" class="text-primary font-weight-bold pb-10">Nombre de Cargo <span class="required-label">(*)</span></label>
-                            <input type="text" id="nombre" placeholder="Nombre de Cargo" class="form-control form-control-sm border border-primary input-sm mayusculas" v-model="dataCargo.nombre_cargo">
+                            <label for="nombre" class="text-primary font-weight-bold mb-10">Nombre de Cargo <span class="required-label">(*)</span></label>
+                            <input type="text" id="nombre" class="form-control form-control-sm border border-primary input-sm mayusculas" v-model="dataCargo.nombre_cargo">
                         </div>
                     </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionCargo" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('cargo')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pt-20 pb-20">
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('cargo')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionCargo" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de cargos -->
@@ -164,11 +164,11 @@ export default {
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
             this.$modal.hide('cargo');   
-            this.notificaciones('Nuevo cargo creado con exito','la la-thumbs-up','success')       
+            //this.notificaciones('Nuevo cargo creado con exito','la la-thumbs-up','success')       
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
 
             });
         },
@@ -193,11 +193,11 @@ export default {
                 this.errors = [];
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
                 this.$modal.hide('cargo');  
-                this.notificaciones('el Cargo fue actualizado con exito','la la-thumbs-up','success')                  
+                //this.notificaciones('el Cargo fue actualizado con exito','la la-thumbs-up','success')                  
             }).catch(error => {
                 this.errors = error.response.data.status;  
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
-                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')
             });
         },
         processEdit(params){

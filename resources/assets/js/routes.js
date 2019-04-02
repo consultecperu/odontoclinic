@@ -193,7 +193,7 @@ export default [
                 }                  
             },   
             {
-                path: '/detalle-laboratorio/servicios-mtd/:laboratorioservicio/:laboratorio',
+                path: '/detalle-laboratorio/servicios-mtd/:laboratorioservicio/:laboratorio/:servicio',
                 name: 'detallelaboratoriomultident',
                 component: DetallelaboratorioMultident,
                 meta: { requiresAuth: true },

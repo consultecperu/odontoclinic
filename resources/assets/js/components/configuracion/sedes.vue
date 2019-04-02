@@ -51,55 +51,55 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="sede" :width="'60%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="sede" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de laboratorios -->
                 <div class="card mb-0">
                     <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} de Sede</div>
+                        <div class="card-title pl-10">{{ labelAccion }} de Sede</div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body pb-0">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 pr-0">
                                 <div class="form-group pt-0">
-                                    <label for="codigo" class="text-primary font-weight-bold">Codigo <span class="required-label">*</span></label>
-                                    <input type="text" id="codigo" placeholder="Codigo" class="form-control form-control-sm border border-primary" v-model="dataSede.codigo">
+                                    <label for="codigo" class="text-primary font-weight-bold mb-0">Codigo <span class="required-label">*</span></label>
+                                    <input type="text" id="codigo" class="form-control form-control-sm border border-primary" v-model="dataSede.codigo">
                                 </div>
                               
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 pl-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre" class="text-primary font-weight-bold">Nombre de Sede <span class="required-label">*</span></label>
-                                    <input type="text" id="nombre" placeholder="Nombre de Sede" class="form-control form-control-sm mayusculas border border-primary" v-model="dataSede.nombre_sede" required />
+                                    <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Sede <span class="required-label">*</span></label>
+                                    <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataSede.nombre_sede" required />
                                 </div>                                  
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 pr-0">
                                 <div class="form-group pt-0">
-                                    <label for="telefono" class="text-primary font-weight-bold">Teléfono </label>
-                                    <input type="text" id="telefono" placeholder="Teléfono" class="form-control form-control-sm border-primary" v-model="dataSede.telefono" required />
+                                    <label for="telefono" class="text-primary font-weight-bold mb-0">Teléfono </label>
+                                    <input type="text" id="telefono" class="form-control form-control-sm border-primary" v-model="dataSede.telefono" required />
                                 </div>
                               
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 pl-0">
                                 <div class="form-group pt-0">
-                                    <label for="celular" class="text-primary font-weight-bold">Celular </label>
-                                    <input type="text" id="celular" placeholder="Celular" class="form-control form-control-sm border-primary" v-model="dataSede.celular" required />
+                                    <label for="celular" class="text-primary font-weight-bold mb-0">Celular </label>
+                                    <input type="text" id="celular" class="form-control form-control-sm border-primary" v-model="dataSede.celular" required />
                                 </div>                                  
                             </div>
                         </div> 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 pr-0">
                                 <div class="form-group pt-0">
-                                    <label for="teladicional" class="text-primary font-weight-bold">Teléfono Adicional</label>
-                                    <input type="text" id="teladicional" placeholder="Teléfono adicional" class="form-control form-control-sm border-primary" v-model="dataSede.telef_adicional" />
+                                    <label for="teladicional" class="text-primary font-weight-bold mb-0">Teléfono Adicional</label>
+                                    <input type="text" id="teladicional" class="form-control form-control-sm border-primary" v-model="dataSede.telef_adicional" />
                                 </div>                              
                             </div>
                         </div>   
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 pr-0">
                                 <div class="form-group pt-0">
-                                    <label class="text-primary font-weight-bold">Departamento <span class="required-label"> *</span></label>
+                                    <label class="text-primary font-weight-bold mb-0">Departamento <span class="required-label"> *</span></label>
                                     <div class="select2-input">
                                         <select id="basic" name="basic" class="form-control form-control-sm border-primary" v-model="coddepa" @change="onchangeDepa">
                                             <option value="">--Seleccione--</option>
@@ -110,9 +110,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 pr-0 pl-0">
                                 <div class="form-group pt-0">
-                                    <label class="text-primary font-weight-bold">Provincia <span class="required-label"> *</span></label>
+                                    <label class="text-primary font-weight-bold mb-0">Provincia <span class="required-label"> *</span></label>
                                     <div class="select2-input">
                                         <select id="basic2" name="basic" class="form-control form-control-sm border-primary" v-model="codprov" @change="onchangeProv">
                                             <option value="">--Seleccione--</option>
@@ -123,9 +123,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 pl-0">
                                 <div class="form-group pt-0">
-                                    <label class="text-primary font-weight-bold">Distrito <span class="required-label"> *</span></label>
+                                    <label class="text-primary font-weight-bold mb-0">Distrito <span class="required-label"> *</span></label>
                                     <div class="select2-input">
                                         <select id="basic3" name="basic" class="form-control form-control-sm border-primary" v-model="dataSede.ubigeo_id" @change="onchangeDist">
                                             <option value="">--Seleccione--</option>
@@ -139,21 +139,21 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div class="form-group pt-0">
+                                <div class="form-group pt-0 mb-0">
                                     <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
-                                    <input type="text" id="direccion" placeholder="Dirección" class="form-control form-control-sm border border-primary" v-model="dataSede.direccion" />
+                                    <input type="text" id="direccion" class="form-control form-control-sm border border-primary" v-model="dataSede.direccion" />
                                 </div>                              
                             </div>                        
                         </div> 
                         <div class="row">
                             <div class="col-6">
-                                <div class="form-group pt-0">
+                                <div class="form-group pt-0 mb-0">
                                     <label for="tipoplan" class="text-primary font-weight-bold">Tipo Plan por defecto</label>
                                     <p class="form-control-static mt-5 mb-0" >PLAN PARTICULAR</p>
                                 </div>                                              
                             </div> 
                             <div class="col-6">
-                                <div class="form-group pt-0">
+                                <div class="form-group pt-0 mb-0">
                                     <label for="plan" class="text-primary font-weight-bold">Elige el Plan <span class="required-label"> *</span></label>
                                     <select class="form-control form-control-sm" id="plan" v-model="dataSede.plan_id">
                                         <option value="">-- Seleccione --</option>
@@ -166,9 +166,9 @@
                         </div>                                                                    
 
                     </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionSede" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('sede')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pt-20 pb-20">
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('sede')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionSede" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de laboratorios -->
@@ -330,11 +330,11 @@ export default {
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')                  
             this.$modal.hide('sede');
-            this.notificaciones('Nueva Sede creado con exito','la la-thumbs-up','success')            
+            //this.notificaciones('Nueva Sede creado con exito','la la-thumbs-up','success')            
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')                     
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')                     
             });
         },
         updateSede: function(){
@@ -362,7 +362,7 @@ export default {
             }).catch(error => {
                 this.errors = error.response.data.status;
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
-                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')                                             
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')                                             
             });
         },
         processEdit(params){

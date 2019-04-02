@@ -127,7 +127,7 @@
                     <div class="card-header">
                         <div class="card-title">{{ labelAccion }} de Servicio</div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body pt-0">
                         <div class="form-group">
                             <label for="nombre" class="text-primary font-weight-bold">Nombre de Servicio</label>
                             <input type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataServicio.nombre_servicio">
@@ -190,6 +190,7 @@
                                 <label for="basic" class="text-primary font-weight-bold pb-10">Simbología :</label>
                                 <div class="select2-input">
                                     <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.simbologia_id" @change="MuestraImagen(dataServicio.simbologia_id)">
+                                        <option value="">-- seleccione --</option>
                                         <option v-for="simbolo in simbologias" :value="simbolo.id" :key="simbolo.id">
                                             {{ simbolo.nombre_simbologia}}
                                         </option>
@@ -215,9 +216,9 @@
                             </div>   
                         </div>                 
                     </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionServicio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('servicio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pt-20 pb-20">
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('servicio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionServicio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de servicio -->
