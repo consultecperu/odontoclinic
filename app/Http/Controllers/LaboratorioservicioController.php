@@ -9,6 +9,7 @@ use Exception;
 use Validator;
 use Carbon\Carbon;
 use App\Laboratorioservicio;
+use App\Servicio;
 
 class LaboratorioservicioController extends Controller
 {
@@ -61,10 +62,20 @@ class LaboratorioservicioController extends Controller
                     return response()->json(['errors'=>['Nombre de servicio' => 'Ya existe un servicio con estos datos']]);
                 }
             }        
-    
+            /*-- validacion del Nombre de servicio--*/
+            if($request->get('servicio_id')){   
+                $labid = $request->get('laboratorio_id');
+                $serid = $request->get('servicio_id');   
+                $conLS = Laboratorioservicio::where('laboratorio_id',$labid)->where('servicio_id',$serid)->count();
+                if($conLS > 0){
+                    return response()->json(['errors'=>['Servicio' => 'Ya existe un servicio registrado con estos datos']]);
+                }
+            }     
             $labservicio = new Laboratorioservicio($request->all());
             $labservicio->nombre_servicio = Str::upper($labservicio->nombre_servicio);
             $labservicio->save();
+
+            Servicio::where('id',$request->get('servicio_id'))->update(['laboratorio' => 1]);
     
             DB::commit();        
             return;

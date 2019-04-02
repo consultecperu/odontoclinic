@@ -293,7 +293,7 @@
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.laboratorio.nombre_laboratorio}}</label>
                                                     </div>                                                    
                                                 </div>
-                                                <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
+<!--                                                 <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
                                                     <label for="material" class="text-primary font-weight-bold pt-10">{{ rec.material_id == null ? 'Asignar Material :' : 'Material Asignado :'}}</label>
                                                     <div class="select2-input" v-if="rec.material_id == null">
                                                         <select id="material" name="material" class="col-8 form-control form-control-sm border" v-model="dataServicio.materialservicio_id" @change="cambioMaterial">
@@ -306,7 +306,7 @@
                                                     <div class="text-primary font-weight-bold" v-if="rec.material_id != null">
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.material.nombre_material}}</label>
                                                     </div>                                                     
-                                                </div>
+                                                </div> -->
 
                                             </div>
                                             <button type="button" class="btn btn-danger btn-sm float-right" @click.prevent="numid = 0"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
@@ -1465,6 +1465,11 @@ export default {
             this.$modal.show('record_atencion')
         },
         GrabarRecord(param){
+            if(param.tarifario.servicio.materialservicios.length > 0){
+                let mat = this.materialservicios.find(mat => mat.id == param.tarifario.servicio.materialservicios[0].material_id)
+                this.dataServicio.material_id = mat.material_id
+                this.dataServicio.monto_mat = mat.material.costo
+            }
             this.dataRecord = {
                 presupuestooperatoriadetalle_id:param.id,
                 fase_id:'',
@@ -1486,7 +1491,6 @@ export default {
                 tipo:1,
                 liquidable:1                         
             }
-
             var url = '/api/recordatencion-operatorias';
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.post(url, this.dataRecord).then(response => {
@@ -2094,13 +2098,13 @@ export default {
             let lab = this.laboratorioservicios.find(la => la.id == this.dataServicio.laboratorioservicio_id)
             this.dataServicio.laboratorio_id = lab.laboratorio_id
             this.dataServicio.monto_lab = lab.costo_lab
-            console.log('servicios',this.dataServicio)
+
         },
         cambioMaterial(){
             let mat = this.materialservicios.find(mat => mat.id == this.dataServicio.materialservicio_id)
             this.dataServicio.material_id = mat.material_id
             this.dataServicio.monto_mat = mat.material.costo
-            console.log('servicios',this.dataServicio)
+
         },        
         AgregaEvolucion(param){
             this.numid = param

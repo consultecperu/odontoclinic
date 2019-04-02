@@ -131,16 +131,16 @@ export default {
     },
     computed: {
         ...mapState(['servicios','user_system','materialservicios','materiales']),
-        detalle_material: function(){
+        detalle_material(){
             if(this.materialservicios.length > 0){
                 return this.materialservicios.filter((mat) => mat.material_id == this.$route.params.material)
             }
             return []
         },
-        material: function(){
+        material(){
             return this.materiales.find((mat) => mat.id == this.$route.params.material)
         },
-        servicio_materiales: function(){
+        servicio_materiales(){
             return this.servicios.filter((ser) => ser.materiales == 1)
         }       
     },

@@ -1025,6 +1025,7 @@ export default {
 
         },
         selectServicio(param){
+            console.log("servicios",param)
             let _letras = ''   
             let self = this 
             let datalist = []                  

@@ -19,7 +19,7 @@ class TarifarioController extends Controller
      */
     public function index()
     {
-        $tarifarios = Tarifario::with('moneda','servicio','sede','plan')->orderBy('id','ASC')->where('activo',true)->get();
+        $tarifarios = Tarifario::with('moneda','servicio','sede','plan','servicio.materialservicios')->orderBy('id','ASC')->where('activo',true)->get();
         return $tarifarios;       
     }
 

@@ -9,6 +9,7 @@ use Exception;
 use Validator;
 use Carbon\Carbon;
 use App\Materialservicio;
+use App\Servicio;
 
 class MaterialservicioController extends Controller
 {
@@ -65,6 +66,8 @@ class MaterialservicioController extends Controller
     
             $matservicio = new Materialservicio($request->all());
             $matservicio->save();
+
+            Servicio::where('id',$request->get('servicio_id'))->update(['materiales' => 1]);
     
             DB::commit();        
             return;
