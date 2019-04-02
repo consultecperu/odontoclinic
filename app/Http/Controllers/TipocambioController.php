@@ -62,7 +62,7 @@ class TipocambioController extends Controller
             }
             /*-- validacion del Nombre de empleado--*/
             if($request->get('fecha_registro')){       
-                $fec = TipoCambio::where('fecha_registro',$request->get('fecha_registro'))->count();
+                $fec = TipoCambio::where('fecha_registro',Globales::FormatFecYMD($request->get('fecha_registro')))->count();
                 if($fec > 0){
                     return response()->json(['errors'=>['Fecha de Registro' => 'Ya existe un tipo de cambio para la fecha de hoy']]);
                 }
