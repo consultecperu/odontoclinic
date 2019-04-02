@@ -9,6 +9,7 @@ use Exception;
 use Validator;
 use Carbon\Carbon;
 use App\TipoCambio;
+use Globales;
 
 class TipocambioController extends Controller
 {
@@ -50,7 +51,11 @@ class TipocambioController extends Controller
                       'monedaa_id'      => 'required',
                       'tipo_cambio'     => 'required'
                       ];
-    
+
+            if($request->has('fecha_registro')){
+                $rules = array_add($rules, 'fecha_registro', 'date_format:d-m-Y');
+            }    
+            
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
@@ -64,6 +69,7 @@ class TipocambioController extends Controller
             }        
     
             $tipocambio = new TipoCambio($request->all());
+            $tipocambio->fecha_registro = Globales::FormatFecYMD($request->get('fecha_registro'));
             $tipocambio->save();
     
             DB::commit();        
