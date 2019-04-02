@@ -15,7 +15,7 @@ use App\Liquidacionoperatoriatransaccione;
 use App\Liquidacionoperatoriafactura;
 use App\Presupuestooperatoriadetalle;
 use App\Transacciondoctor;
-use App\Tipocambio;
+use App\TipoCambio;
 use Globales;   // helpers
 
 class LiquidacionoperatoriaController extends Controller
