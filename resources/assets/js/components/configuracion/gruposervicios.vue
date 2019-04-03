@@ -58,7 +58,7 @@
                         <div class="card-title">{{ labelAccion }} de Grupo de Servicio</div>
                     </div>
                     <div class="card-body pb-0">
-                        <div class="form-group pt-0">
+                        <div class="form-group pt-0 pb-0">
                             <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Grupo de Servicio</label>
                             <input type="text" id="nombre" class="form-control form-control-sm mayusculas" v-model="dataGruposervicio.nombre_gruposervicio">
                         </div>

@@ -9,9 +9,10 @@
         <div class="col">
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
-                <div class="card-header pr-0"> 
+                <div class="card-header pr-0 pt-0"> 
 				    <div class="card-category">Laboratorio :</div>                    
                     <div class="card-title">{{ laboratorio.nombre_laboratorio}} </div> 
+                    <div class="card-category mt-0 pb-10">Servicio :<span class="font-weight-bold">{{ nombre_servicio }}</span></div>
                     <div class="col border-top pt-20 pl-0">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-add"></i></span> Agregar Servicio Multident</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
@@ -143,7 +144,11 @@ export default {
         },
         laboratorio(){
             return this.laboratorios.find((lab) => lab.id == this.$route.params.laboratorio)
-        }        
+        },
+        nombre_servicio() {
+            let nomser = this.laboratorioservicios.find((labser) => labser.id == this.$route.params.laboratorioservicio)
+            return nomser.nombre_servicio
+        }       
     },
     methods: {
         StatusForm: function(eshow,eclass,elabel){

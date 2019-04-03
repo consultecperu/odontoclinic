@@ -129,7 +129,7 @@
                     </div>
                     <div class="card-body pt-0">
                         <div class="form-group">
-                            <label for="nombre" class="text-primary font-weight-bold">Nombre de Servicio</label>
+                            <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Servicio</label>
                             <input type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataServicio.nombre_servicio">
                         </div>
                         <div class="form-check pt-0 pb-0" v-if="!showGroups">
@@ -175,8 +175,8 @@
                             </div>                                                                                     
                         </div>                                                
                         <div class="row pl-20" v-if="showGroups">
-                            <span class="col-12 pb-10">
-                                <label class="text-primary font-weight-bold">Grupos :</label>
+                            <span class="col-12 pb-0 pl-10">
+                                <label class="text-primary font-weight-bold mb-0">Grupos :</label>
                             </span>
                             <div class="form-check col-6 pt-0 pb-0" v-for="grupo in gruposervicios" :key="grupo.id" >
                                 <label class="form-check-label">
@@ -187,7 +187,7 @@
                         </div>
                         <div class="row pl-20 pb-20 pt-20">
                             <div class="col-8 pl-5">
-                                <label for="basic" class="text-primary font-weight-bold pb-10">Simbología :</label>
+                                <label for="basic" class="text-primary font-weight-bold pb-0">Simbología :</label>
                                 <div class="select2-input">
                                     <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.simbologia_id" @change="MuestraImagen(dataServicio.simbologia_id)">
                                         <option value="">-- seleccione --</option>
@@ -214,7 +214,15 @@
                                     <span class="form-check-sign text-primary font-weight-bold">Aplica Materiales</span>
                                 </label>
                             </div>   
-                        </div>                 
+                        </div> 
+                        <div class="row pl-20">
+                            <div class="form-check col-6 pb-0" >
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" v-model="dataServicio.pago_doctor" true-value=1 false-value=0 />
+                                    <span class="form-check-sign text-primary font-weight-bold">Liquidar al Doctor</span>
+                                </label>
+                            </div>                            
+                        </div>                
                     </div>
                     <div class="card-action pt-20 pb-20">
                         <button class="btn btn-danger float-right ml-10" @click="$modal.hide('servicio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
@@ -302,6 +310,7 @@ export default {
                 parentid_ortodoncia:'',
                 laboratorio:'',
                 materiales:'',
+                pago_doctor:'',
                 exodoncia:'',
                 control_ortodoncia:'',      //  serviciodetalles
                 cuota_inicial:'',           //  serviciodetalles
@@ -339,6 +348,7 @@ export default {
                 laboratorio: 0,
                 materiales: 0 , 
                 exodoncia: 0,
+                pago_doctor: 0,
                 control_ortodoncia: 0,      //  serviciodetalles
                 cuota_inicial: 0,           //  serviciodetalles
                 ortofacil: 0,               //  serviciodetalles  
@@ -361,6 +371,7 @@ export default {
                 laboratorio:0,
                 materiales:0 , 
                 exodoncia:0,
+                pago_doctor:0,
                 control_ortodoncia:0,      //  serviciodetalles
                 cuota_inicial:0,           //  serviciodetalles
                 ortofacil:0 ,               //  serviciodetalles   
@@ -448,7 +459,8 @@ export default {
                 tipo:dataser.tipo,
                 parentid_ortodoncia:dataser.parentid_ortodoncia,
                 laboratorio:dataser.laboratorio,
-                materiales:dataser.materiales ,               
+                materiales:dataser.materiales , 
+                pago_doctor:dataser.pago_doctor,              
                 user_id: dataser.user_id                                                         
             }  
             if(dataser.tipo === 2){

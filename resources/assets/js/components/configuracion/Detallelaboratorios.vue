@@ -9,7 +9,7 @@
         <div class="col">
             <!-- START DEFAULT DATATABLE -->
             <div class="card text-white bg-white mb-3">
-                <div class="card-header pr-0"> 
+                <div class="card-header pr-0 pt-0"> 
 				    <div class="card-category">Laboratorio :</div>                    
                     <div class="card-title">{{ laboratorio.nombre_laboratorio}} </div> 
                     <div class="col border-top pt-20 pl-0">
@@ -319,7 +319,7 @@ export default {
         },
         CargaServiciosMultident(valor){
             console.log("valor",valor)
-            this.$router.push({ name: 'detallelaboratoriomultident', params: { laboratorioservicio: valor.id , laboratorio : valor.laboratorio.id , servicio: valor.nombre_servicio}})
+            this.$router.push({ name: 'detallelaboratoriomultident', params: { laboratorioservicio: valor.id , laboratorio : valor.laboratorio.id }})
         },        
         fieldFn(rowObj) {
             return rowObj.servicios.length

@@ -8,7 +8,7 @@ class Servicio extends Model
 {
     protected $table = "servicios";
 
-    protected $fillable = ['id', 'nombre_servicio', 'user_id', 'simbologia_id','tipo','parentid_ortodoncia','laboratorio','materiales','exodoncia','activo'];
+    protected $fillable = ['id', 'nombre_servicio', 'user_id', 'simbologia_id','tipo','parentid_ortodoncia','laboratorio','materiales','exodoncia','pago_doctor','activo'];
     
     public function user()
     {

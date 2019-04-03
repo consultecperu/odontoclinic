@@ -54,7 +54,7 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="plan" :width="'45%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="plan" :width="'40%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de planes -->
                 <div class="card mb-0">
                     <div class="card-header">
@@ -64,28 +64,27 @@
                         <div class="row">
                             <div class="col-8 pr-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre" class="text-primary font-weight-bold">Nombre de Plan <span class="required-label"> *</span></label>
+                                    <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Plan <span class="required-label"> *</span></label>
                                     <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataPlan.descripcion">
                                 </div>                            
                             </div>
                             <div class="col-4 pl-0">
                                 <div class="form-group pt-0">
-                                    <label for="nombre" class="text-primary font-weight-bold">Abreviatura <span class="required-label"> *</span></label>
+                                    <label for="nombre" class="text-primary font-weight-bold mb-0">Abreviatura <span class="required-label"> *</span></label>
                                     <input type="text" id="abreviatura" class="form-control form-control-sm mayusculas border border-primary" v-model="dataPlan.abreviatura">
                                 </div>                            
                             </div>
                         </div>
 
                         <div class="form-group pt-0">
-                            <label for="comment" class="text-primary font-weight-bold">Comentario</label>
+                            <label for="comment" class="text-primary font-weight-bold mb-0">Comentario</label>
                             <textarea class="form-control form-control-sm border border-primary" id="comment" rows="4" v-model="dataPlan.comentario">
-
                             </textarea>
                         </div>                        
                     </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionPlan" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('plan')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pb-20 pt-20">
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('plan')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionPlan" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de planes -->
@@ -195,7 +194,7 @@ export default {
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
 
             });
         },
@@ -224,7 +223,7 @@ export default {
             }).catch(error => {
                 this.errors = error.response.data.status;  
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
-                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')
             });
         },
         processEdit(params){

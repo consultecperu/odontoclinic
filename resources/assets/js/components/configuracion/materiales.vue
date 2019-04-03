@@ -59,40 +59,54 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="material" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="material" :width="'35%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de materiales -->
                 <div class="card mb-0">
                     <div class="card-header">
                         <div class="card-title">{{ labelAccion }} de Material</div>
                     </div>
-                    <div class="card-body">                   
-                        <div class="form-group pt0">
-                            <label for="opcion" class="text-primary font-weight-bold">Nombre de Material <span class="required-label">*</span></label>
-                            <input type="text" id="opcion" placeholder="Nombre" class="form-control form-control-sm mayusculas" v-model="dataMaterial.nombre_material">
-                        </div>
-                        <div class="form-group pt-0 pb-0">
-                            <label for="exampleFormControlSelect1" class="text-primary font-weight-bold">Seleccione la Moneda <span class="required-label">*</span></label>
-                            <select v-model="dataMaterial.moneda_id" class="form-control form-control-sm" id="exampleFormControlSelect1">
-                            <option v-for="moneda in monedas" :value="moneda.id" :key="moneda.id">
-                                {{ moneda.nombre_moneda }}
-                            </option>
-                            </select>                            
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group pt-0">
+                                    <label for="opcion" class="text-primary font-weight-bold mb-0">Nombre de Material <span class="required-label">*</span></label>
+                                    <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataMaterial.nombre_material">
+                                </div>  
+                            </div>                      
+                        </div>                  
+                        <div class="row">
+                            <div class="col-6 pr-0">
+                                <div class="form-group pt-0 pb-0">
+                                    <label for="exampleFormControlSelect1" class="text-primary font-weight-bold mb-0">Seleccione la Moneda <span class="required-label">*</span></label>
+                                    <select v-model="dataMaterial.moneda_id" class="form-control form-control-sm border border-primary" id="exampleFormControlSelect1">
+                                    <option v-for="moneda in monedas" :value="moneda.id" :key="moneda.id">
+                                        {{ moneda.nombre_moneda }}
+                                    </option>
+                                    </select>                            
+                                </div>
+                            </div>
+                            <div class="col-6 pl-0">
+                                <div class="form-group pb-0 pt-0">
+                                    <label for="costo" class="text-primary font-weight-bold mb-0">Costo</label>
+                                    <input type="number" step="0.01" id="costo" class="form-control form-control-sm border border-primary" v-model="dataMaterial.costo">
+                                </div>
+                            </div>
                         </div>                        
-                        <div class="form-group pb-0">
-                            <label for="costo" class="text-primary font-weight-bold">Costo</label>
-                            <input type="text" id="costo" placeholder="Costo" class="form-control form-control-sm" v-model="dataMaterial.costo">
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" v-model="dataMaterial.devolucion" true-value=true false-value=false />
-                                <span class="form-check-sign text-primary font-weight-bold">Devolución al Doctor</span><span class="required-label"> *</span>
-                            </label>
-                        </div>                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="" v-model="dataMaterial.devolucion" true-value=true false-value=false />
+                                        <span class="form-check-sign text-primary font-weight-bold">Devolución al Doctor</span><span class="required-label"> *</span>
+                                    </label>
+                                </div> 
+                            </div>
 
+                        </div>
                     </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionMaterial" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('material')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pb-20 pt-20">
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('material')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionMaterial" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de materiales -->

@@ -61,14 +61,14 @@
                         <div class="card-title">{{ labelAccion }} de Laboratorio</div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group pt-0">
-                            <label for="nombre" class="text-primary font-weight-bold">Nombre de Laboratorio <span class="required-label"> *</span></label>
-                            <input type="text" id="nombre" placeholder="Nombre de laboratorio" class="form-control form-control-sm mayusculas border border-primary" v-model="dataLaboratorio.nombre_laboratorio">
+                        <div class="form-group pt-0 pb-0">
+                            <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Laboratorio <span class="required-label"> *</span></label>
+                            <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataLaboratorio.nombre_laboratorio">
                         </div>
                     </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionLaboratorio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('laboratorio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pb-20 pt-20">
+                        <button class="btn btn-danger ml-10 float-right" @click="$modal.hide('laboratorio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionLaboratorio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de laboratorios -->
