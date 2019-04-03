@@ -61,60 +61,60 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="razon" class="text-primary font-weight-bold">Razón Social <span class="required-label">*</span></label>
-                                    <input type="text" id="razon" placeholder="Razón social" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.nombre_empresa" required />
+                                    <label for="razon" class="text-primary font-weight-bold mb-0">Razón Social <span class="required-label">*</span></label>
+                                    <input type="text" id="razon" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.nombre_empresa" required />
                                 </div>
                               
                             </div>
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="ruc" class="text-primary font-weight-bold">RUC <span class="required-label">*</span></label>
-                                    <input type="text" id="ruc" placeholder="RUC" class="form-control form-control-sm border border-primary" maxlength="11" v-model="dataEmpresa.ruc" required />
+                                    <label for="ruc" class="text-primary font-weight-bold mb-0">RUC <span class="required-label">*</span></label>
+                                    <input type="text" id="ruc" class="form-control form-control-sm border border-primary" maxlength="11" v-model="dataEmpresa.ruc" required />
                                 </div>                                  
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="telefono" class="text-primary font-weight-bold">Teléfono </label>
-                                    <input type="text" id="telefono" placeholder="Teléfono" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telefono" required />
+                                    <label for="telefono" class="text-primary font-weight-bold mb-0">Teléfono </label>
+                                    <input type="text" id="telefono" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telefono" required />
                                 </div>
                               
                             </div>
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="celular" class="text-primary font-weight-bold">Celular </label>
-                                    <input type="text" id="celular" placeholder="Celular" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.celular" required />
+                                    <label for="celular" class="text-primary font-weight-bold mb-0">Celular </label>
+                                    <input type="text" id="celular" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.celular" required />
                                 </div>                                  
                             </div>
                         </div> 
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="email" class="text-primary font-weight-bold">Email </label>
-                                    <input type="email" id="email" placeholder="Email" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.email" />
+                                    <label for="email" class="text-primary font-weight-bold mb-0">Email </label>
+                                    <input type="email" id="email" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.email" />
                                 </div>
                               
                             </div>
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="teladicional" class="text-primary font-weight-bold">Telef. Adicional </label>
-                                    <input type="text" id="teladicional" placeholder="Teléfono adicional" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telef_adicional" />
+                                    <label for="teladicional" class="text-primary font-weight-bold mb-0">Telef. Adicional </label>
+                                    <input type="text" id="teladicional" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telef_adicional" />
                                 </div>                                  
                             </div>
                         </div>                        
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group pt-0">
-                                    <label for="representante" class="text-primary font-weight-bold">Representante Legal <span class="required-label">*</span></label>
-                                    <input type="text" id="representante" placeholder="Representante" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.representante_legal" />
+                                    <label for="representante" class="text-primary font-weight-bold mb-0">Representante Legal <span class="required-label">*</span></label>
+                                    <input type="text" id="representante" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.representante_legal" />
                                 </div>                              
                             </div>
                         </div>   
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 pr-0">
                                 <div class="form-group pt-0">
-                                    <label class="text-primary font-weight-bold">Departamento <span class="required-label">*</span></label>
+                                    <label class="text-primary font-weight-bold mb-0">Departamento <span class="required-label">*</span></label>
                                     <div class="select2-input">
                                         <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="coddepa" @change="onchangeDepa">
                                             <option value="">--Seleccione--</option>
@@ -125,9 +125,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 pr-0 pl-0">
                                 <div class="form-group pt-0">
-                                    <label class="text-primary font-weight-bold">Provincia <span class="required-label">*</span></label>
+                                    <label class="text-primary font-weight-bold mb-0">Provincia <span class="required-label">*</span></label>
                                     <div class="select2-input">
                                         <select id="basic2" name="basic" class="form-control form-control-sm border border-primary" v-model="codprov" @change="onchangeProv">
                                             <option value="">--Seleccione--</option>
@@ -138,9 +138,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 pl-0">
                                 <div class="form-group pt-0">
-                                    <label class="text-primary font-weight-bold">Distrito <span class="required-label">*</span></label>
+                                    <label class="text-primary font-weight-bold mb-0">Distrito <span class="required-label">*</span></label>
                                     <div class="select2-input">
                                         <select id="basic3" name="basic" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.ubigeo_id" @change="onchangeDist">
                                             <option value="">--Seleccione--</option>
@@ -155,7 +155,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group pt-0">
-                                    <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
+                                    <label for="direccion" class="text-primary font-weight-bold mb-0">Dirección</label>
                                     <input type="text" id="direccion" placeholder="Dirección" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.direccion" />
                                 </div>                              
                             </div>                        
@@ -163,8 +163,8 @@
 
                     </div>
                     <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionEmpresa" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('empresa')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('empresa')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionEmpresa" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de laboratorios -->
