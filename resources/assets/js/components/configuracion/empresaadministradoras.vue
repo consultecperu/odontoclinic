@@ -156,7 +156,7 @@
                             <div class="col-12">
                                 <div class="form-group pt-0">
                                     <label for="direccion" class="text-primary font-weight-bold mb-0">Dirección</label>
-                                    <input type="text" id="direccion" placeholder="Dirección" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.direccion" />
+                                    <input type="text" id="direccion" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.direccion" />
                                 </div>                              
                             </div>                        
                         </div>                                             

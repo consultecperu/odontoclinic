@@ -342,4 +342,9 @@ export default {
     .vld-overlay.is-full-page {
         z-index: 99999;
     }
+
+    .table td {
+        padding: 5px 10px !important;
+    }
+
 </style>

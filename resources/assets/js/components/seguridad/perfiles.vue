@@ -64,19 +64,19 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group pt-0">
-                            <label for="nombre" class="text-primary font-weight-bold">Nombre de Perfil <span class="required-label"> *</span></label>
+                            <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Perfil <span class="required-label"> *</span></label>
                             <input type="text" id="nombre" placeholder="Nombre de Perfil" class="form-control input-sm mayusculas border border-primary" v-model="dataPerfil.nombre_perfil">
                         </div>
                         <div class="form-group pt-0">
-                            <label for="descripcion" class="text-primary font-weight-bold">Descripcion</label>
+                            <label for="descripcion" class="text-primary font-weight-bold mb-0">Descripcion <span class="required-label"> *</span></label>
                             <textarea class="form-control input-sm border border-primary" id="descripcion" rows="2" v-model="dataPerfil.descripcion">
 
                             </textarea>
                         </div>
                     </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionPerfil" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('perfil')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pb-20 pt-20">
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('perfil')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionPerfil" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de perfiles -->
@@ -123,8 +123,8 @@
                         </div>                        
                     </div>
                     <div class="card-action pb-10 pt-10">
-                        <button class="btn btn-primary" @click.prevent="updateModulos" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('modulos')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('modulos')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="updateModulos" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>                    
                 </div>
             <!-- /. form de modulos -->
@@ -246,7 +246,7 @@ export default {
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')                     
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')                     
             });
         },
         updatePerfil: function(){
@@ -274,7 +274,7 @@ export default {
             }).catch(error => {
                 this.errors = error.response.data.status;
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
-                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')                                             
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')                                             
 
             });
         },
@@ -410,4 +410,7 @@ export default {
         border: 1px solid gray;
     }  
 
+    .table td {
+        padding: 5px 10px !important;
+    }
 </style>

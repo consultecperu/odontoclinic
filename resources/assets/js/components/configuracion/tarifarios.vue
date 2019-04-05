@@ -11,7 +11,7 @@
             <div class="card text-white bg-white mb-3">
                 <div class="card-header pl-0 pr-0">                        
                     <div class="col">
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-agenda-1"></i></span> Nuevo Plan</button>
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-list"></i></span> Nuevo Plan</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>

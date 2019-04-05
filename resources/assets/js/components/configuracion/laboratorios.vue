@@ -11,7 +11,7 @@
             <div class="card text-white bg-white mb-3">
                 <div class="card-header pr-0">                        
                     <div class="col pl-0">
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-technology-1"></i></span> Nuevo Laboratorio</button>
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="la la-flask"></i></span> Nuevo Laboratorio</button>
                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                     </div>                                                        
                 </div>
@@ -177,7 +177,7 @@ export default {
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')                     
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')                     
             });
         },
         updateLaboratorio: function(){
@@ -205,7 +205,7 @@ export default {
             }).catch(error => {
                 this.errors = error.response.data.status;
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
-                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')                              
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')                              
 
             });
         },

@@ -59,7 +59,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group pt-0">
-                            <label for="nombre" class="text-primary font-weight-bold mb-10">Nombre de Cargo <span class="required-label">(*)</span></label>
+                            <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Cargo <span class="required-label">(*)</span></label>
                             <input type="text" id="nombre" class="form-control form-control-sm border border-primary input-sm mayusculas" v-model="dataCargo.nombre_cargo">
                         </div>
                     </div>

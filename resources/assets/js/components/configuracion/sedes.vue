@@ -155,7 +155,7 @@
                             <div class="col-6">
                                 <div class="form-group pt-0 mb-0">
                                     <label for="plan" class="text-primary font-weight-bold">Elige el Plan <span class="required-label"> *</span></label>
-                                    <select class="form-control form-control-sm" id="plan" v-model="dataSede.plan_id">
+                                    <select class="form-control form-control-sm border-primary" id="plan" v-model="dataSede.plan_id">
                                         <option value="">-- Seleccione --</option>
                                         <option v-for="pla in getPlanes" :value="pla.id" :key="pla.id">
                                             {{ pla.descripcion}}
