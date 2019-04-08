@@ -91,6 +91,8 @@
                                                     <input type="text" class="form-control form-control-sm border-dark" id="historia" name="historia" v-model="dataPaciente.historia_clinica" disabled>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-6">
                                             <div class="form-group row pt-5 pb-0">
                                                 <label for="tipodoc" class="col-4 text-right">Tipo de Documento <span class="required-label"> *</span></label>
                                                 <div class="col-8 pr-0">
@@ -103,6 +105,8 @@
                                                 </div>
                                             </div>                                               
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-6">
                                             <div class="form-group row pb-0">
                                                 <label for="sede" class="col-4 text-right">Sede </label>
@@ -142,7 +146,16 @@
                                                 <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataPaciente.numero_documento" maxlength="9">
                                             </div>
                                         </div>  -->                                           
-                                    </div>                                        
+                                    </div>  
+                                    <div class="row">
+                                        <div class="col-6">
+
+                                        </div>
+                                        <div class="col-6">
+
+                                        </div>
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group form-group-default border border-primary" >
