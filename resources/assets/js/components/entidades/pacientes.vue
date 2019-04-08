@@ -88,33 +88,32 @@
                                             <div class="form-group row pb-0">
                                                 <label for="historia" class="col-4 pr-0 text-right">Historia Clínica </label>
                                                 <div class="col-8 pr-0">
-                                                    <input type="text" class="form-control form-control-sm" id="historia" name="historia" v-model="dataPaciente.historia_clinica" disabled>
+                                                    <input type="text" class="form-control form-control-sm border-dark" id="historia" name="historia" v-model="dataPaciente.historia_clinica" disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group row pt-5 pb-0">
-                                                <label for="tipodoc" class="col-4 text-right font-weight-bold">Tipo de Documento <span class="required-label"> *</span></label>
+                                                <label for="tipodoc" class="col-4 text-right">Tipo de Documento <span class="required-label"> *</span></label>
                                                 <div class="col-8 pr-0">
-                                                    <select class="form-control form-control-sm" id="tipodoc" v-model="dataPaciente.tipodocumento_id">
+                                                    <select class="form-control form-control-sm border-dark" id="tipodoc" v-model="dataPaciente.tipodocumento_id">
                                                         <option value="">-- Seleccione Tipo--</option>
                                                         <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
                                                             {{ tipo.nombre_tipodocumento}}
                                                         </option>
                                                     </select>
                                                 </div>
-
                                             </div>                                               
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group row pb-0">
                                                 <label for="sede" class="col-4 text-right">Sede </label>
                                                 <div class="col-8 pr-0">
-                                                    <input type="text" class="form-control form-control-sm" id="sede" name="sede" v-model="dataPaciente.sede" disabled>
+                                                    <input type="text" class="form-control form-control-sm border-dark" id="sede" name="sede" v-model="dataPaciente.sede" disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group row pb-0 pt-5">
                                                 <label for="numdocumento" class="col-4 text-right">Num.Documento <span class="required-label"> *</span></label>
                                                 <div class="col-8 pr-0">
-                                                    <input type="text" class="form-control form-control-sm" id="numdocumento" name="numdocumento" v-model="dataPaciente.numero_documento" maxlength="8">
+                                                    <input type="text" class="form-control form-control-sm border-dark" id="numdocumento" name="numdocumento" v-model="dataPaciente.numero_documento" maxlength="8">
                                                 </div>                                                
                                             </div>
                                         </div>
@@ -137,12 +136,12 @@
                                                 </select>
                                             </div>
                                         </div> -->
-                                        <div class="col-4">
+<!--                                         <div class="col-4">
                                             <div class="form-group form-group-default border border-primary" >
                                                 <label for="numdoc" class="text-primary font-weight-bold">Num.Documento <span class="required-label"> *</span></label>
                                                 <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataPaciente.numero_documento" maxlength="9">
                                             </div>
-                                        </div>                                            
+                                        </div>  -->                                           
                                     </div>                                        
                                     <div class="row">
                                         <div class="col-4">
