@@ -138,6 +138,8 @@ export default {
         state.motivocaptaciones = list.motivocaptaciones
         state.parentescos = list.parentescos
         state.asignaciones = list.asignaciones
+        state.convenios = list.convenios
+        state.campañas = list.campañas
     }, 
     SET_PACIENTES_LIST: (state, { list }) => {      // PACIENTES
         state.pacientes = list

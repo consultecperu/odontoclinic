@@ -19,6 +19,8 @@ use App\Parentesco;
 use App\Asignacion;
 use App\Pacienteplan;
 use App\Historiaclinica;
+use App\Convenio;
+use App\Campaña;
 use Globales;   // helpers
 
 class PacienteController extends Controller
@@ -47,6 +49,8 @@ class PacienteController extends Controller
         $motivocaptaciones = Motivocaptacion::where('activo',true)->orderBy('nombre_motivocaptacion','ASC')->get();
         $parentescos = Parentesco::orderBy('id','ASC')->where('activo',true)->get();
         $asignaciones = Asignacion::orderBy('id','ASC')->where('activo',true)->get();
+        $convenios = Convenio::orderBy('id','ASC')->where('activo',true)->get();
+        $campañas = Campaña::orderBy('id','ASC')->where('activo',true)->get();
 
         return [
               'estadosciviles'          => $estadosciviles,
@@ -54,7 +58,9 @@ class PacienteController extends Controller
               'tipodocumentos'          => $tipodocumentos,
               'motivocaptaciones'       => $motivocaptaciones,
               'parentescos'             => $parentescos,
-              'asignaciones'            => $asignaciones
+              'asignaciones'            => $asignaciones,
+              'convenios'               => $convenios,
+              'campañas'                => $campañas
           ];
 
     }
