@@ -65,7 +65,7 @@
                             <div class="col-6">
                                 <label for="basic" class="text-primary font-weight-bold pb-10">Tipo Tarifa <span class="required-label"> *</span></label>
                                 <div class="select2-input">
-                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.tarifa">
+                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.tipo">
                                         <option value="">-- Seleccione Tipo--</option>
                                         <option v-for="tipo in tipo_tarifas" :value="tipo.id" :key="tipo.id">
                                             {{ tipo.nombre_tipotarifa}}
@@ -123,8 +123,8 @@
                         </div>
                     </div>
                     <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionServicio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('servicio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('servicio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionServicio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de planes -->
@@ -292,6 +292,7 @@ export default {
         },
         createServicio: function(){
             var url = '/api/tarifarios';
+            this.dataServicio.tarifa = this.dataServicio.tipo == 1 ? 2 : 1
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.post(url, this.dataServicio).then(response => {
             if(typeof(response.data.errors) != "undefined"){
@@ -321,6 +322,7 @@ export default {
         },
         updateServicio: function(){
             var url = '/api/tarifarios/'+this.dataServicio.id; 
+            this.dataServicio.tarifa = this.dataServicio.tipo == 1 ? 2 : 1
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.put(url, this.dataServicio).then(response => {
                 if(typeof(response.data.errors) != "undefined"){

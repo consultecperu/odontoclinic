@@ -402,8 +402,8 @@
                         </div>
                     </div>
                     <div class="card-action">
-                        <button class="btn btn-primary float-right ml-10" :disabled="list_services_dent.length == 0" @click.prevent="ActionServicio"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger float-right" @click="salirDiente"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-danger float-right ml-10" @click="salirDiente"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" :disabled="list_services_dent.length == 0" @click.prevent="ActionServicio"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de servicios -->
