@@ -265,7 +265,7 @@ export default {
                 sede_id:1,
                 servicio_id:'',
                 plan_id:this.$route.params.plan,
-                moneda_id:'',
+                moneda_id:1,
                 costo:'',
                 tipo:1,
                 solocoaseguro:'',
@@ -273,7 +273,7 @@ export default {
                 cuota_inicial:'',
                 ortodoncia:0,
                 control_mensual:'',
-                tarifa:'',
+                tarifa:1,
                 user_id: this.user_system.id,
                 sedes:[1]
             }   

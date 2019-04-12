@@ -19,7 +19,7 @@ class PlaneController extends Controller
      */
     public function index()
     {
-        $planes = Plane::orderBy('id','ASC')->where('activo',true)->get();
+        $planes = Plane::orderBy('descripcion','ASC')->where('activo',true)->get();
         return $planes;   
     }
 

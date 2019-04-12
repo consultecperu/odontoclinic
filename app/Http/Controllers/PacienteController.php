@@ -49,7 +49,7 @@ class PacienteController extends Controller
         $motivocaptaciones = Motivocaptacion::where('activo',true)->orderBy('nombre_motivocaptacion','ASC')->get();
         $parentescos = Parentesco::orderBy('id','ASC')->where('activo',true)->get();
         $asignaciones = Asignacion::orderBy('id','ASC')->where('activo',true)->get();
-        $convenios = Convenio::orderBy('id','ASC')->where('activo',true)->get();
+        $convenios = Convenio::with('empresapaciente')->orderBy('id','ASC')->where('activo',true)->get();
         $campañas = Campaña::orderBy('id','ASC')->where('activo',true)->get();
 
         return [

@@ -162,7 +162,7 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },
-                width:'20%',
+                width:'15%',
                 }, 
                 {
                 label: 'Nombre',
@@ -171,7 +171,7 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },
-                width:'40%',
+                width:'30%',
                 },
                 {
                 label: 'Facturar A',
@@ -180,14 +180,14 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },
-                width:'20%',
+                width:'40%',
                 },                                                                                                                                                                          
                 {
                 label: 'Acción',
                 field: 'btn',
                 tdClass: 'center',
                 html: true  ,
-                width:'20%',  
+                width:'15%',  
                 }                               
             ],
             dataAseguradora : {

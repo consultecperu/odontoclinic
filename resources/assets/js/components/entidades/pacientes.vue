@@ -53,7 +53,7 @@
         <modal name="paciente" :width="'80%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" @opened="openedFn()">
             <!-- form de registro de medicos -->
                 <div class="card mb-0">
-                    <div class="card-header pt-0 pb-0">
+                    <div class="card-header pt-5 pb-5">
                         <div class="card-title">Registro de Paciente</div>
                     </div>
                     <form role="form" method="POST" v-on:submit.prevent="createPaciente">                    
@@ -71,7 +71,7 @@
                                             <div class="user-profile text-center pt-20">
                                                 <div class="view-profile">
                                                     <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" @change="onFileChange" >
-                                                    <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-secondary btn-block"><i class="la la-file-image-o"></i> Cargar Imagen</label>
+                                                    <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-primary btn-block"><i class="la la-file-image-o"></i> Cargar Imagen</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -129,7 +129,7 @@
                                             <div class="form-group row pb-0 pt-5">
                                                 <label for="apepat" class="col-4 pl-0">Apellido Paterno <span class="required-label"> *</span></label>
                                                 <div class="col-8 pr-0">
-                                                    <input type="text" class="form-control form-control-sm border-odonto mayuscula" id="ape_paterno" name="ape_paterno" v-model="dataPaciente.apellido_paterno">
+                                                    <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="ape_paterno" name="ape_paterno" v-model="dataPaciente.apellido_paterno">
                                                 </div>                                                
                                             </div>
                                         </div>
@@ -186,7 +186,7 @@
                                     <div class="row" v-if="menor_edad">
                                         <div class="col-6">
                                             <div class="form-group row pb-0 pt-5">
-                                                <label for="apoderado" class="col-4 pl-0">Apoderado <span class="required-label"> *</span></label>
+                                                <label for="apoderado" class="col-4 pl-0">Apoderado </label>
                                                 <div class="col-8 pr-0">
                                                     <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="apoderado" name="apoderado" v-model="dataPaciente.apoderado">
                                                 </div>                                                
@@ -194,7 +194,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group row pt-5 pb-0">
-                                                <label for="tipodoc" class="col-4 pl-0">Parentesco <span class="required-label"> *</span></label>
+                                                <label for="tipodoc" class="col-4 pl-0">Parentesco </label>
                                                 <div class="col-8 pr-0">
                                                     <select class="form-control form-control-sm border-odonto" id="sexo" v-model="dataPaciente.parentesco_apoderado_id">
                                                         <option value="">-- Seleccione --</option>
@@ -209,9 +209,9 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group row pb-0 pt-5">
-                                                <label for="telefono" class="col-4 pl-0">Telefono <span class="required-label"> *</span></label>
+                                                <label for="telefono" class="col-4 pl-0">Teléfono </label>
                                                 <div class="col-8 pr-0">
-                                                    <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="telefono" name="telefono" v-model="dataPaciente.telefono">
+                                                    <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="telefono" name="telefono" v-model="dataPaciente.telefono" maxlength="7">
                                                 </div>                                                
                                             </div>
                                         </div>
@@ -219,7 +219,7 @@
                                             <div class="form-group row pb-0 pt-5">
                                                 <label for="celular" class="col-4 pl-0">Celular <span class="required-label"> *</span></label>
                                                 <div class="col-8 pr-0">
-                                                    <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="celular" name="celular" v-model="dataPaciente.celular">
+                                                    <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="celular" name="celular" v-model="dataPaciente.celular" maxlength="9">
                                                 </div>                                                
                                             </div>
                                         </div>
@@ -227,7 +227,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group row pb-0 pt-5">
-                                                <label for="email" class="col-4 pl-0">Email <span class="required-label"> *</span></label>
+                                                <label for="email" class="col-4 pl-0">Email </label>
                                                 <div class="col-8 pr-0">
                                                     <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="email" name="email" v-model="dataPaciente.email">
                                                 </div>                                                
@@ -235,7 +235,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group row pt-5 pb-0">
-                                                <label for="estadocivil" class="col-4 pl-0">Estado Civil <span class="required-label"> *</span></label>
+                                                <label for="estadocivil" class="col-4 pl-0">Estado Civil </label>
                                                 <div class="col-8 pr-0">
                                                     <select class="form-control form-control-sm border-odonto" id="estadocivil" v-model="dataPaciente.estadocivil_id">
                                                         <option value="">-- Seleccione --</option>
@@ -261,14 +261,14 @@
                                                 </div>
                                             </div> 
                                         </div>
-<!--                                         <div class="col-6" v-if="dataPaciente.motivocaptacion_id == 15">
+                                        <div class="col-6" v-if="dataPaciente.motivocaptacion_id == 15">
                                             <div class="form-group row pt-5 pb-0">
                                                 <label for="convenio" class="col-4 pl-0">Convenios <span class="required-label"> *</span></label>
                                                 <div class="col-8 pr-0">
                                                     <select class="form-control form-control-sm border-odonto" id="convenio" v-model="dataPaciente.convenio_id">
                                                         <option value="">-- Seleccione --</option>
                                                         <option v-for="conv in convenios" :value="conv.id" :key="conv.id">
-                                                            {{ conv.empresapaciente.nombre_empresa}}
+                                                            {{ conv.empresapaciente.razon_social}}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -286,9 +286,8 @@
                                                     </select>
                                                 </div>
                                             </div> 
-                                        </div>  -->                                       
+                                        </div>                                        
                                     </div>
-
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group row pb-0 pt-5">
@@ -302,7 +301,7 @@
                                             <div class="form-group row pb-0 pt-5">
                                                 <label for="num_mensajeria" class="col-4 pl-0">Nº Mensajeria </label>
                                                 <div class="col-8 pr-0">
-                                                    <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="telefono_mensajeria" v-model="dataPaciente.telefono_mensajeria">
+                                                    <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="telefono_mensajeria" v-model="dataPaciente.telefono_mensajeria" maxlength="9">
                                                 </div>                                                
                                             </div>                                            
                                         </div>                                                                                        
@@ -317,7 +316,7 @@
                                             </div>
                                         </div>
                                     </div>
-<!--                                     <div class="row pt-5">
+                                    <div class="row pt-5">
                                         <div class="col-2 pl-10">
                                             <label for="direccion" class="pl-0">Depart./ Prov./ Dist.</label>
                                         </div>
@@ -455,7 +454,7 @@
                                                 </div>
                                             </div>
                                         </div>                                                                                                                                                                               
-                                    </div>  -->                                                                                                                                                          
+                                    </div>                                                                                                                                                           
                                 </div>
                             </div>
                         </div>
@@ -541,46 +540,46 @@ export default {
                 }                               
             ],
             dataPaciente: {
+                historiaclinica:'',
+                sede:'',
                 tipodocumento_id:'',
                 numero_documento:'',
-                sede_id:'',
-                nombres:'',
                 apellido_paterno:'',
                 apellido_materno:'',
-                fecha_nacimiento:'',
+                nombres:'',  
+                sede_id:'',                              
                 sexo:'',
-                ubigeo_id:'',
-                direccion:'',
+                fecha_nacimiento:'',
+                edad:'',
+                apoderado:'',
+                parentesco_apoderado_id:'',  
                 telefono:'',
-                celular:'',                
+                celular:'',
                 email:'',                
                 estadocivil_id:'',
-                motivocaptacion_id:'',
-                telefono_mensajeria:'',
+                motivocaptacion_id:'', 
+                convenio_id:'',
+                campania_id:'', 
+                carnet:'',  
+                telefono_mensajeria:'', 
+                observacion:'',                                                                                            
+                ubigeo_id:'',
+                direccion:'',
+                empleado_id:'', 
+                asignacion_id:'', 
+                tipo:'' ,
+                plan_id:'',                                              
                 titular:'',
                 mensajeria:'',
                 foto:'',
                 condicion_id:'',
-                empleado_id:'',
-                asignacion_id:'',
                 fecha_ingreso:'',
                 nombre_completo:'',
-                carnet:'',
-                convenio_id:'',
-                campania_id:'',
-                historiaclinica:'',
-                observacion:'',
-                apoderado:'',
-                parentesco_apoderado_id:'',
                 historial:'',
                 user_id:'',
-                tipo:'' ,
-                plan_id:'',
                 empresapaciente_id:'',
                 poliza_id:'',
-                descripcion:'',
-                image:'',
-                edad:''
+                image:''
             }, 
             sexos :[
                 { id : 'H' , value : 'Hombre'},
@@ -597,7 +596,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['pacientes','user_system','tipodocumentos','estadosciviles','sedes','motivocaptaciones','asignaciones','parentescos','empresapacientesplanes','planes','polizas','convenios','campañas']),
+        ...mapState(['pacientes','user_system','sede_system','tipodocumentos','estadosciviles','sedes','motivocaptaciones','asignaciones','parentescos','empresapacientesplanes','planes','polizas','convenios','campañas']),
         ...mapGetters(['getubigeos','getMedicos','getDocumentosIdentidad','getplanes_aseguradoras','getPolizas']),
         departamentos: function(){
             return this.getubigeos.filter((ubigeo) => ubigeo.codprov == '00').filter((ubigeo) => ubigeo.coddist == '00');
@@ -640,9 +639,11 @@ export default {
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')         
 
             this.dataPaciente = {
+                historiaclinica:'',
+                sede:this.sede_system.nombre_sede,                
                 tipodocumento_id:'',
                 numero_documento:'',
-                sede_id:1,
+                sede_id:this.sede_system.id,
                 nombres:'',
                 apellido_paterno:'',
                 apellido_materno:'',
@@ -667,7 +668,6 @@ export default {
                 carnet:'',
                 convenio_id:'',
                 campania_id:'',
-                historiaclinica:'',
                 observacion:'',
                 apoderado:'',
                 parentesco_apoderado_id:'',
@@ -677,9 +677,8 @@ export default {
                 plan_id:'',
                 empresapaciente_id:'',
                 poliza_id:'',
-                descripcion:'',
                 image:'',
-                edad:''
+                edad:0
             }           
             this.SelectTipoPlan()
             this.$modal.show('paciente')                                                
