@@ -322,7 +322,7 @@
                                         </div>
                                         <div class="col-3 pr-0 pl-20">
                                             <div class="select2-input">
-                                                <select id="basic" name="basic" class="form-control form-control-sm border-odonto" v-model="coddepa">
+                                                <select id="departamento" name="departamento" class="form-control form-control-sm border-odonto" v-model="coddepa">
                                                     <option value="">--Seleccione--</option>
                                                     <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
                                                         {{ depa.descripcion}}
@@ -332,7 +332,7 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="select2-input">
-                                                <select id="basic2" name="basic2" class="form-control form-control-sm border-odonto" v-model="codprov">
+                                                <select id="provincia" name="provincia" class="form-control form-control-sm border-odonto" v-model="codprov">
                                                     <option value="">--Seleccione--</option>
                                                     <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
                                                         {{ prov.descripcion}}
@@ -342,7 +342,7 @@
                                         </div>
                                         <div class="col-3 pr-10 pl-0">
                                             <div class="select2-input">
-                                                <select id="basic3" name="basic3" class="form-control form-control-sm border-odonto" v-model="dataPaciente.ubigeo_id">
+                                                <select id="distrito" name="distrito" class="form-control form-control-sm border-odonto" v-model="dataPaciente.ubigeo_id">
                                                     <option value="">--Seleccione--</option>
                                                     <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
                                                         {{ dist.descripcion}}

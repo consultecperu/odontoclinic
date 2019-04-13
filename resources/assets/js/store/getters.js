@@ -127,9 +127,24 @@ export default {
     getTipoCambioHoy: state => {
         return state.tipocambios.find(tc => tc.fecha_registro == moment().format('DD-MM-YYYY'))
     },
+    // Carga de tratamientos para agregar a la muela principal
     getTratamientosSimbolo: (state) => (idsim, idpla ,idsed) => {
         return state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 
     },
+    getTratamientosSimboloNew: (state) => (idsim, idplapac ,idplased ,idsed) => {
+        let serpla = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplapac && tar.sede_id == idsed)
+        let sersed = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplased && tar.sede_id == idsed)
+        //return state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 
+        let servicios = []        
+        _.each(serpla, function(value,key){
+            _.each(sersed, function(value2,key2){
+                if(value2.servicio_id == value.servicio_id){
+                    sersed.splice(key2,1)
+                }
+            })
+        }) 
+        return servicios = _.union(serpla,sersed)       
+    },    
     getTratamientosOrtodoncia: (state) => (idpla ,idsed) => {
         return state.tarifarios.filter(tar => tar.ortodoncia == 1 && tar.plan_id == idpla && tar.sede_id == idsed) 
     },    

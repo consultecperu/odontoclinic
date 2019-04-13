@@ -910,7 +910,7 @@ export default {
     },
     computed: {
         ...mapState(['user_system','sede_system','dientes','simbologias','tarifarios']),
-        ...mapGetters(['getDientesByCuadrante','getPacienteById','getMedicos','getTipoCambioHoy','getTratamientosSimbolo','getPresupuestoOperatoriaById']), 
+        ...mapGetters(['getDientesByCuadrante','getPacienteById','getMedicos','getTipoCambioHoy','getTratamientosSimbolo','getTratamientosSimboloNew','getPresupuestoOperatoriaById']), 
         PacienteById(){
             return this.getPacienteById(this.$route.params.idpaciente)
         },  
@@ -920,6 +920,9 @@ export default {
         TratamientosSimbolo(){
             return this.getTratamientosSimbolo(this.simboloID,this.PacienteById.pacienteplanes.plan_id,1)
         },
+/*         TratamientosSimboloNew(){
+            return this.getTratamientosSimboloNew(this.simboloID,this.PacienteById.pacienteplanes.plan_id,this.sede_system.plan_id,this.sede_system.id)
+        },   */      
         costoTotal(){
             let costo = 0
             this.lista_general_presupuesto.map(function(value, key){
@@ -1025,7 +1028,6 @@ export default {
 
         },
         selectServicio(param){
-            console.log("servicios",param)
             let _letras = ''   
             let self = this 
             let datalist = []                  

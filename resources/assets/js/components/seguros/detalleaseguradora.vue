@@ -65,7 +65,7 @@
                             <div class="col-6">
                                 <label for="basic" class="text-primary font-weight-bold pb-10">Tipo Tarifa <span class="required-label"> *</span></label>
                                 <div class="select2-input">
-                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.tipo">
+                                    <select id="basic" name="basic" class="form-control form-control-sm border border-primary" v-model="dataServicio.tarifa">
                                         <option value="">-- Seleccione Tipo--</option>
                                         <option v-for="tipo in tipo_tarifas" :value="tipo.id" :key="tipo.id">
                                             {{ tipo.nombre_tipotarifa}}
@@ -223,7 +223,7 @@ export default {
                 plan_id:'',
                 moneda_id:'',
                 costo:'',
-                tipo:1,
+                tipo:2,
                 solocoaseguro:'',
                 cuotas:'',
                 cuota_inicial:'',
@@ -233,7 +233,7 @@ export default {
                 user_id:'',
                 sedes:[]
             }, 
-            tipo_tarifas: [{'id':1 , 'nombre_tipotarifa':'ASEGURADORA'},{ 'id':2 ,'nombre_tipotarifa':'PARTICULAR'} ],
+            tipo_tarifas: [{'id':1 , 'nombre_tipotarifa':'PARTICULAR'},{ 'id':2 ,'nombre_tipotarifa':'ASEGURADORA'} ],
             dataSede:'', 
             searchServicio:'',  
             valorinicial:'',
@@ -267,7 +267,7 @@ export default {
                 plan_id:this.$route.params.plan,
                 moneda_id:1,
                 costo:'',
-                tipo:1,
+                tipo:2,
                 solocoaseguro:'',
                 cuotas:'',
                 cuota_inicial:'',
@@ -292,7 +292,6 @@ export default {
         },
         createServicio: function(){
             var url = '/api/tarifarios';
-            this.dataServicio.tarifa = this.dataServicio.tipo == 1 ? 2 : 1
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.post(url, this.dataServicio).then(response => {
             if(typeof(response.data.errors) != "undefined"){
@@ -322,7 +321,6 @@ export default {
         },
         updateServicio: function(){
             var url = '/api/tarifarios/'+this.dataServicio.id; 
-            this.dataServicio.tarifa = this.dataServicio.tipo == 1 ? 2 : 1
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.put(url, this.dataServicio).then(response => {
                 if(typeof(response.data.errors) != "undefined"){
@@ -405,7 +403,7 @@ export default {
             this.dataServicio.servicio_id = group.value
         }, 
         fieldFn(rowObj) {
-            return (rowObj.tipo == 1 ? 'ASEGURADORA' : 'PARTICULAR')     
+            return (rowObj.tarifa == 1 ? 'PARTICULAR' : 'ASEGURADORA')     
         }                 
     }        
     
