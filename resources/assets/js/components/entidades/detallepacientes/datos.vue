@@ -6,7 +6,7 @@
             :can-cancel="false" 
             :is-full-page="fullPage">
         </loading> 
-        <div class="card card-with-nav">
+        <div class="card card-with-nav pb-10">
             <div class="card-header">
                 <div class="row">
                     <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
@@ -20,285 +20,396 @@
                     <div class="tab-pane active" id="datos" role="tabpanel" aria-labelledby="datos-tab">
                         <form role="form" method="PUT" v-on:submit.prevent="updatePaciente">                    
                             <div class="card-body">
-                                <div class="row pr-10 pl-10">                                   
-                                    <div class="col-12">
+                                <div class="row pr-20 pl-20">                                   
+                                    <div class="col-12 pl-20 pr-20">
                                         <div class="row">
-                                            <div class="col-12">
-                                                <p class="form-control-static text-danger font-weight-bold">Datos Personales</p>
+                                            <div class="col-12 pl-10">
+                                                <p class="form-control-static text-primary font-weight-bold mb-0">Datos Personales</p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-4 pr-0">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="historia" class="text-primary font-weight-bold">Historia Clínica </label>
-                                                    <p class="form-control-static text-danger text-center font-weight-bold mb-10">{{ dataPaciente.historiaclinica == null ? '--' : dataPaciente.historiaclinica }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="tipodoc" class="text-primary font-weight-bold">Tipo de Documento <span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="tipodoc" v-model="dataPaciente.tipodocumento_id">
-                                                        <option value="">-- Seleccione Tipo--</option>
-                                                        <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
-                                                            {{ tipo.nombre_tipodocumento}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-4 pl-0">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="numdoc" class="text-primary font-weight-bold">Num.Documento <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataPaciente.numero_documento" maxlength="9">
-                                                </div>
-                                            </div>                                            
-                                        </div>                                        
-                                        <div class="row">
-                                            <div class="col-4 pr-0">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="apepat" class="text-primary font-weight-bold">Apellido Paterno <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="apepat" placeholder="Apellido Paterno" v-model="dataPaciente.apellido_paterno">
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="apemat" class="text-primary font-weight-bold">Apellido Materno <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="apemat" placeholder="Apellido Materno" v-model="dataPaciente.apellido_materno">
-                                                </div>
-                                            </div>
-                                            <div class="col-4 pl-0">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="nombres" class="text-primary font-weight-bold">Nombres <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="nombres" placeholder="Nombres" v-model="dataPaciente.nombres">
-                                                </div>
-                                            </div>                                            
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-4 pr-0">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="tipodoc" class="text-primary font-weight-bold">Sexo <span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="tipodoc" v-model="dataPaciente.sexo">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="sexo in sexos" :value="sexo.id" :key="sexo.id">
-                                                            {{ sexo.value}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="datepicker" class="text-primary font-weight-bold">Fecha de Nacimiento</label>
-                                                    <masked-input v-model="dataPaciente.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
-                                                </div>
-                                            </div>
-                                            <div class="col-4 pl-0">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="edad" class="text-primary font-weight-bold">Edad</label>
-                                                    <p class="form-control-static text-danger text-center font-weight-bold mb-10">{{ dataPaciente.edad }}</p>                                                    
-                                                </div>
-                                            </div>                                                                                       
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-4 pr-0">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="telefono" class="text-primary font-weight-bold">Telefono</label>
-                                                    <input type="text" class="form-control form-control-sm" name="telefono" placeholder="Telefono" maxlength="8" v-model="dataPaciente.telefono">
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="celular" class="text-primary font-weight-bold">Celular<span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm" name="celular" placeholder="Celular" maxlength="9" v-model="dataPaciente.celular">
-                                                </div>
-                                            </div>
-                                            <div class="col-4 pl-0">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="telefono_mensajeria" class="text-primary font-weight-bold">Nº Mensajeria</label>
-                                                    <input type="text" class="form-control form-control-sm" name="telefono_mensajeria" placeholder="Tel.Mensajeria" v-model="dataPaciente.telefono_mensajeria">
-                                                </div>
-                                            </div>                                                                                        
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-4 pr-0">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="email" class="text-primary font-weight-bold">Email <span class="required-label"> *</span></label>
-                                                    <input type="email" class="form-control form-control-sm" name="email" placeholder="Email" v-model="dataPaciente.email">
-                                                </div>
-                                            </div>                                             
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="estciv" class="text-primary font-weight-bold">Estado Civil</label>
-                                                    <select class="form-control form-control-sm" id="estciv" v-model="dataPaciente.estadocivil_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="estado in estadosciviles" :value="estado.id" :key="estado.id">
-                                                            {{ estado.nombre_estadocivil}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-4 pl-0">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="captaciones" class="text-primary font-weight-bold">Captación<span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="captaciones" v-model="dataPaciente.motivocaptacion_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="cap in motivocaptaciones" :value="cap.id" :key="cap.id">
-                                                            {{ cap.nombre_motivocaptacion}}
-                                                        </option>
-                                                    </select>
-                                                </div>                                                
-                                            </div>                                            
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-4 pr-0">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="carnet" class="text-primary font-weight-bold">Nº Carnet</label>
-                                                    <input type="text" class="form-control form-control-sm" name="carnet" placeholder="Carnet" v-model="dataPaciente.numero_carnet">
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="observaciones" class="text-primary font-weight-bold">Observaciones</label>
-                                                    <input type="text" class="form-control form-control-sm" name="observaciones" placeholder="" v-model="dataPaciente.observaciones">
-                                                </div>                                                
-                                            </div>                                                                                       
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-4 pr-0">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="basic" class="text-primary font-weight-bold">Departamento</label>
-                                                    <div class="select2-input">
-                                                        <select id="basic" name="basic" class="form-control form-control-sm border-primary" v-model="coddepa">
-                                                            <option value="">--Seleccione--</option>
-                                                            <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
-                                                                {{ depa.descripcion}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="basic2" class="text-primary font-weight-bold">Provincia</label>
-                                                    <div class="select2-input">
-                                                        <select id="basic2" name="basic2" class="form-control form-control-sm border-primary" v-model="codprov">
-                                                            <option value="">--Seleccione--</option>
-                                                            <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
-                                                                {{ prov.descripcion}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4 pl-0">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="basic3" class="text-primary font-weight-bold">Distrito</label>
-                                                    <div class="select2-input">
-                                                        <select id="basic3" name="basic3" class="form-control form-control-sm border-primary" v-model="dataPaciente.ubigeo_id">
-                                                            <option value="">--Seleccione--</option>
-                                                            <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
-                                                                {{ dist.descripcion}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
-                                                    <input type="text" class="form-control form-control-sm" name="direccion" placeholder="Direccion" v-model="dataPaciente.direccion">
-                                                </div>                                                
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="form-control-static text-danger font-weight-bold">Asignación del Paciente</p>
-                                            </div>
-                                        </div>                                        
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="medico" class="text-primary font-weight-bold">Médico<span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="medico" v-model="dataPaciente.empleado_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="med in getMedicos" :value="med.id" :key="med.id">
-                                                            {{ med.nombre_completo}}
-                                                        </option>
-                                                    </select>
-                                                </div>  
+                                                <div class="form-group row pb-0 pt-0">
+                                                    <label for="historia" class="col-4 pr-0 pl-0">Historia Clínica </label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto text-danger text-center font-weight-bold mb-0" id="edad" name="edad" v-model="dataPaciente.historiaclinica" disabled>                                                        
+                                                        <!-- <p class="form-control-static text-danger text-center font-weight-bold mb-10">{{ dataPaciente.historiaclinica == null ? '--' : dataPaciente.historiaclinica }}</p> -->
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="asignacion" class="text-primary font-weight-bold">Asignación<span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="asignacion" v-model="dataPaciente.asignacion_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="asig in asignaciones" :value="asig.id" :key="asig.id">
-                                                            {{ asig.nombre_asignacion}}
-                                                        </option>
-                                                    </select>
-                                                </div>  
+                                                <div class="form-group row pb-0 pt-0">
+                                                    <label for="sede" class="col-4 pl-0">Sede </label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto text-danger text-center font-weight-bold mb-0" id="edad" name="edad" v-model="dataPaciente.sede.nombre_sede" disabled>                                                        
+                                                        <!-- <p class="form-control-static text-danger text-center font-weight-bold mb-10">{{ dataPaciente.sede == null ? '--' : dataPaciente.sede.nombre_sede }}</p> -->
+                                                        <!-- <input type="text" class="form-control form-control-sm border-odonto" id="sede" name="sede" v-model="dataPaciente.sede" disabled> -->
+                                                    </div>
+                                                </div>                                              
                                             </div>
                                         </div> 
                                         <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row pt-5 pb-0">
+                                                    <label for="tipodoc" class="col-4 pl-0">Tipo de Documento <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="tipodoc" v-model="dataPaciente.tipodocumento_id">
+                                                            <option value="">-- Seleccione Tipo--</option>
+                                                            <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
+                                                                {{ tipo.nombre_tipodocumento}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>                                             
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="numdocumento" class="col-4 pl-0">Num.Documento <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto" id="numdocumento" name="numdocumento" v-model="dataPaciente.numero_documento" maxlength="8">
+                                                    </div>                                                
+                                                </div>
+                                            </div>                                           
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="apepat" class="col-4 pl-0">Apellido Paterno <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="ape_paterno" name="ape_paterno" v-model="dataPaciente.apellido_paterno">
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="apemat" class="col-4 pl-0">Apellido Materno <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="ape_materno" name="numdocumento" v-model="dataPaciente.apellido_materno">
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="nombres" class="col-4 pl-0">Nombres <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="nombres" name="nombres" v-model="dataPaciente.nombres">
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row pt-5 pb-0">
+                                                    <label for="tipodoc" class="col-4 pl-0">Sexo <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="sexo" v-model="dataPaciente.sexo">
+                                                            <option value="">-- Seleccione Sexo--</option>
+                                                            <option v-for="sexo in sexos" :value="sexo.id" :key="sexo.id">
+                                                                {{ sexo.value}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row pt-5 pb-0">
+                                                    <label for="datepicker" class="col-4 pl-0">Fecha de Nacimiento</label>
+                                                    <div class="col-8 pr-0">
+                                                        <masked-input v-model="dataPaciente.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control form-control-sm border-odonto"/>                                                                                                
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row pt-5 pb-0">
+                                                    <label for="sede" class="col-4 pl-0">Edad </label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto font-weight-bold" id="edad" name="edad" v-model="dataPaciente.edad" disabled>
+                                                    </div>
+                                                </div>  
+                                            </div>
+                                        </div>                                        
+                                        <div class="row" v-if="menor_edad">
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="apoderado" class="col-4 pl-0">Apoderado </label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="apoderado" name="apoderado" v-model="dataPaciente.apoderado">
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row pt-5 pb-0">
+                                                    <label for="tipodoc" class="col-4 pl-0">Parentesco </label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="sexo" v-model="dataPaciente.parentesco_apoderado_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="parent in parentescos" :value="parent.id" :key="parent.id">
+                                                                {{ parent.nombre_parentesco}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="telefono" class="col-4 pl-0">Teléfono </label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="telefono" name="telefono" v-model="dataPaciente.telefono" maxlength="7">
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="celular" class="col-4 pl-0">Celular <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="celular" name="celular" v-model="dataPaciente.celular" maxlength="9">
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="email" class="col-4 pl-0">Email </label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="email" name="email" v-model="dataPaciente.email">
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row pt-5 pb-0">
+                                                    <label for="estadocivil" class="col-4 pl-0">Estado Civil </label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="estadocivil" v-model="dataPaciente.estadocivil_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="est in estadosciviles" :value="est.id" :key="est.id">
+                                                                {{ est.nombre_estadocivil}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>                                                                                
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row pt-5 pb-0">
+                                                    <label for="captacion" class="col-4 pl-0">Captación <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="captacion" v-model="dataPaciente.motivocaptacion_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="cap in motivocaptaciones" :value="cap.id" :key="cap.id">
+                                                                {{ cap.nombre_motivocaptacion}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-6" v-if="dataPaciente.motivocaptacion_id == 15">
+                                                <div class="form-group row pt-5 pb-0">
+                                                    <label for="convenio" class="col-4 pl-0">Convenios <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="convenio" v-model="dataPaciente.convenio_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="conv in convenios" :value="conv.id" :key="conv.id">
+                                                                {{ conv.empresapaciente.razon_social}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-6"  v-if="dataPaciente.motivocaptacion_id == 3">
+                                                <div class="form-group row pt-5 pb-0">
+                                                    <label for="campania" class="col-4 pl-0">Campañas <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="campania" v-model="dataPaciente.campania_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="camp in campañas" :value="camp.id" :key="camp.id">
+                                                                {{ camp.nombre_campania}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                            </div>                                        
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="carnet" class="col-4 pl-0">Nº Carnet </label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="carnet" v-model="dataPaciente.numero_carnet">
+                                                    </div>                                                
+                                                </div>                                            
+                                            </div> 
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="num_mensajeria" class="col-4 pl-0">Nº Mensajeria </label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="telefono_mensajeria" v-model="dataPaciente.telefono_mensajeria" maxlength="9">
+                                                    </div>                                                
+                                                </div>                                            
+                                            </div>                                                                                        
+                                        </div>
+                                        <div class="row">
                                             <div class="col-12">
-                                                <p class="form-control-static text-danger font-weight-bold">Asignación del Plan</p>
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="observaciones" class="col-2 pl-0">Observaciones </label>
+                                                    <div class="col-10 pr-0 pl-12">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="observaciones" v-model="dataPaciente.observaciones">
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="row pt-5">
+                                            <div class="col-2 pl-10">
+                                                <label for="direccion" class="pl-0">Depart./ Prov./ Dist.</label>
+                                            </div>
+                                            <div class="col-3 pr-0 pl-20">
+                                                <div class="select2-input">
+                                                    <select id="departamento" name="departamento" class="form-control form-control-sm border-odonto" v-model="coddepa">
+                                                        <option value="">--Seleccione--</option>
+                                                        <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
+                                                            {{ depa.descripcion}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="select2-input">
+                                                    <select id="provincia" name="provincia" class="form-control form-control-sm border-odonto" v-model="codprov">
+                                                        <option value="">--Seleccione--</option>
+                                                        <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
+                                                            {{ prov.descripcion}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 pr-10 pl-0">
+                                                <div class="select2-input">
+                                                    <select id="distrito" name="distrito" class="form-control form-control-sm border-odonto" v-model="dataPaciente.ubigeo_id">
+                                                        <option value="">--Seleccione--</option>
+                                                        <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
+                                                            {{ dist.descripcion}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="direccion" class="col-2 pl-0">Dirección </label>
+                                                    <div class="col-10 pr-0 pl-12">
+                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="direccion" v-model="dataPaciente.direccion">
+                                                    </div>                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 pl-10">
+                                                <p class="form-control-static text-primary font-weight-bold mb-0">Asignación del Paciente</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="medico" class="col-4 pl-0">Médico<span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="medico" v-model="dataPaciente.empleado_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="med in getMedicos" :value="med.id" :key="med.id">
+                                                                {{ med.nombre_completo}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>  
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="asignacion" class="col-4 pl-0">Asignación<span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="asignacion" v-model="dataPaciente.asignacion_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="asig in asignaciones" :value="asig.id" :key="asig.id">
+                                                                {{ asig.nombre_asignacion}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>  
+                                            </div>
+                                        </div>                                       
+                                        <div class="row">
+                                            <div class="col-12 pl-10">
+                                                <p class="form-control-static text-primary font-weight-bold mb-0">Asignación del Plan</p>
                                             </div>
                                         </div>                                        
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="tipoplan" class="text-primary font-weight-bold">Tipo Plan<span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="tipoplan" v-model="dataPaciente.tipo" @change="SelectTipoPlan">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="tip in tipoplanes" :value="tip.id" :key="tip.id">
-                                                            {{ tip.value}}
-                                                        </option>
-                                                    </select>
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="tipoplan" class="col-4 pl-0">Tipo Plan<span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="tipoplan" v-model="dataPaciente.tipo" @change="SelectTipoPlan">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="tip in tipoplanes" :value="tip.id" :key="tip.id">
+                                                                {{ tip.value}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
                                                 </div>                                              
                                             </div> 
                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="plan" class="text-primary font-weight-bold">{{ dataPaciente.tipo == 1 ? 'Elige Plan' : 'Aseguradora'}}<span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="plan" v-model="dataPaciente.plan_id"  @change="SelectPlan">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="pla in getPlanes" :value="pla.id" :key="pla.id">
-                                                            {{ pla.descripcion}}
-                                                        </option>
-                                                    </select>
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="plan" class="col-4">{{ dataPaciente.tipo == 1 ? 'Elige Plan' : 'Aseguradora'}}<span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="plan" v-model="dataPaciente.plan_id"  @change="SelectPlan">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="pla in getPlanes" :value="pla.id" :key="pla.id">
+                                                                {{ pla.descripcion}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
                                                 </div>                                              
-                                            </div>
-                                                                                                                                                                                
+                                            </div>                                                                                                                                                    
                                         </div>
+
                                         <div class="row" v-show="dataPaciente.tipo == 2">
                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="empresa" class="text-primary font-weight-bold">Empresa<span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="empresa" v-model="dataPaciente.empresapaciente_id" @change="SelectEmpresa">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="emp in empresapacientesplanes" :value="emp.empresapaciente.id" :key="emp.empresapaciente.id">
-                                                            {{ emp.empresapaciente.razon_social}}
-                                                        </option>
-                                                    </select>
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="empresa" class="col-4">Empresa<span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="empresa" v-model="dataPaciente.empresapaciente_id" @change="SelectEmpresa">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="emp in empresapacientesplanes" :value="emp.empresapaciente.id" :key="emp.empresapaciente.id">
+                                                                {{ emp.empresapaciente.razon_social}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
                                                 </div>                                              
                                             </div>
                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="poliza" class="text-primary font-weight-bold">Poliza<span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="poliza" v-model="dataPaciente.poliza_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="pol in polizaspac" :value="pol.id" :key="pol.id">
-                                                            {{ pol.codigo }} - {{pol.plane.descripcion }}-DED {{ pol.deducible }}-COAS {{ pol.coaseguro }} %- {{ pol.planpoliza.nombre_planpoliza}}
-                                                        </option>
-                                                    </select>
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="poliza" class="col-4">Poliza<span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <select class="form-control form-control-sm border-odonto" id="poliza" v-model="dataPaciente.poliza_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="pol in polizaspac" :value="pol.id" :key="pol.id">
+                                                                {{ pol.codigo }} - {{pol.plane.descripcion }}-DED {{ pol.deducible }}-COAS {{ pol.coaseguro }} %- {{ pol.planpoliza.nombre_planpoliza}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>                                                                                                                                                                               
-                                        </div>                                                                                                                                                           
+                                        </div> 
+                                                                                                                                                          
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-action">
-                                <button type="submit" class="btn btn-primary" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                                <button type="button" class="btn btn-danger"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                            <div class="card-action pr-20">
+<!--                                 <button type="button" class="btn btn-danger float-right ml-10"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button> -->
+                                <button type="submit" class="btn btn-primary float-right" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                             </div>
                         </form> 
                     </div>
@@ -669,7 +780,7 @@
                             </div>
                         </div>
                         <div class="card-action">
-                            <button type="submit" class="btn btn-primary" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+                            <button type="submit" class="btn btn-primary float-right" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                             <button class="btn btn-danger" @click.prevent="$modal.hide('dependiente')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                         </div>
                     </form>                    
@@ -971,11 +1082,12 @@ export default {
             polizaspac:[],  
             getPlanesDep:[], 
             polizaspacDep:[],
-            nom_pac:[]                  
+            nom_pac:[],
+            menor_edad:false,                            
         }
     },
     computed: {
-        ...mapState(['user_system','tipodocumentos','estadosciviles','sedes','motivocaptaciones','asignaciones','parentescos','empresapacientesplanes','planes','polizas','pacientes']),
+        ...mapState(['user_system','tipodocumentos','estadosciviles','sedes','motivocaptaciones','asignaciones','parentescos','empresapacientesplanes','planes','polizas','pacientes','convenios']),
         ...mapGetters(['getubigeos','getMedicos','getDocumentosIdentidad','getplanes_aseguradoras','getPolizas','getPacienteById','getDependientesById']),
         departamentos: function(){
             return this.getubigeos.filter((ubigeo) => ubigeo.codprov == '00').filter((ubigeo) => ubigeo.coddist == '00');
@@ -1008,6 +1120,13 @@ export default {
         'dataPaciente.empresapaciente_id' (newVal,oldVal){
             this.polizaspac = this.getPolizas(this.dataPaciente.empresapaciente_id,this.dataPaciente.plan_id)       
         },
+        'dataPaciente.edad' (newVal,oldVal) { 
+            if(newVal < 18){
+                this.menor_edad = true
+            }else{
+                this.menor_edad = false
+            }
+        },         
         'dataDependiente.fecha_nacimiento' (newVal,oldVal) {
             if(moment(newVal,'DD-MM-YYYY',true).isValid()){
                 this.dataDependiente.edad = moment().diff(moment(newVal, "DD-MM-YYYY"), 'years')
@@ -1090,7 +1209,9 @@ export default {
                 if(this.dataPaciente.ubigeo_id != null){   
                     this.coddepa = (this.departamentos.find(depa => depa.coddepa == this.dataPaciente.ubigeo.coddepa)).coddepa
                     this.codprov = (this.provincias.find(provi => provi.codprov == this.dataPaciente.ubigeo.codprov)).codprov
-                }                                             
+                }else{
+                    this.dataPaciente.ubigeo_id = ''
+                }                                            
             } 
             
         },
@@ -1471,10 +1592,15 @@ export default {
     .form-group-default label:not(.error) {
         font-size: 9.5px !important;
     }  
-
     .card.card-with-nav .card-body {
         padding:5px 0px !important;
-    }    
+    } 
+    .pl-12 {
+        padding-left: 12px !important;        
+    } 
+    .border-odonto {
+        border-color: #c1c4c7 !important;
+    }         
 </style>
 
 

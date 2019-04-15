@@ -128,10 +128,14 @@ export default {
         return state.tipocambios.find(tc => tc.fecha_registro == moment().format('DD-MM-YYYY'))
     },
     // Carga de tratamientos para agregar a la muela principal
-    getTratamientosSimbolo: (state) => (idsim, idpla ,idsed) => {
-        return state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 
+    getTratamientosSimbolo: (state) => (idsim, idpla ,idsed,idplased) => {
+        let serpla = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 
+        let sersed = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplased && tar.sede_id == idsed) 
+        let servicios = []
+        return servicios = _.union(serpla,sersed)
+        //return state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 
     },
-    getTratamientosSimboloNew: (state) => (idsim, idplapac ,idplased ,idsed) => {
+    getTratamientosSimboloNew: (state) => (idsim, idplapac ,idsed ,idplased) => {
         let serpla = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplapac && tar.sede_id == idsed)
         let sersed = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplased && tar.sede_id == idsed)
         //return state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 

@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-md-3 div-left">
-            <div class="card card-profile card-secondary">
+            <div class="card card-profile card-primary">
                 <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
                     <div class="profile-picture">
                         <img v-if="imagenPerfil" :src="imagenPerfil" alt="Imagen de Perfil objeto">
@@ -16,7 +16,7 @@
 
                         <div class="view-profile">
                             <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" @change="onFileChange" >
-                            <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-secondary"><i class="la la-file-image-o"></i> Cargar Imagen</label>
+                            <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-primary"><i class="la la-file-image-o"></i> Cargar Imagen</label>
                         </div>
                         <div class="seperator-solid"></div>                        
                     </div>
@@ -24,7 +24,7 @@
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-12 pl-10 pr-10">
-                            <div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <div class="nav flex-column nav-pills nav-primary" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <router-link :to="{ name: 'datos' }" class="nav-link" id="v-pills-datos-tab" data-toggle="pill" href="#v-pills-datos" role="tab" aria-controls="v-pills-datos" aria-selected="true" exact>Datos Generales</router-link>
                                 <router-link :to="{ name: 'derivaciones' }" class="nav-link" id="v-pills-derivaciones-tab" data-toggle="pill" href="#v-pills-derivaciones" role="tab" aria-controls="v-pills-derivaciones" aria-selected="false" exact>Derivaciones</router-link>
                                 <router-link :to="{ name: 'citas-paciente' }" class="nav-link" id="v-pills-citas-tab" data-toggle="pill" href="#v-pills-citas" role="tab" aria-controls="v-pills-citas" aria-selected="false" exact>Citas</router-link>

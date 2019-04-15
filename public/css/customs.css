@@ -1,5 +1,23 @@
 /** Clases Importantes para el uso del sistema **/
 
+.login .wrapper.wrapper-login {
+    background: #000046 !important; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #000046, #1cb5e0) !important; /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #000046, #1cb5e0) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.login .wrapper.wrapper-login .container-login {
+    padding: 40px 25px !important;
+    width: 350px !important;
+}
+.login .wrapper.wrapper-login .container-login .btn-login {
+    padding: 10px 0 !important;
+    width: 185px !important;
+    font-size: 1.2em !important;
+    border-radius: 5px !important;
+}
+.user-box .u-text h4 {
+    font-size: 11px !important;
+}
 .close-form {
     margin:15px;
     border-radius: 50%;

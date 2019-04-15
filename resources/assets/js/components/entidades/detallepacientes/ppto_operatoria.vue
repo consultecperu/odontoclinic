@@ -241,7 +241,7 @@
                 </div>              
             </div>
             <!-- Fin de Odontograma -->          
-            <div class="row">
+            <div class="row pl-20 pr-20">
                 <table class="table table-bordered table-sm table-head-bg-info table-bordered-bd-info">
                     <thead>
                         <tr>
@@ -258,16 +258,16 @@
                     <tbody>
                         <tr v-for="(serv, index) in lista_general_presupuesto" :key="serv.id">
                             <td>{{ serv.letras }}</td>
-                            <td>{{ serv.nombre_servicio}}</td>
+                            <td>{{ serv.nombre_servicio}}</td> 
                             <td>{{ serv.nombre_moneda}}</td>
-                            <td>0</td>
-                            <td>0</td>  
-                            <td>0</td>   
-                            <td>{{ serv.costo}}</td> 
+                            <td align="center">{{ serv.costo_deducible}}</td>
+                            <td align="center">{{ serv.costo_coaseguro}}</td>  
+                            <td align="center">{{ serv.costo_aseguradora}}</td>   
+                            <td align="center">{{ serv.costo}}</td> 
                             <td><button type="button" v-tooltip="'Eliminar Item'" class="btn btn-danger btn-xs" @click.prevent="borrarItem(serv,index)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>
-                                <button type="button" v-if="$route.params.idpresupuesto == undefined" v-tooltip="'Descuento'" class="btn btn-success btn-xs" @click.prevent="AplicaDescuento(serv,index)">
+                                <button type="button" v-if="$route.params.idpresupuesto == undefined && dataPaciente.tipo_plan == 1" v-tooltip="'Descuento'" class="btn btn-success btn-xs" @click.prevent="AplicaDescuento(serv,index)">
                                     <i class="la la-calculator font-large"></i>
                                 </button>
                             </td>                                                                                                                        
@@ -277,9 +277,11 @@
                         </tr>
                         <tr v-else>
                             <td>Totales</td>
-                            <td>Cliente: {{ costoTotal }}</td>
+                            <td v-if="dataPaciente.tipo_plan == 1">Cliente1: {{ costoTotal }}</td>
+                            <td v-if="dataPaciente.tipo_plan == 2">Cliente2: {{ costoCliente }}</td>
                             <td colspan="2">Aseguradora:</td>
-                            <td colspan="4">Total: {{ costoTotal }}</td>
+                            <td colspan="4" v-if="dataPaciente.tipo_plan == 1">Total: 0.00</td>
+                            <td colspan="4" v-if="dataPaciente.tipo_plan == 2">Total: {{ costoAseguradora }}</td>                            
                         </tr>
                     </tbody>
                 </table>                                
@@ -373,10 +375,10 @@
                                             <td>{{ serv.letras }}</td>
                                             <td>{{ serv.nombre_servicio}}</td>
                                             <td>{{ serv.nombre_moneda}}</td>
-                                            <td>0</td>
-                                            <td>0</td>  
-                                            <td>0</td>   
-                                            <td>{{ serv.costo}}</td>  
+                                            <td align="center">{{ serv.costo_deducible}}</td>
+                                            <td align="center">{{ serv.costo_coaseguro}}</td>  
+                                            <td align="center">{{ serv.costo_aseguradora}}</td>   
+                                            <td align="center">{{ serv.costo}}</td> 
                                             <td>{{ serv.costo}}</td> 
                                             <td align="center"><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" disabled><i class="la la-close"></i></button></td>                                                                                                                        
                                         </tr>
@@ -384,10 +386,10 @@
                                             <td>{{ serv.letras }}</td>
                                             <td>{{ serv.nombre_servicio}}</td>
                                             <td>{{ serv.nombre_moneda}}</td>
-                                            <td>0</td>
-                                            <td>0</td>  
-                                            <td>0</td>   
-                                            <td>{{ serv.costo}}</td>  
+                                            <td align="center">{{ serv.costo_deducible}}</td>
+                                            <td align="center">{{ serv.costo_coaseguro}}</td>  
+                                            <td align="center">{{ serv.costo_aseguradora}}</td>   
+                                            <td align="center">{{ serv.costo}}</td>  
                                             <td>{{ serv.costo}}</td> 
                                             <td align="center"><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" v-tooltip.top="'Eliminar'"><i class="la la-close"></i></button></td>                                                                                                                        
                                         </tr>                                        
@@ -398,7 +400,6 @@
                                     </tbody>
                                 </table>                                
                             </div>
-
                         </div>
                     </div>
                     <div class="card-action">
@@ -561,7 +562,7 @@ import html2canvas from 'html2canvas'
 import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'ppto-operatoria',
-    mixins: [mixin],   
+    mixins: [mixin],  
     created(){
         this.$store.dispatch('LOAD_DIENTES_LIST') 
         this.$store.dispatch('LOAD_SIMBOLOGIAS_LIST')   
@@ -578,7 +579,10 @@ export default {
                 aseguradora:this.PacienteById.pacienteplanes.plan.descripcion ,
                 empleado_id:this.PacienteById.empleado_id,
                 fecha:moment().format('DD-MM-YYYY'),
-                tipocambio:this.getTipoCambioHoy.tipo_cambio
+                tipocambio:this.getTipoCambioHoy.tipo_cambio,
+                deducible:this.PacienteById.pacienteplanes.tipo == 1 ? '0' : this.PacienteById.pacienteplanes.poliza.deducible,
+                coaseguro:this.PacienteById.pacienteplanes.tipo == 1 ? '0' : this.PacienteById.pacienteplanes.poliza.coaseguro,
+                tipo_plan: this.PacienteById.pacienteplanes.tipo
             } 
         }else{
             this.dataPaciente = {
@@ -590,10 +594,13 @@ export default {
                 aseguradora:this.presupuestoOperatoriaById.paciente.pacienteplanes.plan.descripcion ,
                 empleado_id:this.presupuestoOperatoriaById.paciente.empleado_id,
                 fecha:moment(this.presupuestoOperatoriaById.fecha_registro).format('DD-MM-YYYY'),
-                tipocambio:this.presupuestoOperatoriaById.tipocambio.tipo_cambio
+                tipocambio:this.presupuestoOperatoriaById.tipocambio.tipo_cambio,
+                deducible:this.presupuestoOperatoriaById.paciente.pacienteplanes.tipo == 1 ? '0' : this.presupuestoOperatoriaById.paciente.pacienteplanes.poliza.deducible,
+                coaseguro:this.presupuestoOperatoriaById.paciente.pacienteplanes.tipo == 1 ? '0' : this.presupuestoOperatoriaById.paciente.pacienteplanes.poliza.coaseguro,
+                tipo_plan: this.presupuestoOperatoriaById.paciente.pacienteplanes.tipo
             }
             this.newidPresupuesto = this.presupuestoOperatoriaById.id             
-        }
+        }    
         window.addEventListener('scroll', this.handleScroll);                           
     },  
     mounted(){
@@ -709,7 +716,10 @@ export default {
                 aseguradora:'',
                 empleado:'',
                 fecha:'',
-                tipocambio:''
+                tipocambio:'',
+                deducible:'',
+                coaseguro:'',
+                tipo_plan:''
             },
             dataTratamiento:{
                 id:'',
@@ -729,6 +739,9 @@ export default {
                 nombre_moneda : '',
                 descuento:'',
                 realizado:'',
+                costo_deducible:'',
+                costo_coaseguro:'',
+                costo_aseguradora:'',
                 activo:''
             },
             dataDescuento:{
@@ -918,15 +931,32 @@ export default {
             return _.sortBy(this.simbologias, 'id');
         },
         TratamientosSimbolo(){
-            return this.getTratamientosSimbolo(this.simboloID,this.PacienteById.pacienteplanes.plan_id,1)
+            return this.getTratamientosSimbolo(this.simboloID,this.PacienteById.pacienteplanes.plan_id,this.sede_system.id,this.sede_system.plan_id)
         },
-/*         TratamientosSimboloNew(){
-            return this.getTratamientosSimboloNew(this.simboloID,this.PacienteById.pacienteplanes.plan_id,this.sede_system.plan_id,this.sede_system.id)
-        },   */      
+        TratamientosSimboloNew(){
+            //console.log("servicio_odonto",this.getTratamientosSimboloNew(this.simboloID,this.PacienteById.pacienteplanes.plan_id,this.sede_system.id,this.sede_system.plan_id))
+            return this.getTratamientosSimboloNew(this.simboloID,this.PacienteById.pacienteplanes.plan_id,this.sede_system.id,this.sede_system.plan_id)
+        },        
         costoTotal(){
             let costo = 0
             this.lista_general_presupuesto.map(function(value, key){
                 costo += parseFloat(value.costo)
+            })
+            return parseFloat(costo).toFixed(2)
+        },
+        costoCliente(){
+            let costo = 0
+            this.lista_general_presupuesto.map(function(value, key){
+                let monto = parseFloat(value.costo_deducible) + parseFloat(value.costo_coaseguro)
+                costo += parseFloat(monto)
+            })
+            return parseFloat(costo).toFixed(2)
+        },
+        costoAseguradora(){
+            let costo = 0
+            this.lista_general_presupuesto.map(function(value, key){
+                let monto = parseFloat(value.costo) - (parseFloat(value.costo_deducible) + parseFloat(value.costo_coaseguro))
+                costo += parseFloat(monto)
             })
             return parseFloat(costo).toFixed(2)
         },
@@ -1039,6 +1069,9 @@ export default {
             if(this.simboloID != 1) _letras='OVPMD'
 
             if(this.select_multi){
+                let _costo_deducible = parseFloat(this.dataPaciente.deducible).toFixed(2)
+                let _costo_coaseguro = (parseFloat(param.row.costo) - parseFloat(this.dataPaciente.deducible)) * ((parseFloat(this.dataPaciente.coaseguro))/100)
+                let _costo_aseguradora = parseFloat(param.row.costo) - ( parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro))
                 this.list_dent_multiple.map(function(value, key) {                                       
                     self.dataTratamiento = {
                         tarifario_id:param.row.id,
@@ -1055,12 +1088,18 @@ export default {
                         moneda_id:param.row.moneda.id,
                         nombre_moneda : param.row.moneda.nombre_moneda,
                         descuento:'',
-                        realizado:''
+                        realizado:'',
+                        costo_deducible: parseFloat(_costo_deducible).toFixed(2),
+                        costo_coaseguro: parseFloat(_costo_coaseguro).toFixed(2),
+                        costo_aseguradora: self.dataPaciente.tipo_plan == 1 ? 0.00 : parseFloat(_costo_aseguradora).toFixed(2)                        
                     } 
                     datalist = _.clone(self.dataTratamiento)             
                     self.list_services_dent.push(datalist)      // nuevos servicios
                 })
             }else{
+                let _costo_deducible = parseFloat(this.dataPaciente.deducible).toFixed(2)
+                let _costo_coaseguro = (parseFloat(param.row.costo) - parseFloat(this.dataPaciente.deducible)) * ((parseFloat(this.dataPaciente.coaseguro))/100)
+                let _costo_aseguradora = parseFloat(param.row.costo) - ( parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro))
                 this.dataTratamiento = {
                     tarifario_id:param.row.id,
                     diente_id: this.infodent.id,
@@ -1072,11 +1111,14 @@ export default {
                     servicio_id : param.row.servicio_id,
                     nombre_servicio : param.row.servicio.nombre_servicio,
                     costo_base: param.row.costo,
-                    costo : param.row.costo,
+                    costo : parseFloat(param.row.costo).toFixed(2),
                     moneda_id:param.row.moneda.id,
                     nombre_moneda : param.row.moneda.nombre_moneda,
                     descuento:'',
-                    realizado:''
+                    realizado:'',
+                    costo_deducible: parseFloat(_costo_deducible).toFixed(2),
+                    costo_coaseguro: parseFloat(_costo_coaseguro).toFixed(2),
+                    costo_aseguradora: self.dataPaciente.tipo_plan == 1 ? 0.00 : parseFloat(_costo_aseguradora).toFixed(2) 
                 }                
                 this.list_services_dent.push(this.dataTratamiento)          // nuevos servicios
             }
@@ -1126,8 +1168,8 @@ export default {
                         tarifario_id:value.tarifario_id,
                         tarifa:self.PacienteById.pacienteplanes.tipo,
                         moneda_id:value.moneda_id,
-                        deducible:self.PacienteById.pacienteplanes.poliza_id != null ? self.PacienteById.pacienteplanes.poliza.deducible : null ,
-                        solocoaseguro: self.PacienteById.pacienteplanes.poliza_id != null ? self.PacienteById.pacienteplanes.poliza.coaseguro : null,
+                        deducible: value.costo_deducible,
+                        solocoaseguro: value.costo_coaseguro,
                         pago_cliente:value.costo,
                         pago_aseguradora:'',
                         costo:value.costo,

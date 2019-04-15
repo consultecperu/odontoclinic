@@ -102,20 +102,20 @@
                             <div class="user-box">
                                 <div class="u-img"><img src="/img/profile.jpg" alt="image profile"></div>
                                 <div class="u-text">
-                                    <h4>Hizrian</h4>
-                                    <p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                    <h4>{{user_system.perfile.nombre_perfil}}</h4>
+                                    <p class="text-muted">{{ user_system.__empleado.nombres + ' ' + user_system.__empleado.apellido_paterno}}</p>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">My Profile</a>
-                            <a class="dropdown-item" href="#">My Balance</a>
+                            <a class="dropdown-item" href="#">Cambiar Clave</a>
+<!--                             <a class="dropdown-item" href="#">My Balance</a>
                             <a class="dropdown-item" href="#">Inbox</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Account Setting</a>
+                            <a class="dropdown-item" href="#">Account Setting</a> -->
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" @click.prevent="logout">Logout</a>
+                            <a class="dropdown-item" href="#" @click.prevent="logout">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </li>
@@ -130,13 +130,24 @@
     <!-- End Navbar -->    
 </template>
 <script>
+import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'navbar',
+    created() {      
+        this.$store.dispatch('LOAD_PERFIL_USER')   
+    },    
     data() {
         return {
-                   
+            dataPassword: {
+                antPass:'',
+                newPass:'',
+                repPass:''
+            }                     
         }
     },
+    computed: {
+        ...mapState(['perfil_user','user_system']),
+    },    
     methods: {
         logout() {
             this.$store.dispatch('LOGOUT').then(() => {          
