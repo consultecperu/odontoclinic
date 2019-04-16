@@ -51,22 +51,22 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="empresa" :width="'60%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="empresa" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de empresas -->
                 <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} de Empresa Administradora</div>
+                    <div class="card-header bg-primary pb-10 pt-10">
+                        <div class="card-title text-white">{{ labelAccion }} de Empresa Administradora</div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body pb-0">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 pr-0">
                                 <div class="form-group pt-0">
                                     <label for="razon" class="text-primary font-weight-bold mb-0">Razón Social <span class="required-label">*</span></label>
                                     <input type="text" id="razon" class="form-control form-control-sm mayusculas border border-primary" v-model="dataEmpresa.nombre_empresa" required />
                                 </div>
                               
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 pl-0">
                                 <div class="form-group pt-0">
                                     <label for="ruc" class="text-primary font-weight-bold mb-0">RUC <span class="required-label">*</span></label>
                                     <input type="text" id="ruc" class="form-control form-control-sm border border-primary" maxlength="11" v-model="dataEmpresa.ruc" required />
@@ -74,14 +74,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 pr-0">
                                 <div class="form-group pt-0">
                                     <label for="telefono" class="text-primary font-weight-bold mb-0">Teléfono </label>
                                     <input type="text" id="telefono" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telefono" required />
                                 </div>
                               
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 pl-0">
                                 <div class="form-group pt-0">
                                     <label for="celular" class="text-primary font-weight-bold mb-0">Celular </label>
                                     <input type="text" id="celular" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.celular" required />
@@ -89,14 +89,14 @@
                             </div>
                         </div> 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 pr-0">
                                 <div class="form-group pt-0">
                                     <label for="email" class="text-primary font-weight-bold mb-0">Email </label>
                                     <input type="email" id="email" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.email" />
                                 </div>
                               
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 pl-0">
                                 <div class="form-group pt-0">
                                     <label for="teladicional" class="text-primary font-weight-bold mb-0">Telef. Adicional </label>
                                     <input type="text" id="teladicional" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telef_adicional" />
@@ -104,7 +104,7 @@
                             </div>
                         </div>                        
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 pr-0">
                                 <div class="form-group pt-0">
                                     <label for="representante" class="text-primary font-weight-bold mb-0">Representante Legal <span class="required-label">*</span></label>
                                     <input type="text" id="representante" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.representante_legal" />
@@ -162,7 +162,7 @@
                         </div>                                             
 
                     </div>
-                    <div class="card-action">
+                    <div class="card-action pt-20 pb-20">
                         <button class="btn btn-danger float-right ml-10" @click="$modal.hide('empresa')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                         <button class="btn btn-primary float-right" @click.prevent="ActionEmpresa" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>

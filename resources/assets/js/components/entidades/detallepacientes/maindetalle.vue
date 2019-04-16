@@ -2,17 +2,17 @@
     <div class="row">
         <div class="col-md-3 div-left">
             <div class="card card-profile card-primary">
-                <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
+                <div class="card-header">
                     <div class="profile-picture">
                         <img v-if="imagenPerfil" :src="imagenPerfil" alt="Imagen de Perfil objeto">
                         <img v-if="!imagenPerfil" :src="'/images/pacientes/' + dataPacienteMain.foto" alt="Imagen de Perfil db">                        
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body pb-0">
                     <div class="user-profile text-center">
-                        <div class="name">{{ dataPacienteMain.numero_documento }}</div>
+                        <!-- <div class="name">{{ dataPacienteMain.numero_documento }}</div> -->
                         <div class="job">{{ dataPacienteMain.nombre_completo }}</div>
-                        <div class="desc"> SEDE : {{ dataPacienteMain.sede.nombre_sede}}</div>
+                        <!-- <div class="desc"> SEDE : {{ dataPacienteMain.sede.nombre_sede}}</div> -->
 
                         <div class="view-profile">
                             <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" @change="onFileChange" >
@@ -21,17 +21,17 @@
                         <div class="seperator-solid"></div>                        
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer pt-0">
                     <div class="row">
                         <div class="col-12 pl-10 pr-10">
                             <div class="nav flex-column nav-pills nav-primary" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <router-link :to="{ name: 'datos' }" class="nav-link" id="v-pills-datos-tab" data-toggle="pill" href="#v-pills-datos" role="tab" aria-controls="v-pills-datos" aria-selected="true" exact>Datos Generales</router-link>
-                                <router-link :to="{ name: 'derivaciones' }" class="nav-link" id="v-pills-derivaciones-tab" data-toggle="pill" href="#v-pills-derivaciones" role="tab" aria-controls="v-pills-derivaciones" aria-selected="false" exact>Derivaciones</router-link>
-                                <router-link :to="{ name: 'citas-paciente' }" class="nav-link" id="v-pills-citas-tab" data-toggle="pill" href="#v-pills-citas" role="tab" aria-controls="v-pills-citas" aria-selected="false" exact>Citas</router-link>
-                                <router-link :to="{ name: 'multimedia' }" class="nav-link" id="v-pills-multimedia-tab" data-toggle="pill" href="#v-pills-multimedia" role="tab" aria-controls="v-pills-multimedia" aria-selected="false" exact>Imagenes y Archivos</router-link>
+                                <router-link :to="{ name: 'datos' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-datos-tab" data-toggle="pill" href="#v-pills-datos" role="tab" aria-controls="v-pills-datos" aria-selected="true" exact>Datos Generales</router-link>
+                                <router-link :to="{ name: 'derivaciones' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-derivaciones-tab" data-toggle="pill" href="#v-pills-derivaciones" role="tab" aria-controls="v-pills-derivaciones" aria-selected="false" exact>Derivaciones</router-link>
+                                <router-link :to="{ name: 'citas-paciente' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-citas-tab" data-toggle="pill" href="#v-pills-citas" role="tab" aria-controls="v-pills-citas" aria-selected="false" exact>Citas</router-link>
+                                <router-link :to="{ name: 'multimedia' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-multimedia-tab" data-toggle="pill" href="#v-pills-multimedia" role="tab" aria-controls="v-pills-multimedia" aria-selected="false" exact>Imagenes y Archivos</router-link>
                                 <div class="seperator-solid"></div>
-                                <router-link :to="{ name: 'lista-ppto-operatoria' }" class="nav-link" id="v-pills-operatoria-tab" data-toggle="pill" href="#v-pills-operatoria" role="tab" aria-controls="v-pills-operatoria" aria-selected="true" exact>Ppto. Operatoria</router-link>
-                                <router-link :to="{ name: 'lista-ppto-ortodoncia' }" class="nav-link" id="v-pills-ortodoncia-tab" data-toggle="pill" href="#v-pills-ortodoncia" role="tab" aria-controls="v-pills-ortodoncia" aria-selected="false" exact>Ppto. Ortodoncia</router-link>
+                                <router-link :to="{ name: 'lista-ppto-operatoria' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-operatoria-tab" data-toggle="pill" href="#v-pills-operatoria" role="tab" aria-controls="v-pills-operatoria" aria-selected="true" exact>Ppto. Operatoria</router-link>
+                                <router-link :to="{ name: 'lista-ppto-ortodoncia' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-ortodoncia-tab" data-toggle="pill" href="#v-pills-ortodoncia" role="tab" aria-controls="v-pills-ortodoncia" aria-selected="false" exact>Ppto. Ortodoncia</router-link>
                             </div>
                         </div>
                     </div>
@@ -169,7 +169,12 @@ export default {
         padding-bottom: 100%;
         margin-bottom: -100%;
     }
-
+    .border-odonto {
+        border-color: #c1c4c7 !important;
+    } 
+    .card-profile .profile-picture{
+        bottom: -40px !important;
+    }       
 </style>
 
 

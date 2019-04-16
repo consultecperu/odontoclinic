@@ -59,13 +59,13 @@
         <modal name="perfil" :width="'40%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de perfiles -->
                 <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} de Perfil</div>
+                    <div class="card-header bg-primary pt-10 pb-10">
+                        <div class="card-title text-white">{{ labelAccion }} de Perfil</div>
                     </div>
                     <div class="card-body">
                         <div class="form-group pt-0">
                             <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Perfil <span class="required-label"> *</span></label>
-                            <input type="text" id="nombre" placeholder="Nombre de Perfil" class="form-control input-sm mayusculas border border-primary" v-model="dataPerfil.nombre_perfil">
+                            <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataPerfil.nombre_perfil">
                         </div>
                         <div class="form-group pt-0">
                             <label for="descripcion" class="text-primary font-weight-bold mb-0">Descripcion <span class="required-label"> *</span></label>

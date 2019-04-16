@@ -124,8 +124,8 @@
         <modal name="servicio" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de servicios -->
                 <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} de Servicio</div>
+                    <div class="card-header bg-primary pt-10 pb-10">
+                        <div class="card-title text-white">{{ labelAccion }} de Servicio</div>
                     </div>
                     <div class="card-body pt-0">
                         <div class="form-group">
@@ -202,26 +202,24 @@
                             </div>
                         </div>
                         <div class="row pl-20">
-                            <div class="form-check col-6 pt-0 pb-0" >
+                            <div class="form-check col-4 pt-0 pb-0" >
                                 <label class="form-check-label">
                                     <input class="form-check-input" type="checkbox" value="" v-model="dataServicio.laboratorio" true-value=1 false-value=0 />
                                     <span class="form-check-sign text-primary font-weight-bold">Aplica Laboratorio</span>
                                 </label>
                             </div>   
-                            <div class="form-check col-6 pt-0 pb-0" >
+                            <div class="form-check col-4 pt-0 pb-0" >
                                 <label class="form-check-label">
                                     <input class="form-check-input" type="checkbox" value="" v-model="dataServicio.materiales" true-value=1 false-value=0 />
                                     <span class="form-check-sign text-primary font-weight-bold">Aplica Materiales</span>
                                 </label>
-                            </div>   
-                        </div> 
-                        <div class="row pl-20">
-                            <div class="form-check col-6 pb-0" >
+                            </div> 
+                            <div class="form-check col-4 pt-0 pb-0" >
                                 <label class="form-check-label">
                                     <input class="form-check-input" type="checkbox" value="" v-model="dataServicio.pago_doctor" true-value=1 false-value=0 />
                                     <span class="form-check-sign text-primary font-weight-bold">Liquidar al Doctor</span>
                                 </label>
-                            </div>                            
+                            </div>                               
                         </div>                
                     </div>
                     <div class="card-action pt-20 pb-20">
@@ -555,5 +553,7 @@ export default {
     .hide-border {
         border-color:white !important;
     }
-
+    .badge {
+        border-radius: 3px !important;
+    }
 </style>

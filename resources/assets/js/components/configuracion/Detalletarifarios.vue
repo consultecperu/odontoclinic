@@ -69,8 +69,8 @@
         <modal name="servicio" :width="'40%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de planes -->
                 <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} Servicio al Plan</div>
+                    <div class="card-header bg-primary pt-10 pb-10">
+                        <div class="card-title text-white">{{ labelAccion }} Servicio al Plan</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -147,8 +147,8 @@
                         </div>
                     </div>
                     <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="ActionServicio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('servicio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('servicio')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionServicio" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de planes -->

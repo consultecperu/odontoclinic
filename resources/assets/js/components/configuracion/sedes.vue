@@ -54,8 +54,8 @@
         <modal name="sede" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de laboratorios -->
                 <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title pl-10">{{ labelAccion }} de Sede</div>
+                    <div class="card-header bg-primary pb-10 pt-10">
+                        <div class="card-title pl-10 text-white">{{ labelAccion }} de Sede</div>
                     </div>
                     <div class="card-body pb-0">
                         <div class="row">

@@ -78,49 +78,47 @@
         <modal name="modulo" :width="'30%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de modulos -->
                 <div class="card mb-0">
-                    <div class="card-header pt-5 pb-5">
-                        <div class="card-title">Registro de {{ labelSeleccion }}</div>
+                    <div class="card-header bg-primary pt-10 pb-10">
+                        <div class="card-title text-white">Registro de {{ labelSeleccion }}</div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group pt-0 pb-0" v-if="MenuSelect">
-                            <label for="exampleFormControlSelect1" class="text-primary font-weight-bold">Seleccione el Menú</label>
+                        <div class="form-group pt-0 pb-10" v-if="MenuSelect">
+                            <label for="exampleFormControlSelect1" class="text-primary font-weight-bold mb-0">Seleccione el Menú</label>
                             <select v-model="dataModulo.idparent" class="form-control form-control-sm border border-primary" id="exampleFormControlSelect1" :disabled="!(typeof(dataModulo.id) === 'undefined')">
                             <option v-for="menu in getMenus" :value="menu.id" :key="menu.id">
                                 {{ menu.name }}
                             </option>
                             </select>                            
                         </div>                    
-                        <div class="form-group pb-0">
-                            <label for="opcion" class="text-primary font-weight-bold">Nombre de {{ labelSeleccion }} <span class="required-label"> *</span></label>
-                            <input type="text" id="opcion" placeholder="Nombre" class="form-control form-control-sm border border-primary" v-model="dataModulo.name">
+                        <div class="form-group pt-0 pb-0">
+                            <label for="opcion" class="text-primary font-weight-bold mb-0">Nombre de {{ labelSeleccion }} <span class="required-label"> *</span></label>
+                            <input type="text" id="opcion" class="form-control form-control-sm border border-primary" v-model="dataModulo.name">
                         </div>
                         <div class="form-group pb-0">
-                            <label for="icono" class="text-primary font-weight-bold">Icono <span class="required-label"> *</span></label>
-                            <input type="text" id="icono" placeholder="Nombre de Icono" class="form-control form-control-sm border border-primary" v-model="dataModulo.icono">
+                            <label for="icono" class="text-primary font-weight-bold mb-0">Icono <span class="required-label"> *</span></label>
+                            <input type="text" id="icono" class="form-control form-control-sm border border-primary" v-model="dataModulo.icono">
                         </div>
                         <div class="form-group pb-0">
-                            <label for="ruta" class="text-primary font-weight-bold">Nombre de Ruta <span class="required-label"> *</span></label>
-                            <input type="text" id="ruta" placeholder="Nombre de Ruta" class="form-control form-control-sm border border-primary" v-model="dataModulo.name_router">
+                            <label for="ruta" class="text-primary font-weight-bold mb-0">Nombre de Ruta <span class="required-label"> *</span></label>
+                            <input type="text" id="ruta" class="form-control form-control-sm border border-primary" v-model="dataModulo.name_router">
                         </div> 
                         <div class="form-group pb-0">
-                            <label for="plantilla" class="text-primary font-weight-bold">Nombre en Plantilla <span class="required-label"> *</span></label>
-                            <input type="text" id="plantilla" placeholder="Nombre en Plantilla" class="form-control form-control-sm border border-primary" v-model="dataModulo.name_template">
+                            <label for="plantilla" class="text-primary font-weight-bold mb-0">Nombre en Plantilla <span class="required-label"> *</span></label>
+                            <input type="text" id="plantilla" class="form-control form-control-sm border border-primary" v-model="dataModulo.name_template">
                         </div>                                                                        
                         <div class="form-group pb-0">
-                            <label for="orden" class="text-primary font-weight-bold">Numero de orden</label>
-                            <input type="text" id="orden" placeholder="Número Orden" class="form-control form-control-sm border border-primary" v-model="dataModulo.orden">
+                            <label for="orden" class="text-primary font-weight-bold mb-0">Numero de orden</label>
+                            <input type="text" id="orden" class="form-control form-control-sm border border-primary" v-model="dataModulo.orden">
                         </div> 
                     </div>
                     <div class="card-action pb-10 pt-10">
-                        <button class="btn btn-primary" @click.prevent="ActionModulo" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('modulo')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('modulo')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionModulo" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de modulos -->
         </modal>        
-
-    </div>
-   
+    </div>   
 </template>
 <script>
 import mixin from '../../mixins.js'

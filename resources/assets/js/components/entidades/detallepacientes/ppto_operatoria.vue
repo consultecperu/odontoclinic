@@ -1073,8 +1073,8 @@ export default {
             if(this.multicaras.includes(4)) _letras += 'D'
             if(this.simboloID != 1) _letras='OVPMD'
             if(this.select_multi){
-                let _costo_deducible = parseFloat(this.dataPaciente.deducible).toFixed(2)
-                let _costo_coaseguro = (parseFloat(param.row.costo) - parseFloat(this.dataPaciente.deducible)) * ((parseFloat(this.dataPaciente.coaseguro))/100)
+                let _costo_deducible = param.row.solocoaseguro == 1 ? 0.00 : parseFloat(this.dataPaciente.deducible).toFixed(2)
+                let _costo_coaseguro = (parseFloat(param.row.costo) - parseFloat(_costo_deducible)) * ((parseFloat(this.dataPaciente.coaseguro))/100)
                 let _pago_cliente = parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro)
                 let _costo_aseguradora = parseFloat(param.row.costo) - ( parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro))
                 this.list_dent_multiple.map(function(value, key) {                                       
@@ -1103,8 +1103,8 @@ export default {
                     self.list_services_dent.push(datalist)      // nuevos servicios
                 })
             }else{
-                let _costo_deducible = parseFloat(this.dataPaciente.deducible).toFixed(2)
-                let _costo_coaseguro = (parseFloat(param.row.costo) - parseFloat(this.dataPaciente.deducible)) * ((parseFloat(this.dataPaciente.coaseguro))/100)
+                let _costo_deducible = param.row.solocoaseguro == 1 ? 0.00 : parseFloat(this.dataPaciente.deducible).toFixed(2)
+                let _costo_coaseguro = (parseFloat(param.row.costo) - parseFloat(_costo_deducible)) * ((parseFloat(this.dataPaciente.coaseguro))/100)
                 let _pago_cliente = parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro)
                 let _costo_aseguradora = parseFloat(param.row.costo) - ( parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro))
                 this.dataTratamiento = {
@@ -1133,8 +1133,7 @@ export default {
             this.multicaras = []
             this.cambiotratamiento(undefined)
             this.simboloID = ''
-            this.$modal.hide('tratamientos');   
-            console.log("lista completa",this.list_services_dent)         
+            this.$modal.hide('tratamientos');          
         },
         selectD(param){
             if(this.simboloID != 1) return

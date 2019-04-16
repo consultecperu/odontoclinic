@@ -54,8 +54,8 @@
         <modal name="gruposervicio" :width="'35%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de gruposervicios -->
                 <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} de Grupo de Servicio</div>
+                    <div class="card-header bg-primary pt-10 pb-10">
+                        <div class="card-title text-white">{{ labelAccion }} de Grupo de Servicio</div>
                     </div>
                     <div class="card-body pb-0">
                         <div class="form-group pt-0 pb-0">

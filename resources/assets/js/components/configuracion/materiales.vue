@@ -62,10 +62,10 @@
         <modal name="material" :width="'35%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de materiales -->
                 <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} de Material</div>
+                    <div class="card-header bg-primary pt-10 pb-10">
+                        <div class="card-title text-white">{{ labelAccion }} de Material</div>
                     </div>
-                    <div class="card-body"> 
+                    <div class="card-body pb-0"> 
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group pt-0">
@@ -327,8 +327,10 @@ export default {
     .v--modal-overlay {
         z-index:9000;     
     }    
-
     .vld-overlay.is-full-page {
         z-index: 99999;
     }
+    .badge {
+        border-radius: 3px !important;
+    }    
 </style>
