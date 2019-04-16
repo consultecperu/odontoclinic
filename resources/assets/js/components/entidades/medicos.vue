@@ -413,11 +413,11 @@
                                                 </div>
                                             </div>    -->                                                                                   
                                         </div>
-                                        <div class="row pb-15">
+                                        <div class="row">
                                             <div class="col-12">
-                                                <div class="form-group row pb-0 pt-5">
+                                                <div class="form-group row pb-0">
                                                     <label for="especialidades" class="col-2 pl-0">Especialidades <span class="required-label"> *</span></label>
-                                                    <div class="col-10 pr-0">
+                                                    <div class="col-10 pr-0 pl-10">
                                                         <multiselect v-model="dataEmpleado.especialidades" tag-placeholder="Agregar Especialidades" placeholder="Agregar Especialidad" label="nombre_especialidad" track-by="nombre_especialidad" :options="especialidades" :multiple="true" :option-height="20" :taggable="true" @input="addEspecialidad" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
                                                     </div>
                                                 </div>
@@ -426,8 +426,8 @@
                                         <div class="row"> 
                                             <div class="col-12">
                                                 <div class="form-group row pb-0 pt-5">
-                                                    <label for="sede" class="col-4 pl-0">Sedes <span class="required-label"> *</span></label>
-                                                    <div class="col-8 pr-0">
+                                                    <label for="sede" class="col-2 pl-0">Sedes <span class="required-label"> *</span></label>
+                                                    <div class="col-10 pr-0 pl-10">
                                                         <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="20" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                                                                            
                                                     </div>
                                                 </div>
