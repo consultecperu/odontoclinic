@@ -408,7 +408,6 @@
                                 </div>
                             </div>
                             <div class="card-action pr-20">
-<!--                                 <button type="button" class="btn btn-danger float-right ml-10"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button> -->
                                 <button type="submit" class="btn btn-primary float-right" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                             </div>
                         </form> 
@@ -479,7 +478,7 @@
                             <div class="row pr-10 pl-10">
                                 <div class="col-md-3">
                                     <div class="card card-profile card-primary">
-                                        <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
+                                        <div class="card-header">
                                             <div class="profile-picture">
                                                 <img v-if="dataDependiente.image" :src="dataDependiente.image" alt="Imagen de Perfil">
                                                 <img v-if="!dataDependiente.image" :src="'/images/pacientes/' + dataDependiente.foto" alt="Imagen de Perfil">                                                
@@ -506,17 +505,6 @@
                                         </div>
                                     </div>
                                     <div class="row">
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="tipodoc" class="text-primary font-weight-bold">Parentesco <span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="tipodoc" v-model="dataDependiente.parentesco_id">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="par in parentescos" :value="par.id" :key="par.id">
-                                                        {{ par.nombre_parentesco}}
-                                                    </option>
-                                                </select>
-                                            </div>                                            
-                                        </div> -->
                                         <div class="col-6">
                                             <div class="form-group row pt-5 pb-0">
                                                 <label for="parentesco" class="col-4 pl-0">Parentesco <span class="required-label"> *</span></label>
@@ -530,17 +518,6 @@
                                                 </div>
                                             </div>                                             
                                         </div>                                        
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="tipodoc" class="text-primary font-weight-bold">Tipo de Documento <span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="tipodoc" v-model="dataDependiente.tipodocumento_id">
-                                                    <option value="">-- Seleccione Tipo--</option>
-                                                    <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
-                                                        {{ tipo.nombre_tipodocumento}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div> -->
                                         <div class="col-6">
                                             <div class="form-group row pt-5 pb-0">
                                                 <label for="tipodoc" class="col-4 pl-0">Tipo de Documento <span class="required-label"> *</span></label>
@@ -553,13 +530,7 @@
                                                     </select>
                                                 </div>
                                             </div>                                             
-                                        </div>                                        
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="numdoc" class="text-primary font-weight-bold">Num.Documento <span class="required-label"> *</span></label>
-                                                <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataDependiente.numero_documento" maxlength="9">
-                                            </div>
-                                        </div>    -->                                         
+                                        </div>                                                                                 
                                     </div>                                        
                                     <div class="row">
                                         <div class="col-6">
@@ -587,25 +558,7 @@
                                                     <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="ape_materno" name="apemat" v-model="dataDependiente.apellido_materno">
                                                 </div>                                                
                                             </div>
-                                        </div>                                        
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="apepat" class="text-primary font-weight-bold">Apellido Paterno <span class="required-label"> *</span></label>
-                                                <input type="text" class="form-control form-control-sm mayusculas" name="apepat" placeholder="Apellido Paterno" v-model="dataDependiente.apellido_paterno">
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="apemat" class="text-primary font-weight-bold">Apellido Materno <span class="required-label"> *</span></label>
-                                                <input type="text" class="form-control form-control-sm mayusculas" name="apemat" placeholder="Apellido Materno" v-model="dataDependiente.apellido_materno">
-                                            </div>
-                                        </div> -->
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="nombres" class="text-primary font-weight-bold">Nombres <span class="required-label"> *</span></label>
-                                                <input type="text" class="form-control form-control-sm mayusculas" name="nombres" placeholder="Nombres" v-model="dataDependiente.nombres">
-                                            </div>
-                                        </div>   -->                                          
+                                        </div>                                                                                  
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
@@ -628,31 +581,7 @@
                                                     </select>
                                                 </div>
                                             </div> 
-                                        </div>
-
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="tipodoc" class="text-primary font-weight-bold">Sexo <span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="tipodoc" v-model="dataDependiente.sexo">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="sexo in sexos" :value="sexo.id" :key="sexo.id">
-                                                        {{ sexo.value}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div> -->
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="datepicker" class="text-primary font-weight-bold">Fecha de Nacimiento</label>
-                                                <masked-input v-model="dataDependiente.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="edad" class="text-primary font-weight-bold">Edad</label>
-                                                <p class="form-control-static text-danger text-center font-weight-bold mb-10">{{ dataDependiente.edad }}</p>                                                    
-                                            </div>
-                                        </div>  -->                                                                                      
+                                        </div>                                                                                     
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
@@ -688,25 +617,7 @@
                                                     <input type="text" class="form-control form-control-sm border-odonto" id="celular" name="celular" v-model="dataDependiente.celular" maxlength="9">
                                                 </div>                                                
                                             </div>
-                                        </div>
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="telefono" class="text-primary font-weight-bold">Telefono</label>
-                                                <input type="text" class="form-control form-control-sm" name="telefono" placeholder="Telefono" maxlength="8" v-model="dataDependiente.telefono">
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="celular" class="text-primary font-weight-bold">Celular<span class="required-label"> *</span></label>
-                                                <input type="text" class="form-control form-control-sm" name="celular" placeholder="Celular" maxlength="9" v-model="dataDependiente.celular">
-                                            </div>
-                                        </div> -->
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="telefono_mensajeria" class="text-primary font-weight-bold">Nº Mensajeria</label>
-                                                <input type="text" class="form-control form-control-sm" name="telefono_mensajeria" placeholder="Tel.Mensajeria" v-model="dataDependiente.telefono_mensajeria">
-                                            </div>
-                                        </div> -->                                                                                        
+                                        </div>                                                                                        
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
@@ -724,13 +635,7 @@
                                                     <input type="text" class="form-control form-control-sm border-odonto" id="email" name="email" v-model="dataDependiente.email">
                                                 </div>                                                
                                             </div>
-                                        </div>                                        
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="email" class="text-primary font-weight-bold">Email <span class="required-label"> *</span></label>
-                                                <input type="email" class="form-control form-control-sm" name="email" placeholder="Email" v-model="dataDependiente.email">
-                                            </div>
-                                        </div>  --> 
+                                        </div>                                         
                                     </div>
                                     <div class="row"> 
                                         <div class="col-6">
@@ -753,30 +658,7 @@
                                                     <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="carnet" v-model="dataDependiente.numero_carnet">
                                                 </div>                                                
                                             </div>                                            
-                                        </div>                                                                                                                          
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="estciv" class="text-primary font-weight-bold">Estado Civil</label>
-                                                <select class="form-control form-control-sm" id="estciv" v-model="dataDependiente.estadocivil_id">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="estado in estadosciviles" :value="estado.id" :key="estado.id">
-                                                        {{ estado.nombre_estadocivil}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div> -->
-                                       
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="captaciones" class="text-primary font-weight-bold">Captación<span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="captaciones" v-model="dataDependiente.motivocaptacion_id">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="cap in motivocaptaciones" :value="cap.id" :key="cap.id">
-                                                        {{ cap.nombre_motivocaptacion}}
-                                                    </option>
-                                                </select>
-                                            </div>                                                
-                                        </div>   -->                                          
+                                        </div>                                                                                                                                                                    
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
@@ -827,19 +709,7 @@
                                                     <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="observaciones" v-model="dataDependiente.observaciones">
                                                 </div>                                                
                                             </div>
-                                        </div>                                                                              
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="carnet" class="text-primary font-weight-bold">Nº Carnet</label>
-                                                <input type="text" class="form-control form-control-sm" name="carnet" placeholder="Carnet" v-model="dataDependiente.numero_carnet">
-                                            </div>
-                                        </div>
-                                        <div class="col-8">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="observaciones" class="text-primary font-weight-bold">Observaciones</label>
-                                                <input type="text" class="form-control form-control-sm" name="observaciones" placeholder="" v-model="dataDependiente.observaciones">
-                                            </div>                                                
-                                        </div>  -->                                                                                      
+                                        </div>                                                                                                                                                                    
                                     </div>
                                     <div class="row pt-5">
                                         <div class="col-2 pl-10">
@@ -875,47 +745,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
-
-<!--                                         <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="basic" class="text-primary font-weight-bold">Departamento</label>
-                                                <div class="select2-input">
-                                                    <select id="basic" name="basic" class="form-control form-control-sm border-primary" v-model="coddepa">
-                                                        <option value="">--Seleccione--</option>
-                                                        <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
-                                                            {{ depa.descripcion}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="basic2" class="text-primary font-weight-bold">Provincia</label>
-                                                <div class="select2-input">
-                                                    <select id="basic2" name="basic2" class="form-control form-control-sm border-primary" v-model="codprov">
-                                                        <option value="">--Seleccione--</option>
-                                                        <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
-                                                            {{ prov.descripcion}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="basic3" class="text-primary font-weight-bold">Distrito</label>
-                                                <div class="select2-input">
-                                                    <select id="basic3" name="basic3" class="form-control form-control-sm border-primary" v-model="dataDependiente.ubigeo_id">
-                                                        <option value="">--Seleccione--</option>
-                                                        <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
-                                                            {{ dist.descripcion}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
@@ -926,12 +755,6 @@
                                                 </div>                                                
                                             </div>
                                         </div>                                        
-<!--                                         <div class="col-12">
-                                            <div class="form-group form-group-default border border-primary" >
-                                                <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
-                                                <input type="text" class="form-control form-control-sm" name="direccion" placeholder="Direccion" v-model="dataDependiente.direccion">
-                                            </div>                                                
-                                        </div> -->
                                     </div>
                                     <div class="row">
                                         <div class="col-12 pl-0">
@@ -965,29 +788,6 @@
                                                 </div>
                                             </div>  
                                         </div>
-
-<!--                                         <div class="col-6">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="medico" class="text-primary font-weight-bold">Médico<span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="medico" v-model="dataDependiente.empleado_id">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="med in getMedicos" :value="med.id" :key="med.id">
-                                                        {{ med.nombre_completo}}
-                                                    </option>
-                                                </select>
-                                            </div>  
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="asignacion" class="text-primary font-weight-bold">Asignación<span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="asignacion" v-model="dataDependiente.asignacion_id">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="asig in asignaciones" :value="asig.id" :key="asig.id">
-                                                        {{ asig.nombre_asignacion}}
-                                                    </option>
-                                                </select>
-                                            </div>  
-                                        </div> -->
                                     </div> 
                                     <div class="row">
                                         <div class="col-12 pl-0">
@@ -1020,34 +820,7 @@
                                                     </select>
                                                 </div>
                                             </div>                                              
-                                        </div>
-
-
-
-
-<!--                                         <div class="col-6">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="tipoplan" class="text-primary font-weight-bold">Tipo Plan<span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="tipoplan" v-model="dataDependiente.tipo" @change="SelectTipoPlanDep">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="tip in tipoplanes" :value="tip.id" :key="tip.id">
-                                                        {{ tip.value}}
-                                                    </option>
-                                                </select>
-                                            </div>                                              
-                                        </div> 
-                                        <div class="col-6">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="plan" class="text-primary font-weight-bold">{{ dataDependiente.tipo == 1 ? 'Elige Plan' : 'Aseguradora'}}<span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="plan" v-model="dataDependiente.plan_id"  @change="SelectPlanDep">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="pla in getPlanesDep" :value="pla.id" :key="pla.id">
-                                                        {{ pla.descripcion}}
-                                                    </option>
-                                                </select>
-                                            </div>                                              
-                                        </div> -->
-                                                                                                                                                                            
+                                        </div>                                                                                                                                                                            
                                     </div>
                                     <div class="row" v-show="dataDependiente.tipo == 2">
                                         <div class="col-6">
@@ -1075,32 +848,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>                                                                                                                                                                               
-
-
-<!-- 
-                                        <div class="col-6">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="empresa" class="text-primary font-weight-bold">Empresa<span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="empresa" v-model="dataDependiente.empresapaciente_id" @change="SelectEmpresaDep">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="emp in empresapacientesplanes" :value="emp.empresapaciente.id" :key="emp.empresapaciente.id">
-                                                        {{ emp.empresapaciente.razon_social}}
-                                                    </option>
-                                                </select>
-                                            </div>                                              
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group form-group-default border border-primary">
-                                                <label for="poliza" class="text-primary font-weight-bold">Poliza<span class="required-label"> *</span></label>
-                                                <select class="form-control form-control-sm" id="poliza" v-model="dataDependiente.poliza_id">
-                                                    <option value="">-- Seleccione --</option>
-                                                    <option v-for="pol in polizaspacDep" :value="pol.id" :key="pol.id">
-                                                        {{ pol.codigo }} - {{pol.plane.descripcion }}-DED {{ pol.deducible }}-COAS {{ pol.coaseguro }} %- {{ pol.planpoliza.nombre_planpoliza}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div> -->                                                                                                                                                                               
+                                        </div>                                                                                                                                                                                                                                                                                                                                                             
                                     </div>                                                                                                                                                           
                                 </div>
                             </div>

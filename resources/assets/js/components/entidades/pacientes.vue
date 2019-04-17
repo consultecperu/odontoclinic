@@ -53,15 +53,15 @@
         <modal name="paciente" :width="'80%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" @opened="openedFn()">
             <!-- form de registro de medicos -->
                 <div class="card mb-0">
-                    <div class="card-header pt-5 pb-5">
-                        <div class="card-title">Registro de Paciente</div>
+                    <div class="card-header bg-primary pt-5 pb-5">
+                        <div class="card-title text-white">Registro de Paciente</div>
                     </div>
                     <form role="form" method="POST" v-on:submit.prevent="createPaciente">                    
                         <div class="card-body pt-5">
                             <div class="row pr-10 pl-10">
                                 <div class="col-md-3 pt-10">
-                                    <div class="card card-profile card-secondary">
-                                        <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
+                                    <div class="card card-profile card-primary">
+                                        <div class="card-header">
                                             <div class="profile-picture">
                                                 <img v-if="dataPaciente.image" :src="dataPaciente.image" alt="Imagen de Perfil">
                                                 <img v-if="!dataPaciente.image" src="/images/pacientes/no-image.jpg" alt="Imagen de Perfil">
@@ -74,6 +74,12 @@
                                                     <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-primary btn-block"><i class="la la-file-image-o"></i> Cargar Imagen</label>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="card-footer pl-10 pr-10">
+											<div class="nav flex-column nav-pills nav-primary" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+												<a class="nav-link border-odonto active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Datos Personales</a>
+												<a class="nav-link border-odonto" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Asignaciones / Planes</a>
+											</div>                                            
                                         </div>
                                     </div>
                                 </div>                                    

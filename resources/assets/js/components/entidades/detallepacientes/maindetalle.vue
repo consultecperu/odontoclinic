@@ -13,7 +13,6 @@
                         <!-- <div class="name">{{ dataPacienteMain.numero_documento }}</div> -->
                         <div class="job">{{ dataPacienteMain.nombre_completo }}</div>
                         <!-- <div class="desc"> SEDE : {{ dataPacienteMain.sede.nombre_sede}}</div> -->
-
                         <div class="view-profile">
                             <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" @change="onFileChange" >
                             <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-primary"><i class="la la-file-image-o"></i> Cargar Imagen</label>
