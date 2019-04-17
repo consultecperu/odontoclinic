@@ -1,33 +1,33 @@
 <template>
     <div class="row">
         <div class="col-md-3">
-            <div class="card card-profile card-secondary">
-                <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
+            <div class="card card-profile card-primary pb-20">
+                <div class="card-header">
                     <div class="profile-picture">
                         <img v-if="dataEmpleado.image" :src="dataEmpleado.image" alt="Imagen de Perfil">
                         <img v-if="!dataEmpleado.image" :src="'/images/' + dataEmpleado.foto" alt="Imagen de Perfil">                        
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body pb-0">
                     <div class="user-profile text-center">
-                        <div class="name">{{ dataEmpleado.numero_documento }}</div>
+                        <!-- <div class="name">{{ dataEmpleado.numero_documento }}</div> -->
                         <div class="job">{{ dataEmpleado.nombre_completo }}</div>
-                        <div class="desc">MÉDICO</div>
+                        <div class="desc">ODONTOLOGO</div>
 
                         <div class="view-profile">
                             <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" @change="onFileChange" >
-                            <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-secondary"><i class="la la-file-image-o"></i> Cargar Imagen</label>
+                            <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-sm btn-primary"><i class="la la-file-image-o"></i> Cargar Imagen</label>
                         </div>
                         <div class="seperator-solid"></div>                        
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer pt-0 pb-20">
                     <div class="row">
                         <div class="col-12 pl-10 pr-10">
-                            <div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Datos Generales</a>
-                                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Liquidación Operatoria</a>
-                                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Liquidación Ortodoncia</a>
+                            <div class="nav flex-column nav-pills nav-primary" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <a class="nav-link active border-odonto pt-5 pb-5" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Datos Generales</a>
+                                <a class="nav-link border-odonto pt-5 pb-5" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Liquidación Operatoria</a>
+                                <a class="nav-link border-odonto pt-5 pb-5" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Liquidación Ortodoncia</a>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="card card-with-nav">
                         <div class="card-header">
                             <div class="row">
-                                <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                <ul class="nav nav-tabs nav-line nav-color-primary" role="tablist">
                                     <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#datos" role="tab" aria-selected="true">Datos Personales</a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#horarios" role="tab" aria-selected="false" @click.prevent="BlankSede">Turnos Normales</a> </li>
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#horespeciales" role="tab" aria-selected="false" @click.prevent="BlankSede">Turnos Especiales</a> </li>
@@ -50,114 +50,227 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="tab-content">
+                            <div class="tab-content pr-10 pl-10 pt-10">
                                 <div class="tab-pane active" id="datos" role="tabpanel" aria-labelledby="datos-tab">
-                                    <form role="form" method="PUT" v-on:submit.prevent="updateEmpleado">                            
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="tipodoc" class="text-primary font-weight-bold">Tipo de Documento <span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="tipodoc" v-model="dataEmpleado.tipodocumento_id">
-                                                        <option value="">-- Seleccione Tipo--</option>
-                                                        <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
-                                                            {{ tipo.nombre_tipodocumento}}
-                                                        </option>
-                                                    </select>
+                                    <form role="form" method="PUT" v-on:submit.prevent="updateEmpleado">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group row pt-5 pb-0">
+                                                        <label for="tipodoc" class="col-4 pl-0">Tipo de Documento <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <select class="form-control form-control-sm border-odonto" id="tipodoc" v-model="dataEmpleado.tipodocumento_id">
+                                                                <option value="">-- Seleccione Tipo--</option>
+                                                                <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
+                                                                    {{ tipo.nombre_tipodocumento}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>                                             
                                                 </div>
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="numdocumento" class="col-4 pl-0">Num.Documento <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto" id="numdocumento" name="numdocumento" v-model="dataEmpleado.numero_documento" maxlength="8">
+                                                        </div>                                                
+                                                    </div>
+                                                </div>                                              
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary">
+                                                        <label for="tipodoc" class="text-primary font-weight-bold">Tipo de Documento <span class="required-label"> *</span></label>
+                                                        <select class="form-control form-control-sm" id="tipodoc" v-model="dataEmpleado.tipodocumento_id">
+                                                            <option value="">-- Seleccione Tipo--</option>
+                                                            <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
+                                                                {{ tipo.nombre_tipodocumento}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="numdoc" class="text-primary font-weight-bold">Num.Documento <span class="required-label"> *</span></label>
+                                                        <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataEmpleado.numero_documento" maxlength="9">
+                                                    </div>
+                                                </div>  -->
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="numdoc" class="text-primary font-weight-bold">Num.Documento <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataEmpleado.numero_documento" maxlength="9">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="apepat" class="col-4 pl-0">Apellido Paterno <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="ape_paterno" name="ape_paterno" v-model="dataEmpleado.apellido_paterno">
+                                                        </div>                                                
+                                                    </div>
                                                 </div>
-                                            </div> 
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="apepat" class="text-primary font-weight-bold">Apellido Paterno <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="apepat" placeholder="Apellido Paterno" v-model="dataEmpleado.apellido_paterno">
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="apemat" class="col-4 pl-0">Apellido Materno <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="ape_materno" name="numdocumento" v-model="dataEmpleado.apellido_materno">
+                                                        </div>                                                
+                                                    </div>
+                                                </div>                                             
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="apepat" class="text-primary font-weight-bold">Apellido Paterno <span class="required-label"> *</span></label>
+                                                        <input type="text" class="form-control form-control-sm mayusculas" name="apepat" placeholder="Apellido Paterno" v-model="dataEmpleado.apellido_paterno">
+                                                    </div>
                                                 </div>
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="apemat" class="text-primary font-weight-bold">Apellido Materno <span class="required-label"> *</span></label>
+                                                        <input type="text" class="form-control form-control-sm mayusculas" name="apemat" placeholder="Apellido Materno" v-model="dataEmpleado.apellido_materno">
+                                                    </div>
+                                                </div> -->
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="apemat" class="text-primary font-weight-bold">Apellido Materno <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="apemat" placeholder="Apellido Materno" v-model="dataEmpleado.apellido_materno">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="nombres" class="col-4 pl-0">Nombres <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="nombres" name="nombres" v-model="dataEmpleado.nombres">
+                                                        </div>                                                
+                                                    </div>
                                                 </div>
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="nombres" class="col-4 pl-0">COP <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="cop" name="cop" v-model="dataEmpleado.COP">
+                                                        </div>                                                
+                                                    </div>
+                                                </div>                                             
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="nombres" class="text-primary font-weight-bold">Nombres <span class="required-label"> *</span></label>
+                                                        <input type="text" class="form-control form-control-sm mayusculas" name="nombres" placeholder="Nombres" v-model="dataEmpleado.nombres">
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="cop" class="text-primary font-weight-bold">COP <span class="required-label"> *</span></label>
+                                                        <input type="text" class="form-control form-control-sm mayusculas" name="cop" placeholder="COP" v-model="dataEmpleado.COP">
+                                                    </div>
+                                                </div>  -->                                           
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="nombres" class="text-primary font-weight-bold">Nombres <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="nombres" placeholder="Nombres" v-model="dataEmpleado.nombres">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group row pt-5 pb-0">
+                                                        <label for="datepicker" class="col-4 pl-0">Fecha Nacimiento</label>
+                                                        <div class="col-8 pr-0">
+                                                            <masked-input v-model="dataEmpleado.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control form-control-sm border-odonto"/>                                                                                                
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <div class="col-6">
+                                                    <div class="form-group row pt-5 pb-0">
+                                                        <label for="tipodoc" class="col-4 pl-0">Sexo <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <select class="form-control form-control-sm border-odonto" id="sexo" v-model="dataEmpleado.sexo">
+                                                                <option value="">-- Seleccione Sexo--</option>
+                                                                <option v-for="sexo in sexos" :value="sexo.id" :key="sexo.id">
+                                                                    {{ sexo.value}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div> 
+                                                </div>                                            
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary">
+                                                        <label for="datepicker" class="text-primary font-weight-bold">Fecha de Nacimiento</label>
+                                                        <masked-input v-model="dataEmpleado.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary">
+                                                        <label for="tipodoc" class="text-primary font-weight-bold">Sexo <span class="required-label"> *</span></label>
+                                                        <select class="form-control form-control-sm" id="tipodoc" v-model="dataEmpleado.sexo">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="sexo in sexos" :value="sexo.id" :key="sexo.id">
+                                                                {{ sexo.value}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> -->
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="cop" class="text-primary font-weight-bold">COP <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="cop" placeholder="COP" v-model="dataEmpleado.COP">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="telefono" class="col-4 pl-0">Teléfono </label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto" id="telefono" name="telefono" v-model="dataEmpleado.telefono" maxlength="7">
+                                                        </div>                                                
+                                                    </div>
                                                 </div>
-                                            </div>                                            
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="datepicker" class="text-primary font-weight-bold">Fecha de Nacimiento</label>
-                                                    <masked-input v-model="dataEmpleado.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="celular" class="col-4 pl-0">Celular <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto" id="celular" name="celular" v-model="dataEmpleado.celular" maxlength="9">
+                                                        </div>                                                
+                                                    </div>
+                                                </div>                                            
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="telefono" class="text-primary font-weight-bold">Telefono</label>
+                                                        <input type="text" class="form-control form-control-sm" name="telefono" placeholder="Telefono" maxlength="8" v-model="dataEmpleado.telefono">
+                                                    </div>
                                                 </div>
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="celular" class="text-primary font-weight-bold">Celular</label>
+                                                        <input type="text" class="form-control form-control-sm" name="celular" placeholder="Celular" maxlength="9" v-model="dataEmpleado.celular">
+                                                    </div>
+                                                </div> -->
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="tipodoc" class="text-primary font-weight-bold">Sexo <span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="tipodoc" v-model="dataEmpleado.sexo">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="sexo in sexos" :value="sexo.id" :key="sexo.id">
-                                                            {{ sexo.value}}
-                                                        </option>
-                                                    </select>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="email" class="col-4 pl-0">Email <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto" id="email" name="email" v-model="dataEmpleado.email">
+                                                        </div>                                                
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="telefono" class="text-primary font-weight-bold">Telefono</label>
-                                                    <input type="text" class="form-control form-control-sm" name="telefono" placeholder="Telefono" maxlength="8" v-model="dataEmpleado.telefono">
+                                                <div class="col-6">
+                                                    <div class="form-group row pt-5 pb-0">
+                                                        <label for="estadocivil" class="col-4 pl-0">Estado Civil </label>
+                                                        <div class="col-8 pr-0">
+                                                            <select class="form-control form-control-sm border-odonto" id="estadocivil" v-model="dataEmpleado.estadocivil_id">
+                                                                <option value="">-- Seleccione --</option>
+                                                                <option v-for="est in estadosciviles" :value="est.id" :key="est.id">
+                                                                    {{ est.nombre_estadocivil}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div> 
+                                                </div>                                            
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="email" class="text-primary font-weight-bold">Email <span class="required-label"> *</span></label>
+                                                        <input type="email" class="form-control form-control-sm" name="email" placeholder="Email" v-model="dataEmpleado.email">
+                                                    </div>
                                                 </div>
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary">
+                                                        <label for="estciv" class="text-primary font-weight-bold">Estado Civil</label>
+                                                        <select class="form-control form-control-sm" id="estciv" v-model="dataEmpleado.estadocivil_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="estado in estadosciviles" :value="estado.id" :key="estado.id">
+                                                                {{ estado.nombre_estadocivil}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> -->
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="celular" class="text-primary font-weight-bold">Celular</label>
-                                                    <input type="text" class="form-control form-control-sm" name="celular" placeholder="Celular" maxlength="9" v-model="dataEmpleado.celular">
+                                            <div class="row pt-5">
+                                                <div class="col-2 pl-10">
+                                                    <label for="direccion" class="pl-0">Depart./ Prov./ Dist.</label>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="email" class="text-primary font-weight-bold">Email <span class="required-label"> *</span></label>
-                                                    <input type="email" class="form-control form-control-sm" name="email" placeholder="Email" v-model="dataEmpleado.email">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="estciv" class="text-primary font-weight-bold">Estado Civil</label>
-                                                    <select class="form-control form-control-sm" id="estciv" v-model="dataEmpleado.estadocivil_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="estado in estadosciviles" :value="estado.id" :key="estado.id">
-                                                            {{ estado.nombre_estadocivil}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="basic" class="text-primary font-weight-bold">Departamento</label>
+                                                <div class="col-3 pr-0 pl-20">
                                                     <div class="select2-input">
-                                                        <select id="basic" name="basic" class="form-control form-control-sm border-primary" v-model="coddepa">
+                                                        <select id="departamento" name="departamento" class="form-control form-control-sm border-odonto" v-model="coddepa">
                                                             <option value="">--Seleccione--</option>
                                                             <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
                                                                 {{ depa.descripcion}}
@@ -165,12 +278,9 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="basic2" class="text-primary font-weight-bold">Provincia</label>
+                                                <div class="col-4">
                                                     <div class="select2-input">
-                                                        <select id="basic2" name="basic2" class="form-control form-control-sm border-primary" v-model="codprov">
+                                                        <select id="provincia" name="provincia" class="form-control form-control-sm border-odonto" v-model="codprov">
                                                             <option value="">--Seleccione--</option>
                                                             <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
                                                                 {{ prov.descripcion}}
@@ -178,12 +288,9 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="basic3" class="text-primary font-weight-bold">Distrito</label>
+                                                <div class="col-3 pr-10 pl-0">
                                                     <div class="select2-input">
-                                                        <select id="basic3" name="basic3" class="form-control form-control-sm border-primary" v-model="dataEmpleado.ubigeo_id">
+                                                        <select id="distrito" name="distrito" class="form-control form-control-sm border-odonto" v-model="dataEmpleado.ubigeo_id">
                                                             <option value="">--Seleccione--</option>
                                                             <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
                                                                 {{ dist.descripcion}}
@@ -191,352 +298,505 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
-                                                    <input type="text" class="form-control form-control-sm" name="direccion" placeholder="Direccion" v-model="dataEmpleado.direccion">
-                                                </div>                                                
-                                            </div>
-                                        </div> 
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="dtpingreso" class="text-primary font-weight-bold">Fecha de Ingreso</label>
-                                                    <masked-input v-model="dataEmpleado.fecha_ingreso" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
-                                                </div>                                                
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="numconsultorio" class="text-primary font-weight-bold">Num. Consultorio</label>
-                                                    <input type="text" class="form-control form-control-sm" name="numconsultorio" placeholder="Num. Consultorio" v-model="dataEmpleado.numero_consultorio">
+
+    <!--                                             <div class="col-4">
+                                                    <div class="form-group form-group-default border border-primary">
+                                                        <label for="basic" class="text-primary font-weight-bold">Departamento</label>
+                                                        <div class="select2-input">
+                                                            <select id="basic" name="basic" class="form-control form-control-sm border-primary" v-model="coddepa">
+                                                                <option value="">--Seleccione--</option>
+                                                                <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
+                                                                    {{ depa.descripcion}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>                                                                                      
-                                        </div>
-                                        <div class="row pb-15">
-                                            <div class="col-6">
-                                                <div class="form-group border border-primary rounded pt-5">
-                                                    <label for="sede" class="text-primary font-weight-bold mb-0">Especialidades <span class="required-label"> *</span></label>
-                                                    <multiselect v-model="dataEmpleado.especialidades" tag-placeholder="Agregar Especialidades" placeholder="Agregar Especialidad" label="nombre_especialidad" track-by="nombre_especialidad" :options="especialidades" :multiple="true" :option-height="20" :taggable="true" @input="addEspecialidad" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
+                                                <div class="col-4">
+                                                    <div class="form-group form-group-default border border-primary">
+                                                        <label for="basic2" class="text-primary font-weight-bold">Provincia</label>
+                                                        <div class="select2-input">
+                                                            <select id="basic2" name="basic2" class="form-control form-control-sm border-primary" v-model="codprov">
+                                                                <option value="">--Seleccione--</option>
+                                                                <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
+                                                                    {{ prov.descripcion}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <div class="col-4">
+                                                    <div class="form-group form-group-default border border-primary">
+                                                        <label for="basic3" class="text-primary font-weight-bold">Distrito</label>
+                                                        <div class="select2-input">
+                                                            <select id="basic3" name="basic3" class="form-control form-control-sm border-primary" v-model="dataEmpleado.ubigeo_id">
+                                                                <option value="">--Seleccione--</option>
+                                                                <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
+                                                                    {{ dist.descripcion}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="direccion" class="col-2 pl-0">Dirección </label>
+                                                        <div class="col-10 pr-0 pl-12">
+                                                            <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="direccion" v-model="dataEmpleado.direccion">
+                                                        </div>                                                
+                                                    </div>
+                                                </div>                                            
+    <!--                                             <div class="col-12">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
+                                                        <input type="text" class="form-control form-control-sm" name="direccion" placeholder="Direccion" v-model="dataEmpleado.direccion">
+                                                    </div>                                                
+                                                </div> -->
+                                            </div> 
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group row pt-5 pb-0">
+                                                        <label for="datepicker" class="col-4 pl-0">Fecha de Ingreso</label>
+                                                        <div class="col-8 pr-0">
+                                                            <masked-input v-model="dataEmpleado.fecha_ingreso" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control form-control-sm border-odonto"/>                                                                                                
+                                                        </div>
+                                                    </div>
+                                                </div>  
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="consultorio" class="col-4 pl-0">Nro. Consultorio </label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto" id="consultorio" name="consultorio" v-model="dataEmpleado.numero_consultorio">
+                                                        </div>                                                
+                                                    </div>
+                                                </div>                                             
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary">
+                                                        <label for="dtpingreso" class="text-primary font-weight-bold">Fecha de Ingreso</label>
+                                                        <masked-input v-model="dataEmpleado.fecha_ingreso" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
+                                                    </div>                                                
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="numconsultorio" class="text-primary font-weight-bold">Num. Consultorio</label>
+                                                        <input type="text" class="form-control form-control-sm" name="numconsultorio" placeholder="Num. Consultorio" v-model="dataEmpleado.numero_consultorio">
+                                                    </div>
+                                                </div> -->                                                                                      
+                                            </div>
+                                            <div class="row pb-15">
+                                                <div class="col-12">
+                                                    <div class="form-group row pb-0 pt-10">
+                                                        <label for="especialidades" class="col-2 pl-0">Especialidades <span class="required-label"> *</span></label>
+                                                        <div class="col-10 pr-0 pl-10">
+                                                            <multiselect v-model="dataEmpleado.especialidades" tag-placeholder="Agregar Especialidades" placeholder="Agregar Especialidad" label="nombre_especialidad" track-by="nombre_especialidad" :options="especialidades" :multiple="true" :option-height="15" :taggable="true" @input="addEspecialidad" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="row">  
+                                                <div class="col-12">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="sede" class="col-2 pl-0">Sedes <span class="required-label"> *</span></label>
+                                                        <div class="col-10 pr-0 pl-10">
+                                                            <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="15" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">  
+                                                <div class="col-6">
+                                                    <div class="form-group row pt-5 pb-0">
+                                                        <label for="estadocivil" class="col-4 pl-0">Tipo Pago <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <select class="form-control form-control-sm border-odonto" id="estadocivil" v-model="dataEmpleado.tipopagodoctor_id">
+                                                                <option value="">-- Seleccione --</option>
+                                                                <option v-for="tippag in tipopagodoctores" :value="tippag.id" :key="tippag.id">
+                                                                    {{ tippag.nombre_tipopagodoctor}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group row pt-5 pb-0">
+                                                        <label for="estadocivil" class="col-4 pl-0">Tipo Contrato <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <select class="form-control form-control-sm border-odonto" id="tipocontrato" v-model="dataEmpleado.tipocontrato_id">
+                                                                <option value="">-- Seleccione --</option>
+                                                                <option v-for="tipcon in tipocontratos" :value="tipcon.id" :key="tipcon.id">
+                                                                    {{ tipcon.nombre_tipocontrato}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div> 
+                                                </div>                                                                                                                                 
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group border border-primary rounded pt-5">
+                                                        <label for="sede" class="text-primary font-weight-bold mb-0">Especialidades <span class="required-label"> *</span></label>
+                                                        <multiselect v-model="dataEmpleado.especialidades" tag-placeholder="Agregar Especialidades" placeholder="Agregar Especialidad" label="nombre_especialidad" track-by="nombre_especialidad" :options="especialidades" :multiple="true" :option-height="20" :taggable="true" @input="addEspecialidad" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
+                                                    </div>
+                                                </div>                                             
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary mb-0 pb-20">
+                                                        <label for="estciv" class="text-primary font-weight-bold">Tipo Pago</label>
+                                                        <select class="form-control form-control-sm" id="estciv" v-model="dataEmpleado.tipopagodoctor_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="tippag in tipopagodoctores" :value="tippag.id" :key="tippag.id">
+                                                                {{ tippag.nombre_tipopagodoctor}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> -->
+                                            </div>                                        
+                                            <div class="row pb-15">
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="email" class="col-4 pl-0">% Planes Internos <span class="required-label"> *</span> </label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto" id="porcetanjeinterno" name="porcentajeinterno" v-model="dataEmpleado.porcentaje_interno">
+                                                        </div>                                                
+                                                    </div>
+                                                </div>    
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="email" class="col-4 pl-0">% Aseguradoras<span class="required-label"> *</span> </label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto" id="porcetanjeaseguradora" name="porcentajeaseguradora" v-model="dataEmpleado.porcentaje_aseguradora">
+                                                        </div>                                                
+                                                    </div>
+                                                </div>                                             
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group border border-primary rounded pt-5">
+                                                        <label for="sede" class="text-primary font-weight-bold mb-0">Sede</label>
+                                                        <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="20" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
+                                                    </div>
+                                                </div>                                            
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary mb-0 pb-20">
+                                                        <label for="cargo" class="text-primary font-weight-bold">Tipo Contrato</label>
+                                                        <select class="form-control form-control-sm" id="cargo" v-model="dataEmpleado.tipocontrato_id">
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="tipcon in tipocontratos" :value="tipcon.id" :key="tipcon.id">
+                                                                {{ tipcon.nombre_tipocontrato}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+    <!--                                         <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="porcentajeinterno" class="text-primary font-weight-bold">% Planes Internos <span class="required-label"> *</span></label>
+                                                        <input type="text" class="form-control form-control-sm" name="porcentajeinterno" placeholder="% Interno" v-model="dataEmpleado.porcentaje_interno">
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="poraseguradoras" class="text-primary font-weight-bold">% Aseguradoras<span class="required-label"> *</span></label>
+                                                        <input type="text" class="form-control form-control-sm" name="poraseguradoras" placeholder="% Aseguradora" v-model="dataEmpleado.porcentaje_aseguradora">
+                                                    </div>
+                                                </div>
+                                            </div>  -->                                        
+                                            <div class="row pb-20 pt-20">
+                                                <div class="col-6">
+                                                    <label for="">Acceso al Sistema</label>
+                                                    <toggle-button :sync="true" :labels="{checked: 'SI', unchecked: 'NO'}" :color="{checked: '#005FD8', unchecked: '#FF0000', disabled: '#CCCCCC'}" v-model="dataEmpleado.acceso_system"/>                                
+                                                </div>
+                                            </div>
+                                            <div class="row" v-show="dataEmpleado.acceso_system">
+                                                <div class="col-6">
+                                                    <div class="form-group row pb-0 pt-5">
+                                                        <label for="email" class="col-4 pl-0">Nombre Usuario <span class="required-label"> *</span></label>
+                                                        <div class="col-8 pr-0">
+                                                            <input type="text" class="form-control form-control-sm border-odonto" id="username" name="username" v-model="dataEmpleado.username">
+                                                        </div>                                                
+                                                    </div>
+                                                </div>  
+                                                <div class="col-6">
+                                                    <div class="form-group row pt-5 pb-0">
+                                                        <label for="estadocivil" class="col-4 pl-0">Perfil de Acceso </label>
+                                                        <div class="col-8 pr-0">
+                                                            <select class="form-control form-control-sm border-odonto" id="tipocontrato" v-model="dataEmpleado.perfil_id" disabled>
+                                                                <option value="">-- Seleccione --</option>
+                                                                <option v-for="perfil in perfiles" :value="perfil.id" :key="perfil.id">
+                                                                    {{ perfil.nombre_perfil}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+
+    <!--                                             <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary" >
+                                                        <label for="usernme" class="text-primary font-weight-bold">Nombre de Usuario</label>
+                                                        <input type="text" class="form-control form-control-sm" name="username" placeholder="Nombre de usuario" v-model="dataEmpleado.username">
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group form-group-default border border-primary">
+                                                        <label for="perfil" class="text-primary font-weight-bold">Perfil de Acceso</label>
+                                                        <select class="form-control form-control-sm" id="perfil" v-model="dataEmpleado.perfil_id" disabled>
+                                                            <option value="">-- Seleccione --</option>
+                                                            <option v-for="perfil in perfiles" :value="perfil.id" :key="perfil.id">
+                                                                {{ perfil.nombre_perfil}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div> -->
+                                            </div> 
+                                            <div class="text-right mt-3 mb-3">
+                                                <button tpe="submit" class="btn btn-primary float-right" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+    <!--                                             <button class="btn btn-danger">Cancelar</button> -->
                                             </div>                                             
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary mb-0 pb-20">
-                                                    <label for="estciv" class="text-primary font-weight-bold">Tipo Pago</label>
-                                                    <select class="form-control form-control-sm" id="estciv" v-model="dataEmpleado.tipopagodoctor_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="tippag in tipopagodoctores" :value="tippag.id" :key="tippag.id">
-                                                            {{ tippag.nombre_tipopagodoctor}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>                                        
-                                        <div class="row pb-15">
-                                            <div class="col-6">
-                                                <div class="form-group border border-primary rounded pt-5">
-                                                    <label for="sede" class="text-primary font-weight-bold mb-0">Sede</label>
-                                                    <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="20" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
-                                                </div>
-                                            </div>                                            
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary mb-0 pb-20">
-                                                    <label for="cargo" class="text-primary font-weight-bold">Tipo Contrato</label>
-                                                    <select class="form-control form-control-sm" id="cargo" v-model="dataEmpleado.tipocontrato_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="tipcon in tipocontratos" :value="tipcon.id" :key="tipcon.id">
-                                                            {{ tipcon.nombre_tipocontrato}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="porcentajeinterno" class="text-primary font-weight-bold">% Planes Internos <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm" name="porcentajeinterno" placeholder="% Interno" v-model="dataEmpleado.porcentaje_interno">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="poraseguradoras" class="text-primary font-weight-bold">% Aseguradoras<span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm" name="poraseguradoras" placeholder="% Aseguradora" v-model="dataEmpleado.porcentaje_aseguradora">
-                                                </div>
-                                            </div>
-                                        </div>                                         
-                                        <div class="row pb-20 pt-20">
-                                            <div class="col-6">
-                                                <label for="">Acceso al Sistema</label>
-                                                <toggle-button :sync="true" :labels="{checked: 'SI', unchecked: 'NO'}" :color="{checked: '#005FD8', unchecked: '#FF0000', disabled: '#CCCCCC'}" v-model="dataEmpleado.acceso_system"/>                                
-                                            </div>
-                                        </div>
-                                        <div class="row" v-show="dataEmpleado.acceso_system">
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="usernme" class="text-primary font-weight-bold">Nombre de Usuario</label>
-                                                    <input type="text" class="form-control form-control-sm" name="username" placeholder="Nombre de usuario" v-model="dataEmpleado.username">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="perfil" class="text-primary font-weight-bold">Perfil de Acceso</label>
-                                                    <select class="form-control form-control-sm" id="perfil" v-model="dataEmpleado.perfil_id" disabled>
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="perfil in perfiles" :value="perfil.id" :key="perfil.id">
-                                                            {{ perfil.nombre_perfil}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div class="text-right mt-3 mb-3">
-                                            <button tpe="submit" class="btn btn-primary" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                                            <button class="btn btn-danger">Cancelar</button>
-                                        </div> 
+                                        </div>                            
+
                                     </form>
                                 </div>
                                 <div class="tab-pane" id="horarios" role="tabpanel" aria-labelledby="horarios-tab">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-group pl-0">
-                                                        <label for="tipodoc" class="text-primary font-weight-bold">Sede <span class="required-label"> *</span></label>
-                                                        <select class="form-control form-control-sm" id="tipodoc" v-model="dataHorario.sede_id" @change="cargaTurnos(dataHorario.sede_id)">
-                                                            <option value="">-- Seleccione Sede--</option>
-                                                            <option v-for="sed in dataEmpleado.sedes" :value="sed.id" :key="sed.id">
-                                                                {{ sed.nombre_sede}}
-                                                            </option>
-                                                        </select>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group pl-0">
+                                                            <label for="tipodoc" class="text-primary font-weight-bold">Sede <span class="required-label"> *</span></label>
+                                                            <select class="form-control form-control-sm" id="tipodoc" v-model="dataHorario.sede_id" @change="cargaTurnos(dataHorario.sede_id)">
+                                                                <option value="">-- Seleccione Sede--</option>
+                                                                <option v-for="sed in dataEmpleado.sedes" :value="sed.id" :key="sed.id">
+                                                                    {{ sed.nombre_sede}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-group pl-0">
-                                                        <label for="tipodoc" class="text-primary font-weight-bold">Dias <span class="required-label"> *</span></label>
-                                                        <select class="custom-select" size="6" multiple v-model="dias_select">
-                                                            <option value="1">Lunes</option>
-                                                            <option value="2">Martes</option>
-                                                            <option value="3">Miercoles</option>
-                                                            <option value="4">Jueves</option>
-                                                            <option value="5">Viernes</option>
-                                                            <option value="6">Sabado</option>                                            
-                                                        </select> 
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group pl-0">
+                                                            <label for="tipodoc" class="text-primary font-weight-bold">Dias <span class="required-label"> *</span></label>
+                                                            <select class="custom-select" size="6" multiple v-model="dias_select">
+                                                                <option value="1">Lunes</option>
+                                                                <option value="2">Martes</option>
+                                                                <option value="3">Miercoles</option>
+                                                                <option value="4">Jueves</option>
+                                                                <option value="5">Viernes</option>
+                                                                <option value="6">Sabado</option>                                            
+                                                            </select> 
+                                                        </div>
+                                                    </div>                                       
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label for="" class="text-primary font-weight-bold">Mañana</label>
+                                                    </div>                                        
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group pl-0">
+                                                            <select class="form-control form-control-sm sansSerif" id="horaini1" v-model="dataHorario.horaini1" @change="onSelectChange($event,1)">
+                                                                <option value="">desde</option>
+                                                                <option v-for="hor in getHorasAM" :value="hor.id" :key="hor.id">
+                                                                    {{ hor.nombre_hora}}
+                                                                </option>
+                                                            </select>                                                 
+                                                        </div>
                                                     </div>
-                                                </div>                                       
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label for="" class="text-primary font-weight-bold">Mañana</label>
-                                                </div>                                        
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group pl-0">
-                                                        <select class="form-control form-control-sm sansSerif" id="horaini1" v-model="dataHorario.horaini1" @change="onSelectChange($event,1)">
-                                                            <option value="">desde</option>
-                                                            <option v-for="hor in getHorasAM" :value="hor.id" :key="hor.id">
-                                                                {{ hor.nombre_hora}}
-                                                            </option>
-                                                        </select>                                                 
+                                                    <div class="col-6">
+                                                        <div class="form-group pl-0">
+                                                            <select class="form-control form-control-sm sansSerif" id="horafin1" v-model="dataHorario.horafin1" @change="onSelectChange($event,2)">
+                                                                <option value="">hasta</option>
+                                                                <option v-for="hor in getHorasAM" :value="hor.id" :key="hor.id">
+                                                                    {{ hor.nombre_hora}}
+                                                                </option>
+                                                            </select>                                               
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <div class="form-group pl-0">
-                                                        <select class="form-control form-control-sm sansSerif" id="horafin1" v-model="dataHorario.horafin1" @change="onSelectChange($event,2)">
-                                                            <option value="">hasta</option>
-                                                            <option v-for="hor in getHorasAM" :value="hor.id" :key="hor.id">
-                                                                {{ hor.nombre_hora}}
-                                                            </option>
-                                                        </select>                                               
-                                                    </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label for="" class="text-primary font-weight-bold">Tarde</label>
+                                                    </div>                                        
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label for="" class="text-primary font-weight-bold">Tarde</label>
-                                                </div>                                        
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group pl-0">
-                                                        <select class="form-control form-control-sm sansSerif" id="horaini2" v-model="dataHorario.horaini2" @change="onSelectChange($event,3)">
-                                                            <option value="">desde</option>
-                                                            <option v-for="hor in getHorasPM" :value="hor.id" :key="hor.id">
-                                                                {{ hor.nombre_hora}}
-                                                            </option>
-                                                        </select>                                              
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group pl-0">
+                                                            <select class="form-control form-control-sm sansSerif" id="horaini2" v-model="dataHorario.horaini2" @change="onSelectChange($event,3)">
+                                                                <option value="">desde</option>
+                                                                <option v-for="hor in getHorasPM" :value="hor.id" :key="hor.id">
+                                                                    {{ hor.nombre_hora}}
+                                                                </option>
+                                                            </select>                                              
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group pl-0">
-                                                        <select class="form-control form-control-sm sansSerif" id="horafin2" v-model="dataHorario.horafin2" @change="onSelectChange($event,4)">
-                                                            <option value="">hasta</option>
-                                                            <option v-for="hor in getHorasPM" :value="hor.id" :key="hor.id">
-                                                                {{ hor.nombre_hora}}
-                                                            </option>
-                                                        </select>                                               
+                                                    <div class="col-6">
+                                                        <div class="form-group pl-0">
+                                                            <select class="form-control form-control-sm sansSerif" id="horafin2" v-model="dataHorario.horafin2" @change="onSelectChange($event,4)">
+                                                                <option value="">hasta</option>
+                                                                <option v-for="hor in getHorasPM" :value="hor.id" :key="hor.id">
+                                                                    {{ hor.nombre_hora}}
+                                                                </option>
+                                                            </select>                                               
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div> 
-                                            <div class="row">
-                                                <button type="button" class="btn btn-primary btn-block" @click.prevent="addHorario(1)">AGREGAR HORARIO</button>
-                                            </div>                                   
+                                                </div> 
+                                                <div class="row">
+                                                    <button type="button" class="btn btn-primary btn-block" @click.prevent="addHorario(1)">AGREGAR HORARIO</button>
+                                                </div>                                   
 
-                                        </div>
-                                        <div class="col-8">
-                                            <table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Dia</th>
-                                                        <th scope="col">Mañana de</th>
-                                                        <th scope="col">Hasta</th>
-                                                        <th scope="col">Tarde de</th>
-                                                        <th scope="col">Hasta</th> 
-                                                        <th scope="col">Accion</th>                                                                                                                     
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(item,index) in listTurnos" :key="item.dia_id">
-                                                        <td>{{ item._dia }}</td>
-                                                        <td>{{ item.horaini1 != '' ? item._horaini1.format('HH:mm') : '' }}</td>
-                                                        <td>{{ item.horafin1 != '' ? item._horafin1.format('HH:mm') : '' }}</td>
-                                                        <td>{{ item.horaini2 != '' ? item._horaini2.format('HH:mm') : '' }}</td>
-                                                        <td>{{ item.horafin2 != '' ? item._horafin2.format('HH:mm') : '' }}</td>
-                                                        <td class="center"><button type="button" class="btn btn-danger btn-xs font-weight-bold" v-tooltip="'Eliminar'"  @click.prevent="ProcessDelete(index)">X</button></td>
-                                                    </tr>                                                                                       
-                                                </tbody>
-                                            </table>
-                                            <div class="row" v-if="listTurnos.length > 0">
-                                                <div class="col-12">
-                                                    <button class="btn btn-success float-right font-weight-bold" :disabled="ShowIcon" @click.prevent="createTurno"><span class="btn-label"><i :class="[IconClass]"></i></span>{{ labelButton }}</button>
+                                            </div>
+                                            <div class="col-8">
+                                                <table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Dia</th>
+                                                            <th scope="col">Mañana de</th>
+                                                            <th scope="col">Hasta</th>
+                                                            <th scope="col">Tarde de</th>
+                                                            <th scope="col">Hasta</th> 
+                                                            <th scope="col">Accion</th>                                                                                                                     
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(item,index) in listTurnos" :key="item.dia_id">
+                                                            <td>{{ item._dia }}</td>
+                                                            <td>{{ item.horaini1 != '' ? item._horaini1.format('HH:mm') : '' }}</td>
+                                                            <td>{{ item.horafin1 != '' ? item._horafin1.format('HH:mm') : '' }}</td>
+                                                            <td>{{ item.horaini2 != '' ? item._horaini2.format('HH:mm') : '' }}</td>
+                                                            <td>{{ item.horafin2 != '' ? item._horafin2.format('HH:mm') : '' }}</td>
+                                                            <td class="center"><button type="button" class="btn btn-danger btn-xs font-weight-bold" v-tooltip="'Eliminar'"  @click.prevent="ProcessDelete(index)">X</button></td>
+                                                        </tr>                                                                                       
+                                                    </tbody>
+                                                </table>
+                                                <div class="row" v-if="listTurnos.length > 0">
+                                                    <div class="col-12">
+                                                        <button class="btn btn-success float-right font-weight-bold" :disabled="ShowIcon" @click.prevent="createTurno"><span class="btn-label"><i :class="[IconClass]"></i></span>{{ labelButton }}</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="tab-pane" id="horespeciales" role="tabpanel" aria-labelledby="horespeciales-tab">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-group pl-0">
-                                                        <label for="tipodoc" class="text-primary font-weight-bold">Sede <span class="required-label"> *</span></label>
-                                                        <select class="form-control form-control-sm" id="tipodoc" v-model="dataHorario.sede_id" @change="e_cargaTurnos(dataHorario.sede_id)">
-                                                            <option value="">-- Seleccione Sede--</option>
-                                                            <option v-for="sed in dataEmpleado.sedes" :value="sed.id" :key="sed.id">
-                                                                {{ sed.nombre_sede}}
-                                                            </option>
-                                                        </select>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group pl-0">
+                                                            <label for="tipodoc" class="text-primary font-weight-bold">Sede <span class="required-label"> *</span></label>
+                                                            <select class="form-control form-control-sm" id="tipodoc" v-model="dataHorario.sede_id" @change="e_cargaTurnos(dataHorario.sede_id)">
+                                                                <option value="">-- Seleccione Sede--</option>
+                                                                <option v-for="sed in dataEmpleado.sedes" :value="sed.id" :key="sed.id">
+                                                                    {{ sed.nombre_sede}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label for="datepick" class="text-primary font-weight-bold">Seleccione la Fecha <span class="required-label"> *</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div id="sandbox-container">
-                                                        <input type="text" class="form-control" id="fechas">
-                                                    </div>
-                                                </div>                                       
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label for="" class="text-primary font-weight-bold">Mañana</label>
-                                                </div>                                        
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group pl-0">
-                                                        <select class="form-control form-control-sm sansSerif" id="e_horaini1" v-model="dataHorario.horaini1" @change="onSelectChange($event,1)">
-                                                            <option value="">desde</option>
-                                                            <option v-for="hor in getHorasAM" :value="hor.id" :key="hor.id">
-                                                                {{ hor.nombre_hora}}
-                                                            </option>
-                                                        </select>                                                 
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label for="datepick" class="text-primary font-weight-bold">Seleccione la Fecha <span class="required-label"> *</span></label>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <div class="form-group pl-0">
-                                                        <select class="form-control form-control-sm sansSerif" id="e_horafin1" v-model="dataHorario.horafin1" @change="onSelectChange($event,2)">
-                                                            <option value="">hasta</option>
-                                                            <option v-for="hor in getHorasAM" :value="hor.id" :key="hor.id">
-                                                                {{ hor.nombre_hora}}
-                                                            </option>
-                                                        </select>                                               
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div id="sandbox-container">
+                                                            <input type="text" class="form-control" id="fechas">
+                                                        </div>
+                                                    </div>                                       
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label for="" class="text-primary font-weight-bold">Mañana</label>
+                                                    </div>                                        
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group pl-0">
+                                                            <select class="form-control form-control-sm sansSerif" id="e_horaini1" v-model="dataHorario.horaini1" @change="onSelectChange($event,1)">
+                                                                <option value="">desde</option>
+                                                                <option v-for="hor in getHorasAM" :value="hor.id" :key="hor.id">
+                                                                    {{ hor.nombre_hora}}
+                                                                </option>
+                                                            </select>                                                 
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group pl-0">
+                                                            <select class="form-control form-control-sm sansSerif" id="e_horafin1" v-model="dataHorario.horafin1" @change="onSelectChange($event,2)">
+                                                                <option value="">hasta</option>
+                                                                <option v-for="hor in getHorasAM" :value="hor.id" :key="hor.id">
+                                                                    {{ hor.nombre_hora}}
+                                                                </option>
+                                                            </select>                                               
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label for="" class="text-primary font-weight-bold">Tarde</label>
-                                                </div>                                        
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group pl-0">
-                                                        <select class="form-control form-control-sm sansSerif" id="e_horaini2" v-model="dataHorario.horaini2" @change="onSelectChange($event,3)">
-                                                            <option value="">desde</option>
-                                                            <option v-for="hor in getHorasPM" :value="hor.id" :key="hor.id">
-                                                                {{ hor.nombre_hora}}
-                                                            </option>
-                                                        </select>                                              
-                                                    </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label for="" class="text-primary font-weight-bold">Tarde</label>
+                                                    </div>                                        
                                                 </div>
-                                                <div class="col-6">
-                                                    <div class="form-group pl-0">
-                                                        <select class="form-control form-control-sm sansSerif" id="e_horafin2" v-model="dataHorario.horafin2" @change="onSelectChange($event,4)">
-                                                            <option value="">hasta</option>
-                                                            <option v-for="hor in getHorasPM" :value="hor.id" :key="hor.id">
-                                                                {{ hor.nombre_hora}}
-                                                            </option>
-                                                        </select>                                               
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group pl-0">
+                                                            <select class="form-control form-control-sm sansSerif" id="e_horaini2" v-model="dataHorario.horaini2" @change="onSelectChange($event,3)">
+                                                                <option value="">desde</option>
+                                                                <option v-for="hor in getHorasPM" :value="hor.id" :key="hor.id">
+                                                                    {{ hor.nombre_hora}}
+                                                                </option>
+                                                            </select>                                              
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div> 
-                                            <div class="row">
-                                                <button type="button" class="btn btn-primary btn-block" @click.prevent="addHorario(2)">AGREGAR HORARIO</button>
-                                            </div>                                   
+                                                    <div class="col-6">
+                                                        <div class="form-group pl-0">
+                                                            <select class="form-control form-control-sm sansSerif" id="e_horafin2" v-model="dataHorario.horafin2" @change="onSelectChange($event,4)">
+                                                                <option value="">hasta</option>
+                                                                <option v-for="hor in getHorasPM" :value="hor.id" :key="hor.id">
+                                                                    {{ hor.nombre_hora}}
+                                                                </option>
+                                                            </select>                                               
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                <div class="row">
+                                                    <button type="button" class="btn btn-primary btn-block" @click.prevent="addHorario(2)">AGREGAR HORARIO</button>
+                                                </div>                                   
 
+                                            </div>
+                                            <div class="col-8">
+                                                <table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Dia</th>
+                                                            <th scope="col">Mañana de</th>
+                                                            <th scope="col">Hasta</th>
+                                                            <th scope="col">Tarde de</th>
+                                                            <th scope="col">Hasta</th> 
+                                                            <th scope="col">Accion</th>                                                                                                                     
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(item,index) in e_listTurnos" :key="item.fecha">
+                                                            <td>{{ item.fecha }}</td>
+                                                            <td>{{ item.horaini1 != '' ? item._horaini1.format('HH:mm') : '' }}</td>
+                                                            <td>{{ item.horafin1 != '' ? item._horafin1.format('HH:mm') : '' }}</td>
+                                                            <td>{{ item.horaini2 != '' ? item._horaini2.format('HH:mm') : '' }}</td>
+                                                            <td>{{ item.horafin2 != '' ? item._horafin2.format('HH:mm') : '' }}</td>
+                                                            <td class="center"><button type="button" class="btn btn-danger btn-xs font-weight-bold" v-tooltip="'Eliminar'"  @click.prevent="ProcessDelete(index)">X</button></td>
+                                                        </tr>                                                                                       
+                                                    </tbody>
+                                                </table>
+                                                <div class="row" v-if="e_listTurnos.length > 0">
+                                                    <div class="col-12">
+                                                        <button class="btn btn-success float-right font-weight-bold" :disabled="ShowIcon" @click.prevent="e_createTurno"><span class="btn-label"><i :class="[IconClass]"></i></span>{{ labelButton }}</button>
+                                                    </div>
+                                                </div>
+                                            </div>                                
                                         </div>
-                                        <div class="col-8">
-                                            <table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Dia</th>
-                                                        <th scope="col">Mañana de</th>
-                                                        <th scope="col">Hasta</th>
-                                                        <th scope="col">Tarde de</th>
-                                                        <th scope="col">Hasta</th> 
-                                                        <th scope="col">Accion</th>                                                                                                                     
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(item,index) in e_listTurnos" :key="item.fecha">
-                                                        <td>{{ item.fecha }}</td>
-                                                        <td>{{ item.horaini1 != '' ? item._horaini1.format('HH:mm') : '' }}</td>
-                                                        <td>{{ item.horafin1 != '' ? item._horafin1.format('HH:mm') : '' }}</td>
-                                                        <td>{{ item.horaini2 != '' ? item._horaini2.format('HH:mm') : '' }}</td>
-                                                        <td>{{ item.horafin2 != '' ? item._horafin2.format('HH:mm') : '' }}</td>
-                                                        <td class="center"><button type="button" class="btn btn-danger btn-xs font-weight-bold" v-tooltip="'Eliminar'"  @click.prevent="ProcessDelete(index)">X</button></td>
-                                                    </tr>                                                                                       
-                                                </tbody>
-                                            </table>
-                                            <div class="row" v-if="e_listTurnos.length > 0">
-                                                <div class="col-12">
-                                                    <button class="btn btn-success float-right font-weight-bold" :disabled="ShowIcon" @click.prevent="e_createTurno"><span class="btn-label"><i :class="[IconClass]"></i></span>{{ labelButton }}</button>
-                                                </div>
-                                            </div>
-                                        </div>                                
                                     </div>
-
                                 </div>
                                 <div class="tab-pane" id="permisos" role="tabpanel" aria-labelledby="permisos">
                                     <div class="row">
@@ -1476,4 +1736,22 @@ export default {
     .sansSerif {
         font-family:sans-serif !important;
     }  
+    .form-group-default {
+        margin-top:0px !important;
+    } 
+    .form-control-sm {
+        font-size: .680rem !important;
+    }
+    .form-group-default label:not(.error) {
+        font-size: 9.5px !important;
+    }  
+    .card.card-with-nav .card-body {
+        padding:5px 0px !important;
+    } 
+    .pl-12 {
+        padding-left: 12px !important;        
+    } 
+    .border-odonto {
+        border-color: #c1c4c7 !important;
+    }     
 </style>

@@ -129,7 +129,14 @@ table.vgt-table td {
   margin-bottom: 0 !important;
 }
 .multiselect__tags {
-  font-size: 12px !important;
+  font-size: 11px !important;
+  border : 1px solid #c1c4c7 !important;
+  border-radius:5px !important;
+  padding: 5px 40px 0 8px !important; 
+  min-height: 20px !important; 
+}
+.multiselect__select {
+  height: 28px !important;
 }
 /*** FIN MULTISELECT ***/
 

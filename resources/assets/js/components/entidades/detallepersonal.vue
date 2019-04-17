@@ -1,8 +1,8 @@
 <template>
     <div class="row">
         <div class="col-md-3">
-            <div class="card card-profile card-secondary">
-                <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
+            <div class="card card-profile card-primary">
+                <div class="card-header">
                     <div class="profile-picture">
                         <img v-if="dataEmpleado.image" :src="dataEmpleado.image" alt="Imagen de Perfil">
                         <img v-if="!dataEmpleado.image" :src="'/images/' + dataEmpleado.foto" alt="Imagen de Perfil">                        
@@ -12,11 +12,11 @@
                     <div class="user-profile text-center">
                         <div class="name">{{ dataEmpleado.numero_documento }}</div>
                         <div class="job">{{ dataEmpleado.nombre_completo }}</div>
-                        <div class="desc">{{ dataEmpleado.cargo.nombre_cargo }}</div>
+                        <div class="desc">{{ dataEmpleado.cargo_id == null ? '' : dataEmpleado.cargo.nombre_cargo }}</div>
 
                         <div class="view-profile">
                             <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" @change="onFileChange" >
-                            <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-secondary btn-block"><i class="la la-file-image-o"></i> Cargar Imagen</label>
+                            <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-sm btn-primary btn-block"><i class="la la-file-image-o"></i> Cargar Imagen</label>
                         </div>
                     </div>
                 </div>
@@ -44,6 +44,27 @@
                             <form role="form" method="PUT" v-on:submit.prevent="updateEmpleado">                            
                                 <div class="row">
                                     <div class="col-6">
+                                        <div class="form-group row pt-5 pb-0">
+                                            <label for="tipodoc" class="col-4 pl-0">Tipo de Documento <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <select class="form-control form-control-sm border-odonto" id="tipodoc" v-model="dataEmpleado.tipodocumento_id">
+                                                    <option value="">-- Seleccione Tipo--</option>
+                                                    <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
+                                                        {{ tipo.nombre_tipodocumento}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>                                             
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="numdocumento" class="col-4 pl-0">Num.Documento <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <input type="text" class="form-control form-control-sm border-odonto" id="numdocumento" name="numdocumento" v-model="dataEmpleado.numero_documento" maxlength="8">
+                                            </div>                                                
+                                        </div>
+                                    </div>                                     
+<!--                                     <div class="col-6">
                                         <div class="form-group form-group-default border border-primary">
                                             <label for="tipodoc" class="text-primary font-weight-bold">Tipo de Documento <span class="required-label"> *</span></label>
                                             <select class="form-control form-control-sm" id="tipodoc" v-model="dataEmpleado.tipodocumento_id">
@@ -59,10 +80,26 @@
                                             <label for="numdoc" class="text-primary font-weight-bold">Num.Documento <span class="required-label"> *</span></label>
                                             <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataEmpleado.numero_documento" maxlength="9">
                                         </div>
-                                    </div> 
+                                    </div> --> 
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="apepat" class="col-4 pl-0">Apellido Paterno <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="ape_paterno" name="ape_paterno" v-model="dataEmpleado.apellido_paterno">
+                                            </div>                                                
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="apemat" class="col-4 pl-0">Apellido Materno <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="ape_materno" name="numdocumento" v-model="dataEmpleado.apellido_materno">
+                                            </div>                                                
+                                        </div>
+                                    </div>                                    
+<!--                                     <div class="col-6">
                                         <div class="form-group form-group-default border border-primary" >
                                             <label for="apepat" class="text-primary font-weight-bold">Apellido Paterno <span class="required-label"> *</span></label>
                                             <input type="text" class="form-control form-control-sm mayusculas" name="apepat" placeholder="Apellido Paterno" v-model="dataEmpleado.apellido_paterno">
@@ -73,18 +110,47 @@
                                             <label for="apemat" class="text-primary font-weight-bold">Apellido Materno <span class="required-label"> *</span></label>
                                             <input type="text" class="form-control form-control-sm mayusculas" name="apemat" placeholder="Apellido Materno" v-model="dataEmpleado.apellido_materno">
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="nombres" class="col-4 pl-0">Nombres <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="nombres" name="nombres" v-model="dataEmpleado.nombres">
+                                            </div>                                                
+                                        </div>
+                                    </div>                                     
+<!--                                     <div class="col-6">
                                         <div class="form-group form-group-default border border-primary" >
                                             <label for="nombres" class="text-primary font-weight-bold">Nombres <span class="required-label"> *</span></label>
                                             <input type="text" class="form-control form-control-sm mayusculas" name="nombres" placeholder="Nombres" v-model="dataEmpleado.nombres">
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
+                                        <div class="form-group row pt-5 pb-0">
+                                            <label for="datepicker" class="col-4 pl-0">Fecha Nacimiento</label>
+                                            <div class="col-8 pr-0">
+                                                <masked-input v-model="dataEmpleado.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control form-control-sm border-odonto"/>                                                                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group row pt-5 pb-0">
+                                            <label for="tipodoc" class="col-4 pl-0">Sexo <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <select class="form-control form-control-sm border-odonto" id="sexo" v-model="dataEmpleado.sexo">
+                                                    <option value="">-- Seleccione Sexo--</option>
+                                                    <option v-for="sexo in sexos" :value="sexo.id" :key="sexo.id">
+                                                        {{ sexo.value}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div> 
+                                    </div>                                    
+<!--                                     <div class="col-6">
                                         <div class="form-group form-group-default border border-primary">
                                             <label for="datepicker" class="text-primary font-weight-bold">Fecha de Nacimiento</label>
                                             <masked-input v-model="dataEmpleado.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
@@ -100,10 +166,26 @@
                                                 </option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="telefono" class="col-4 pl-0">Teléfono </label>
+                                            <div class="col-8 pr-0">
+                                                <input type="text" class="form-control form-control-sm border-odonto" id="telefono" name="telefono" v-model="dataEmpleado.telefono" maxlength="7">
+                                            </div>                                                
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="celular" class="col-4 pl-0">Celular <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <input type="text" class="form-control form-control-sm border-odonto" id="celular" name="celular" v-model="dataEmpleado.celular" maxlength="9">
+                                            </div>                                                
+                                        </div>
+                                    </div>                                     
+<!--                                     <div class="col-6">
                                         <div class="form-group form-group-default border border-primary" >
                                             <label for="telefono" class="text-primary font-weight-bold">Telefono</label>
                                             <input type="text" class="form-control form-control-sm" name="telefono" placeholder="Telefono" maxlength="8" v-model="dataEmpleado.telefono">
@@ -114,10 +196,31 @@
                                             <label for="celular" class="text-primary font-weight-bold">Celular</label>
                                             <input type="text" class="form-control form-control-sm" name="celular" placeholder="Celular" maxlength="9" v-model="dataEmpleado.celular">
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="email" class="col-4 pl-0">Email <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <input type="text" class="form-control form-control-sm border-odonto" id="email" name="email" v-model="dataEmpleado.email">
+                                            </div>                                                
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group row pt-5 pb-0">
+                                            <label for="estadocivil" class="col-4 pl-0">Estado Civil </label>
+                                            <div class="col-8 pr-0">
+                                                <select class="form-control form-control-sm border-odonto" id="estadocivil" v-model="dataEmpleado.estadocivil_id">
+                                                    <option value="">-- Seleccione --</option>
+                                                    <option v-for="est in estadosciviles" :value="est.id" :key="est.id">
+                                                        {{ est.nombre_estadocivil}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div> 
+                                    </div>                                     
+<!--                                     <div class="col-6">
                                         <div class="form-group form-group-default border border-primary" >
                                             <label for="email" class="text-primary font-weight-bold">Email <span class="required-label"> *</span></label>
                                             <input type="email" class="form-control form-control-sm" name="email" placeholder="Email" v-model="dataEmpleado.email">
@@ -133,18 +236,73 @@
                                                 </option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
+                                        <div class="form-group row pt-5 pb-0">
+                                            <label for="datepicker" class="col-4 pl-0">Fecha de Ingreso</label>
+                                            <div class="col-8 pr-0">
+                                                <masked-input v-model="dataEmpleado.fecha_ingreso" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control form-control-sm border-odonto"/>                                                                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group row pt-5 pb-0">
+                                            <label for="cargos" class="col-4 pl-0">Cargo <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <select class="form-control form-control-sm border-odonto" id="cargo" v-model="dataEmpleado.cargo_id">
+                                                    <option value="">-- Seleccione --</option>
+                                                    <option v-for="cargo in cargos" :value="cargo.id" :key="cargo.id">
+                                                        {{ cargo.nombre_cargo}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+<!--                                     <div class="col-6">
                                         <div class="form-group form-group-default border border-primary">
                                             <label for="dtpingreso" class="text-primary font-weight-bold">Fecha de Ingreso</label>
                                             <masked-input v-model="dataEmpleado.fecha_ingreso" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
                                         </div>                                                
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <div class="row">
+                                <div class="row pt-5">
+                                    <div class="col-2 pl-10">
+                                        <label for="direccion" class="pl-0">Depart./ Prov./ Dist.</label>
+                                    </div>
+                                    <div class="col-3 pr-0 pl-20">
+                                        <div class="select2-input">
+                                            <select id="departamento" name="departamento" class="form-control form-control-sm border-odonto" v-model="coddepa">
+                                                <option value="">--Seleccione--</option>
+                                                <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
+                                                    {{ depa.descripcion}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-4">
+                                        <div class="select2-input">
+                                            <select id="provincia" name="provincia" class="form-control form-control-sm border-odonto" v-model="codprov">
+                                                <option value="">--Seleccione--</option>
+                                                <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
+                                                    {{ prov.descripcion}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 pr-10 pl-0">
+                                        <div class="select2-input">
+                                            <select id="distrito" name="distrito" class="form-control form-control-sm border-odonto" v-model="dataEmpleado.ubigeo_id">
+                                                <option value="">--Seleccione--</option>
+                                                <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
+                                                    {{ dist.descripcion}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+<!--                                     <div class="col-4">
                                         <div class="form-group form-group-default border border-primary">
                                             <label for="basic" class="text-primary font-weight-bold">Departamento</label>
                                             <div class="select2-input">
@@ -182,18 +340,34 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="direccion" class="col-2 pl-0">Dirección </label>
+                                            <div class="col-10 pr-0 pl-12">
+                                                <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="direccion" v-model="dataEmpleado.direccion">
+                                            </div>                                                
+                                        </div>
+                                    </div>                                     
+<!--                                     <div class="col-12">
                                         <div class="form-group form-group-default border border-primary" >
                                             <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
                                             <input type="text" class="form-control form-control-sm" name="direccion" placeholder="Direccion" v-model="dataEmpleado.direccion">
                                         </div>                                                
-                                    </div>
+                                    </div> -->
                                 </div> 
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="sede" class="col-2 pl-0">Sedes <span class="required-label"> *</span></label>
+                                            <div class="col-10 pr-0 pl-10">
+                                                <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="15" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                                                                            
+                                            </div>
+                                        </div>
+                                    </div>                                     
+<!--                                     <div class="col-6">
                                         <div class="form-group border border-primary rounded pt-5">
                                             <label for="sede" class="text-primary font-weight-bold mb-0">Sede</label>
                                             <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="20" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
@@ -209,7 +383,7 @@
                                                 </option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div> 
                                 <div class="row pb-20 pt-20">
                                     <div class="col-6">
@@ -219,6 +393,27 @@
                                 </div>
                                 <div class="row" v-show="dataEmpleado.acceso_system">
                                     <div class="col-6">
+                                        <div class="form-group row pb-0 pt-5">
+                                            <label for="email" class="col-4 pl-0">Nombre Usuario <span class="required-label"> *</span></label>
+                                            <div class="col-8 pr-0">
+                                                <input type="text" class="form-control form-control-sm border-odonto" id="username" name="username" v-model="dataEmpleado.username">
+                                            </div>                                                
+                                        </div>
+                                    </div>  
+                                    <div class="col-6">
+                                        <div class="form-group row pt-5 pb-0">
+                                            <label for="estadocivil" class="col-4 pl-0">Perfil de Acceso </label>
+                                            <div class="col-8 pr-0">
+                                                <select class="form-control form-control-sm border-odonto" id="tipocontrato" v-model="dataEmpleado.perfil_id">
+                                                    <option value="">-- Seleccione --</option>
+                                                    <option v-for="perfil in perfiles" :value="perfil.id" :key="perfil.id">
+                                                        {{ perfil.nombre_perfil}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div> 
+                                    </div>                                     
+<!--                                     <div class="col-6">
                                         <div class="form-group form-group-default border border-primary" >
                                             <label for="usernme" class="text-primary font-weight-bold">Nombre de Usuario</label>
                                             <input type="text" class="form-control form-control-sm" name="username" placeholder="Nombre de usuario" v-model="dataEmpleado.username">
@@ -234,11 +429,10 @@
                                                 </option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="text-right mt-3 mb-3">
-                                    <button tpe="submit" class="btn btn-primary" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                                    <button class="btn btn-danger">Cancelar</button>
+                                    <button tpe="submit" class="btn btn-primary float-right" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                                 </div> 
                             </form>
                         </div>
@@ -530,6 +724,7 @@ export default {
                 nombres:datos.nombres,
                 apellido_paterno:datos.apellido_paterno,
                 apellido_materno:datos.apellido_materno,
+                nombre_completo:datos.nombre_completo,
                 fecha_nacimiento:datos.fecha_nacimiento,
                 sexo:datos.sexo,
                 direccion:datos.direccion,
@@ -590,6 +785,7 @@ export default {
                 apellido_paterno:'',
                 apellido_materno:'',
                 fecha_nacimiento:'',
+                nombre_completo:'',
                 sexo:'',
                 direccion:'',
                 telefono:'',
@@ -976,4 +1172,22 @@ export default {
     .sansSerif {
         font-family:sans-serif !important;
     }  
+    .form-group-default {
+        margin-top:0px !important;
+    } 
+    .form-control-sm {
+        font-size: .680rem !important;
+    }
+    .form-group-default label:not(.error) {
+        font-size: 9.5px !important;
+    } 
+    .form-control:disabled, .form-control[readonly] {
+        border-color :#c1c4c7  !important;
+    }  
+    .pl-12 {
+        padding-left: 12px !important;        
+    } 
+    .border-odonto {
+        border-color: #c1c4c7 !important;
+    }    
 </style>

@@ -106,6 +106,7 @@ class EmpleadoController extends Controller
                             'nombres'             =>  'required',
                             'sexo'                =>  'required',
                             'email'               =>  'required',
+                            'cargo_id'            =>  'required',
                             'checkedSedes'        =>  'required'
                         ];
             }

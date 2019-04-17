@@ -57,11 +57,11 @@
                         <div class="card-title text-white">Registro de Nuevo Médico</div>
                     </div>
                         <form role="form" method="POST" v-on:submit.prevent="createEmpleado">                    
-                            <div class="card-body">
+                            <div class="card-body pb-0">
                                 <div class="row pr-10 pl-10">
                                     <div class="col-md-3">
-                                        <div class="card card-profile card-secondary">
-                                            <div class="card-header" style="background-image: url('/img/blogpost.jpg')">
+                                        <div class="card card-profile card-primary">
+                                            <div class="card-header">
                                                 <div class="profile-picture">
                                                     <img v-if="dataEmpleado.image" :src="dataEmpleado.image" alt="Imagen de Perfil">
                                                     <img v-if="!dataEmpleado.image" src="/images/no-image.jpg" alt="Imagen de Perfil">
@@ -71,7 +71,7 @@
                                                 <div class="user-profile text-center pt-20">
                                                     <div class="view-profile">
                                                         <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" @change="onFileChange" >
-                                                        <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-secondary btn-block"><i class="la la-file-image-o"></i> Cargar Imagen</label>
+                                                        <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-primary btn-block"><i class="la la-file-image-o"></i> Cargar Imagen</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,7 +181,7 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group row pt-5 pb-0">
-                                                    <label for="datepicker" class="col-4 pl-0">Fecha de Nacimiento</label>
+                                                    <label for="datepicker" class="col-4 pl-0">Fecha Nacimiento</label>
                                                     <div class="col-8 pr-0">
                                                         <masked-input v-model="dataEmpleado.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control form-control-sm border-odonto"/>                                                                                                
                                                     </div>
@@ -251,7 +251,7 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group row pb-0 pt-5">
-                                                    <label for="email" class="col-4 pl-0">Email </label>
+                                                    <label for="email" class="col-4 pl-0">Email <span class="required-label"> *</span></label>
                                                     <div class="col-8 pr-0">
                                                         <input type="text" class="form-control form-control-sm border-odonto" id="email" name="email" v-model="dataEmpleado.email">
                                                     </div>                                                
@@ -415,10 +415,10 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="form-group row pb-0">
+                                                <div class="form-group row pb-0 pt-10">
                                                     <label for="especialidades" class="col-2 pl-0">Especialidades <span class="required-label"> *</span></label>
                                                     <div class="col-10 pr-0 pl-10">
-                                                        <multiselect v-model="dataEmpleado.especialidades" tag-placeholder="Agregar Especialidades" placeholder="Agregar Especialidad" label="nombre_especialidad" track-by="nombre_especialidad" :options="especialidades" :multiple="true" :option-height="20" :taggable="true" @input="addEspecialidad" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
+                                                        <multiselect v-model="dataEmpleado.especialidades" tag-placeholder="Agregar Especialidades" placeholder="Agregar Especialidad" label="nombre_especialidad" track-by="nombre_especialidad" :options="especialidades" :multiple="true" :option-height="15" :taggable="true" @input="addEspecialidad" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
                                                     </div>
                                                 </div>
                                             </div> 
@@ -428,7 +428,7 @@
                                                 <div class="form-group row pb-0 pt-5">
                                                     <label for="sede" class="col-2 pl-0">Sedes <span class="required-label"> *</span></label>
                                                     <div class="col-10 pr-0 pl-10">
-                                                        <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="20" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                                                                            
+                                                        <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="15" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                                                                            
                                                     </div>
                                                 </div>
                                             </div>
@@ -436,7 +436,7 @@
                                         <div class="row">                                                                                        
                                             <div class="col-6">
                                                 <div class="form-group row pt-5 pb-0">
-                                                    <label for="estadocivil" class="col-4 pl-0">Tipo Pago </label>
+                                                    <label for="estadocivil" class="col-4 pl-0">Tipo Pago <span class="required-label"> *</span></label>
                                                     <div class="col-8 pr-0">
                                                         <select class="form-control form-control-sm border-odonto" id="estadocivil" v-model="dataEmpleado.tipopagodoctor_id">
                                                             <option value="">-- Seleccione --</option>
@@ -445,30 +445,11 @@
                                                             </option>
                                                         </select>
                                                     </div>
-                                                </div>                                                 
-<!--                                                 <div class="form-group form-group-default border border-primary mb-0 pb-20">
-                                                    <label for="estciv" class="text-primary font-weight-bold">Tipo Pago</label>
-                                                    <select class="form-control form-control-sm" id="estciv" v-model="dataEmpleado.tipopagodoctor_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="tippag in tipopagodoctores" :value="tippag.id" :key="tippag.id">
-                                                            {{ tippag.nombre_tipopagodoctor}}
-                                                        </option>
-                                                    </select>
-                                                </div> -->
-                                            </div>
-                                        </div>                                        
-                                        <div class="row pb-15">
-
-                                                                                       
-<!--                                             <div class="col-6">
-                                                <div class="form-group border border-primary rounded pt-5">
-                                                    <label for="sede" class="text-primary font-weight-bold mb-0">Sede</label>
-                                                    <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="20" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
                                                 </div>
-                                            </div>  -->
+                                            </div>
                                             <div class="col-6">
                                                 <div class="form-group row pt-5 pb-0">
-                                                    <label for="estadocivil" class="col-4 pl-0">Tipo Contrato </label>
+                                                    <label for="estadocivil" class="col-4 pl-0">Tipo Contrato <span class="required-label"> *</span></label>
                                                     <div class="col-8 pr-0">
                                                         <select class="form-control form-control-sm border-odonto" id="tipocontrato" v-model="dataEmpleado.tipocontrato_id">
                                                             <option value="">-- Seleccione --</option>
@@ -478,8 +459,28 @@
                                                         </select>
                                                     </div>
                                                 </div> 
-                                            </div>                                                                                       
-<!--                                             <div class="col-6">
+                                            </div>                                                                                                  
+<!--                                                 <div class="form-group form-group-default border border-primary mb-0 pb-20">
+                                                    <label for="estciv" class="text-primary font-weight-bold">Tipo Pago</label>
+                                                    <select class="form-control form-control-sm" id="estciv" v-model="dataEmpleado.tipopagodoctor_id">
+                                                        <option value="">-- Seleccione --</option>
+                                                        <option v-for="tippag in tipopagodoctores" :value="tippag.id" :key="tippag.id">
+                                                            {{ tippag.nombre_tipopagodoctor}}
+                                                        </option>
+                                                    </select>
+                                                </div> -->
+                                        </div>                                        
+<!--                                         <div class="row pb-15">
+
+                                                                                       
+                                            <div class="col-6">
+                                                <div class="form-group border border-primary rounded pt-5">
+                                                    <label for="sede" class="text-primary font-weight-bold mb-0">Sede</label>
+                                                    <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="20" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
+                                                </div>
+                                            </div> 
+                                                                                      
+                                            <div class="col-6">
                                                 <div class="form-group form-group-default border border-primary mb-0 pb-20">
                                                     <label for="cargo" class="text-primary font-weight-bold">Tipo Contrato</label>
                                                     <select class="form-control form-control-sm" id="cargo" v-model="dataEmpleado.tipocontrato_id">
@@ -489,8 +490,8 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                            </div> -->
-                                        </div>
+                                            </div>
+                                        </div> -->
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group row pb-0 pt-5">
@@ -521,13 +522,13 @@
                                                 </div>
                                             </div> -->
                                         </div>                                         
-                                        <div class="row pb-20 pt-20">
+                                        <div class="row pb-10 pt-20">
                                             <div class="col-6">
                                                 <label for="">Acceso al Sistema</label>
                                                 <toggle-button :sync="true" :labels="{checked: 'SI', unchecked: 'NO'}" :color="{checked: '#005FD8', unchecked: '#FF0000', disabled: '#CCCCCC'}" v-model="dataEmpleado.acceso_system"/>                                
                                             </div>
                                         </div>
-                                        <div class="row" v-show="dataEmpleado.acceso_system">
+                                        <div class="row pb-10" v-show="dataEmpleado.acceso_system">
 <!--                                             <div class="col-6">
                                                 <div class="form-group form-group-default border border-primary" >
                                                     <label for="usernme" class="text-primary font-weight-bold">Nombre de Usuario</label>
@@ -536,7 +537,7 @@
                                             </div> -->
                                             <div class="col-6">
                                                 <div class="form-group row pb-0 pt-5">
-                                                    <label for="email" class="col-4 pl-0">Nombre de Usuario</label>
+                                                    <label for="email" class="col-4 pl-0">Nombre Usuario <span class="required-label"> *</span></label>
                                                     <div class="col-8 pr-0">
                                                         <input type="text" class="form-control form-control-sm border-odonto" id="username" name="username" v-model="dataEmpleado.username">
                                                     </div>                                                
@@ -546,7 +547,7 @@
                                                 <div class="form-group row pt-5 pb-0">
                                                     <label for="estadocivil" class="col-4 pl-0">Perfil de Acceso </label>
                                                     <div class="col-8 pr-0">
-                                                        <select class="form-control form-control-sm border-odonto" id="tipocontrato" v-model="dataEmpleado.perfil_id">
+                                                        <select class="form-control form-control-sm border-odonto" id="tipocontrato" v-model="dataEmpleado.perfil_id" disabled>
                                                             <option value="">-- Seleccione --</option>
                                                             <option v-for="perfil in perfiles" :value="perfil.id" :key="perfil.id">
                                                                 {{ perfil.nombre_perfil}}
@@ -571,9 +572,9 @@
                                 </div>
 
                             </div>
-                            <div class="card-action">
-                                <button type="submit" class="btn btn-primary" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                                <button class="btn btn-danger" @click.prevent="$modal.hide('empleado')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                            <div class="card-action pt-10 mb-20">
+                                <button type="button" class="btn btn-danger float-right ml-10" @click.prevent="$modal.hide('empleado')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                                <button type="submit" class="btn btn-primary float-right" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                             </div>
                         </form>                    
                 </div>
@@ -613,7 +614,7 @@ export default {
                 {
                 label: 'Doc',
                 field: 'tipodocumento.abreviatura',
-                width:'10%',
+                width:'7%',
                 }, 
                 {
                 label: 'Número',
@@ -627,7 +628,7 @@ export default {
                 {
                 label: 'COP',
                 field: 'COP',
-                width:'10%',
+                width:'7%',
                 },                 
                 {
                 label: 'Empleado',
@@ -636,12 +637,12 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },                 
-                width:'20%',
+                width:'31%',
                 }, 
                 {
                 label: 'Teléfono',
                 field: 'telefono',
-                width:'20%',
+                width:'15%',
                 },
                 {
                 label: 'Email',
@@ -893,6 +894,5 @@ export default {
     } 
     .border-odonto {
         border-color: #c1c4c7 !important;
-    }       
-
+    }  
 </style>
