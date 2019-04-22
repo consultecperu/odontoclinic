@@ -21,6 +21,7 @@ use App\Pacienteplan;
 use App\Historiaclinica;
 use App\Convenio;
 use App\Campaña;
+use App\SeguimientoPlane;
 use Globales;   // helpers
 
 class PacienteController extends Controller
@@ -145,7 +146,12 @@ class PacienteController extends Controller
             $pacienteplan = new Pacienteplan($request->all());
             $pacienteplan->paciente_id = $paciente->id;
             $pacienteplan->save();
-            DB::commit();        
+            DB::commit(); 
+            /** --- creamos los datos en la tabla Seguimiento Planes ----*/
+            $segpla = new SeguimientoPlane($request->all());
+            $segpla->fecha = date('Y-m-d H:i:s'); 
+            $segpla->paciente_id = $paciente->id;            
+            $segpla->save();             
             //return;   
             return response()->json(['idpaciente' => $paciente->id], 200);                     
         }
@@ -229,13 +235,13 @@ class PacienteController extends Controller
             $paciente->nombre_completo = Str::upper($paciente->nombres).' '.Str::upper($paciente->apellido_paterno).' '.Str::upper($paciente->apellido_materno);                                              
             $paciente->save();
             /** --- actualizamos los datos en la tabla paciente_plan---**/
-            $pacienteplan = Pacienteplan::find($request->get('pacienteplanid'));
+/*             $pacienteplan = Pacienteplan::find($request->get('pacienteplanid'));
             $pacienteplan->tipo = $request->get('tipo');
             $pacienteplan->plan_id = $request->get('plan_id');
             $pacienteplan->descripcion = $request->get('descripcion');
             $pacienteplan->empresapaciente_id = ($request->get('empresapaciente_id')) ? $request->get('empresapaciente_id') : null;
             $pacienteplan->poliza_id = ($request->get('poliza_id')) ?  $request->get('poliza_id') : null;            
-            $pacienteplan->save();            
+            $pacienteplan->save();  */           
 
             DB::commit();           
             return;
@@ -318,5 +324,47 @@ class PacienteController extends Controller
             );
         }
       
-    }    
+    }  
+    
+    public function ActualizaPlanesPaciente(Request $request, $id)
+    {
+        try { 
+            $rules = ['empleado_id'             => 'required',
+                      'asignacion_id'           => 'required',
+                      'user_id'                 => 'required',
+                      'plan_id'                 => 'required',
+                      'tipo'                    => 'required'
+                      ];
+            if($request->get('tipo') == 2){
+                $rules = array_add($rules, 'empresapaciente_id', 'required');
+                $rules = array_add($rules, 'poliza_id', 'required');
+            }     
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            }                  
+            /** -- actualizamos el plan del paciente -- */     
+            $pacienteplan = Pacienteplan::find($request->get('pacienteplanid'));
+            $pacienteplan->tipo = $request->get('tipo');
+            $pacienteplan->plan_id = $request->get('plan_id');
+            $pacienteplan->descripcion = $request->get('descripcion');
+            $pacienteplan->empresapaciente_id = ($request->get('empresapaciente_id')) ? $request->get('empresapaciente_id') : null;
+            $pacienteplan->poliza_id = ($request->get('poliza_id')) ?  $request->get('poliza_id') : null;            
+            $pacienteplan->save();
+            /** -- actualizamos la asignacion del paciente -- */
+            $paciente = Paciente::find($id);
+            $paciente->empleado_id = $request->get('empleado_id');
+            $paciente->asignacion_id = $request->get('asignacion_id');
+            $paciente->save();
+            /** --- creamos los datos en la tabla Seguimiento Planes ----*/
+            $segpla = new SeguimientoPlane($request->all());
+            $segpla->fecha = date('Y-m-d H:i:s');            
+            $segpla->save();                
+        } catch (Exception $e) {
+            return response()->json(
+                ['errors' => $e->getMessage()], 422
+            );
+        }
+      
+    }        
 }

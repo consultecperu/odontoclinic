@@ -22,7 +22,7 @@ class PresupuestosoperatoriaController extends Controller
      */
     public function index()
     {
-        $pptosoperatorias = Presupuestooperatoria::with('paciente','paciente.pacienteplanes.plan','empleado','estadopresupuesto','tipocambio','presupuestosoperatoriasdetalles','presupuestosoperatoriasdetalles.diente','presupuestosoperatoriasdetalles.laboratorio','presupuestosoperatoriasdetalles.tarifario.servicio','presupuestosoperatoriasdetalles.tarifario.servicio.laboratorioservicios.laboratorio','presupuestosoperatoriasdetalles.material','presupuestosoperatoriasdetalles.tarifario.servicio.materialservicios.material','presupuestosoperatoriasdetalles.moneda','presupuestosoperatoriasdetalles.recordatencionoperatorias','presupuestosoperatoriasdetalles.recordatencionoperatorias.empleado','dientes')->orderBy('id','DESC')->where('activo',true)->get();
+        $pptosoperatorias = Presupuestooperatoria::with('paciente','paciente.pacienteplanes.plan','poliza.empresapaciente','plan','empleado','estadopresupuesto','tipocambio','presupuestosoperatoriasdetalles','presupuestosoperatoriasdetalles.diente','presupuestosoperatoriasdetalles.laboratorio','presupuestosoperatoriasdetalles.tarifario.servicio','presupuestosoperatoriasdetalles.tarifario.servicio.laboratorioservicios.laboratorio','presupuestosoperatoriasdetalles.material','presupuestosoperatoriasdetalles.tarifario.servicio.materialservicios.material','presupuestosoperatoriasdetalles.moneda','presupuestosoperatoriasdetalles.recordatencionoperatorias','presupuestosoperatoriasdetalles.recordatencionoperatorias.empleado','dientes')->orderBy('id','DESC')->where('activo',true)->get();
         return $pptosoperatorias;  
     }
 

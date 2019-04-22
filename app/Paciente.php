@@ -97,5 +97,9 @@ class Paciente extends Model
     public function citas()
     {
         return $this->hasMany('App\Cita');
-    }                                                            
+    }   
+    public function seguimientoplanes()
+    {
+        return $this->hasMany('App\Seguimientoplane');
+    }                                                               
 }

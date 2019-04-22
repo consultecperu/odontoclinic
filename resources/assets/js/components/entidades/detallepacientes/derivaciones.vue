@@ -12,8 +12,7 @@
                 <div class="card-header pl-0 pr-0">                        
                     <div class="col">
                         <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="flaticon-repeat"></i></span> Agregar Derivación</button>
-<!--                         <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
- -->                    </div>                                                        
+                    </div>                                                        
                 </div>
                 <div class="card-body">
                     <vue-good-table

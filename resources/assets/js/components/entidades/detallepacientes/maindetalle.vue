@@ -15,7 +15,7 @@
                         <!-- <div class="desc"> SEDE : {{ dataPacienteMain.sede.nombre_sede}}</div> -->
                         <div class="view-profile">
                             <input type="file" class="form-control form-control-file" id="uploadImg" name="uploadImg" accept="image/*" @change="onFileChange" >
-                            <label for="uploadImg" class=" label-input-file text-white btn btn-icon btn-primary"><i class="la la-file-image-o"></i> Cargar Imagen</label>
+                            <label for="uploadImg" class=" label-input-file text-white btn btn-sm btn-icon btn-info"><i class="la la-file-image-o"></i> Cargar Imagen</label>
                         </div>
                         <div class="seperator-solid"></div>                        
                     </div>
@@ -25,10 +25,10 @@
                         <div class="col-12 pl-10 pr-10">
                             <div class="nav flex-column nav-pills nav-primary" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <router-link :to="{ name: 'datos' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-datos-tab" data-toggle="pill" href="#v-pills-datos" role="tab" aria-controls="v-pills-datos" aria-selected="true" exact>Datos Generales</router-link>
-                                <router-link :to="{ name: 'derivaciones' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-derivaciones-tab" data-toggle="pill" href="#v-pills-derivaciones" role="tab" aria-controls="v-pills-derivaciones" aria-selected="false" exact>Derivaciones</router-link>
+                                <!-- <router-link :to="{ name: 'derivaciones' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-derivaciones-tab" data-toggle="pill" href="#v-pills-derivaciones" role="tab" aria-controls="v-pills-derivaciones" aria-selected="false" exact>Derivaciones</router-link> -->
                                 <router-link :to="{ name: 'citas-paciente' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-citas-tab" data-toggle="pill" href="#v-pills-citas" role="tab" aria-controls="v-pills-citas" aria-selected="false" exact>Citas</router-link>
                                 <router-link :to="{ name: 'multimedia' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-multimedia-tab" data-toggle="pill" href="#v-pills-multimedia" role="tab" aria-controls="v-pills-multimedia" aria-selected="false" exact>Imagenes y Archivos</router-link>
-                                <div class="seperator-solid"></div>
+                                <div class="seperator-solid mt-10 mb-10"></div>
                                 <router-link :to="{ name: 'lista-ppto-operatoria' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-operatoria-tab" data-toggle="pill" href="#v-pills-operatoria" role="tab" aria-controls="v-pills-operatoria" aria-selected="true" exact>Ppto. Operatoria</router-link>
                                 <router-link :to="{ name: 'lista-ppto-ortodoncia' }" class="nav-link border-odonto pt-5 pb-5" id="v-pills-ortodoncia-tab" data-toggle="pill" href="#v-pills-ortodoncia" role="tab" aria-controls="v-pills-ortodoncia" aria-selected="false" exact>Ppto. Ortodoncia</router-link>
                             </div>

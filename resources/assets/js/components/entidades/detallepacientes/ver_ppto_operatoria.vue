@@ -12,7 +12,7 @@
                     <p class="form-control-static text-danger font-weight-bold">DATOS DEL PACIENTE</p>
                 </div>
             </div>             
-            <div class="row">
+<!--             <div class="row">
                 <div class="col-4">
                     <div class="form-group form-group-default" >
                         <label for="historia" class="text-primary font-weight-bold">Paciente </label>
@@ -37,39 +37,51 @@
                         <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.fecha"></p>
                     </div>
                 </div>                 
-            </div>
+            </div> -->
             <div class="row">
-                <div class="col-4">
-                    <div class="form-group form-group-default" >
-                        <label for="historia" class="text-primary font-weight-bold">Empresa </label>
+                <div class="col-4 pr-0">
+                    <div class="form-group form-group-default border-odonto">
+                        <label for="empresa" class="text-primary font-weight-bold">Empresa </label>
                         <p class="form-control-static text-truncate mb-0" v-text="dataPaciente.empresa"></p>
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="form-group form-group-default" >
-                        <label for="historia" class="text-primary font-weight-bold">Plan </label>
+                    <div class="form-group form-group-default border-odonto">
+                        <label for="plan" class="text-primary font-weight-bold">Plan </label>
                         <p class="form-control-static text-truncate mb-0" v-text="dataPaciente.plan"></p>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="form-group form-group-default" >
+                <div class="col-4 pl-0">
+                    <div class="form-group form-group-default border-odonto">
                         <label for="aseguradora" class="text-primary font-weight-bold">Aseguradora </label>
                         <p class="form-control-static text-truncate mb-0" v-text="dataPaciente.aseguradora"></p>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-8">
-                    <div class="form-group form-group-default" >
+                <div class="col-7">
+                    <div class="form-group form-group-default border-odonto">
                         <label for="medicos" class="text-primary font-weight-bold">Profesional </label>
-                        <select class="form-control mt-5" id="medicos" v-model="dataPaciente.empleado_id" @change.prevent="CambioMedico(dataPresupuesto.empleado_id)">
+                        <select class="form-control form-control-sm mt-5" id="medicos" v-model="dataPaciente.empleado_id" @change.prevent="CambioMedico(dataPresupuesto.empleado_id)">
                             <option value="">-- Seleccione --</option>
                             <option v-for="med in getMedicos" :value="med.id" :key="med.id">
                                 {{ med.nombre_completo}}
                             </option>
                         </select>                                
                     </div>
-                </div>               
+                </div>
+                <div class="col-2 pr-0 pl-0">
+                    <div class="form-group form-group-default border-odonto">
+                        <label for="tipocambio" class="text-primary font-weight-bold">T.Cambio </label>
+                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.tipocambio"></p>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group form-group-default border-odonto">
+                        <label for="fecha" class="text-primary font-weight-bold">Fecha </label>
+                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.fecha"></p>
+                    </div>
+                </div>                                
             </div>
             <div class="row">
                 <div class="col-9 pr-10">
@@ -893,13 +905,16 @@ export default {
             id:this.presupuestoOperatoriaById.paciente_id,
             nombre_completo:this.presupuestoOperatoriaById.paciente.nombre_completo,
             historiaclinica:this.presupuestoOperatoriaById.paciente.historiaclinica,
-            empresa:this.presupuestoOperatoriaById.paciente.pacienteplanes.tipo == 1 ? '-' : this.presupuestoOperatoriaById.paciente.pacienteplanes.empresapaciente.razon_social,
-            plan:this.presupuestoOperatoriaById.paciente.pacienteplanes.plan.descripcion ,
-            aseguradora:this.presupuestoOperatoriaById.paciente.pacienteplanes.plan.descripcion ,
+            empresa:this.presupuestoOperatoriaById.poliza_id == null ? '-' : this.presupuestoOperatoriaById.poliza.empresapaciente.razon_social,
+            plan:this.presupuestoOperatoriaById.plan.descripcion,
+            aseguradora:this.presupuestoOperatoriaById.poliza_id == null ? '-' : this.presupuestoOperatoriaById.poliza.plane.descripcion,
             empleado_id:this.presupuestoOperatoriaById.paciente.empleado_id,
             fecha:moment(this.presupuestoOperatoriaById.fecha_registro).format('DD-MM-YYYY'),
             tipocambio:this.presupuestoOperatoriaById.tipocambio.tipo_cambio,
-            empleado_id:this.presupuestoOperatoriaById.empleado_id
+            empleado_id:this.presupuestoOperatoriaById.empleado_id,
+            deducible:this.presupuestoOperatoriaById.poliza_id == null ? '0' : this.presupuestoOperatoriaById.poliza.deducible,
+            coaseguro:this.presupuestoOperatoriaById.poliza_id == null ? '0' : this.presupuestoOperatoriaById.poliza.coaseguro,
+            tipo_presupuesto: this.presupuestoOperatoriaById.tipo_presupuesto            
         } 
     },
     mounted(){
@@ -1010,7 +1025,10 @@ export default {
                 empleado:'',
                 fecha:'',
                 tipocambio:'',
-                empleado_id:''
+                empleado_id:'',
+                deducible:'',
+                coaseguro:'',
+                tipo_presupuesto:''
             },
             dataRecord:{
                 presupuestooperatoriadetalle_id:'',
@@ -2369,5 +2387,8 @@ export default {
         word-wrap: break-word;
         text-align:center;
         font-weight: 600;
-    }   
+    } 
+    .border-odonto {
+        border-color: #c1c4c7 !important;
+    }       
 </style>

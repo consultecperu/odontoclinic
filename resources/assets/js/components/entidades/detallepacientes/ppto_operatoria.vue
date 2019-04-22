@@ -589,15 +589,15 @@ export default {
                 id:this.presupuestoOperatoriaById.paciente_id,
                 nombre_completo:this.presupuestoOperatoriaById.paciente.nombre_completo,
                 historiaclinica:this.presupuestoOperatoriaById.paciente.historiaclinica,
-                empresa:this.presupuestoOperatoriaById.paciente.pacienteplanes.tipo == 1 ? '-' : this.presupuestoOperatoriaById.paciente.pacienteplanes.empresapaciente.razon_social,
-                plan:this.presupuestoOperatoriaById.paciente.pacienteplanes.plan.descripcion ,
-                aseguradora:this.presupuestoOperatoriaById.paciente.pacienteplanes.plan.descripcion ,
-                empleado_id:this.presupuestoOperatoriaById.paciente.empleado_id,
+                empresa:this.presupuestoOperatoriaById.poliza_id == null ? '-' : this.presupuestoOperatoriaById.poliza.empresapaciente.razon_social,
+                plan:this.presupuestoOperatoriaById.plan.descripcion ,
+                aseguradora:this.presupuestoOperatoriaById.poliza_id == null ? '-' : this.presupuestoOperatoriaById.poliza.plane.descripcion,
+                empleado_id:this.presupuestoOperatoriaById.empleado_id,
                 fecha:moment(this.presupuestoOperatoriaById.fecha_registro).format('DD-MM-YYYY'),
                 tipocambio:this.presupuestoOperatoriaById.tipocambio.tipo_cambio,
-                deducible:this.presupuestoOperatoriaById.paciente.pacienteplanes.tipo == 1 ? '0' : this.presupuestoOperatoriaById.paciente.pacienteplanes.poliza.deducible,
-                coaseguro:this.presupuestoOperatoriaById.paciente.pacienteplanes.tipo == 1 ? '0' : this.presupuestoOperatoriaById.paciente.pacienteplanes.poliza.coaseguro,
-                tipo_plan: this.presupuestoOperatoriaById.paciente.pacienteplanes.tipo
+                deducible:this.presupuestoOperatoriaById.poliza_id == null ? '0' : this.presupuestoOperatoriaById.poliza.deducible,
+                coaseguro:this.presupuestoOperatoriaById.poliza_id == null ? '0' : this.presupuestoOperatoriaById.poliza.coaseguro,
+                tipo_plan: this.presupuestoOperatoriaById.tipo_presupuesto
             }
             this.newidPresupuesto = this.presupuestoOperatoriaById.id             
         }    
@@ -787,7 +787,7 @@ export default {
                 cursor:'pointer', 
                 cursor: 'hand' ,        
                 fillOpacity:'0',
-                stroke:'dimgrey',
+                stroke:'black',
                 strokeWidth:'1px'                
             },
 
@@ -1062,7 +1062,6 @@ export default {
             }
         },
         selectServicio(param){
-            console.log("data service",param)
             let _letras = ''   
             let self = this 
             let datalist = []                  

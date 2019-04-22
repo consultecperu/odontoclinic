@@ -191,5 +191,9 @@ class User extends Authenticatable
     public function transaccionesdoctor()
     {
         return $this->hasMany('App\Transacciondoctor');
-    }                                                                                                                            
+    }  
+    public function seguimientoplanes()
+    {
+        return $this->hasMany('App\Seguimientoplane');
+    }                                                                                                                               
 }

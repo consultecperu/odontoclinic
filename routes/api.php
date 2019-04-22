@@ -90,6 +90,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/pacientes/actualizahc/{id}','PacienteController@ActualizaHC');      
     Route::put('/pacientes/actualizafoto/{id}','PacienteController@ActualizaFoto');  
     Route::put('/pacientes/actualizacelular/{id}', 'PacienteController@Actualizacelular');
+    Route::put('/pacientes/actualizaplanes/{id}', 'PacienteController@ActualizaPlanesPaciente');
     // dependientes
     Route::resource('dependientes','DependienteController'); 
     Route::post('/dependientes/relacion', 'DependienteController@relacion'); 

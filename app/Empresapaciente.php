@@ -42,5 +42,8 @@ class Empresapaciente extends Model
     {
         return $this->hasMany('App\Pago');
     }                          
-        
+    public function seguimientoplanes()
+    {
+        return $this->hasMany('App\Seguimientoplane');
+    }         
 }

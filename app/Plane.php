@@ -41,5 +41,9 @@ class Plane extends Model
     public function sedes()
     {
         return $this->hasMany('App\Sede');
-    }                  
+    }
+    public function seguimientoplanes()
+    {
+        return $this->hasMany('App\Seguimientoplane');
+    }                       
 }
