@@ -72,4 +72,5 @@ export default {
     preliquidaciondoctor_ortodoncia:[],
     liquidacionessedes:[],
     liquidacionessedes_ortodoncia:[],
+    seguimientoplanes:[],
 }

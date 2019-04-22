@@ -203,5 +203,8 @@ export default {
     },  
     SET_LIQUIDACIONES_SEDES_ORTODONCIA_LIST: (state, { list }) => {
         state.liquidacionessedes_ortodoncia = list
-    },                                                                                                                                                                              
+    },  
+    SET_SEGUIMIENTO_PLANES_LIST: (state, { list }) => {
+        state.seguimientoplanes = list
+    },                                                                                                                                                                               
 }

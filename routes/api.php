@@ -91,6 +91,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/pacientes/actualizafoto/{id}','PacienteController@ActualizaFoto');  
     Route::put('/pacientes/actualizacelular/{id}', 'PacienteController@Actualizacelular');
     Route::put('/pacientes/actualizaplanes/{id}', 'PacienteController@ActualizaPlanesPaciente');
+    Route::get('/seguimientoplanes','PacienteController@seguimientoplanes');
     // dependientes
     Route::resource('dependientes','DependienteController'); 
     Route::post('/dependientes/relacion', 'DependienteController@relacion'); 

@@ -465,5 +465,13 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },                                                                                                                                                              
+    },
+    LOAD_SEGUIMIENTO_PLANES_LIST: function ({ commit }) {
+        var url = '/api/seguimientoplanes'
+        return axios.get(url).then((response) => {
+            commit('SET_SEGUIMIENTO_PLANES_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },                                                                                                                                                                   
 }

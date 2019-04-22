@@ -172,5 +172,8 @@ export default {
     }, 
     getConceptosDescuentos: (state) => {
         return state.conceptos.filter(con => con.type == 2)
-    },                                                                                                                      
+    },   
+    getSeguimientoPlanesbyPaciente: (state) => (id) => {
+        return state.seguimientoplanes.filter(seg => seg.paciente_id == id)
+    },                                                                                                                        
 }

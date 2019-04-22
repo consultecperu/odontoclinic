@@ -375,7 +375,7 @@
                                         </div> 
                                         <div class="col-6">
                                             <div class="form-group row pb-0 pt-5">
-                                                <label for="plan" class="col-4">{{ dataPaciente.tipo == 1 ? 'Elige Plan' : 'Aseguradora'}}<span class="required-label"> *</span></label>
+                                                <label for="plan" class="col-4 pl-0">{{ dataPaciente.tipo == 1 ? 'Elige Plan' : 'Aseguradora'}}<span class="required-label"> *</span></label>
                                                 <div class="col-8 pr-0">
                                                     <select class="form-control form-control-sm border-odonto" id="plan" v-model="dataPaciente.plan_id"  @change="SelectPlan">
                                                         <option value="">-- Seleccione --</option>
@@ -390,7 +390,7 @@
                                     <div class="row" v-show="dataPaciente.tipo == 2">
                                         <div class="col-6">
                                             <div class="form-group row pb-0 pt-5">
-                                                <label for="empresa" class="col-4">Empresa<span class="required-label"> *</span></label>
+                                                <label for="empresa" class="col-4 pl-0">Empresa<span class="required-label"> *</span></label>
                                                 <div class="col-8 pr-0">
                                                     <select class="form-control form-control-sm border-odonto" id="empresa" v-model="dataPaciente.empresapaciente_id" @change="SelectEmpresa">
                                                         <option value="">-- Seleccione --</option>
@@ -403,7 +403,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group row pb-0 pt-5">
-                                                <label for="poliza" class="col-4">Poliza<span class="required-label"> *</span></label>
+                                                <label for="poliza" class="col-4 pl-0">Poliza<span class="required-label"> *</span></label>
                                                 <div class="col-8 pr-0">
                                                     <select class="form-control form-control-sm border-odonto" id="poliza" v-model="dataPaciente.poliza_id">
                                                         <option value="">-- Seleccione --</option>
@@ -418,9 +418,39 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-action pr-20 pt-20">
+                        <div class="card-action pr-20 pt-20 mb-30">
                             <button type="button" class="btn btn-primary float-right" :disabled="ShowIcon" @click.prevent="updatePlanesPaciente"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        </div>                                                 
+                        </div>
+                        <div class="clearfix"></div> 
+                        <div class="row pl-20 pr-20">
+                            <table class="table table-bordered table-sm table-head-bg-info table-bordered-bd-info">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Plan</th>
+                                        <th scope="col">Empresa_Paciente</th>
+                                        <th scope="col">Poliza</th>
+                                        <th scope="col">Usuario</th>                                                                                                                             
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(seg, index) in SeguimientoPlanes" :key="seg.id">
+                                        <td align="center"> {{ index + 1 }}</td>
+                                        <td>{{ seg.fecha }}</td>
+                                        <td>{{ seg.tipo == 1 ? 'PART.' : 'SEG.' }}</td> 
+                                        <td>{{ seg.plan.descripcion }}</td>
+                                        <td>{{ seg.tipo == 1 ? '-' : seg.empresapaciente.razon_social }}</td>
+                                        <td align="center">{{ seg.tipo == 1 ? '-' : seg.poliza.codigo }}</td>  
+                                        <td>{{ seg.user.__empleado.nombre_completo}}</td>                                                                                                                         
+                                    </tr>
+                                    <tr v-if="SeguimientoPlanes.length == 0">
+                                        <td colspan="7" class="text-center">NO EXISTEN DATOS DE CAMBIOS ...</td>                                           
+                                    </tr>
+                                </tbody>
+                            </table>                                
+                        </div> 
                     </div>                      
                     <div class="tab-pane" id="dependientes" role="tabpanel" aria-labelledby="dependientes-tab">
                         <div class="row">
@@ -430,7 +460,7 @@
                                     <div class="card-header">                        
                                         <div class="col pl-0 pr-0 pt-10">
                                             <button type="button" class="btn btn-primary float-right" @click.prevent="LoadFormDependiente"><span class="btn-label"><i class="flaticon-profile"></i></span> Agregar Familia / Dependiente</button>
-                                            <button type="button" class="btn btn-success float-right mr-10" @click.prevent="$modal.show('relacionar')"><span class="btn-label"><i class="flaticon-profile"></i></span> Relacionar Dependiente</button>
+                                            <button type="button" class="btn btn-success float-right mr-10" @click.prevent="LoadFormRelacionar"><span class="btn-label"><i class="flaticon-profile"></i></span> Relacionar Dependiente</button>
                                             <button type="button" class="btn btn-primary btn-border" @click.prevent="showSearch(columns)"><span class="btn-label"><i class="flaticon-search-2"></i></span> Buscar</button>
                                         </div>                                                        
                                     </div>
@@ -503,7 +533,7 @@
                                             styleClass="vgt-table condensed bordered striped">
                                                 <template slot="table-row" slot-scope="props">
                                                     <span v-if="props.column.field == 'btn'" class="center">                               
-                                                        <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Ver Derivación'" @click.prevent="processEditDerivacion(props)">
+                                                        <button type="button" class="btn btn-border btn-success btn-xs" v-tooltip="'Editar Derivación'" @click.prevent="processEditDerivacion(props)">
                                                             <i class="la la-edit font-large"></i>
                                                         </button>                                
                                                     </span>
@@ -922,10 +952,7 @@
                                                 </div>                                                                                                                                                                                                                                                                                                                                                             
                                             </div>                                         
                                         </div>
-                                    </div>
-
-
-                                                                                                                                                          
+                                    </div>                                                                                                                                                          
                                 </div>
                             </div>
                         </div>
@@ -941,8 +968,8 @@
         <modal name="relacionar" :width="'40%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de campañas -->
                 <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title"> Relacionar Familiares / Dependientes </div>
+                    <div class="card-header bg-primary pt-5 pb-5">
+                        <div class="card-title text-white"> Relacionar Familiares / Dependientes </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -970,18 +997,18 @@
                             </div>                         
                         </div>                                                                         
                     </div>
-                    <div class="card-action">
-                        <button class="btn btn-primary" @click.prevent="createRelacion" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('relacionar')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pr-20">
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('relacionar')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="createRelacion" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de campañas -->
         </modal>         
         <modal name="pacientesdep" :width="'60%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
            <div class="card mb-0">
-                <div class="card-header">
-                    <div class="card-title d-inline">Seleccione un Paciente</div>
-                    <button type="button" class="close d-inline" aria-label="Close" @click.prevent="$modal.hide('relacionar')">
+                <div class="card-header bg-primary pt-5 pb-5">
+                    <div class="card-title d-inline text-white">Seleccione un Paciente</div>
+                    <button type="button" class="close d-inline" aria-label="Close" @click.prevent="$modal.hide('pacientesdep')">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -1068,8 +1095,8 @@
         <modal name="derivacion" :width="'50%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de campañas -->
                 <div class="card mb-0">
-                    <div class="card-header">
-                        <div class="card-title">{{ labelAccion }} Derivación</div>
+                    <div class="card-header bg-primary pt-10 pb-10">
+                        <div class="card-title text-white">{{ labelAccion }} Derivación</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -1118,9 +1145,9 @@
                             </div>
                         </div>                                          
                     </div>
-                    <div class="card-action pt-15 pb-15">
-                        <button class="btn btn-primary" @click.prevent="ActionDerivacion" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                        <button class="btn btn-danger" @click="$modal.hide('derivacion')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <div class="card-action pt-15 pb-15 pr-20">
+                        <button class="btn btn-danger float-right ml-10" @click="$modal.hide('derivacion')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                        <button class="btn btn-primary float-right" @click.prevent="ActionDerivacion" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
                 </div>
             <!-- /. form de registro de campañas -->
@@ -1145,11 +1172,11 @@ export default {
         this.$store.dispatch('LOAD_PLANES_LIST')    
         this.$store.dispatch('LOAD_POLIZAS_LIST')   
         this.$store.dispatch('LOAD_DERIVACIONES_LIST') 
-        this.$store.dispatch('LOAD_DEPENDIENTES_LIST')         
+        this.$store.dispatch('LOAD_DEPENDIENTES_LIST')  
+        this.$store.dispatch('LOAD_SEGUIMIENTO_PLANES_LIST')        
         this.$store.dispatch('LOAD_DATA_INIT_PACIENTES_LIST').then(() => {
             this.isLoading = false
-        }) 
-       
+        })        
     },          
     data(){
         return {
@@ -1423,14 +1450,27 @@ export default {
                 empresapaciente_id:'',
                 poliza_id:'',
                 descripcion: '',
+                user_id:'',
+                cambio_planes: 0
+            }, 
+            dataPlanesPacAnt: {
+                paciente_id:'',
+                empleado_id:'',
+                asignacion_id:'', 
+                pacienteplanid: '',
+                tipo:'',
+                plan_id:'',
+                empresapaciente_id:'',
+                poliza_id:'',
+                descripcion: '',
                 user_id:''
-            }            
+            }          
 
         }
     },
     computed: {
         ...mapState(['user_system','tipodocumentos','estadosciviles','sedes','motivocaptaciones','asignaciones','parentescos','empresapacientesplanes','planes','polizas','pacientes','convenios','derivaciones','servicios']),
-        ...mapGetters(['getubigeos','getMedicos','getDocumentosIdentidad','getplanes_aseguradoras','getPolizas','getPacienteById','getDependientesById']),
+        ...mapGetters(['getubigeos','getMedicos','getDocumentosIdentidad','getplanes_aseguradoras','getPolizas','getPacienteById','getDependientesById','getSeguimientoPlanesbyPaciente']),
         departamentos: function(){
             return this.getubigeos.filter((ubigeo) => ubigeo.codprov == '00').filter((ubigeo) => ubigeo.coddist == '00');
         },
@@ -1445,6 +1485,9 @@ export default {
         },    
         dependientes(){
             return this.getDependientesById(this.$route.params.idpaciente)
+        },
+        SeguimientoPlanes(){
+            return this.getSeguimientoPlanesbyPaciente(this.$route.params.idpaciente)
         }                                           
     },
     watch: {
@@ -1458,6 +1501,9 @@ export default {
         },
         'dataPaciente.tipo' (newVal,oldVal){
             this.getPlanes = this.planes.filter((pla) => pla.tipo == newVal)
+        },
+        'dataPaciente.plan_id' (newVal,oldVal){
+            this.SelectPlan()
         },
         'dataPaciente.empresapaciente_id' (newVal,oldVal){
             this.polizaspac = this.getPolizas(this.dataPaciente.empresapaciente_id,this.dataPaciente.plan_id)       
@@ -1555,7 +1601,19 @@ export default {
                     poliza_id:datos.pacienteplanes.poliza_id, 
                     descripcion:datos.pacienteplanes.descripcion,  
                     user_id:datos.user_id             
-                }                  
+                }
+                this.dataPlanesPacAnt = {
+                    paciente_id:datos.id,
+                    empleado_id:datos.empleado_id,
+                    asignacion_id:datos.asignacion_id, 
+                    pacienteplanid: datos.pacienteplanes.id,
+                    tipo:datos.pacienteplanes.tipo,
+                    plan_id:datos.pacienteplanes.plan_id,
+                    empresapaciente_id:datos.pacienteplanes.empresapaciente_id,
+                    poliza_id:datos.pacienteplanes.poliza_id, 
+                    descripcion:datos.pacienteplanes.descripcion,  
+                    user_id:datos.user_id             
+                }                                   
                 if(this.dataPaciente.tipo == 1){
                     this.dataPaciente.empresapaciente_id = null
                     this.dataPaciente.poliza_id = null
@@ -1568,6 +1626,11 @@ export default {
                 }                                            
             } 
             
+        },
+        LoadFormRelacionar(){
+            this.nom_pac = ''
+            this.dataRelDep.parentesco_id = ''
+            this.$modal.show('relacionar') 
         },
         LoadFormDependiente: function(){  
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')   
@@ -2084,6 +2147,10 @@ export default {
                 descripcion:this.dataPaciente.descripcion,
                 user_id:this.user_system.id             
             }
+
+            if(this.dataPlanesPac.tipo != this.dataPlanesPacAnt.tipo || this.dataPlanesPac.plan_id != this.dataPlanesPacAnt.plan_id || this.dataPlanesPac.empresapaciente_id != this.dataPlanesPacAnt.empresapaciente_id || this.dataPlanesPac.poliza_id != this.dataPlanesPacAnt.poliza_id ){
+                this.dataPlanesPac.cambio_planes = 1
+            }
             var url = '/api/pacientes/actualizaplanes/'+this.dataPlanesPac.paciente_id;
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.put(url, this.dataPlanesPac).then(response => {
@@ -2099,7 +2166,10 @@ export default {
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')                
                 return;
             }
-            this.$store.dispatch('LOAD_PACIENTES_LIST')    
+            this.$store.dispatch('LOAD_SEGUIMIENTO_PLANES_LIST') 
+            this.$store.dispatch('LOAD_PACIENTES_LIST').then(() => {
+                this.CargaDatosTitular() 
+            })                      
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')               
             this.notificaciones('Planes del paciente actualizado con exito','la la-thumbs-up','success')   
@@ -2144,7 +2214,12 @@ export default {
     }  
     #servicios {
         z-index:999999;
-    }            
+    } 
+    .table-sm th,
+    .table-sm td {
+        padding: 0.3rem !important; 
+        font-size: 11px !important;
+    }                
 </style>
 
 

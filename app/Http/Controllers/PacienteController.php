@@ -21,7 +21,7 @@ use App\Pacienteplan;
 use App\Historiaclinica;
 use App\Convenio;
 use App\Campaña;
-use App\SeguimientoPlane;
+use App\Seguimientoplane;
 use Globales;   // helpers
 
 class PacienteController extends Controller
@@ -357,14 +357,22 @@ class PacienteController extends Controller
             $paciente->asignacion_id = $request->get('asignacion_id');
             $paciente->save();
             /** --- creamos los datos en la tabla Seguimiento Planes ----*/
-            $segpla = new SeguimientoPlane($request->all());
-            $segpla->fecha = date('Y-m-d H:i:s');            
-            $segpla->save();                
+            if($request->get('cambio_planes') == 1 ){
+                $segpla = new Seguimientoplane($request->all());
+                $segpla->fecha = date('Y-m-d H:i:s');            
+                $segpla->save(); 
+            }               
         } catch (Exception $e) {
             return response()->json(
                 ['errors' => $e->getMessage()], 422
             );
         }
       
-    }        
+    }
+    
+    public function seguimientoplanes()
+    {
+        $seguiplanes = Seguimientoplane::with('plan','empresapaciente','poliza','user.__empleado')->orderBy('id','DESC')->where('activo',true)->get();
+        return $seguiplanes;  
+    }    
 }
