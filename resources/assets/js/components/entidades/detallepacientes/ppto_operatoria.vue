@@ -288,7 +288,7 @@
             </div>            
         </div>
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="carga_servicios" :width="'70%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="carga_servicios" :width="'65%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de servicios -->
                 <div class="card mb-0">
                     <div class="card-header bg-primary pt-10 pb-10">
@@ -298,166 +298,66 @@
                         </button>                        
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <svg height="42" width="42" id="normal">
-                                            <!-- Caras del Diente -->
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
-                                        </svg>
-                                    </div>
-                                    <div class="col-3">
-                                        <svg height="42" width="42" id="normal">
-                                            <!-- Caras del Diente -->
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
-
-                                            <polygon points="21,8 27,8 27,40 21,40" class="marcadoEndodoncia marcado"/>                                            
-                                        </svg>
-                                    </div>
-                                    <div class="col-3">
-                                        <svg height="42" width="42" id="normal">
-                                            <!-- Caras del Diente -->
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
-
-                                            <circle cx="24" cy="24" r="13" estado="8" value="8" class="marcadoCorona marcado"/>
-                                        </svg>
-                                    </div>
-                                    <div class="col-3">
-                                        <svg height="42" width="42" id="normal">
-                                            <!-- Caras del Diente -->
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
-
-                                            <polygon points="8,12 12,8 40,36 36,40" estado="4" value="6" class="marcadoExodoncia marcado"/>                                    
-                                            <polygon points="36,8 40,12 12,40 8,36" estado="4" value="7" class="marcadoExodoncia marcado" />
-                                        </svg>
-                                    </div>                                    
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <svg height="42" width="42" id="normal">
-                                            <!-- Caras del Diente -->
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
-
-                                            <image xlink:href="/img/odontograma/perno3.png" x=8 y=8 width=34 height=34 />
-                                        </svg>
-                                    </div>
-                                    <div class="col-3">
-                                        <svg height="42" width="42" id="normal">
-                                            <!-- Caras del Diente -->
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
-
-                                            <path d="M 10,25 a10,10 0 1,1 28,0" class="marcadoIonomero marcado"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="col-3">
-                                        <svg height="42" width="42" id="normal">
-                                            <!-- Caras del Diente -->
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
-
-                                            <text x=13 y=35 class="marcadoSellante marcado">S</text>                                                                        
-                                        </svg>
-                                    </div>
-                                    <div class="col-3">
-                                        <svg height="42" width="42" id="normal">
-                                            <!-- Caras del Diente -->
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
-
-                                            <ellipse cx="24" cy="20" rx="15" ry="9"  estado="10" value="11" class="marcadoGeneral marcado"/>
-                                            <line x1="8" y1="20" x2="40" y2="20" class="marcadoGeneral marcado"/>                                    
-                                            <text x=10 y=38 class="marcadoTextGeneral marcado">BOCA</text>                                                                        
-                                        </svg>
+                        <div class="row pb-20">
+                            <div class="col-9 pr-0">
+                                <div class="row pl-20 font-weight-bold pb-10">Tratamientos</div>
+                                <div class="row pl-20">
+                                    <div v-for="sim in simbolos" :key="sim.id"  class="d-inline pr-10 pl-0">
+                                        <div class="title-simbologia text-center text-white pt-3 pb-3 pl-5 pr-5 rounded" :class="[ sim.id == selected ? 'bg-danger' : 'bg-ppto']">{{ sim.id == 1 ? 'NORMAL' : sim.nombre_simbologia}}                                    
+                                        </div>
+                                        <div class="form-check form-check-inline pl-0 mr-0">
+                                            <p-radio class="p-icon p-curve p-tada mr-0" :value="sim.id" name="radio66" color="primary-o" v-model="simboloID" @change="cambiotratamiento(sim.id)">
+                                                <i slot="extra" class="icon la la-check"></i>                                
+                                            </p-radio>
+                                            <div>
+                                                <svg height="42" width="42" :id="'tratam_' + sim.id">
+                                                    <!-- Caras del Diente -->
+                                                    <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
+                                                    <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
+                                                    <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
+                                                    <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
+                                                    <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
+                                                    <!-- Tratamientos / Estados del diente -->
+                                                    <polygon points="21,8 27,8 27,40 21,40" :class="[sim.id == 2 ? 'marcadoEndodoncia marcado' : 'endodoncia']"/>
+                                                    <circle cx="24" cy="24" r="13" estado="8" value="8" :class="[sim.id == 3 ? 'marcadoCorona marcado' : 'corona']"/>
+                                                    <polygon points="8,12 12,8 40,36 36,40" estado="4" value="6" :class="[sim.id == 4 ? 'marcadoExodoncia marcado' : 'exodoncia']"/>                                    
+                                                    <polygon points="36,8 40,12 12,40 8,36" estado="4" value="7" :class="[sim.id == 4 ? 'marcadoExodoncia marcado' : 'exodoncia']" />
+                                                    <image v-if="sim.id == 5" xlink:href="/img/odontograma/perno3.png" x=8 y=8 width=34 height=34 />
+                                                    <path d="M 10,25 a10,10 0 1,1 28,0" :class="[sim.id == 6 ? 'marcadoIonomero marcado' : 'ionomero']"></path>
+                                                    <text x=13 y=35 :class="[sim.id == 7 ? 'marcadoSellante marcado' : 'sellante']">S</text>                                                                        
+                                                    <ellipse cx="24" cy="20" rx="15" ry="9"  estado="10" value="11" :class="[sim.id == 8 ? 'marcadoGeneral marcado' : 'general']"/>
+                                                    <line x1="8" y1="20" x2="40" y2="20" :class="[sim.id == 8 ? 'marcadoGeneral marcado' : 'general']"/>                                    
+                                                    <text x=10 y=38 :class="[sim.id == 8 ? 'marcadoTextGeneral marcado' : 'sellante']">BOCA</text>                                                                        
+                                                </svg>
+                                            </div>
+                                        </div>
                                     </div> 
                                 </div>
+                            </div>
+                            <div class="col-3 pl-0">
                                 <div class="row">
-                                    <svg height="160" width="160" id="diente_servicios" style="margin:0 auto !important;">
+                                    <svg height="120" width="120" id="diente_servicios" style="margin:0 auto !important;">
                                         <!-- Caras del Diente -->                                        
-                                        <polygon points="0,0 160,0 120,40 40,40" v-tooltip.top="'VESTIBULAR'" :class="[simboloID == 1 && multicaras.includes(1) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(1)" /> <!-- CARA 1 Trapecio superior -->
-                                        <polygon points="160,0 160,160 120,120 120,40" v-tooltip.right="'MESIAL'" :class="[simboloID == 1 && multicaras.includes(2) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(2)" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                        <polygon points="160,160 0,160 40,120 120,120" v-tooltip.bottom="'PALATINO'" :class="[simboloID == 1 && multicaras.includes(3) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(3)"/> <!-- CARA 3 Trapecio inferior -->
-                                        <polygon points="0,160 40,120 40,40 0,0" v-tooltip.left="'DISTAL'" :class="[simboloID == 1 && multicaras.includes(4) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(4)" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                        <polygon points="40,40 120,40 120,120 40,120" v-tooltip.top="'OCLUSAL'" :class="[simboloID == 1 && multicaras.includes(5) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(5)" /> <!-- CARA 5 Cuadrado Central -->
+                                        <polygon points="0,0 120,0 90,30 30,30" v-tooltip.top="'VESTIBULAR'" :class="[simboloID == 1 && multicaras.includes(1) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(1)" /> <!-- CARA 1 Trapecio superior -->
+                                        <polygon points="120,0 120,120 90,90 90,30" v-tooltip.right="'MESIAL'" :class="[simboloID == 1 && multicaras.includes(2) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(2)" /> <!-- CARA 2 Trapecio lateral derecho -->
+                                        <polygon points="120,120 0,120 30,90 90,90" v-tooltip.bottom="'PALATINO'" :class="[simboloID == 1 && multicaras.includes(3) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(3)"/> <!-- CARA 3 Trapecio inferior -->
+                                        <polygon points="0,120 30,90 30,30 0,0" v-tooltip.left="'DISTAL'" :class="[simboloID == 1 && multicaras.includes(4) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(4)" /> <!-- CARA 4 trapecio lateral izquierdo-->
+                                        <polygon points="30,30 90,30 90,90 30,90" v-tooltip.top="'OCLUSAL'" :class="[simboloID == 1 && multicaras.includes(5) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(5)" /> <!-- CARA 5 Cuadrado Central -->
                                         <!-- Tratamientos del Diente -->
-                                        <polygon points="75,5 87,5 87,155 75,155" :class="[simboloID == 2 ? 'marcadoEndodonciaD marcado' : 'endodoncia']"/>                                           
-                                        <circle cx="80" cy="80" r="70" :class="[simboloID == 3 ? 'marcadoCoronaD marcado' : 'corona']"/>
-                                        <polygon points="0,10 10,0 160,150 150,160" :class="[simboloID == 4 ? 'marcadoExodonciaD marcado' : 'exodoncia']"/>                                    
-                                        <polygon points="150,0 160,10 10,160 0,150" :class="[simboloID == 4 ? 'marcadoExodonciaD marcado' : 'exodoncia']" />
-                                        <image v-if="simboloID == 5" xlink:href="/img/odontograma/perno4.png" x=0 y=0 width=160 height=160 />                                        
-                                        <path d="M 10,85 a40,40 0 1,1 140,0" :class="[simboloID == 6 ? 'marcadoIonomeroD marcado' : 'ionomero']"></path>
-                                        <text x=40 y=130 :class="[simboloID == 7 ? 'marcadoSellanteD marcado' : 'sellante']">S</text>                                                                        
-                                        <ellipse cx="80" cy="80" rx="75" ry="35"  :class="[simboloID == 8 ? 'marcadoGeneralD marcado' : 'general']"/>
-                                        <line x1="5" y1="80" x2="155" y2="80" :class="[simboloID == 8 ? 'marcadoGeneralD marcado' : 'general']"/>                                    
+                                        <polygon points="55,5 67,5 67,115 55,115" :class="[simboloID == 2 ? 'marcadoEndodonciaD marcado' : 'endodoncia']"/>                                           
+                                        <circle cx="60" cy="60" r="50" :class="[simboloID == 3 ? 'marcadoCoronaD marcado' : 'corona']"/>
+                                        <polygon points="0,10 10,0 120,110 110,120" :class="[simboloID == 4 ? 'marcadoExodonciaD marcado' : 'exodoncia']"/>                                    
+                                        <polygon points="110,0 120,10 10,120 0,110" :class="[simboloID == 4 ? 'marcadoExodonciaD marcado' : 'exodoncia']" />
+                                        <image v-if="simboloID == 5" xlink:href="/img/odontograma/perno4.png" x=0 y=0 width=120 height=120 />                                        
+                                        <path d="M 10,65 a30,30 0 1,1 100,0" :class="[simboloID == 6 ? 'marcadoIonomeroD marcado' : 'ionomero']"></path>
+                                        <text x=20 y=105 :class="[simboloID == 7 ? 'marcadoSellanteD marcado' : 'sellante']">S</text>                                                                        
+                                        <ellipse cx="60" cy="60" rx="55" ry="25"  :class="[simboloID == 8 ? 'marcadoGeneralD marcado' : 'general']"/>
+                                        <line x1="5" y1="60" x2="115" y2="60" :class="[simboloID == 8 ? 'marcadoGeneralD marcado' : 'general']"/>                                    
                                     </svg>                                    
                                 </div>
                             </div>
-                            <div class="col-9">
-                                <div class="col">
-                                    <!-- START DEFAULT DATATABLE -->
-                                    <vue-good-table
-                                    :columns="columns_servicios"
-                                    :rows="TratamientosSimbolo"
-                                    :paginationOptions="{
-                                        enabled: true,
-                                        dropdownAllowAll: false,
-                                        nextLabel: 'Sig',
-                                        prevLabel: 'Ant',
-                                        rowsPerPageLabel: 'Registros por Pagina',
-                                        ofLabel: 'de',
-                                        allLabel: 'Todos',
-                                    }"
-                                    :fixed-header="true"
-                                    @on-row-dblclick="selectServicio"
-                                    :rowStyleClass="'enlace'"
-                                    max-height="400px"
-                                    styleClass="vgt-table condensed bordered striped"> 
-                                    <template slot="table-row" slot-scope="props">
-                                        <span v-if="props.column.field == 'btn'" class="center">
-                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-primary btn-xs" data-original-title="" @click.prevent="selectServicio(props)">
-                                                Seleccionar
-                                            </button>                                                               
-                                        </span>
-                                        <span v-else>
-                                            {{props.formattedRow[props.column.field]}}
-                                        </span>
-                                    </template>                                                    
-                                    </vue-good-table>
-                                    <!-- END DEFAULT DATATABLE -->  
-                                </div>
-                            </div>
                         </div>
-                        <div class="row">
+<!--                         <div class="row">
                             <div v-for="sim in simbolos" :key="sim.id"  class="col-1 d-inline pr-0">
                                 <div class="title-simbologia text-center">{{ sim.id == 1 ? 'NORMAL' : sim.nombre_simbologia}}                                    
                                 </div>
@@ -467,13 +367,13 @@
                                     </p-radio>
                                     <div>
                                         <svg height="42" width="42" :id="'tratam_' + sim.id">
-                                            <!-- Caras del Diente -->
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> <!-- CARA 1 Trapecio superior -->
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> <!-- CARA 3 Trapecio inferior -->
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> <!-- CARA 5 Cuadrado Central -->
-                                            <!-- Tratamientos / Estados del diente -->
+                                            
+                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> 
+                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> 
+                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> 
+                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> 
+                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> 
+                                            
                                             <polygon points="21,8 27,8 27,40 21,40" :class="[sim.id == 2 ? 'marcadoEndodoncia marcado' : 'endodoncia']"/>
                                             <circle cx="24" cy="24" r="13" estado="8" value="8" :class="[sim.id == 3 ? 'marcadoCorona marcado' : 'corona']"/>
                                             <polygon points="8,12 12,8 40,36 36,40" estado="4" value="6" :class="[sim.id == 4 ? 'marcadoExodoncia marcado' : 'exodoncia']"/>                                    
@@ -488,22 +388,22 @@
                                     </div>
                                 </div>
                             </div>                                                                                                                                                                          
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-12">
-                                <button type="button" class="btn btn-primary btn-sm float-right" @click.prevent="cargaTratamientos">Buscar Servicios <i class="la flaticon-search-2"></i></button>
+                                <button type="button" class="btn btn-danger btn-sm" @click.prevent="cargaTratamientos">Buscar Servicios <i class="la flaticon-search-2"></i></button>
                             </div>
                         </div>
                         <div class="row mt-10">
-                            <div class="col-3 mr-0 pr-0">
+<!--                             <div class="col-3 mr-0 pr-0">
                                 <svg height="160" width="160" id="diente_servicios">
-                                    <!-- Caras del Diente -->                                        
-                                    <polygon points="0,0 160,0 120,40 40,40" v-tooltip.top="'VESTIBULAR'" :class="[simboloID == 1 && multicaras.includes(1) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(1)" /> <!-- CARA 1 Trapecio superior -->
-                                    <polygon points="160,0 160,160 120,120 120,40" v-tooltip.right="'MESIAL'" :class="[simboloID == 1 && multicaras.includes(2) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(2)" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                    <polygon points="160,160 0,160 40,120 120,120" v-tooltip.bottom="'PALATINO'" :class="[simboloID == 1 && multicaras.includes(3) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(3)"/> <!-- CARA 3 Trapecio inferior -->
-                                    <polygon points="0,160 40,120 40,40 0,0" v-tooltip.left="'DISTAL'" :class="[simboloID == 1 && multicaras.includes(4) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(4)" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                    <polygon points="40,40 120,40 120,120 40,120" v-tooltip.top="'OCLUSAL'" :class="[simboloID == 1 && multicaras.includes(5) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(5)" /> <!-- CARA 5 Cuadrado Central -->
-                                    <!-- Tratamientos del Diente -->
+                                                                    
+                                    <polygon points="0,0 160,0 120,40 40,40" v-tooltip.top="'VESTIBULAR'" :class="[simboloID == 1 && multicaras.includes(1) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(1)" /> 
+                                    <polygon points="160,0 160,160 120,120 120,40" v-tooltip.right="'MESIAL'" :class="[simboloID == 1 && multicaras.includes(2) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(2)" /> 
+                                    <polygon points="160,160 0,160 40,120 120,120" v-tooltip.bottom="'PALATINO'" :class="[simboloID == 1 && multicaras.includes(3) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(3)"/> 
+                                    <polygon points="0,160 40,120 40,40 0,0" v-tooltip.left="'DISTAL'" :class="[simboloID == 1 && multicaras.includes(4) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(4)" /> 
+                                    <polygon points="40,40 120,40 120,120 40,120" v-tooltip.top="'OCLUSAL'" :class="[simboloID == 1 && multicaras.includes(5) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(5)" /> 
+                                    
                                     <polygon points="75,5 87,5 87,155 75,155" :class="[simboloID == 2 ? 'marcadoEndodonciaD marcado' : 'endodoncia']"/>                                           
                                     <circle cx="80" cy="80" r="70" :class="[simboloID == 3 ? 'marcadoCoronaD marcado' : 'corona']"/>
                                     <polygon points="0,10 10,0 160,150 150,160" :class="[simboloID == 4 ? 'marcadoExodonciaD marcado' : 'exodoncia']"/>                                    
@@ -514,20 +414,20 @@
                                     <ellipse cx="80" cy="80" rx="75" ry="35"  :class="[simboloID == 8 ? 'marcadoGeneralD marcado' : 'general']"/>
                                     <line x1="5" y1="80" x2="155" y2="80" :class="[simboloID == 8 ? 'marcadoGeneralD marcado' : 'general']"/>                                    
                                 </svg>
-                            </div>
-                            <div class="col-9 pl-0">
-                                <table class="table table-bordered table-sm table-head-bg-primary table-bordered-bd-primary">
+                            </div> -->
+                            <div class="col-12">
+                                <table class="table table-bordered table-sm table-head-bg-info table-bordered-bd-primary">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Diente</th>
-                                            <th scope="col">Servicio</th>
-                                            <th scope="col">Moneda</th>
-                                            <th scope="col">Deducible</th>
-                                            <th scope="col">Coaseguro</th>
-                                            <th scope="col">P.Aseg</th>     
-                                            <th scope="col">C.Total</th>
-                                            <th scope="col">Pago</th>  
-                                            <th scope="col" align="center">*</th>                                                                                                                        
+                                            <th>Diente</th>
+                                            <th>Servicio</th>
+                                            <th>Moneda</th>
+                                            <th>Deducible</th>
+                                            <th>Coaseguro</th>
+                                            <th>P.Aseg</th>     
+                                            <th>C.Total</th>
+                                            <th>Pago</th>  
+                                            <th></th>                                                                                                                        
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -536,23 +436,23 @@
                                             <td>{{ serv.letras }}</td>
                                             <td>{{ serv.nombre_servicio}}</td>
                                             <td>{{ serv.nombre_moneda}}</td>
-                                            <td align="center">{{ serv.deducible}}</td>
-                                            <td align="center">{{ serv.solocoaseguro}}</td>  
-                                            <td align="center">{{ serv.pago_aseguradora}}</td>   
-                                            <td align="center">{{ serv.costo}}</td> 
-                                            <td>{{ serv.costo}}</td> 
-                                            <td align="center"><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" disabled><i class="la la-close"></i></button></td>                                                                                                                        
+                                            <td align="right">{{ serv.deducible}}</td>
+                                            <td align="right">{{ serv.solocoaseguro}}</td>  
+                                            <td align="right">{{ serv.pago_aseguradora}}</td>   
+                                            <td align="right">{{ serv.costo}}</td> 
+                                            <td align="right">{{ serv.costo}}</td> 
+                                            <td align="center"><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" disabled><span class="btn-label pl-5"><i class="la la-trash"></i></span></button></td>                                                                                                                        
                                         </tr>
                                         <tr v-for="(serv, index) in list_services_dent" :key="serv.id">
                                             <td>{{ serv.letras }}</td>
                                             <td>{{ serv.nombre_servicio}}</td>
                                             <td>{{ serv.nombre_moneda}}</td>
-                                            <td align="center">{{ serv.deducible}}</td>
-                                            <td align="center">{{ serv.solocoaseguro}}</td>  
-                                            <td align="center">{{ serv.pago_aseguradora}}</td>   
-                                            <td align="center">{{ serv.costo}}</td>  
-                                            <td>{{ serv.costo}}</td> 
-                                            <td align="center"><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" v-tooltip.top="'Eliminar'"><i class="la la-close"></i></button></td>                                                                                                                        
+                                            <td align="right">{{ serv.deducible}}</td>
+                                            <td align="right">{{ serv.solocoaseguro}}</td>  
+                                            <td align="right">{{ serv.pago_aseguradora}}</td>   
+                                            <td align="right">{{ serv.costo}}</td>  
+                                            <td align="right">{{ serv.costo}}</td> 
+                                            <td align="center"><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" v-tooltip.top="'Eliminar'"><span class="btn-label pl-5"><i class="la la-trash"></i></span></button></td>                                                                                                                        
                                         </tr>                                        
                                         <!--<tr v-if="list_services_dent.length == 0">-->
                                         <tr v-if="list_services_dent.length == 0 && list_services_anteriores.length == 0">
@@ -2064,8 +1964,8 @@ export default {
 	.marcadoRojo{
         cursor:pointer; 
         cursor: hand ;          
-        fill:red;
-        stroke:dimgrey;
+        fill:#f94f4f;
+        stroke:#dedcdc;
         stroke-width:1px;
 	}    
     .marcadoCorona, .marcadoCoronaO
@@ -2186,14 +2086,14 @@ export default {
         cursor:pointer; 
         cursor: hand ;         
         fill-opacity:0;
-        stroke:rgb(224, 219, 219);
+        stroke:rgb(129, 128, 128);
         stroke-width:1px;
     }
     .diente{
         cursor:pointer; 
         cursor: hand ;         
         fill-opacity:0;
-        stroke:dimgrey;
+        stroke:#6f6a6a;
         stroke-width:1px;
     }    
     .ausente, .corona, .endodoncia, .implante, .ionomero, .sellante, .general, .exodoncia
@@ -2256,7 +2156,7 @@ export default {
         font-size: 11px !important;
     } 
     .btn-xs {
-        padding: 2px !important;
+        padding: 3px !important;
     } 
     #context-menu{
         background: rgb(238, 237, 237);
@@ -2290,5 +2190,13 @@ export default {
         font-size: 0.65em !important; 
         font-weight: 700 !important;       
     } 
-
+    .pt-3 {
+        padding-top: 3px !important;
+    }
+    .pb-3 {
+        padding-bottom: 3px !important;
+    }
+    .bg-ppto {
+        background-color: #696969 !important;
+    }
 </style>
