@@ -132,20 +132,28 @@ export default {
         let servicios = []
         if(idsim == 1){
             if(multicaras == 1){  
-                console.log("1")
-                let serpla = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed && tar.servicio.nombre_servicio.indexOf("COMPUESTA") == 0 && tar.servicio.nombre_servicio.indexOf("COMPLEJA") == 0) 
-                let sersed = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplased && tar.sede_id == idsed && tar.servicio.nombre_servicio.indexOf("COMPUESTA") == 0 && tar.servicio.nombre_servicio.indexOf("COMPLEJA") == 0) 
-                return servicios = _.union(serpla,sersed)              
+                state.tarifarios.map(function(value, key) { 
+                    if(value.servicio.simbologia_id == idsim && (value.plan_id == idplased || value.plan_id == idpla) && value.sede_id == idsed && !value.servicio.nombre_servicio.includes('COMPUESTA') && !value.servicio.nombre_servicio.includes('COMPLEJA')){
+                        servicios.push(value)
+                    }                    
+                })
+                return servicios           
             }
             if(multicaras == 2){
-                console.log("2")
-                let datosFiltrados = state.tarifarios.filter(item => item.servicio.simbologia_id == idsim && item.plan_id == idpla && tar.sede_id == idsed  && item.servicio.nombre_servicio.indexOf("SIMPLE") == 0 && item.servicio.nombre_servicio.indexOf("COMPLEJA") == 0) 
-                return datosFiltrados  
+                state.tarifarios.map(function(value, key) { 
+                    if(value.servicio.simbologia_id == idsim && (value.plan_id == idplased || value.plan_id == idpla) && value.sede_id == idsed && !value.servicio.nombre_servicio.includes('SIMPLE') && !value.servicio.nombre_servicio.includes('COMPLEJA')){
+                        servicios.push(value)
+                    }                    
+                })
+                return servicios   
             }
             if(multicaras >= 3 ){
-                console.log("3")
-                let datosFiltrados = state.tarifarios.filter(item => item.servicio.simbologia_id == idsim && item.plan_id == idpla && tar.sede_id == idsed  && item.servicio.nombre_servicio.indexOf("COMPUESTA") == 0 && item.servicio.nombre_servicio.indexOf("SIMPLE") == 0) 
-                return datosFiltrados  
+                state.tarifarios.map(function(value, key) { 
+                    if(value.servicio.simbologia_id == idsim && (value.plan_id == idplased || value.plan_id == idpla) && value.sede_id == idsed && !value.servicio.nombre_servicio.includes('COMPUESTA') && !value.servicio.nombre_servicio.includes('SIMPLE')){
+                        servicios.push(value)
+                    }                    
+                })
+                return servicios   
             }
         }else{
             let serpla = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 

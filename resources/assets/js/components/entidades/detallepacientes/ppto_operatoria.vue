@@ -338,11 +338,11 @@
                                 <div class="row">
                                     <svg height="120" width="120" id="diente_servicios" style="margin:0 auto !important;">
                                         <!-- Caras del Diente -->                                        
-                                        <polygon points="0,0 120,0 90,30 30,30" v-tooltip.top="'VESTIBULAR'" :class="[simboloID == 1 && multicaras.includes(1) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(1)" /> <!-- CARA 1 Trapecio superior -->
-                                        <polygon points="120,0 120,120 90,90 90,30" v-tooltip.right="'MESIAL'" :class="[simboloID == 1 && multicaras.includes(2) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(2)" /> <!-- CARA 2 Trapecio lateral derecho -->
-                                        <polygon points="120,120 0,120 30,90 90,90" v-tooltip.bottom="'PALATINO'" :class="[simboloID == 1 && multicaras.includes(3) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(3)"/> <!-- CARA 3 Trapecio inferior -->
-                                        <polygon points="0,120 30,90 30,30 0,0" v-tooltip.left="'DISTAL'" :class="[simboloID == 1 && multicaras.includes(4) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(4)" /> <!-- CARA 4 trapecio lateral izquierdo-->
-                                        <polygon points="30,30 90,30 90,90 30,90" v-tooltip.top="'OCLUSAL'" :class="[simboloID == 1 && multicaras.includes(5) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(5)" /> <!-- CARA 5 Cuadrado Central -->
+                                        <polygon points="0,0 120,0 90,30 30,30" v-tooltip.top="toolTipDiente.cara_1" :class="[simboloID == 1 && multicaras.includes(1) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(1)" /> <!-- CARA 1 Trapecio superior -->
+                                        <polygon points="120,0 120,120 90,90 90,30" v-tooltip.right="toolTipDiente.cara_2" :class="[simboloID == 1 && multicaras.includes(2) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(2)" /> <!-- CARA 2 Trapecio lateral derecho -->
+                                        <polygon points="120,120 0,120 30,90 90,90" v-tooltip.bottom="toolTipDiente.cara_3" :class="[simboloID == 1 && multicaras.includes(3) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(3)"/> <!-- CARA 3 Trapecio inferior -->
+                                        <polygon points="0,120 30,90 30,30 0,0" v-tooltip.left="toolTipDiente.cara_4" :class="[simboloID == 1 && multicaras.includes(4) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(4)" /> <!-- CARA 4 trapecio lateral izquierdo-->
+                                        <polygon points="30,30 90,30 90,90 30,90" v-tooltip.top="toolTipDiente.cara_5" :class="[simboloID == 1 && multicaras.includes(5) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(5)" /> <!-- CARA 5 Cuadrado Central -->
                                         <!-- Tratamientos del Diente -->
                                         <polygon points="55,5 67,5 67,115 55,115" :class="[simboloID == 2 ? 'marcadoEndodonciaD marcado' : 'endodoncia']"/>                                           
                                         <circle cx="60" cy="60" r="50" :class="[simboloID == 3 ? 'marcadoCoronaD marcado' : 'corona']"/>
@@ -926,7 +926,15 @@ export default {
                 strokeWidth:'1px'        
             },
 
-            newidPresupuesto:''                         
+            newidPresupuesto:'',
+            toolTipDiente: {
+                cara_1:'',
+                cara_2:'',
+                cara_3:'',
+                cara_4:'',
+                cara_5:''
+            }
+
         }
     },
     computed: {
@@ -999,6 +1007,13 @@ export default {
             if(!this.contains(this.odontograma,params.id)) return
             this.infodent = params
             if(this.select_multi){
+                this.toolTipDiente = {
+                    cara_1 : '',
+                    cara_2 : '',
+                    cara_3 : '',
+                    cara_4 : '',
+                    cara_5 : ''
+                }                
                 if(this.contains(this.list_dent_multiple,params)){
                     this.list_dent_multiple = _.reject(this.list_dent_multiple, function(val){
                         return val.id == params.id
@@ -1007,6 +1022,14 @@ export default {
                     this.list_dent_multiple.push(params)
                 }
             }else{
+                //console.log("params",params)
+                this.toolTipDiente = {
+                    cara_1 : params.cara_1,
+                    cara_2 : params.cara_2,
+                    cara_3 : params.cara_3,
+                    cara_4 : params.cara_4,
+                    cara_5 : params.cara_5
+                }
                 this.LoadServices()
             } 
         },
@@ -1072,12 +1095,12 @@ export default {
             let _letras = ''   
             let self = this 
             let datalist = []                  
-            if(this.multicaras.includes(5)) _letras += 'O'
-            if(this.multicaras.includes(1)) _letras += 'V'
-            if(this.multicaras.includes(3)) _letras += 'P'
-            if(this.multicaras.includes(2)) _letras += 'M'
-            if(this.multicaras.includes(4)) _letras += 'D'
-            if(this.simboloID != 1) _letras='OVPMD'
+            if(this.multicaras.includes(5)) _letras += this.toolTipDiente.cara_5.substr(0,1)
+            if(this.multicaras.includes(1)) _letras += this.toolTipDiente.cara_1.substr(0,1)
+            if(this.multicaras.includes(3)) _letras += this.toolTipDiente.cara_3.substr(0,1)
+            if(this.multicaras.includes(2)) _letras += this.toolTipDiente.cara_2.substr(0,1)
+            if(this.multicaras.includes(4)) _letras += this.toolTipDiente.cara_4.substr(0,1)
+            if(this.simboloID != 1) _letras=this.toolTipDiente.cara_5.substr(0,1)+this.toolTipDiente.cara_1.substr(0,1)+this.toolTipDiente.cara_3.substr(0,1)+this.toolTipDiente.cara_2.substr(0,1)+this.toolTipDiente.cara_4.substr(0,1)
             if(this.select_multi){
                 let _costo_deducible = param.row.solocoaseguro == 1 ? 0.00 : parseFloat(this.dataPaciente.deducible).toFixed(2)
                 let _costo_coaseguro = (parseFloat(param.row.costo) - parseFloat(_costo_deducible)) * ((parseFloat(this.dataPaciente.coaseguro))/100)

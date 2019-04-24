@@ -61,8 +61,11 @@
         </div>
         <modal name="cita_nueva" :width="'40%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
            <div class="card mb-0">
-                <div class="card-header pt-10 pb-10">
-                    <div class="card-title">Nueva Cita</div>
+                <div class="card-header bg-primary pt-10 pb-10">
+                    <div class="card-title d-inline text-white">Nueva Cita</div>
+                    <button type="button" class="close d-inline text-white" aria-label="Close" @click.prevent="$modal.hide('cita_nueva')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>                      
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -201,9 +204,9 @@
                         </div>
                     </div>                                    
                 </div>
-                <div class="card-action pt-15 pb-15">
-                    <button class="btn btn-primary float-right ml-10" @click.prevent="createCita" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                    <button class="btn btn-danger float-right" @click="$modal.hide('cita_nueva')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                <div class="card-action pt-15 pb-15 pr-20">
+                    <button class="btn btn-danger float-right ml-10" @click="$modal.hide('cita_nueva')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    <button class="btn btn-primary float-right" @click.prevent="createCita" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                 </div>                
             </div>                                
         </modal> 
@@ -502,7 +505,7 @@ export default {
                 slotLabelFormat : 'hh:mm a', 
                 minTime : '08:00:00',
                 maxTime : '24:00:00',  
-                editable : false,   
+                editable : true,   
                 allDaySlot: false, 
                 eventLimit : true,                 
                 businessHours:[],
@@ -632,6 +635,7 @@ export default {
             this.$modal.show('cita_nueva')                         
         } ,
         eventDrop( event, delta, revertFunc, jsEvent, ui, view ){
+            //console.log("cambio drop")
             let self = this
             let bloqueado = false
             let turn_valid = true
