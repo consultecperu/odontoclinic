@@ -128,12 +128,31 @@ export default {
         return state.tipocambios.find(tc => tc.fecha_registro == moment().format('DD-MM-YYYY'))
     },
     // Carga de tratamientos para agregar a la muela principal
-    getTratamientosSimbolo: (state) => (idsim, idpla ,idsed,idplased) => {
-        let serpla = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 
-        let sersed = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplased && tar.sede_id == idsed) 
+    getTratamientosSimbolo: (state) => (idsim, idpla ,idsed,idplased,multicaras) => {
         let servicios = []
-        return servicios = _.union(serpla,sersed)
-        //return state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 
+        if(idsim == 1){
+            if(multicaras == 1){  
+                console.log("1")
+                let serpla = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed && tar.servicio.nombre_servicio.indexOf("COMPUESTA") == 0 && tar.servicio.nombre_servicio.indexOf("COMPLEJA") == 0) 
+                let sersed = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplased && tar.sede_id == idsed && tar.servicio.nombre_servicio.indexOf("COMPUESTA") == 0 && tar.servicio.nombre_servicio.indexOf("COMPLEJA") == 0) 
+                return servicios = _.union(serpla,sersed)              
+            }
+            if(multicaras == 2){
+                console.log("2")
+                let datosFiltrados = state.tarifarios.filter(item => item.servicio.simbologia_id == idsim && item.plan_id == idpla && tar.sede_id == idsed  && item.servicio.nombre_servicio.indexOf("SIMPLE") == 0 && item.servicio.nombre_servicio.indexOf("COMPLEJA") == 0) 
+                return datosFiltrados  
+            }
+            if(multicaras >= 3 ){
+                console.log("3")
+                let datosFiltrados = state.tarifarios.filter(item => item.servicio.simbologia_id == idsim && item.plan_id == idpla && tar.sede_id == idsed  && item.servicio.nombre_servicio.indexOf("COMPUESTA") == 0 && item.servicio.nombre_servicio.indexOf("SIMPLE") == 0) 
+                return datosFiltrados  
+            }
+        }else{
+            let serpla = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idpla && tar.sede_id == idsed) 
+            let sersed = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplased && tar.sede_id == idsed) 
+            return servicios = _.union(serpla,sersed)
+        }
+
     },
     getTratamientosSimboloNew: (state) => (idsim, idplapac ,idsed ,idplased) => {
         let serpla = state.tarifarios.filter(tar => tar.servicio.simbologia_id == idsim && tar.plan_id == idplapac && tar.sede_id == idsed)

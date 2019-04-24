@@ -357,66 +357,14 @@
                                 </div>
                             </div>
                         </div>
-<!--                         <div class="row">
-                            <div v-for="sim in simbolos" :key="sim.id"  class="col-1 d-inline pr-0">
-                                <div class="title-simbologia text-center">{{ sim.id == 1 ? 'NORMAL' : sim.nombre_simbologia}}                                    
-                                </div>
-                                <div class="form-check form-check-inline pl-0" :class="{trata_selected:sim.id == selected}">
-                                    <p-radio class="p-icon p-curve p-tada mr-0" :value="sim.id" name="radio66" color="primary-o" v-model="simboloID" @change="cambiotratamiento(sim.id)">
-                                        <i slot="extra" class="icon la la-check"></i>                                
-                                    </p-radio>
-                                    <div>
-                                        <svg height="42" width="42" :id="'tratam_' + sim.id">
-                                            
-                                            <polygon points="8,8 40,8 32,16 16,16" estado="0" value="1" class="_diente" /> 
-                                            <polygon points="40,8 40,40 32,32 32,16" estado="0" value="2" class="_diente" /> 
-                                            <polygon points="40,40 8,40 16,32 32,32" estado="0" value="3" class="_diente" /> 
-                                            <polygon points="8,40 16,32 16,16 8,8" estado="0" value="4" class="_diente" /> 
-                                            <polygon points="16,16 32,16 32,32 16,32" estado="0" value="5" class="_diente" /> 
-                                            
-                                            <polygon points="21,8 27,8 27,40 21,40" :class="[sim.id == 2 ? 'marcadoEndodoncia marcado' : 'endodoncia']"/>
-                                            <circle cx="24" cy="24" r="13" estado="8" value="8" :class="[sim.id == 3 ? 'marcadoCorona marcado' : 'corona']"/>
-                                            <polygon points="8,12 12,8 40,36 36,40" estado="4" value="6" :class="[sim.id == 4 ? 'marcadoExodoncia marcado' : 'exodoncia']"/>                                    
-                                            <polygon points="36,8 40,12 12,40 8,36" estado="4" value="7" :class="[sim.id == 4 ? 'marcadoExodoncia marcado' : 'exodoncia']" />
-                                            <image v-if="sim.id == 5" xlink:href="/img/odontograma/perno3.png" x=8 y=8 width=34 height=34 />
-                                            <path d="M 10,25 a10,10 0 1,1 28,0" :class="[sim.id == 6 ? 'marcadoIonomero marcado' : 'ionomero']"></path>
-                                            <text x=13 y=35 :class="[sim.id == 7 ? 'marcadoSellante marcado' : 'sellante']">S</text>                                                                        
-                                            <ellipse cx="24" cy="20" rx="15" ry="9"  estado="10" value="11" :class="[sim.id == 8 ? 'marcadoGeneral marcado' : 'general']"/>
-                                            <line x1="8" y1="20" x2="40" y2="20" :class="[sim.id == 8 ? 'marcadoGeneral marcado' : 'general']"/>                                    
-                                            <text x=10 y=38 :class="[sim.id == 8 ? 'marcadoTextGeneral marcado' : 'sellante']">BOCA</text>                                                                        
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>                                                                                                                                                                          
-                        </div> -->
                         <div class="row">
                             <div class="col-12">
                                 <button type="button" class="btn btn-danger btn-sm" @click.prevent="cargaTratamientos">Buscar Servicios <i class="la flaticon-search-2"></i></button>
                             </div>
                         </div>
                         <div class="row mt-10">
-<!--                             <div class="col-3 mr-0 pr-0">
-                                <svg height="160" width="160" id="diente_servicios">
-                                                                    
-                                    <polygon points="0,0 160,0 120,40 40,40" v-tooltip.top="'VESTIBULAR'" :class="[simboloID == 1 && multicaras.includes(1) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(1)" /> 
-                                    <polygon points="160,0 160,160 120,120 120,40" v-tooltip.right="'MESIAL'" :class="[simboloID == 1 && multicaras.includes(2) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(2)" /> 
-                                    <polygon points="160,160 0,160 40,120 120,120" v-tooltip.bottom="'PALATINO'" :class="[simboloID == 1 && multicaras.includes(3) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(3)"/> 
-                                    <polygon points="0,160 40,120 40,40 0,0" v-tooltip.left="'DISTAL'" :class="[simboloID == 1 && multicaras.includes(4) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(4)" /> 
-                                    <polygon points="40,40 120,40 120,120 40,120" v-tooltip.top="'OCLUSAL'" :class="[simboloID == 1 && multicaras.includes(5) ? 'marcadoRojo marcado' : 'diente']" @click.prevent="selectD(5)" /> 
-                                    
-                                    <polygon points="75,5 87,5 87,155 75,155" :class="[simboloID == 2 ? 'marcadoEndodonciaD marcado' : 'endodoncia']"/>                                           
-                                    <circle cx="80" cy="80" r="70" :class="[simboloID == 3 ? 'marcadoCoronaD marcado' : 'corona']"/>
-                                    <polygon points="0,10 10,0 160,150 150,160" :class="[simboloID == 4 ? 'marcadoExodonciaD marcado' : 'exodoncia']"/>                                    
-                                    <polygon points="150,0 160,10 10,160 0,150" :class="[simboloID == 4 ? 'marcadoExodonciaD marcado' : 'exodoncia']" />
-                                    <image v-if="simboloID == 5" xlink:href="/img/odontograma/perno4.png" x=0 y=0 width=160 height=160 />                                        
-                                    <path d="M 10,85 a40,40 0 1,1 140,0" :class="[simboloID == 6 ? 'marcadoIonomeroD marcado' : 'ionomero']"></path>
-                                    <text x=40 y=130 :class="[simboloID == 7 ? 'marcadoSellanteD marcado' : 'sellante']">S</text>                                                                        
-                                    <ellipse cx="80" cy="80" rx="75" ry="35"  :class="[simboloID == 8 ? 'marcadoGeneralD marcado' : 'general']"/>
-                                    <line x1="5" y1="80" x2="155" y2="80" :class="[simboloID == 8 ? 'marcadoGeneralD marcado' : 'general']"/>                                    
-                                </svg>
-                            </div> -->
                             <div class="col-12">
-                                <table class="table table-bordered table-sm table-head-bg-info table-bordered-bd-primary">
+                                <table class="table table-bordered table-sm table-head-bg-primary table-bordered-bd-primary">
                                     <thead>
                                         <tr>
                                             <th>Diente</th>
@@ -430,8 +378,7 @@
                                             <th></th>                                                                                                                        
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <!--<tr v-for="serv in list_services_dent" :key="serv.id">-->
+                                    <tbody>                                        
                                         <tr v-for="(serv, index) in list_services_anteriores" :key="serv.id">
                                             <td>{{ serv.letras }}</td>
                                             <td>{{ serv.nombre_servicio}}</td>
@@ -454,7 +401,6 @@
                                             <td align="right">{{ serv.costo}}</td> 
                                             <td align="center"><button type="button" class="btn btn-xs btn-danger" @click.prevent="EliminaServicio(index)" v-tooltip.top="'Eliminar'"><span class="btn-label pl-5"><i class="la la-trash"></i></span></button></td>                                                                                                                        
                                         </tr>                                        
-                                        <!--<tr v-if="list_services_dent.length == 0">-->
                                         <tr v-if="list_services_dent.length == 0 && list_services_anteriores.length == 0">
                                             <td colspan="9" class="text-center">NO HAY SERVICIOS CARGADOS ...</td>                                           
                                         </tr>
@@ -463,7 +409,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-action">
+                    <div class="card-action pt-10 pb-10 pr-20">
                         <button class="btn btn-danger float-right ml-10" @click="salirDiente"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                         <button class="btn btn-primary float-right" :disabled="list_services_dent.length == 0" @click.prevent="ActionServicio"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
                     </div>
@@ -993,7 +939,7 @@ export default {
             return _.sortBy(this.simbologias, 'id');
         },
         TratamientosSimbolo(){
-            return this.getTratamientosSimbolo(this.simboloID,this.PacienteById.pacienteplanes.plan_id,this.sede_system.id,this.sede_system.plan_id)
+            return this.getTratamientosSimbolo(this.simboloID,this.PacienteById.pacienteplanes.plan_id,this.sede_system.id,this.sede_system.plan_id,this.multicaras.length)
         },
         TratamientosSimboloNew(){
             //console.log("servicio_odonto",this.getTratamientosSimboloNew(this.simboloID,this.PacienteById.pacienteplanes.plan_id,this.sede_system.id,this.sede_system.plan_id))
@@ -2198,5 +2144,8 @@ export default {
     }
     .bg-ppto {
         background-color: #696969 !important;
+    }
+    .table {
+        color:#131212 !important;
     }
 </style>

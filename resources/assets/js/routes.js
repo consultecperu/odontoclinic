@@ -52,7 +52,7 @@ import Detallepersonal from './components/entidades/detallepersonal.vue'
 
 import Citas from './components/agenda/citas.vue'
 import Seguimientos from './components/agenda/seguimientos.vue'
-import Modular from './components/agenda/modular.vue'
+/* import Modular from './components/agenda/modular.vue' */
 
 import TipoCambios from './components/caja/tipocambios.vue'
 import CierreCaja from './components/caja/cierrecaja.vue'
@@ -532,7 +532,7 @@ export default [
                     next();
                 }                   
             }, 
-            {
+/*             {
                 path: '/agenda-modular',
                 name: 'agenda-modular',
                 component: Modular,
@@ -542,7 +542,7 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
-            },             
+            },  */            
             {
                 path: '/tipocambio',
                 name: 'tipocambio',
