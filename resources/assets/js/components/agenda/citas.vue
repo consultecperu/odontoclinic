@@ -39,9 +39,6 @@
 									<div class="form-group form-floating-label">
 										<select class="form-control input-border-bottom" id="selectMedicos" v-model="dataCita.empleado_id" @change="cambioMedico" required>
                                             <option value="0">--Todos--</option>
-<!--                                             <option v-for="med in getMedicos" :value="med.id" :key="med.id">
-                                                {{ med.nombre_completo}}
-                                            </option> -->
                                             <option v-for="med in medicos_especialidad" :value="med.id" :key="med.id">
                                                 {{ med.nombre_completo}}
                                             </option>                                            
@@ -294,7 +291,7 @@
                         styleClass="vgt-table condensed bordered striped"> 
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'btn'" class="center">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-primary btn-xs" data-original-title="" @click.prevent="selectPaciente(props)">
+                                <button type="button" data-toggle="tooltip" title="" class="btn btn-primary btn-xs" data-original-title="Seleccionar" @click.prevent="selectPaciente(props)">
                                     Seleccionar
                                 </button>                                                               
                             </span>
@@ -395,7 +392,7 @@ export default {
 
             IconClassCel : 'la la-refresh la-2x',
 
-            tipoAgenda:'1',
+            tipoAgenda: 1,
             dataCita : {
                 paciente_id:'',
                 paciente:'',

@@ -275,6 +275,7 @@
                                     <div class="col-11">
                                         <p class="form-control-static mb-0"><span class="font-weight-bold">Fecha de Registro :</span>{{ ate.fecha_realizacion }}</p>
                                         <p class="form-control-static"><span class="font-weight-bold">Descripcion :</span>{{ ate.descripcion }}</p>
+                                        <p class="form-control-static" v-if="ate.laboratorio_id != null"><span class="font-weight-bold text-danger">Laboratorio Asignado : </span> {{ getLaboratorio(ate.laboratorio_id) }}</p>
                                     </div>
                                 </div>
                             </template>
@@ -293,7 +294,7 @@
                                             <div class="row">
                                                 <div class="col-6" v-if="rec.tarifario.servicio.laboratorioservicios.length > 0">
                                                     <label for="laboratorio" class="text-primary font-weight-bold pt-10">{{ rec.laboratorio_id == null ? 'Asignar Laboratorio :' : 'Laboratorio Asignado :'}}</label>
-                                                    <div class="select2-input" v-if="rec.laboratorio_id == null">
+                                                    <div class="select2-input">
                                                         <select id="laboratorio" name="laboratorio" class="col-8 form-control form-control-sm border" v-model="dataServicio.laboratorioservicio_id" @change="cambioLaboratorio">
                                                             <option value="">--seleccione--</option>
                                                             <option v-for="lab in rec.tarifario.servicio.laboratorioservicios" :value="lab.id" :key="lab.id">
@@ -301,11 +302,11 @@
                                                             </option>
                                                         </select>
                                                     </div> 
-                                                    <div class="text-primary font-weight-bold" v-if="rec.laboratorio_id != null">
+<!--                                                     <div class="text-primary font-weight-bold" v-if="rec.laboratorio_id != null">
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.laboratorio.nombre_laboratorio}}</label>
-                                                    </div>                                                    
+                                                    </div>   -->                                                  
                                                 </div>
-<!--                                                 <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
+                                                <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
                                                     <label for="material" class="text-primary font-weight-bold pt-10">{{ rec.material_id == null ? 'Asignar Material :' : 'Material Asignado :'}}</label>
                                                     <div class="select2-input" v-if="rec.material_id == null">
                                                         <select id="material" name="material" class="col-8 form-control form-control-sm border" v-model="dataServicio.materialservicio_id" @change="cambioMaterial">
@@ -318,8 +319,7 @@
                                                     <div class="text-primary font-weight-bold" v-if="rec.material_id != null">
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.material.nombre_material}}</label>
                                                     </div>                                                     
-                                                </div> -->
-
+                                                </div>
                                             </div>
                                             <button type="button" class="btn btn-danger btn-sm float-right" @click.prevent="numid = 0"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                                             <button type="button" class="btn btn-primary btn-sm float-right mr-10" @click.prevent="GrabarRecord(rec)" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
@@ -899,7 +899,9 @@ export default {
         this.$store.dispatch('LOAD_TIPOPAGOS_LIST') 
         this.$store.dispatch('LOAD_PAGOS_LIST')
         this.$store.dispatch('LOAD_TIPOCAMBIOS_LIST') 
-        this.$store.dispatch('LOAD_MONEDAS_LIST')         
+        this.$store.dispatch('LOAD_MONEDAS_LIST') 
+        this.$store.dispatch('LOAD_LABORATORIOS_LIST') 
+        this.$store.dispatch('LOAD_MATERIALES_LIST')         
         //this.dataDetalleOperatoria = _.clone(this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles)
         this.dataPaciente = {
             id:this.presupuestoOperatoriaById.paciente_id,
@@ -1327,7 +1329,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['user_system','sede_system','monedas','empresapacientes','laboratorioservicios','materialservicios']),
+        ...mapState(['user_system','sede_system','monedas','empresapacientes','laboratorioservicios','materialservicios','laboratorios','materiales']),
         ...mapGetters(['getDientesByCuadrante','getMedicos','getTipoCambioHoy','getPresupuestoOperatoriaById','getTipopagosForma','getPagosPresupuestoOperatoriaById']), 
         presupuestoOperatoriaById(){
             if(this.$route.params.idpresupuesto != undefined){
@@ -1544,7 +1546,7 @@ export default {
             }).catch(error => {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
-            this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
 
             });
         },
@@ -2287,7 +2289,11 @@ export default {
                     //window.open(strurl,'_blank')                   
                 })
             })
-        },                             
+        },
+        getLaboratorio(param){
+            let laboratorio = this.laboratorios.find(lab => lab.id == param)
+            return laboratorio.nombre_laboratorio
+        }                             
 
     },
     filters: {

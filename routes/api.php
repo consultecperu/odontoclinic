@@ -128,7 +128,7 @@ Route::middleware(['auth'])->group(function(){
     // record atencion operatoria
     Route::resource('recordatencion-operatorias','RecordatencionoperatoriaController'); 
     Route::put('recordatencion-operatorias/finalizar/{id}','RecordatencionoperatoriaController@finalizaTratamiento');
-    // record atencio ortodoncia
+    // record atencion ortodoncia
     Route::resource('recordatencion-ortodoncias','RecordatencionortodonciaController'); 
     Route::put('recordatencion-ortodoncias/finalizar/{id}','RecordatencionortodonciaController@finalizaTratamiento');
     // pagos

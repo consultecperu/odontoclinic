@@ -64,11 +64,15 @@
                                         <v2-table :data="rows" ref="table1"
                                                 border 
                                                 stripe 
-                                                height="220"
+                                                height="210"
+                                                :lazy-load="true"
                                                 :loading="loading" 
                                                 :default-sort='{prop: "presupuesto_id", order: "descending"}' 
                                                 @sort-change="handleSortChange" 
+                                                :row-class-name="getRowClassName"
                                                 :total="total"
+                                                :cell-height="34"
+                                                :col-height="30"                                                
                                                 :shown-pagination="true"
                                                 :pagination-info="paginationInfo"
                                                 @page-change="handlePageChange"
@@ -474,6 +478,13 @@ export default {
             })
             this.getTableData()            
         },
+        getRowClassName ({row, rowIndex}) {
+            let encontrado = this.seleccionados.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
+            if(encontrado.length > 0){
+                return 'seleccionado'
+            }
+            return 'no-seleccionado'
+        },        
         cargaDatos2(){              // enviados
             this.loading2 = true
             let self = this
@@ -1013,6 +1024,33 @@ export default {
     .vld-overlay.is-full-page {
         z-index: 99999;
     }
+    /* --- div Resumen --*/
+    .transfer-to {
+        line-height: 30px;        
+    }      
+    .transfer-to .sub {
+        font-size: 14px;
+        margin-bottom: 8px;
+        font-weight: 600;
+        padding: 10px !important;
+    }
+    .transfer-to .account-transfer>div {
+        display: flex;
+        justify-content: space-between;
+    }     
+    .transfer-to .account-transfer>div span:first-child {
+        font-weight: 600;
+        color: #333;
+        font-size: 12px;
+    }
+    .transfer-to .account-transfer>div span:last-child {
+        font-size: 12px;
+    }  
+    .btn .btn-label i {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }     
+
 
 </style>
 
