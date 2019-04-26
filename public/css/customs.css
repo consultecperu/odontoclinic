@@ -44,65 +44,51 @@
 .vgt-left-align {
     vertical-align: middle!important;
 }
-
-
 .bootstro-prev-btn {
     float: left;
 } 
-
 .separador {
     border-top: 1px solid #CF120B;
 }
-
 input.mayusculas, textarea.mayusculas{
     text-transform:uppercase;
 }     
-
 input.minusculas{
     text-transform:lowercase;
 }    
-
 .center {
     text-align: center !important;
 }    
-
 .modal-main {
     background-color: #F6E0A6 !important;
     color:rgb(41, 2, 1);
 } 
-
 .modal-item {
     border-bottom: 1px solid rgb(255, 81, 81);
     border-left: 1px solid rgb(255, 81, 81);
     border-right: 1px solid rgb(255, 81, 81);
 }
-
 .hand-up {
     cursor: pointer;
     cursor: hand;
     font-size:17px !important;
     color:red !important;
 }
-
 table.vgt-table {
     font-size: 13px !important;
 }
 table.vgt-table td {
   vertical-align: middle !important;
 }
-
 .font-large {
     font-size: large !important;
 }
-
 .autocomplete--clear {
     margin-top: -5px !important;
 }
-
 .tooltip-arrow {
   border-style: none !important;
 }
-
 .tooltip-content{
   font-size: 9px !important;
 } 
@@ -143,7 +129,6 @@ table.vgt-table td {
 .card-profile .profile-picture {
   bottom: -60px !important;
 }
-
 .card-profile .profile-picture img {
   width: 120px !important;
   height: 120px !important;
@@ -227,6 +212,7 @@ table.vgt-table td {
 }
 .beautify-scroll-container {
   border-bottom: 1px solid darkslategray !important;
+  border-left: 1px solid darkslategray !important;
 }
 .v2-checkbox-list-wrap.wrap-border {
   border-right: 0 !important;

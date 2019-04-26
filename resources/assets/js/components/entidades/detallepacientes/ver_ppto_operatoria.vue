@@ -1508,7 +1508,7 @@ export default {
                 laboratorioservicio_id:this.dataServicio.laboratorioservicio_id,
                 fecha_separacion:moment().format('DD-MM-YYYY hh:mm:ss'),
                 costo:this.dataServicio.monto_lab,
-                tipo:1,
+                tipo:1,     // operatoria
                 liquidable:1                         
             }
             var url = '/api/recordatencion-operatorias';

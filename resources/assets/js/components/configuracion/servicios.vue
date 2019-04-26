@@ -461,16 +461,15 @@ export default {
                 pago_doctor:dataser.pago_doctor,              
                 user_id: dataser.user_id                                                         
             }  
-            if(dataser.tipo === 2){
-                this.dataServicio.control_ortodoncia = dataser.serviciodetalles[0].control_ortodoncia
-                this.dataServicio.cuota_inicial = dataser.serviciodetalles[0].cuota_inicial
-                this.dataServicio.ortofacil = dataser.serviciodetalles[0].ortofacil
+            if(dataser.tipo == 2){
+                this.dataServicio.control_ortodoncia = dataser.serviciodetalle.control_ortodoncia
+                this.dataServicio.cuota_inicial = dataser.serviciodetalle.cuota_inicial
+                this.dataServicio.ortofacil = dataser.serviciodetalle.ortofacil
                 this.showGroups = false
                 if(dataser.parentid_ortodoncia > 0){
                     this.showService = true
                 }
-            }
-            
+            }            
             var list=[];
             var imod = _.size(params.row.gruposervicios)
             if(imod > 0){
@@ -478,10 +477,11 @@ export default {
                     list.push(value.id)
                 }) 
             }   
-
             this.dataServicio.dataGrupos = list  
             this.labelAccion = "Actualización"
-            this.MuestraImagen(dataser.simbologia.id)         
+            if(dataser.simbologia_id != null){
+                this.MuestraImagen(dataser.simbologia.id)
+            }         
             this.$modal.show('servicio')
         
         },

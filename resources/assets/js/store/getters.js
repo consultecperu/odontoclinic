@@ -176,7 +176,7 @@ export default {
         }) 
         return servicios = _.union(serpla,sersed)       
     },    
-    getTratamientosOrtodoncia: (state) => (idpla ,idsed) => {
+    getTratamientosOrtodoncia: (state) => (idpla ,idsed) => {    
         return state.tarifarios.filter(tar => tar.ortodoncia == 1 && tar.plan_id == idpla && tar.sede_id == idsed) 
     },    
     getPresupuestoOperatoriaById: (state) => (id) => {

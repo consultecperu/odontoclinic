@@ -126,7 +126,7 @@
                                         <label for="fecha" class="col-12 pl-10 mb-0 label-title">Fecha de Corte</label>
                                         <date-picker @change="cargaDatos2" v-model="dataFiltro2.fecha_corte" :first-day-of-week="1" :lang="lang" format="DD-MM-YYYY"></date-picker>
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-success d-inline mr-20 mb-5 float-right" v-if="seleccionados.length > 0" @click.prevent="recibidos"><span class="btn-label"><i class="la la-check-circle-o"></i></span>Marcar como Recibidos</button>
+                                    <button type="button" class="btn btn-sm btn-success d-inline mr-20 mb-5 float-right" v-if="seleccionados2.length > 0" @click.prevent="recibidos"><span class="btn-label"><i class="la la-check-circle-o"></i></span>Marcar como Recibidos</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -135,11 +135,15 @@
                                         <v2-table :data="rows2" ref="table2"
                                                 border 
                                                 stripe 
-                                                height="220"
+                                                height="210"
+                                                :lazy-load="true"
                                                 :loading="loading2" 
                                                 :default-sort='{prop: "presupuesto_id", order: "descending"}' 
                                                 @sort-change="handleSortChange2" 
+                                                :row-class-name="getRowClassName2"
                                                 :total="total2"
+                                                :cell-height="34"
+                                                :col-height="30"                                                
                                                 :shown-pagination="true"
                                                 :pagination-info="paginationInfo2"
                                                 @page-change="handlePageChange2"
@@ -194,7 +198,7 @@
                                         <label for="fecha" class="col-12 pl-10 mb-0 label-title">Fecha de Corte</label>
                                         <date-picker @change="cargaDatos3" v-model="dataFiltro3.fecha_corte" :first-day-of-week="1" :lang="lang" format="DD-MM-YYYY"></date-picker>
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-success d-inline mr-20 mb-5 float-right" v-if="seleccionados.length > 0" @click.prevent="liquidar"><span class="btn-label"><i class="la la-check-circle-o"></i></span>Liquidar</button>
+                                    <button type="button" class="btn btn-sm btn-success d-inline mr-20 mb-5 float-right" v-if="seleccionados3.length > 0" @click.prevent="liquidar"><span class="btn-label"><i class="la la-check-circle-o"></i></span>Liquidar</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -203,11 +207,15 @@
                                         <v2-table :data="rows3" ref="table3"
                                                 border 
                                                 stripe 
-                                                height="220"
+                                                height="210"
+                                                :lazy-load="true"
                                                 :loading="loading3" 
                                                 :default-sort='{prop: "presupuesto_id", order: "descending"}' 
                                                 @sort-change="handleSortChange3" 
+                                                :row-class-name="getRowClassName3"
                                                 :total="total3"
+                                                :cell-height="34"
+                                                :col-height="30"                                                
                                                 :shown-pagination="true"
                                                 :pagination-info="paginationInfo3"
                                                 @page-change="handlePageChange3"
@@ -269,11 +277,15 @@
                                         <v2-table :data="rows4" ref="table4"
                                                 border 
                                                 stripe 
-                                                height="220"
+                                                height="210"
+                                                :lazy-load="true"
                                                 :loading="loading4" 
                                                 :default-sort='{prop: "presupuesto_id", order: "descending"}' 
                                                 @sort-change="handleSortChange4" 
+                                                :row-class-name="getRowClassName4"
                                                 :total="total4"
+                                                :cell-height="34"
+                                                :col-height="30"                                                
                                                 :shown-pagination="true"
                                                 :pagination-info="paginationInfo4"
                                                 @page-change="handlePageChange4"
@@ -444,7 +456,10 @@ export default {
             rows4:[],             
 
             cambio:1,
-            seleccionados:[],              
+            seleccionados:[], 
+            seleccionados2:[],
+            seleccionados3:[],
+            seleccionados4:[],             
             color_selected:[],
             items_separados:[]          
         }
@@ -464,8 +479,10 @@ export default {
             _.each(filtrados, function(value,key){
                 let files= {
                     id:value.id,
-                    presupuesto_id:value.presupuestooperatoriadetalle.presupuestooperatoria_id,
-                    paciente:value.presupuestooperatoriadetalle.presupuestooperatoria.paciente.nombre_completo,
+                    presupuestooperatoriadetalle_id:value.presupuestooperatoriadetalle_id,
+                    presupuestoortodonciadetalle_id:value.presupuestoortodonciadetalle_id,
+                    presupuesto_id:value.presupuestooperatoriadetalle_id != null ? value.presupuestooperatoriadetalle.presupuestooperatoria_id : value.presupuestoortodonciadetalle.presupuestoortodoncia_id,
+                    paciente:value.presupuestooperatoriadetalle_id != null ? value.presupuestooperatoriadetalle.presupuestooperatoria.paciente.nombre_completo : value.presupuestoortodonciadetalle.presupuestoortodoncia.paciente.nombre_completo,
                     servicio:value.laboratorioservicio.nombre_servicio,
                     pieza:value.presupuestooperatoriadetalle.letras,
                     total:value.costo,
@@ -479,6 +496,7 @@ export default {
             this.getTableData()            
         },
         getRowClassName ({row, rowIndex}) {
+            //console.log("Selecc",this.seleccionados)
             let encontrado = this.seleccionados.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
             if(encontrado.length > 0){
                 return 'seleccionado'
@@ -494,8 +512,10 @@ export default {
             _.each(filtrados, function(value,key){
                 let files= {
                     id:value.id,
-                    presupuesto_id:value.presupuestooperatoriadetalle.presupuestooperatoria_id,
-                    paciente:value.presupuestooperatoriadetalle.presupuestooperatoria.paciente.nombre_completo,
+                    presupuestooperatoriadetalle_id:value.presupuestooperatoriadetalle_id,
+                    presupuestoortodonciadetalle_id:value.presupuestoortodonciadetalle_id,
+                    presupuesto_id:value.presupuestooperatoriadetalle_id != null ? value.presupuestooperatoriadetalle.presupuestooperatoria_id : value.presupuestoortodonciadetalle.presupuestoortodoncia_id,
+                    paciente:value.presupuestooperatoriadetalle_id != null ? value.presupuestooperatoriadetalle.presupuestooperatoria.paciente.nombre_completo : value.presupuestoortodonciadetalle.presupuestoortodoncia.paciente.nombre_completo,
                     servicio:value.laboratorioservicio.nombre_servicio,
                     pieza:value.presupuestooperatoriadetalle.letras,
                     total:value.costo,
@@ -508,7 +528,14 @@ export default {
                 self.tableDate2.push(copyfile)
             })
             this.getTableData2()            
-        },   
+        },  
+        getRowClassName2 ({row, rowIndex}) {
+            let encontrado = this.seleccionados2.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
+            if(encontrado.length > 0){
+                return 'seleccionado'
+            }
+            return 'no-seleccionado'
+        },           
         cargaDatos3(){              //recibidos
             this.loading3 = true
             let self = this
@@ -518,8 +545,10 @@ export default {
             _.each(filtrados, function(value,key){
                 let files= {
                     id:value.id,
-                    presupuesto_id:value.presupuestooperatoriadetalle.presupuestooperatoria_id,
-                    paciente:value.presupuestooperatoriadetalle.presupuestooperatoria.paciente.nombre_completo,
+                    presupuestooperatoriadetalle_id:value.presupuestooperatoriadetalle_id,
+                    presupuestoortodonciadetalle_id:value.presupuestoortodonciadetalle_id,
+                    presupuesto_id:value.presupuestooperatoriadetalle_id != null ? value.presupuestooperatoriadetalle.presupuestooperatoria_id : value.presupuestoortodonciadetalle.presupuestoortodoncia_id,
+                    paciente:value.presupuestooperatoriadetalle_id != null ? value.presupuestooperatoriadetalle.presupuestooperatoria.paciente.nombre_completo : value.presupuestoortodonciadetalle.presupuestoortodoncia.paciente.nombre_completo,
                     servicio:value.laboratorioservicio.nombre_servicio,
                     pieza:value.presupuestooperatoriadetalle.letras,
                     total:value.costo,
@@ -531,7 +560,14 @@ export default {
                 self.tableDate3.push(copyfile)
             })
             this.getTableData3()            
-        }, 
+        },
+        getRowClassName3 ({row, rowIndex}) {
+            let encontrado = this.seleccionados3.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
+            if(encontrado.length > 0){
+                return 'seleccionado'
+            }
+            return 'no-seleccionado'
+        },           
         cargaDatos4(){              //liquidados
             this.loading4 = true
             let self = this
@@ -552,7 +588,14 @@ export default {
                 self.tableDate4.push(copyfile)
             })
             this.getTableData4()            
-        },               
+        },
+        getRowClassName4 ({row, rowIndex}) {
+            let encontrado = this.seleccionados4.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
+            if(encontrado.length > 0){
+                return 'seleccionado'
+            }
+            return 'no-seleccionado'
+        },                         
         getTableData(){
             this.rows = this.tableDate
             this.$refs.table1.updateScrollbar(true);
@@ -657,10 +700,10 @@ export default {
                             fecha_recepcion : moment().format('DD-MM-YYYY hh:mm:ss'),
                             detalle:[]
                         }
-                        _.each(this.seleccionados, function(value,key){
+                        _.each(this.seleccionados2, function(value,key){
                             datos.detalle.push(value.id)
                         })
-                        this.isLoading = true
+                        this.isLoading2 = true
                         var url = '/api/laboratoriotrabajos/recibir/'+datos.id;
                         axios.put(url, datos).then(response => {
                         if(typeof(response.data.errors) != "undefined"){
@@ -671,20 +714,20 @@ export default {
                                     resultado += "error -> " + i + " = " + this.errors[i] + "\n";
                                 }
                             }
-                            this.isLoading = false
+                            this.isLoading2 = false
                             this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                              
                             return;
                         }
                         this.$store.dispatch('LOAD_LABORATORIO_TRABAJOS_LIST').then(() => {
                             this.cargaDatos2() 
-                            this.isLoading = false
+                            this.isLoading2 = false
                         })  
                         this.errors = [];                        
                         this.notificaciones('Datos actualizados con exito','la la-thumbs-up','success')                         
                         }).catch(error => {
                         this.errors = error.response.data.status;                 
                         this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
-                        this.isLoading = false
+                        this.isLoading2 = false
                         });
                     }
                 });
@@ -701,7 +744,7 @@ export default {
                 confirmButtonText: 'Si, liquidar!'
                 }).then((result) => {
                     if (result.value) {
-                        this.isLoading = true
+                        this.isLoading3 = true
                         let montoTotal = 0
                         let datos = {
                             fecha_liquidacion : moment().format('DD-MM-YYYY hh:mm:ss'),
@@ -714,7 +757,7 @@ export default {
                             user_id:this.user_system.id,               
                             detalle:[]
                         }
-                        _.each(this.seleccionados, function(value,key){
+                        _.each(this.seleccionados3, function(value,key){
                             datos.detalle.push(value.id)
                             montoTotal += parseFloat(value.total)                
                         })
@@ -729,21 +772,21 @@ export default {
                                     resultado += "error -> " + i + " = " + this.errors[i] + "\n";
                                 }
                             }
-                            this.isLoading = false
+                            this.isLoading3 = false
                             this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                              
                             return;
                         }
                         this.$store.dispatch('LOAD_LABORATORIO_TRABAJOS_LIST').then(() => {
                             this.$store.dispatch('LOAD_LIQUIDACION_LABORATORIOS_LIST')
                             this.cargaDatos3() 
-                            this.isLoading = false
+                            this.isLoading3 = false
                         })  
                         this.errors = [];                        
                         this.notificaciones('Datos actualizados con exito','la la-thumbs-up','success')                         
                         }).catch(error => {
                         this.errors = error.response.data.status;                 
                         this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
-                        this.isLoading = false
+                        this.isLoading3 = false
                         });                        
                     }
                 });
@@ -796,7 +839,7 @@ export default {
             }, 2000);  
         },
         handleSelectChange (rows) {
-            console.log(rows);
+            //console.log(rows);
             this.seleccionados = rows
         },
         // Modulo de En Laboratorio
@@ -847,8 +890,8 @@ export default {
             }, 2000);  
         },
         handleSelectChange2 (rows) {
-            console.log(rows);
-            this.seleccionados = rows
+            //console.log(rows);
+            this.seleccionados2 = rows
         },
         // Modulo de recibidos
         handleSortChange3( {prop, order}) {
@@ -899,8 +942,8 @@ export default {
             }, 2000);  
         },
         handleSelectChange3 (rows) {
-            console.log(rows);
-            this.seleccionados = rows
+            //console.log(rows);
+            this.seleccionados3 = rows
         },
         // Modulo de liquidados
         handleSortChange4( {prop, order}) {
@@ -951,8 +994,8 @@ export default {
             }, 2000);  
         },
         handleSelectChange4 (rows) {
-            console.log(rows);
-            this.seleccionados = rows
+            //console.log(rows);
+            this.seleccionados4 = rows
         },
 
         cambioTab(param){
@@ -1050,7 +1093,5 @@ export default {
         margin-left: 0 !important;
         margin-right: 0 !important;
     }     
-
-
 </style>
 

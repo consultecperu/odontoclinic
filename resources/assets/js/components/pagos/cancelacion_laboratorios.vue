@@ -53,14 +53,17 @@
                                     <v2-table :data="rows" ref="table1"
                                             border 
                                             stripe 
-                                            height="220"
+                                            height="210"
                                             :loading="loading" 
                                             :default-sort='{prop: "presupuesto_id", order: "descending"}' 
                                             @sort-change="handleSortChange" 
                                             :total="total"
+                                            :cell-height="34"
+                                            :col-height="30"                                                
                                             :shown-pagination="true"
                                             :pagination-info="paginationInfo"
-                                            @page-change="handlePageChange">
+                                            @page-change="handlePageChange"
+                                            >                                            
                                         <div slot="empty"></div>
                                         <v2-table-column label="Nro. Liquidación" width="110" prop="codigo"></v2-table-column>
                                         <v2-table-column label="Fecha Liquidación" prop="fecha_liquidacion" width="130" align="left" sortable></v2-table-column>
@@ -299,7 +302,7 @@ export default {
             },                      
             rows:[], 
             generar: false,
-            datos:[]                     
+            datos:[]                  
         }
     },
     computed: {
@@ -331,7 +334,14 @@ export default {
                 self.tableDate.push(copyfile)
             })
             this.getTableData()            
-        },  
+        }, 
+/*         getRowClassName ({row, rowIndex}) {
+            let encontrado = this.seleccionados.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
+            if(encontrado.length > 0){
+                return 'seleccionado'
+            }
+            return 'no-seleccionado'
+        },   */        
         getTableData(){
             this.rows = this.tableDate
             this.$refs.table1.updateScrollbar(true);
@@ -385,6 +395,9 @@ export default {
                 this.rows = [].concat(list);
             }, 2000);  
         },
+/*         handleSelectChange (rows) {
+            this.seleccionados = rows
+        },  */       
         pagarLiquidacion(param){
             this.dataPago.monto = parseFloat(param.monto).toFixed(2)
             this.dataPago.liquidacionlaboratorio_id = param.id
@@ -395,7 +408,6 @@ export default {
         },
         verLiquidacion(param){
             this.datos = param
-            console.log("data",this.datos)
             this.$modal.show('detalle_pago')
         },
         facturarLiquidacion(){
@@ -456,6 +468,35 @@ export default {
     }  
     .vld-overlay.is-full-page {
         z-index: 99999;
+    }
+    /* --- div Resumen --*/
+    .transfer-to {
+        line-height: 30px;        
+    }      
+    .transfer-to .sub {
+        font-size: 14px;
+        margin-bottom: 8px;
+        font-weight: 600;
+        padding: 10px !important;
+    }
+    .transfer-to .account-transfer>div {
+        display: flex;
+        justify-content: space-between;
+    }     
+    .transfer-to .account-transfer>div span:first-child {
+        font-weight: 600;
+        color: #333;
+        font-size: 12px;
+    }
+    .transfer-to .account-transfer>div span:last-child {
+        font-size: 12px;
+    }  
+    .btn .btn-label i {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }     
+    .v2-table__empty-data.v2-table__empty-border {
+        border-left: 1px solid black !important;
     }
 </style>
 

@@ -105,8 +105,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group pt-0 pr-0">
-                                    <label for="nombre" class="text-primary font-weight-bold">Monto :</label>
-                                    <input type="text" id="nombre" class="form-control form-control-sm border border-primary mayusculas" v-model="dataServicio.costo">
+                                    <label for="monto" class="text-primary font-weight-bold">Monto :</label>
+                                    <input type="text" id="monto" class="form-control form-control-sm border border-primary mayusculas" v-model="dataServicio.costo" :disabled="dataServicio.ortodoncia == 1">
                                 </div>
                             </div>
                         </div>
@@ -245,6 +245,13 @@ export default {
         plan: function(){
             return this.planes.find((pla) => pla.id == this.$route.params.plan)
         }                
+    },
+    watch:{
+        'dataServicio.ortodoncia' (newVal,oldVal){
+            if(newVal == 1){
+                this.dataServicio.costo = null
+            }
+        }
     },    
     methods: {
         StatusForm: function(eshow,eclass,elabel){
