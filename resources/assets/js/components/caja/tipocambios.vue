@@ -12,7 +12,7 @@
                 <div class="card-header pl-0 pr-0">                        
                     <div class="col">
                         <button type="button" class="btn btn-primary float-right ml-10" @click.prevent="LoadForm"><span class="btn-label"><i class="la la-calculator"></i></span> Nuevo x Dia</button>
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadForm"><span class="btn-label"><i class="la la-calculator"></i></span> Nuevo Mensual</button>
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="LoadFormMensual"><span class="btn-label"><i class="la la-calculator"></i></span> Nuevo Mensual</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">
@@ -110,7 +110,99 @@
                     </div>
                 </div>
             <!-- /. form de registro de aseguradoras -->
-        </modal>                         
+        </modal> 
+        <!-- PAGE CONTENT MODAL -->  
+        <modal name="tipocambioMensual" :width="'40%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+            <!-- form de registro de aseguradoras -->
+                <div class="card mb-0">
+                    <div class="card-header">
+                        <div class="card-title">{{ labelAccion}} de Tipo de Cambio</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="moneda_d" class="text-primary font-weight-bold pb-10">De :</label>
+                                    <div class="select2-input">
+                                        <select id="moneda_d" name="basic" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.monedade_id" disabled>
+                                            <option v-for="mon in monedas" :value="mon.id" :key="mon.id">
+                                                {{ mon.nombre_moneda}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>                            
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="moneda_a" class="text-primary font-weight-bold pb-10">A :</label>
+                                    <div class="select2-input">
+                                        <select id="moneda_a" name="basic" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.monedaa_id" disabled>
+                                            <option v-for="mon in monedas" :value="mon.id" :key="mon.id">
+                                                {{ mon.nombre_moneda}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="anio" class="text-primary font-weight-bold pb-0">Año :</label>
+                                    <div class="select2-input">
+                                        <select id="anio" name="anio" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.anio">
+                                            <option value="">-- seleccione --</option>
+                                            <option v-for="anio in anios" :value="anio.id" :key="anio.id">
+                                                {{ anio.nombre_anio}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="mes" class="text-primary font-weight-bold pb-0">Mes :</label>
+                                    <div class="select2-input">
+                                        <select id="mes" name="mes" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.mes">
+                                            <option value="">-- seleccione --</option>
+                                            <option v-for="mes in meses" :value="mes.id" :key="mes.id">
+                                                {{ mes.nombre_mes}}
+                                            </option>
+                                        </select>
+                                    </div>                                    
+                                </div>                                
+                            </div>
+                        </div>                        
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="valor_sistema" class="text-primary font-weight-bold">Valor del Sistema </label>
+                                    <input type="number" step="0.01" id="valor_sistema" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.tipo_cambio" @keyup.enter="$refs.compra.focus" placeholder="0.00">
+                                </div>                            
+                            </div>                            
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="compra" class="text-primary font-weight-bold">Compra </label>
+                                    <input type="number" step="0.01" ref="compra" id="compra" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.valor_compra" @keyup.enter="$refs.venta.focus" placeholder="0.00">
+                                </div>                            
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group pt-0">
+                                    <label for="venta" class="text-primary font-weight-bold">Venta </label>
+                                    <input type="number" step="0.01" ref="venta" id="venta" class="form-control form-control-sm border border-primary" v-model="dataTipocambio.valor_venta" @keyup.enter="$refs.accion.focus" placeholder="0.00">
+                                </div>                            
+                            </div>
+                        </div>                         
+                    </div>
+                    <div class="card-action">
+                        <button ref="accion" class="btn btn-primary" @click.prevent="createTipocambioMensual" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+                        <button class="btn btn-danger" @click="$modal.hide('tipocambioMensual')"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
+                    </div>
+                </div>
+            <!-- /. form de registro de aseguradoras -->
+        </modal>                                
     </div>        
 </template>
 <script>
@@ -158,6 +250,8 @@ export default {
                 label: 'Tipo Cambio',
                 field: 'tipo_cambio',
                 type: 'decimal',
+                tdClass: 'center',
+                thClass: 'center',                
                 filterOptions: {
                     enabled: false, 
                     placeholder: 'Buscar', 
@@ -167,7 +261,10 @@ export default {
                 {
                 label: 'Conta Venta',
                 field: 'valor_venta',
-                type: 'decimal',
+                formatFn: this.formatFn,
+                tdClass: 'center',
+                thClass: 'center',                
+                //type: 'decimal',
                 filterOptions: {
                     enabled: false, 
                     placeholder: 'Buscar', 
@@ -177,7 +274,10 @@ export default {
                 {
                 label: 'Conta Compra',
                 field: 'valor_compra',
-                type: 'decimal',
+                formatFn: this.formatFn,
+                tdClass: 'center',
+                thClass: 'center',                
+                //type: 'decimal',
                 filterOptions: {
                     enabled: false, 
                     placeholder: 'Buscar', 
@@ -210,8 +310,16 @@ export default {
                tipo_cambio:'',
                monedade_id:2,
                monedaa_id:1,
-               user_id:''
-           } 
+               user_id:'',
+               mes:'',
+               anio:''
+           },
+           meses: [
+               { id : 1 , nombre_mes : 'Enero'},{ id : 2 , nombre_mes : 'Febrero'},{ id : 3 , nombre_mes : 'Marzo'},{ id : 4 , nombre_mes : 'Abril'},{ id : 5 , nombre_mes : 'Mayo'},{ id : 6 , nombre_mes : 'Junio'},{ id : 7 , nombre_mes : 'Julio'},{ id : 8 , nombre_mes : 'Agosto'},{ id : 9 , nombre_mes : 'Septiembre'},{ id : 10 , nombre_mes : 'Octubre'},{ id : 11 , nombre_mes : 'Noviembre'},{ id : 12 , nombre_mes : 'Diciembre'}
+           ],
+           anios: [
+               { id: 2019 , nombre_anio :'2019'},{id:2020 , nombre_anio : '2020'},{id:2021 , nombre_anio : '2021'},{id:2022 , nombre_anio : '2022'}
+           ]
         }
     },
     computed: {
@@ -223,7 +331,7 @@ export default {
             this.IconClass = eclass        
             this.labelButton = elabel            
         },     
-        LoadForm: function(){  
+        LoadForm(){  
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')   
             this.labelAccion = 'Registro'
             this.dataTipocambio = {
@@ -233,10 +341,28 @@ export default {
                 tipo_cambio:'',
                 monedade_id:2,
                 monedaa_id:1,
+                mes:'',
+                anio:'',
                 user_id:this.user_system.id
             }        
             this.$modal.show('tipocambio')
         }, 
+        LoadFormMensual(){  
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')   
+            this.labelAccion = 'Registro Mensual'
+            this.dataTipocambio = {
+                fecha_registro:'',
+                valor_compra:'',
+                valor_venta:'',
+                tipo_cambio:'',
+                monedade_id:2,
+                monedaa_id:1,
+                mes:'',
+                anio:'',
+                user_id:this.user_system.id
+            }        
+            this.$modal.show('tipocambioMensual')
+        },         
         ActionTipocambio(){
             if(typeof(this.dataTipocambio.id) === "undefined"){
                 this.createTipocambio()
@@ -345,6 +471,38 @@ export default {
                     }
                 });
         },
+        createTipocambioMensual(){
+            var url = '/api/addMensual';
+            this.StatusForm(true,'la la-spinner','Procesando')     
+            axios.post(url, this.dataTipocambio).then(response => {
+            if(typeof(response.data.errors) != "undefined"){
+                this.errors = response.data.errors;
+                var resultado = "";
+                for (var i in this.errors) {
+                    if (this.errors.hasOwnProperty(i)) {
+                        resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                    }
+                }
+                this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                
+                this.StatusForm(false,'la la-cloud-download','Grabar Datos')                
+                return;
+            }
+
+            this.$store.dispatch('LOAD_TIPOCAMBIOS_LIST')    
+            this.errors = [];
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
+            this.$modal.hide('tipocambio');   
+            this.notificaciones('Items Tipo de cambio agregado con exito','la la-thumbs-up','success')       
+            }).catch(error => {
+            this.errors = error.response.data.status;
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
+            this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
+
+            });
+        },
+        formatFn: function(value) {
+            return parseFloat(value).toFixed(3)
+        }                             
     },    
 
 }

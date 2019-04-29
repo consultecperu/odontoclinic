@@ -1,4 +1,12 @@
 export default {
+    ISLOGGED: function ({ commit }){
+        var url = '/api/sessionActiva';
+        return axios.get(url).then((response) => {
+            commit('ISLOGGED', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
     LOGOUT({ commit }) {
         return new Promise((resolve, reject) => {
             axios.post('/api/logout')

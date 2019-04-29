@@ -418,6 +418,9 @@ export default {
             });
         },
         updateServicio: function(){
+            if(this.dataServicio.tipo == 2){
+                this.dataServicio.parentid_ortodoncia = this.showService ? this.dataServicio.parentid_ortodoncia : null
+            }
             var url = '/api/servicios/'+this.dataServicio.id; 
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.put(url, this.dataServicio).then(response => {
@@ -462,9 +465,9 @@ export default {
                 user_id: dataser.user_id                                                         
             }  
             if(dataser.tipo == 2){
-                this.dataServicio.control_ortodoncia = dataser.serviciodetalle.control_ortodoncia
-                this.dataServicio.cuota_inicial = dataser.serviciodetalle.cuota_inicial
-                this.dataServicio.ortofacil = dataser.serviciodetalle.ortofacil
+                this.dataServicio.control_ortodoncia = dataser.serviciodetalle == null ? null : dataser.serviciodetalle.control_ortodoncia
+                this.dataServicio.cuota_inicial = dataser.serviciodetalle == null ? null : dataser.serviciodetalle.cuota_inicial
+                this.dataServicio.ortofacil = dataser.serviciodetalle == null ? null : dataser.serviciodetalle.ortofacil
                 this.showGroups = false
                 if(dataser.parentid_ortodoncia > 0){
                     this.showService = true

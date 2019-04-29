@@ -1,4 +1,11 @@
 export default {
+    ISLOGGED(state, { list }){
+        if(list.logging == 1){
+            state.authenticated = true
+        }else if(list.logging == 0){
+            state.authenticated = false
+        }
+    },
     LOGOUT(state) {
         state.authenticated = false
         localStorage.removeItem('autentificado')

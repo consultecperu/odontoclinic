@@ -3,7 +3,7 @@
 		<div class="container container-login animated fadeIn">
 			<!--<h3 class="text-lg-center text-primary font-weight-bold">ODONTOCLOUD</h3>-->
             <div class="border-bottom border-secondary pb-20">
-                <img src="/img/logo/dental.png" class="img-fluid" alt="odontoCloud">
+                <img src="/img/logo/dental-new.png" class="img-fluid" alt="odontoCloud">
             </div>
 			<div class="login-form mt-20">
 				<div class="form-group form-floating-label">

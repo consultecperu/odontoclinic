@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::post('login', 'AuthenticateController@login');
+Route::get('sessionActiva','AuthenticateController@sessionActiva');
 
 // Routes
 
@@ -122,7 +123,8 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('presupuestos-ortodoncias/detalles','PresupuestosortodonciaController@listaDetalles'); 
     // tipo cambios
-    Route::resource('tipocambios','TipocambioController');   
+    Route::resource('tipocambios','TipocambioController');
+    Route::post('/addMensual','TipocambioController@addMensual');   
     // tipo pagos
     Route::resource('tipopagos','TipopagoController');     
     // record atencion operatoria

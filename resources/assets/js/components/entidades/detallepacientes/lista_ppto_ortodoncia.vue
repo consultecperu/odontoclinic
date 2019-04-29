@@ -11,7 +11,7 @@
             <div class="card text-white bg-white mb-3">
                 <div class="card-header">                        
                     <div class="col pl-0 pr-0">
-                        <button type="button" class="btn btn-primary float-right" @click.prevent="NuevoPresupuesto"><span class="btn-label"><i class="flaticon-profile"></i></span> Nuevo Presupuesto</button>
+                        <button type="button" class="btn btn-primary float-right" @click.prevent="NuevoPresupuesto"><span class="btn-label"><i class="flaticon-list"></i></span> Nuevo Presupuesto</button>
                     </div>                                                        
                 </div>
                 <div class="card-body">
@@ -83,20 +83,20 @@ export default {
             
             columns: [
                 {
-                label: 'Codigo',
+                label: 'Num.',
                 field: 'id',
                 tdClass: 'center',
-                width:'10%',
+                width:'8%',
                 }, 
                 {
                 label: 'Odontologo Encargado',
                 field: 'empleado.nombre_completo',            
-                width:'33%',
+                width:'30%',
                 },
                 {
                 label: 'Tratamiento',
                 field: 'tarifario.servicio.nombre_servicio',            
-                width:'12%',
+                width:'20%',
                 },                
                 {
                 label: 'Fecha Registro',
@@ -110,7 +110,7 @@ export default {
                 {
                 label: 'Estado',
                 field: 'estadopresupuesto.nombre_estadopresupuesto',                
-                width:'15%',
+                width:'12%',
                 },                                                                                                                                                                                                                                      
                 {
                 label: 'Acción',

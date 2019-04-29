@@ -9,6 +9,10 @@ use Exception;
 use Validator;
 use Carbon\Carbon;
 use App\Laboratoriotrabajo;
+use App\Presupuestoperatoria;
+use App\Presupuestooperatoriadetalle;
+use App\Presupuestoortodoncia;
+use App\Presupuestoortodonciadetalle;
 use Globales;   // helpers
 
 class LaboratoriotrabajoController extends Controller
@@ -105,7 +109,15 @@ class LaboratoriotrabajoController extends Controller
             }    
 
             foreach ($request->get('detalle') as $det) {
+                // validando si hay saldo
                 $labtra = Laboratoriotrabajo::findOrFail($det); 
+                if($labtra->presupuestooperatoriadetalle_id != null){
+                    $pptodet_ope = Presupuestooperatoriadetalle::findOrFail($labtra->presupuestooperatoria->id);
+                } elseif($labtra->presupuestoortodonciadetalle_id != null){
+                    $pptodet_ort = Presupuestoortodonciadetalle::findOrFail($labtra->presupuestoortodoncia->id);
+                }
+                // preguntar si el monto es menor igual saldo_lab
+                // si es mayor - igual descontar del saldo_lab
                 $labtra->seguimiento = 2;         
                 $labtra->fecha_envio =  Globales::FormatFecYMD_hms($request->get('fecha_envio'));
                 $labtra->fecha_entrega =  Globales::FormatFecYMD_hms($request->get('fecha_entrega'));                

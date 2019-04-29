@@ -20,13 +20,7 @@ router.beforeEach((to, from, next) => {
                 query: { redirect: to.fullPath }
             })
         } else {
-            if (to.path == "/") {
-                next({
-                    path: '/dashboard'
-                })
-            } else {
-                next()
-            }
+            next()
         }
     } else if (to.matched.some(record => record.meta.redirectIfLogged)) {
         if (store.state.authenticated) {

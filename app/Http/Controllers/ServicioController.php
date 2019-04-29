@@ -69,7 +69,7 @@ class ServicioController extends Controller
             $servicio->nombre_servicio = Str::upper($servicio->nombre_servicio);
             $servicio->save();
 
-            if($request->get('tipo') === 2){
+            if($request->get('tipo') == 2 && !empty($request->get('parentid_ortodoncia'))){
                 $serdet = new Serviciodetalle();
                 $serdet->servicio_id = $servicio->id;
                 $serdet->control_ortodoncia = $request->get('control_ortodoncia');
@@ -142,7 +142,7 @@ class ServicioController extends Controller
             $servicio->nombre_servicio = Str::upper($servicio->nombre_servicio);
             $servicio->save();
 
-            if($request->get('tipo') == 2){
+            if($request->get('tipo') == 2 && !empty($request->get('parentid_ortodoncia'))){
                 $serviciodet = Serviciodetalle::where('servicio_id',$id)->first(); 
                 $serviciodet->control_ortodoncia = $request->get('control_ortodoncia');
                 $serviciodet->cuota_inicial = $request->get('cuota_inicial');

@@ -186,6 +186,7 @@ class PagoController extends Controller
                     $ppto->tipopago_id = $request->get('tipopago_id');
                     $ppto->saldo = floatval($ppto->saldo) + floatval($request->get('monto_efectivo'));
                     $ppto->saldo_tarjeta = floatval($ppto->saldo_tarjeta) + floatval($request->get('monto_tarjeta'));
+                    $ppto->saldo_lab = floatval($ppto->saldo_lab) + floatval($request->get('monto_efectivo')) + floatval($request->get('monto_tarjeta'));
                     $ppto->save();
                 }                  
             }
@@ -249,6 +250,7 @@ class PagoController extends Controller
                     $ppto = Presupuestoortodoncia::findOrFail($request->get('presupuestoortodoncia_id'));
                     $ppto->tipopago_id = $request->get('tipopago_id');
                     $ppto->saldo = floatval($ppto->saldo) + floatval($request->get('total'));
+                    $ppto->saldo_lab = floatval($ppto->saldo_lab) + floatval($request->get('total'));
                     $ppto->save();
                 } 
             }

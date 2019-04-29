@@ -321,7 +321,7 @@
                 </div>
             </div>
         </div>
-        <!-- PAGE CONTENT MODAL ATENCIONES-->  
+        <!-- PAGE CONTENT MODAL ENVIOS-->  
         <modal name="envio_laboratorio" :width="'35%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de cargos -->
                 <div class="card mb-0">

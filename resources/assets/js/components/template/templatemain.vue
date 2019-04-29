@@ -16,7 +16,6 @@
             </div>
         </div>
         <!-- end Main -->
-
 	</div>    
 </template>
 <script>
@@ -25,18 +24,24 @@ export default {
     name: 'templatemain',
     data() {
         return {
-                    
+                 
         }
     },  
     beforeCreate() {  
         document.body.className = "";
-
+        this.$store.dispatch('ISLOGGED') 
     }, 
     mounted() {         
-        console.log("autentificado: ",this.authenticated)
+        //console.log("autentificado: ",this.authenticated)
     },
     computed: {
         ...mapState(['authenticated'])
     },          
 }
 </script>
+<style>
+    #loading-wrapper {
+        display: none !important;
+    }
+</style>
+

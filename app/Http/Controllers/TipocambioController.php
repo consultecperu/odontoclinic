@@ -128,4 +128,50 @@ class TipocambioController extends Controller
     {
         //
     }
+
+    public function addMensual(Request $request)
+    {
+        $dias = cal_days_in_month(CAL_GREGORIAN, $request->get('mes'), $request->get('anio'));
+
+        DB::beginTransaction();    
+        try {
+            $rules = ['valor_compra'    => 'required',
+                      'valor_venta'     => 'required',
+                      'monedade_id'     => 'required',
+                      'monedaa_id'      => 'required',
+                      'tipo_cambio'     => 'required',
+                      'mes'             => 'required',
+                      'anio'            => 'required'
+                      ];  
+            
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            }
+       
+            $dt = Carbon::createFromDate($request->get('anio'), $request->get('mes'), 1);
+            for ($i=1; $i <= $dias ; $i++) {                 
+                /*-- validacion de la fecha de registro --*/     
+                $fec = TipoCambio::where(['fecha_registro' => $dt, 'activo' => true])->count();
+                if($fec > 0){
+                    //return response()->json(['errors'=>['Fecha de Registro' => 'Ya existe un tipo de cambio para la fecha de hoy']]);
+                    $tc = TipoCambio::where(['fecha_registro' => $dt, 'activo' => true])->first();
+                    TipoCambio::where('id',$tc->id)->update(['activo' => false]);
+
+                }             
+                $tipocambio = new TipoCambio($request->all());
+                $tipocambio->fecha_registro = $dt;
+                $tipocambio->save();  
+                $dt->addDay();                             
+            }    
+            DB::commit();        
+            return;
+        }
+        catch(Exception $e){
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }        
+    }
 }

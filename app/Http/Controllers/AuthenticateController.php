@@ -48,4 +48,12 @@ class AuthenticateController extends Controller
     public function logout() {
         Auth::logout();
     }
+
+    public function sessionActiva(){
+        if(Auth::check()){
+            return response()->json(["logging" => 1]);  
+        }else{
+            return response()->json(["logging" => 0]);  
+        }
+    }
 }

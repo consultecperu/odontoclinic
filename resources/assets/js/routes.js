@@ -652,13 +652,18 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
-            },                                                                                                                                                                                                                                                                    
+            }, 
+            {
+                path: '*',
+                name: 'notfound',
+                component: NotFound
+            }                                                                                                                                                                                                                                                                               
         ]
     },
-    {
+/*     {
         path: '*',
         name: 'notfound',
         component: NotFound
-    }
+    } */
 
 ]

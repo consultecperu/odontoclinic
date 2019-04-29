@@ -19,6 +19,7 @@
 	</script>
 
 	<!-- CSS Files -->
+	<link rel="stylesheet" href="{{ asset('css/loading.css') }}">		
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/ready.min.css') }}">
 	<!-- CSS bootstrap-datepicker -->
@@ -29,13 +30,14 @@
 	<link rel="stylesheet" href="{{ asset('css/demo.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/customs.css') }}">
 <!-- 	<link rel="stylesheet" href="{{ asset('css/app.css') }}" >  -->
-	
 </head>
 <body>
 	<div id="app">
-		
+		<div id="loading-wrapper">
+			<div id="loading-text">CARGANDO</div>
+			<div id="loading-content"></div>
+		</div>		
 		<router-view></router-view>
-
 	</div>	
 
 	<!--   Core JS Files   -->

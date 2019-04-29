@@ -323,6 +323,7 @@ class PresupuestosoperatoriaController extends Controller
                 }
             }
             $ppto = Presupuestooperatoria::findOrFail($id);  
+            // verificando si el saldo cubre el pago de los tratamientos
             $saldo_total = floatval($ppto->saldo) + floatval($ppto->saldo_tarjeta);
             if(floatval($saldo_total) < floatval($TxPendiente)){
                 return response()->json(['errors'=>['Saldo' => 'El Saldo no cubre el pago de los tratamientos seleccionados']]);
@@ -377,6 +378,7 @@ class PresupuestosoperatoriaController extends Controller
             //$ppto->saldo = floatval($ppto->saldo) - floatval($TxPendiente);
             $ppto->saldo = floatval($valor_saldo_efectivo);
             $ppto->saldo_tarjeta = floatval($valor_saldo_tarjeta);
+            $ppto->saldo_lab = floatval($ppto->saldo_lab) - floatval($valor_saldo_efectivo) - floatval($valor_saldo_tarjeta);
             $ppto->save();            
             DB::commit();                       
         } catch (Exception $e) {
