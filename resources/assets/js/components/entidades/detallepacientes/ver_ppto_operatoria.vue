@@ -2118,7 +2118,7 @@ export default {
             let lab = this.laboratorioservicios.find(la => la.id == this.dataServicio.laboratorioservicio_id)
             this.dataServicio.laboratorio_id = lab.laboratorio_id
             this.dataServicio.monto_lab = lab.costo_lab
-
+            //console.log("laboratorio",this.dataServicio.laboratorio_id)
         },
         cambioMaterial(){
             let mat = this.materialservicios.find(mat => mat.id == this.dataServicio.materialservicio_id)
@@ -2129,6 +2129,8 @@ export default {
         AgregaEvolucion(param){
             this.numid = param
             this.dataServicio.descripcion[param] = ''
+            this.dataServicio.laboratorioservicio_id = ''
+            this.dataServicio.laboratorio_id = ''
         },    
         createPDF () {
             let self = this
