@@ -112,9 +112,9 @@ class LaboratoriotrabajoController extends Controller
                 // validando si hay saldo
                 $labtra = Laboratoriotrabajo::findOrFail($det); 
                 if($labtra->presupuestooperatoriadetalle_id != null){
-                    $pptodet_ope = Presupuestooperatoriadetalle::findOrFail($labtra->presupuestooperatoria->id);
+                    $pptodet_ope = Presupuestooperatoriadetalle::with('presupuestooperatoria')->findOrFail($labtra->presupuestooperatoriadetalle_id);
                 } elseif($labtra->presupuestoortodonciadetalle_id != null){
-                    $pptodet_ort = Presupuestoortodonciadetalle::findOrFail($labtra->presupuestoortodoncia->id);
+                    $pptodet_ort = Presupuestoortodonciadetalle::with('presupuestoortodoncia')->findOrFail($labtra->presupuestoortodonciadetalle_id);
                 }
                 // preguntar si el monto es menor igual saldo_lab
                 // si es mayor - igual descontar del saldo_lab
