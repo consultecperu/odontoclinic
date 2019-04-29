@@ -44,11 +44,13 @@ class EmpresaAdministradoraController extends Controller
         DB::beginTransaction();    
 
         try {
-            $rules =    ['nombre_empresa'      => 'required',
+            $rules =    ['nombre_empresa'       => 'required',
                         'ruc'                   => 'required',
                         'representante_legal'   => 'required',
                         'ubigeo_id'             => 'required',
-                        'user_id'               => 'required'
+                        'user_id'               => 'required',
+                        'telefono'              => 'required',
+                        'celular'               => 'required'
                         ];
   
           $validator = Validator::make($request->all(), $rules);

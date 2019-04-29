@@ -76,15 +76,15 @@
                         <div class="row">
                             <div class="col-6 pr-0">
                                 <div class="form-group pt-0">
-                                    <label for="telefono" class="text-primary font-weight-bold mb-0">Teléfono </label>
-                                    <input type="text" id="telefono" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telefono" required />
+                                    <label for="telefono" class="text-primary font-weight-bold mb-0">Teléfono <span class="required-label">*</span></label>
+                                    <input type="text" id="telefono" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.telefono" maxlength="7" required/>
                                 </div>
                               
                             </div>
                             <div class="col-6 pl-0">
                                 <div class="form-group pt-0">
-                                    <label for="celular" class="text-primary font-weight-bold mb-0">Celular </label>
-                                    <input type="text" id="celular" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.celular" required />
+                                    <label for="celular" class="text-primary font-weight-bold mb-0">Celular <span class="required-label">*</span></label>
+                                    <input type="text" id="celular" class="form-control form-control-sm border border-primary" v-model="dataEmpresa.celular" maxlength="9" required />
                                 </div>                                  
                             </div>
                         </div> 
