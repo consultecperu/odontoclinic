@@ -120,7 +120,9 @@ class EmpresaAdministradoraController extends Controller
                         'ruc'                   => 'required',
                         'representante_legal'   => 'required',
                         'ubigeo_id'             => 'required',
-                        'user_id'               => 'required'
+                        'user_id'               => 'required',
+                        'telefono'              => 'required',
+                        'celular'               => 'required'                        
                         ];
     
             $validator = Validator::make($request->all(), $rules);

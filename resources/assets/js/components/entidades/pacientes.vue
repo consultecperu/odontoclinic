@@ -734,12 +734,14 @@ export default {
                         this.isLoading = true
                         var url = '/api/pacientes/actualizahc/' + response.data.idpaciente;
                         axios.put(url,this.dataPaciente).then(response=> {
-                            this.isLoading = false
+                            this.$store.dispatch('LOAD_PACIENTES_LIST').then(() => {
+                                this.isLoading = false
+                            }) 
                             this.$swal(
                             'Actualizado!',
                             'La información fue registrada correctamente.',
                             'success'
-                            )                                              
+                            )                                                                      
                         });
                     }
                 });
