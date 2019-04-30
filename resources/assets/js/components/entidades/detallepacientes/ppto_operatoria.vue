@@ -789,6 +789,7 @@ export default {
             deleteDent:[],
             list_dent_missing:[],
             valor_texto_material:'',
+            diente_ancla:[],            // diente de referencia en la seleccion multiple
 
             diente: {
                 cursor:'pointer', 
@@ -1004,18 +1005,39 @@ export default {
             this.labelButton = elabel            
         },        
         ShowDiente(params){
+            let self = this
             if(!this.contains(this.odontograma,params.id)) return
             this.infodent = params
             if(this.select_multi){
-                this.toolTipDiente = {
-                    cara_1 : '',
-                    cara_2 : '',
-                    cara_3 : '',
-                    cara_4 : '',
-                    cara_5 : ''
-                }                
+                if(this.diente_ancla.length == 0){
+                    this.diente_ancla = _.clone(params)
+                    this.toolTipDiente = {
+                        cara_1 : params.cara_1,
+                        cara_2 : params.cara_2,
+                        cara_3 : params.cara_3,
+                        cara_4 : params.cara_4,
+                        cara_5 : params.cara_5
+                    }                     
+                }              
                 if(this.contains(this.list_dent_multiple,params)){
                     this.list_dent_multiple = _.reject(this.list_dent_multiple, function(val){
+                        if(self.diente_ancla.id == params.id){
+                            self.$swal({
+                                title: 'Este es el diente de referencia',
+                                text: "se eliminara toda la seleccion multple",
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                cancelButtonText: 'Cancelar',
+                                confirmButtonText: 'Si, eliminar!'
+                                }).then((result) => {
+                                    if (result.value) {
+                                        self.list_dent_multiple = []
+                                        return
+                                    }
+                                });
+                        }
                         return val.id == params.id
                     });
                 }else{

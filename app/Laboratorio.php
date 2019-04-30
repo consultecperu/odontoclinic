@@ -8,7 +8,7 @@ class Laboratorio extends Model
 {
     protected $table = "laboratorios";
 
-    protected $fillable = ['id', 'nombre_laboratorio', 'user_id', 'activo'];
+    protected $fillable = ['id', 'nombre_laboratorio', 'user_id', 'ruc','razon_social','activo'];
     
     public function user()
     {

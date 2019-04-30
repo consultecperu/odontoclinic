@@ -54,7 +54,7 @@
             <!-- form de registro de medicos -->
                 <div class="card mb-0">
                     <div class="card-header bg-primary pt-5 pb-5">
-                        <div class="card-title text-white">Registro de Nuevo Médico</div>
+                        <div class="card-title text-white">Registro de Nuevo Odontólogo</div>
                     </div>
                         <form role="form" method="POST" v-on:submit.prevent="createEmpleado">                    
                             <div class="card-body pb-0">
@@ -100,23 +100,6 @@
                                                     </div>                                                
                                                 </div>
                                             </div>                                             
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="tipodoc" class="text-primary font-weight-bold">Tipo de Documento <span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="tipodoc" v-model="dataEmpleado.tipodocumento_id">
-                                                        <option value="">-- Seleccione Tipo--</option>
-                                                        <option v-for="tipo in getDocumentosIdentidad" :value="tipo.id" :key="tipo.id">
-                                                            {{ tipo.nombre_tipodocumento}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="numdoc" class="text-primary font-weight-bold">Num.Documento <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm" name="numdoc" placeholder="Num.Documento" v-model="dataEmpleado.numero_documento" maxlength="9">
-                                                </div>
-                                            </div>  -->
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
@@ -135,18 +118,6 @@
                                                     </div>                                                
                                                 </div>
                                             </div>                                            
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="apepat" class="text-primary font-weight-bold">Apellido Paterno <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="apepat" placeholder="Apellido Paterno" v-model="dataEmpleado.apellido_paterno">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="apemat" class="text-primary font-weight-bold">Apellido Materno <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="apemat" placeholder="Apellido Materno" v-model="dataEmpleado.apellido_materno">
-                                                </div>
-                                            </div> -->
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
@@ -164,19 +135,7 @@
                                                         <input type="text" class="form-control form-control-sm border-odonto mayusculas" id="cop" name="cop" v-model="dataEmpleado.COP">
                                                     </div>                                                
                                                 </div>
-                                            </div>                                                                                        
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="nombres" class="text-primary font-weight-bold">Nombres <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="nombres" placeholder="Nombres" v-model="dataEmpleado.nombres">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="cop" class="text-primary font-weight-bold">COP <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm mayusculas" name="cop" placeholder="COP" v-model="dataEmpleado.COP">
-                                                </div>
-                                            </div>   -->                                          
+                                            </div>                                                                                                                                 
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
@@ -200,23 +159,6 @@
                                                     </div>
                                                 </div> 
                                             </div>                                                                                        
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="datepicker" class="text-primary font-weight-bold">Fecha de Nacimiento</label>
-                                                    <masked-input v-model="dataEmpleado.fecha_nacimiento" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="tipodoc" class="text-primary font-weight-bold">Sexo <span class="required-label"> *</span></label>
-                                                    <select class="form-control form-control-sm" id="tipodoc" v-model="dataEmpleado.sexo">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="sexo in sexos" :value="sexo.id" :key="sexo.id">
-                                                            {{ sexo.value}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div> -->
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
@@ -235,18 +177,6 @@
                                                     </div>                                                
                                                 </div>
                                             </div>                                            
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="telefono" class="text-primary font-weight-bold">Telefono</label>
-                                                    <input type="text" class="form-control form-control-sm" name="telefono" placeholder="Telefono" maxlength="8" v-model="dataEmpleado.telefono">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="celular" class="text-primary font-weight-bold">Celular</label>
-                                                    <input type="text" class="form-control form-control-sm" name="celular" placeholder="Celular" maxlength="9" v-model="dataEmpleado.celular">
-                                                </div>
-                                            </div> -->
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
@@ -270,24 +200,6 @@
                                                     </div>
                                                 </div> 
                                             </div>
-
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="email" class="text-primary font-weight-bold">Email <span class="required-label"> *</span></label>
-                                                    <input type="email" class="form-control form-control-sm" name="email" placeholder="Email" v-model="dataEmpleado.email">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="estciv" class="text-primary font-weight-bold">Estado Civil</label>
-                                                    <select class="form-control form-control-sm" id="estciv" v-model="dataEmpleado.estadocivil_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="estado in estadosciviles" :value="estado.id" :key="estado.id">
-                                                            {{ estado.nombre_estadocivil}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div> -->
                                         </div>
                                         <div class="row pt-5">
                                             <div class="col-2 pl-10">
@@ -323,49 +235,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-
-
-<!-- 
-
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="basic" class="text-primary font-weight-bold">Departamento</label>
-                                                    <div class="select2-input">
-                                                        <select id="basic" name="basic" class="form-control form-control-sm border-primary" v-model="coddepa">
-                                                            <option value="">--Seleccione--</option>
-                                                            <option v-for="depa in departamentos" :value="depa.coddepa" :key="depa.id">
-                                                                {{ depa.descripcion}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="basic2" class="text-primary font-weight-bold">Provincia</label>
-                                                    <div class="select2-input">
-                                                        <select id="basic2" name="basic2" class="form-control form-control-sm border-primary" v-model="codprov">
-                                                            <option value="">--Seleccione--</option>
-                                                            <option v-for="prov in provincias" :value="prov.codprov" :key="prov.id">
-                                                                {{ prov.descripcion}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="basic3" class="text-primary font-weight-bold">Distrito</label>
-                                                    <div class="select2-input">
-                                                        <select id="basic3" name="basic3" class="form-control form-control-sm border-primary" v-model="dataEmpleado.ubigeo_id">
-                                                            <option value="">--Seleccione--</option>
-                                                            <option v-for="dist in distritos" :value="dist.id" :key="dist.id">
-                                                                {{ dist.descripcion}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
@@ -376,12 +245,6 @@
                                                     </div>                                                
                                                 </div>
                                             </div>                                            
-<!--                                             <div class="col-12">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="direccion" class="text-primary font-weight-bold">Dirección</label>
-                                                    <input type="text" class="form-control form-control-sm" name="direccion" placeholder="Direccion" v-model="dataEmpleado.direccion">
-                                                </div>                                                
-                                            </div> -->
                                         </div> 
                                         <div class="row">
                                             <div class="col-6">
@@ -399,19 +262,7 @@
                                                         <input type="text" class="form-control form-control-sm border-odonto" id="consultorio" name="consultorio" v-model="dataEmpleado.numero_consultorio">
                                                     </div>                                                
                                                 </div>
-                                            </div>                                                                                      
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="dtpingreso" class="text-primary font-weight-bold">Fecha de Ingreso</label>
-                                                    <masked-input v-model="dataEmpleado.fecha_ingreso" mask="11-11-1111" placeholder="DD-MM-YYYY" class="form-control"/>                                            
-                                                </div>                                                
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="numconsultorio" class="text-primary font-weight-bold">Num. Consultorio</label>
-                                                    <input type="text" class="form-control form-control-sm" name="numconsultorio" placeholder="Num. Consultorio" v-model="dataEmpleado.numero_consultorio">
-                                                </div>
-                                            </div>    -->                                                                                   
+                                            </div>                                                                                                                                                                         
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
@@ -460,38 +311,25 @@
                                                     </div>
                                                 </div> 
                                             </div>                                                                                                  
-<!--                                                 <div class="form-group form-group-default border border-primary mb-0 pb-20">
-                                                    <label for="estciv" class="text-primary font-weight-bold">Tipo Pago</label>
-                                                    <select class="form-control form-control-sm" id="estciv" v-model="dataEmpleado.tipopagodoctor_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="tippag in tipopagodoctores" :value="tippag.id" :key="tippag.id">
-                                                            {{ tippag.nombre_tipopagodoctor}}
-                                                        </option>
-                                                    </select>
-                                                </div> -->
-                                        </div>                                        
-<!--                                         <div class="row pb-15">
-
-                                                                                       
+                                        </div> 
+                                        <div class="row">
                                             <div class="col-6">
-                                                <div class="form-group border border-primary rounded pt-5">
-                                                    <label for="sede" class="text-primary font-weight-bold mb-0">Sede</label>
-                                                    <multiselect v-model="dataEmpleado.sedes" tag-placeholder="Agregar Sede" placeholder="Agregar Sede" label="nombre_sede" track-by="nombre_sede" :options="sedes" :multiple="true" :option-height="20" :taggable="true" @input="addSede" deselectLabel="Seleccione para eliminar" selectLabel="Presione para seleccionar" selectedLabel="Seleccionado"></multiselect>                                                    
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="ruc" class="col-4 pl-0">RUC <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm border-odonto" id="ruc" name="consultorio" v-model="dataEmpleado.ruc" maxlength="11">
+                                                    </div>                                                
                                                 </div>
-                                            </div> 
-                                                                                      
+                                            </div>  
                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary mb-0 pb-20">
-                                                    <label for="cargo" class="text-primary font-weight-bold">Tipo Contrato</label>
-                                                    <select class="form-control form-control-sm" id="cargo" v-model="dataEmpleado.tipocontrato_id">
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="tipcon in tipocontratos" :value="tipcon.id" :key="tipcon.id">
-                                                            {{ tipcon.nombre_tipocontrato}}
-                                                        </option>
-                                                    </select>
+                                                <div class="form-group row pb-0 pt-5">
+                                                    <label for="razon_social" class="col-4 pl-0">Razón social <span class="required-label"> *</span></label>
+                                                    <div class="col-8 pr-0">
+                                                        <input type="text" class="form-control form-control-sm mayusculas border-odonto" id="razon_social" name="consultorio" v-model="dataEmpleado.razon_social">
+                                                    </div>                                                
                                                 </div>
-                                            </div>
-                                        </div> -->
+                                            </div>                                                                                                                                                                         
+                                        </div>                                                                               
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group row pb-0 pt-5">
@@ -509,18 +347,6 @@
                                                     </div>                                                
                                                 </div>
                                             </div>                                                                                     
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="porcentajeinterno" class="text-primary font-weight-bold">% Planes Internos <span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm" name="porcentajeinterno" placeholder="% Interno" v-model="dataEmpleado.porcentaje_interno">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="poraseguradoras" class="text-primary font-weight-bold">% Aseguradoras<span class="required-label"> *</span></label>
-                                                    <input type="text" class="form-control form-control-sm" name="poraseguradoras" placeholder="% Aseguradora" v-model="dataEmpleado.porcentaje_aseguradora">
-                                                </div>
-                                            </div> -->
                                         </div>                                         
                                         <div class="row pb-10 pt-20">
                                             <div class="col-6">
@@ -529,12 +355,6 @@
                                             </div>
                                         </div>
                                         <div class="row pb-10" v-show="dataEmpleado.acceso_system">
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary" >
-                                                    <label for="usernme" class="text-primary font-weight-bold">Nombre de Usuario</label>
-                                                    <input type="text" class="form-control form-control-sm" name="username" placeholder="Nombre de usuario" v-model="dataEmpleado.username">
-                                                </div>
-                                            </div> -->
                                             <div class="col-6">
                                                 <div class="form-group row pb-0 pt-5">
                                                     <label for="email" class="col-4 pl-0">Nombre Usuario <span class="required-label"> *</span></label>
@@ -688,6 +508,8 @@ export default {
                 perfil_id:'',
                 acceso_system:false,
                 image:'', 
+                ruc:'',
+                razon_social:'',
                 sedes:[],
                 checkedSedes:[],
                 especialidades:[],
@@ -754,7 +576,9 @@ export default {
                 tipo:1,
                 username:'',
                 perfil_id:this.getPerfilMedico.id,
-                image:'', 
+                image:'',
+                ruc:'',
+                razon_social:'', 
                 sedes:[],
                 checkedSedes:[],
                 especialidades:[],

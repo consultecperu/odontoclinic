@@ -9,7 +9,7 @@ class Empleado extends Model
 {
     protected $table = "empleados";
 
-    protected $fillable = ['id', 'tipodocumento_id', 'numero_documento','nombres','apellido_paterno','apellido_materno','fecha_nacimiento','sexo','direccion','telefono','celular','email','foto','ubigeo_id','COP','nconsultorio','tipocontrato_id','useracceso_id','estadocivil_id','tipopagodoctor_id','porcentaje_interno','porcentaje_aseguradora','fecha_ingreso','cargo_id','acceso_system','nombre_completo','tipo','user_id', 'activo'];
+    protected $fillable = ['id', 'tipodocumento_id', 'numero_documento','nombres','apellido_paterno','apellido_materno','fecha_nacimiento','sexo','direccion','telefono','celular','email','foto','ubigeo_id','COP','nconsultorio','tipocontrato_id','useracceso_id','estadocivil_id','tipopagodoctor_id','porcentaje_interno','porcentaje_aseguradora','fecha_ingreso','cargo_id','acceso_system','nombre_completo','tipo','ruc','razon_social','user_id', 'activo'];
 
     public function getFechaNacimientoAttribute($date){
         return Carbon::createFromFormat('Y-m-d', $date)->format('d-m-Y');   //formateo de la fecha para verlo en el frontend

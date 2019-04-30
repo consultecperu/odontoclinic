@@ -470,7 +470,7 @@ export default [
                 component: Medicos,
                 meta: { requiresAuth: true },
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Medicos', second: 'Entidades', third : null }
+                    var payload = { main: 'Odontólogos', second: 'Entidades', third : null }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
@@ -482,7 +482,7 @@ export default [
                 meta: { requiresAuth: true },
                 props: true,
                 beforeEnter:(to,from,next) => {
-                    var payload = { main: 'Detalle', second: 'Médicos' , third : 'Entidades' , ruta_second :'medicos' }
+                    var payload = { main: 'Detalle', second: 'Odontologos' , third : 'Entidades' , ruta_second :'medicos' }
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                  

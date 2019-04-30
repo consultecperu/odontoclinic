@@ -491,7 +491,7 @@ export default {
             this.$store.dispatch('LOAD_TIPOCAMBIOS_LIST')    
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
-            this.$modal.hide('tipocambio');   
+            this.$modal.hide('tipocambioMensual');   
             this.notificaciones('Items Tipo de cambio agregado con exito','la la-thumbs-up','success')       
             }).catch(error => {
             this.errors = error.response.data.status;

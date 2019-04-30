@@ -44,27 +44,38 @@ class LaboratorioController extends Controller
         DB::beginTransaction();    
 
         try {
-          $rules = ['nombre_laboratorio' => 'required'];
+          $rules = ['nombre_laboratorio' => 'required',
+                    'ruc'                => 'required',
+                    'razon_social'       => 'required'
+                    ];
   
-          $validator = Validator::make($request->all(), $rules);
-          if ($validator->fails()) {
-              return response()->json(['errors'=>$validator->errors()]);
-          }
-          /*-- validacion del Nombre de laboratorio--*/
-          if($request->get('nombre_laboratorio')){
-              $nom = Str::upper($request->get('nombre_laboratorio'));         
-              $nomlab = Laboratorio::where('nombre_laboratorio',$nom)->count();
-              if($nomlab > 0){
-                  return response()->json(['errors'=>['Nombre de laboratorio' => 'Ya existe un laboratorio con estos datos']]);
-              }
-          }        
-  
-          $laboratorio = new Laboratorio($request->all());
-          $laboratorio->nombre_laboratorio = Str::upper($laboratorio->nombre_laboratorio);
-          $laboratorio->save();
-  
-          DB::commit();        
-          return;
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json(['errors'=>$validator->errors()]);
+            }
+            /*-- validacion del Nombre de laboratorio--*/
+            if($request->get('nombre_laboratorio')){
+                $nom = Str::upper($request->get('nombre_laboratorio'));         
+                $nomlab = Laboratorio::where('nombre_laboratorio',$nom)->count();
+                if($nomlab > 0){
+                    return response()->json(['errors'=>['Nombre de laboratorio' => 'Ya existe un laboratorio con estos datos']]);
+                }
+            } 
+            /*-- validacion del Numero de RUC --*/
+            if($request->get('ruc')){
+                $ruc = Str::upper($request->get('ruc'));         
+                $ruclab = Laboratorio::where('ruc',$ruc)->count();
+                if($ruclab > 0){
+                    return response()->json(['errors'=>['número de RUC' => 'Ya existe un laboratorio registrado con este RUC']]);
+                }
+            }                     
+            $laboratorio = new Laboratorio($request->all());
+            $laboratorio->nombre_laboratorio = Str::upper($laboratorio->nombre_laboratorio);
+            $laboratorio->razon_social = Str::upper($laboratorio->razon_social);
+            $laboratorio->save();
+    
+            DB::commit();        
+            return;
         }
         catch(Exception $e){
           DB::rollback();
@@ -109,7 +120,10 @@ class LaboratorioController extends Controller
         DB::beginTransaction(); 
 
         try {
-            $rules =    ['nombre_laboratorio'     => 'required'];
+            $rules = [  'nombre_laboratorio'    => 'required',
+                        'ruc'                   => 'required',
+                        'razon_social'          => 'required'
+                    ];
     
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -119,6 +133,7 @@ class LaboratorioController extends Controller
             $laboratorio = Laboratorio::find($id);
             $laboratorio->fill($request->all());
             $laboratorio->nombre_laboratorio = Str::upper($laboratorio->nombre_laboratorio);
+            $laboratorio->razon_social = Str::upper($laboratorio->razon_social);
             $laboratorio->save();
   
           DB::commit();           

@@ -54,16 +54,34 @@
             <!-- END DEFAULT DATATABLE -->                                   
         </div> 
         <!-- PAGE CONTENT MODAL -->  
-        <modal name="laboratorio" :width="'35%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
+        <modal name="laboratorio" :width="'40%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de laboratorios -->
                 <div class="card mb-0">
                     <div class="card-header bg-primary pt-10 pb-10">
                         <div class="card-title text-white">{{ labelAccion }} de Laboratorio</div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group pt-0 pb-0">
-                            <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Laboratorio <span class="required-label"> *</span></label>
-                            <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataLaboratorio.nombre_laboratorio">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group pt-0 pb-0">
+                                    <label for="nombre" class="text-primary font-weight-bold mb-0">Nombre de Laboratorio <span class="required-label"> *</span></label>
+                                    <input type="text" id="nombre" class="form-control form-control-sm mayusculas border border-primary" v-model="dataLaboratorio.nombre_laboratorio">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 pr-0">
+                                <div class="form-group pt-10 pb-0">
+                                    <label for="ruc" class="text-primary font-weight-bold mb-0">RUC <span class="required-label"> *</span></label>
+                                    <input type="text" id="ruc" class="form-control form-control-sm border border-primary" v-model="dataLaboratorio.ruc" maxlength="11">                          
+                                </div>
+                            </div>
+                            <div class="col-6 pl-0">
+                                <div class="form-group pt-10 pb-0">
+                                    <label for="razon_social" class="text-primary font-weight-bold mb-0">Razón social <span class="required-label"> *</span></label>
+                                    <input type="text" id="razon_social" class="form-control form-control-sm mayusculas border border-primary" v-model="dataLaboratorio.razon_social">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-action pb-20 pt-20">
@@ -103,7 +121,7 @@ export default {
                     enabled: false, 
                     placeholder: 'Buscar', 
                 },
-                width:'65%',
+                width:'35%',
                 },    
                 {
                 label: 'Nro.Servicios',
@@ -111,18 +129,38 @@ export default {
                 tdClass: 'center',
                 thClass: 'center',                
                 width:'15%',
-                },                                                                                                                                                       
+                }, 
+                {
+                label: 'RUC',
+                field: 'ruc',
+                filterOptions: {
+                    enabled: false, 
+                    placeholder: 'Buscar', 
+                },
+                width:'15%',
+                }, 
+                {
+                label: 'Razón social',
+                field: 'razon_social',
+                filterOptions: {
+                    enabled: false, 
+                    placeholder: 'Buscar', 
+                },
+                width:'20%',
+                },                                                                                                                                                                                       
                 {
                 label: 'Acción',
                 field: 'btn',
                 tdClass: 'center',
                 thClass: 'center',
                 html: true  ,
-                width:'20%',  
+                width:'15%',  
                 }                               
             ],  
             dataLaboratorio : {
                 nombre_laboratorio:'',
+                ruc:'',
+                razon_social:'',
                 user_id:''
             },                                                               
             errors:[]                          
@@ -141,6 +179,8 @@ export default {
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')                    
             this.dataLaboratorio = {
                 nombre_laboratorio:'',
+                ruc:'',
+                razon_social:'',
                 user_id: this.user_system.id
             }       
             this.labelAccion = "Registro"    
@@ -214,8 +254,9 @@ export default {
             datalab = _.clone(params.row)
             this.dataLaboratorio = {
                 id:datalab.id,
-                nombre_laboratorio:datalab.nombre_laboratorio 
-                                          
+                nombre_laboratorio:datalab.nombre_laboratorio, 
+                ruc:datalab.ruc,
+                razon_social:datalab.razon_social
             }   
             this.labelAccion = "Actualización"         
             this.$modal.show('laboratorio')

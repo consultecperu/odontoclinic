@@ -95,6 +95,8 @@ class EmpleadoController extends Controller
                             'tipocontrato_id'           =>  'required',
                             'porcentaje_interno'        =>  'required',
                             'porcentaje_aseguradora'    =>  'required',
+                            'ruc'                       =>  'required',
+                            'razon_social'              =>  'required',
                             'checkedSedes'              =>  'required',
                             'checkedEspecialidades'     =>  'required'
                         ];
@@ -112,13 +114,7 @@ class EmpleadoController extends Controller
             }
             if($request->has('fecha_nacimiento')){
                 $rules = array_add($rules, 'fecha_nacimiento', 'date_format:d-m-Y');
-            }
-/*             if($request->get('image')){
-                $rules = array_add($rules, 'image', 'image64:jpeg,jpg,png');
-            }   */  
-/*             $messages = ['fecha_nacimiento.date_format' => 'Formato de fecha invalido',
-            'image.image64' => 'formato de imagen invalido'];    */                          
-    
+            }                         
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
@@ -252,6 +248,8 @@ class EmpleadoController extends Controller
                             'tipocontrato_id'           =>  'required',
                             'porcentaje_interno'        =>  'required',
                             'porcentaje_aseguradora'    =>  'required',
+                            'ruc'                       =>  'required',
+                            'razon_social'              =>  'required',                            
                             'checkedSedes'              =>  'required',
                             'checkedEspecialidades'     =>  'required'
                         ];
@@ -268,13 +266,7 @@ class EmpleadoController extends Controller
             }
             if($request->has('fecha_nacimiento')){
                 $rules = array_add($rules, 'fecha_nacimiento', 'date_format:d-m-Y');
-            }
-/*             if($request->get('image')){
-                $rules = array_add($rules, 'image', 'image|mimes:jpeg,png,jpg,gif,svg|max:1024');
-            }  */   
-/*             $messages = ['fecha_nacimiento.date_format' => 'Formato de fecha invalido',
-            'image.image' => 'formato de imagen invalido'];     */                     
-    
+            }                    
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
@@ -284,7 +276,17 @@ class EmpleadoController extends Controller
                 $imageData = $request->get('image');
                 $fileName = $request->get('numero_documento') . '.' . explode('/', explode(':', substr($imageData, 0, strpos($imageData, ';')))[1])[1];
                 Image::make($request->get('image'))->save(public_path('images/').$fileName);         
-            }   
+            }  
+            /*-- validacion del Numero de RUC --*/
+            if($request->get('tipo') == 1){
+                if($request->get('ruc')){
+                    $ruc = Str::upper($request->get('ruc'));         
+                    $rucemp = Empleado::where('ruc',$ruc)->count();
+                    if($rucemp > 0){
+                        return response()->json(['errors'=>['número de RUC' => 'Ya existe un Odontólogo registrado con este RUC']]);
+                    }
+                } 
+            }              
             $empleado = Empleado::find($id);
             $empleado->fill($request->all());
             if(isset($fileName)){
