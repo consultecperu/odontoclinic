@@ -81,7 +81,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group border border-primary pt-0 pb-0">
-                        <p class="form-control-static text-primary font-weight-bold mb-10">Tipo de Odontograma</p>
+                        <p class="form-control-static text-primary font-weight-bold mb-10">Tipo de Dentición </p>
                         <p-radio v-for="tip in tiposOdontograma" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="dataPresupuesto.tipo_odontograma" @change="cambioTipo(tip.id)" :disabled="$route.params.idpresupuesto != undefined">
                             <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">{{ tip.nombre }} </label>                              
                         </p-radio>  
@@ -767,7 +767,7 @@ export default {
             },
             tiposOdontograma:[
                 {id:1 , nombre:'permanente'},
-                {id:2 , nombre:'nino'},
+                {id:2 , nombre:'decidua'},
                 {id:3 , nombre:'mixta'}
             ],
             simboloID:'',

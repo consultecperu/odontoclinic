@@ -298,14 +298,14 @@
                                                     </div>                                        
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-6">
+<!--                                                     <div class="col-6">
                                                         <div class="form-group row pb-0 pt-5">
                                                             <label for="carnet" class="col-4 pl-0">Nº Carnet </label>
                                                             <div class="col-8 pr-0">
                                                                 <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="carnet" v-model="dataPaciente.numero_carnet">
                                                             </div>                                                
                                                         </div>                                            
-                                                    </div> 
+                                                    </div>  -->
                                                     <div class="col-6">
                                                         <div class="form-group row pb-0 pt-5">
                                                             <label for="num_mensajeria" class="col-4 pl-0">Nº Mensajeria </label>
