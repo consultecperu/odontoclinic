@@ -218,19 +218,26 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">Nº</th>
+                                <th scope="col" class="text-center">Forma Pago</th>
+                                <th scope="col" class="text-center">Moneda</th>
                                 <th scope="col">Doc</th>
                                 <th scope="col">Número</th>
+                                <th scope="col" class="text-center">Tipo Pago</th>
                                 <th scope="col">Fecha</th>    
                                 <th scope="col" align="right">Monto</th>                                                                                                                      
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(pago, index) in PagosPresupuestoOperatoriaById" :key="pago.id">
-                                <th width="10%" align="center" scope="row" class="text-center">{{ index+1 }}</th>
-                                <td width="15%">{{ pago.tipodocumento.abreviatura}}</td>
-                                <td width="25%">{{ pago.serie + '-' + pago.numero}}</td>  
+                            <tr v-for="(pago, index) in PagosPresupuestoOperatoriaById" :key="pago.id" @contextmenu.prevent="menuPopup(pago)">
+                                <th width="7%" align="center" scope="row" class="text-center">{{ index+1 }}</th>
+                                <td width="15%" class="text-center" v-if="pago.modo == 3">MIXTO</td>                                
+                                <td width="15%" class="text-center" v-if="pago.modo == 1 || pago.modo == 2">{{ pago.tipopago.descripcion}}</td>
+                                <td width="10%" class="text-center">{{ pago.moneda.nombre_moneda}}</td>
+                                <td width="8%">{{ pago.tipodocumento.abreviatura}}</td>
+                                <td width="10%">{{ pago.serie + '-' + pago.numero}}</td> 
+                                <td width="15%" class="text-center">{{ pago.tipo == 1 ? 'DIRECTO': 'ADELANTADO' }}</td> 
                                 <td width="25%">{{ pago.fecha_pago}}</td> 
-                                <td width="25%" align="right">{{ parseFloat(pago.total).toFixed(2)}}</td>                                                                                                                       
+                                <td width="10%" align="right">{{ pago.moneda_id == 1 ? parseFloat(pago.total).toFixed(2) : parseFloat(pago.total_dolares).toFixed(2)}}</td>                                                                                                                       
                             </tr>
                             <tr v-if="PagosPresupuestoOperatoriaById.length == 0">
                                 <td colspan="8" class="text-center">NO HAY SERVICIOS CARGADOS ...</td>                                           
@@ -238,7 +245,12 @@
                         </tbody>
                     </table> 
                 </div>                               
-            </div>          
+            </div>
+            <context-menu id="context-menu-pago" ref="ctxMenuPago">
+                <li @click.prevent="deleteItem">Ver Detalle</li>
+                <li @click.prevent="ausenteItem">Ver Comprobante</li>
+                <li @click.prevent="normalItem">Anular</li>
+            </context-menu>                      
         </div> 
         <!-- PAGE CONTENT MODAL ATENCIONES-->  
         <modal name="record_atencion" :width="'65%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
@@ -276,6 +288,7 @@
                                         <p class="form-control-static mb-0"><span class="font-weight-bold">Fecha de Registro :</span>{{ ate.fecha_realizacion }}</p>
                                         <p class="form-control-static"><span class="font-weight-bold">Descripcion :</span>{{ ate.descripcion }}</p>
                                         <p class="form-control-static" v-if="ate.laboratorio_id != null"><span class="font-weight-bold text-danger">Laboratorio Asignado : </span> {{ getLaboratorio(ate.laboratorio_id) }}</p>
+                                        <p class="form-control-static" v-if="ate.material_id != null"><span class="font-weight-bold text-danger">Material Asignado : </span> {{ getMaterial(ate.material_id) }}</p>
                                     </div>
                                 </div>
                             </template>
@@ -308,7 +321,7 @@
                                                 </div>
                                                 <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
                                                     <label for="material" class="text-primary font-weight-bold pt-10">{{ rec.material_id == null ? 'Asignar Material :' : 'Material Asignado :'}}</label>
-                                                    <div class="select2-input" v-if="rec.material_id == null">
+                                                    <div class="select2-input">
                                                         <select id="material" name="material" class="col-8 form-control form-control-sm border" v-model="dataServicio.materialservicio_id" @change="cambioMaterial">
                                                             <option value="">--seleccione--</option>
                                                             <option v-for="mat in rec.tarifario.servicio.materialservicios" :value="mat.id" :key="mat.id">
@@ -316,9 +329,9 @@
                                                             </option>
                                                         </select>
                                                     </div> 
-                                                    <div class="text-primary font-weight-bold" v-if="rec.material_id != null">
+<!--                                                     <div class="text-primary font-weight-bold" v-if="rec.material_id != null">
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.material.nombre_material}}</label>
-                                                    </div>                                                     
+                                                    </div> -->                                                     
                                                 </div>
                                             </div>
                                             <button type="button" class="btn btn-danger btn-sm float-right" @click.prevent="numid = 0"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
@@ -1486,11 +1499,11 @@ export default {
             this.$modal.show('record_atencion')
         },
         GrabarRecord(param){
-            if(param.tarifario.servicio.materialservicios.length > 0){
+/*             if(param.tarifario.servicio.materialservicios.length > 0){
                 let mat = this.materialservicios.find(mat => mat.id == param.tarifario.servicio.materialservicios[0].material_id)
                 this.dataServicio.material_id = mat.material_id
                 this.dataServicio.monto_mat = mat.material.costo
-            }
+            } */
             this.dataRecord = {
                 presupuestooperatoriadetalle_id:param.id,
                 fase_id:'',
@@ -1790,6 +1803,9 @@ export default {
                     return
                 }
             }
+            if(this.dataPago.modo == 1){
+                this.dataPago.tipopago_id = 1
+            }
             this.dataPago.valor = parseFloat(this.dataPago.total) * 0.82
             this.dataPago.valor = parseFloat(this.dataPago.valor).toFixed(2)
             this.dataPago.igv = parseFloat(this.dataPago.total) * 0.18
@@ -1823,6 +1839,13 @@ export default {
 
             });
         },
+        menuPopup(param){
+            $('#context-menu-pago').css({'display':'block'}) 
+            //this.deleteDent = param
+            //if(this.contains(this.odontograma,param.id) || this.contains(this.list_dent_missing,param.id)){
+                this.$refs.ctxMenuPago.open()
+            //}
+        },        
         cambioMoneda(){
             if(this.dataPago.moneda_id == 1){
                 this.dataPago.monto_efectivo = this.dataPago.total == '' ? 0.00 : this.dataPago.total
@@ -2122,7 +2145,9 @@ export default {
             //console.log("laboratorio",this.dataServicio.laboratorio_id)
         },
         cambioMaterial(){
+            //console.log("matservc",this.dataServicio.materialservicio_id)
             let mat = this.materialservicios.find(mat => mat.id == this.dataServicio.materialservicio_id)
+            //console.log("mat",mat)
             this.dataServicio.material_id = mat.material_id
             this.dataServicio.monto_mat = mat.material.costo
 
@@ -2300,8 +2325,11 @@ export default {
         getLaboratorio(param){
             let laboratorio = this.laboratorios.find(lab => lab.id == param)
             return laboratorio.nombre_laboratorio
-        }                             
-
+        },
+        getMaterial(param){
+            let material = this.materiales.find(mat => mat.id == param)
+            return material.nombre_material
+        }          
     },
     filters: {
         fixed(value){
@@ -2403,5 +2431,30 @@ export default {
     } 
     .border-odonto {
         border-color: #c1c4c7 !important;
-    }       
+    } 
+    #context-menu{
+        background: rgb(238, 237, 237);
+        border: 1px solid #BDBDBD;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+        display: block;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    #context-menu li {
+        cursor:pointer; 
+        cursor: hand ;  
+        border-bottom: 1px solid #E0E0E0;
+        margin: 0;
+        padding: 5px 35px;
+    }
+    #context-menu li:last-child {
+        border-bottom: none;
+    }
+    #context-menu li:hover {
+        background: #1E88E5;
+        color: #FAFAFA;
+        cursor:pointer; 
+        cursor: hand ; 
+    }
 </style>

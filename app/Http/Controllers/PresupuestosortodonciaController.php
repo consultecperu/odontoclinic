@@ -24,7 +24,7 @@ class PresupuestosortodonciaController extends Controller
      */
     public function index()
     {
-        $pptosortodoncias = Presupuestoortodoncia::with('paciente','paciente.pacienteplanes.plan','empleado','estadopresupuesto','tipocambio','presupuestosortodonciasdetalles','presupuestosortodonciasdetalles.tarifario.servicio','presupuestosortodonciasdetalles.tarifario.servicio.laboratorioservicios.laboratorio','presupuestosortodonciasdetalles.material','presupuestosortodonciasdetalles.tarifario.servicio.materialservicios.material','presupuestosortodonciasdetalles.moneda','presupuestosortodonciasdetalles.recordatencionortodoncias','tarifario.servicio')->orderBy('id','DESC')->where('activo',true)->get();
+        $pptosortodoncias = Presupuestoortodoncia::with('paciente','paciente.pacienteplanes.plan','plan','empleado','estadopresupuesto','tipocambio','presupuestosortodonciasdetalles','presupuestosortodonciasdetalles.tarifario.servicio','presupuestosortodonciasdetalles.tarifario.servicio.laboratorioservicios.laboratorio','presupuestosortodonciasdetalles.material','presupuestosortodonciasdetalles.tarifario.servicio.materialservicios.material','presupuestosortodonciasdetalles.moneda','presupuestosortodonciasdetalles.recordatencionortodoncias','tarifario.servicio')->orderBy('id','DESC')->where('activo',true)->get();
         return $pptosortodoncias;  
     }
 
@@ -159,7 +159,8 @@ class PresupuestosortodonciaController extends Controller
             }            
 
             DB::commit();        
-            return;
+            //return;
+            return response()->json(['idpresupuesto' => $ppto->id], 200);            
         }
         catch(Exception $e){
             DB::rollback();

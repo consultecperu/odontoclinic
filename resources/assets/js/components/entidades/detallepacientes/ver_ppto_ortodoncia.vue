@@ -894,14 +894,11 @@ export default {
             historiaclinica:this.presupuestoOrtodonciaById.paciente.historiaclinica,
             //empresa:this.presupuestoOrtodonciaById.paciente.pacienteplanes.tipo == 1 ? '-' : this.presupuestoOrtodonciaById.paciente.pacienteplanes.empresapaciente.razon_social,
             empresa: '-',
-            //plan:this.presupuestoOrtodonciaById.paciente.pacienteplanes.plan.descripcion ,
-            plan:'-',
+            plan:this.presupuestoOrtodonciaById.plan.descripcion,
             aseguradora:'-',
             //aseguradora:this.presupuestoOrtodonciaById.paciente.pacienteplanes.plan.descripcion ,
-            empleado_id:this.presupuestoOrtodonciaById.paciente.empleado_id,
             fecha:moment(this.presupuestoOrtodonciaById.fecha_registro).format('DD-MM-YYYY'),
-            //tipocambio:this.presupuestoOrtodonciaById.tipocambio.tipo_cambio,
-            tipocambio:'-',
+            tipocambio:this.presupuestoOrtodonciaById.tipocambio.tipo_cambio,
             empleado_id:this.presupuestoOrtodonciaById.empleado_id
         } 
     },
@@ -1346,7 +1343,6 @@ export default {
         },        
         RealizarTratamiento(){
             this.seleccionados = this.$refs['tabla_detalle'].selectedRows
-            console.log("seleccionados",this.seleccionados)
             this.$modal.show('record_atencion')
         },
         GrabarRecord(param){
@@ -1651,6 +1647,9 @@ export default {
                     return
                 }
             }
+            if(this.dataPago.modo == 1){
+                this.dataPago.tipopago_id = 1
+            }            
             this.dataPago.valor = parseFloat(this.dataPago.total) * 0.82
             this.dataPago.valor = parseFloat(this.dataPago.valor).toFixed(2)
             this.dataPago.igv = parseFloat(this.dataPago.total) * 0.18
@@ -1922,13 +1921,11 @@ export default {
             let lab = this.laboratorioservicios.find(la => la.id == this.dataServicio.laboratorioservicio_id)
             this.dataServicio.laboratorio_id = lab.laboratorio_id
             this.dataServicio.monto_lab = lab.costo_lab
-            console.log('servicios',this.dataServicio)
         },
         cambioMaterial(){
             let mat = this.materialservicios.find(mat => mat.id == this.dataServicio.materialservicio_id)
             this.dataServicio.material_id = mat.material_id
             this.dataServicio.monto_mat = mat.material.costo
-            console.log('servicios',this.dataServicio)
         },         
         createAdicionales(){
             this.isLoading = true
@@ -2013,12 +2010,12 @@ export default {
             var doc = new jsPDF();
             var img = new Image()
             img.src = '/img/logo/multident.png'
-            doc.addImage(img, 'png', 150, 10, 45, 5)                    
+            doc.addImage(img, 'png', 150, 8, 45, 8)                    
             doc.setFontSize(12)
             doc.setFont("helvetica")
-            doc.setFontType("bold")
-            doc.text(60,25,"PRESUPUESTO DE ORTODONCIA")
-            //doc.text(100,25, this.presupuestoOrtodonciaById.id.toString())
+            doc.setFontType("bold")            
+            doc.text(60,25,"PRESUPUESTO DE ORTODONCIA Nº")
+            doc.text(140,25, this.presupuestoOrtodonciaById.id.toString())
             doc.setFontSize(9) 
             doc.setFontType("normal")                               
             doc.text(10,35,'Historia Clinica :')
@@ -2027,7 +2024,7 @@ export default {
             doc.setFontType("normal")              
             doc.text(150,35, 'Fecha:')
             doc.setFontType("bold")                     
-            //doc.text(165,35, this.presupuestoOrtodonciaById.fecha_registro) 
+            doc.text(165,35, this.presupuestoOrtodonciaById.fecha_registro) 
             doc.setFontType("normal")                                    
             doc.text(10,40,'Paciente:')
             doc.setFontType("bold") 
@@ -2035,7 +2032,7 @@ export default {
             doc.setFontType("normal")                     
             doc.text(10,45,'Doctor:')
             doc.setFontType("bold")                     
-            //doc.text(40,45, this.presupuestoOrtodonciaById.nombre_empleado) 
+            doc.text(40,45, this.presupuestoOrtodonciaById.nombre_empleado) 
             doc.setFontSize(8)
             doc.setFontType("normal") 
             doc.text(10,50,'TX de Ortodoncia:')

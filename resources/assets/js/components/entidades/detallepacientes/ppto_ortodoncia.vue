@@ -421,6 +421,7 @@ export default {
                 nuevo_monto:'',
                 descuento:''
             },
+            newidPresupuesto:'',           
             lista_general_presupuesto:[],   // listado general del presupuesto            
         }
     },
@@ -535,7 +536,8 @@ export default {
             let self = this              
             this.dataPresupuesto.fecha_registro = moment().format('DD-MM-YYYY')
             this.dataPresupuesto.paciente_id = this.PacienteById.id
-            //this.dataPresupuesto.empleado_id = this.PacienteById.empleado_id                     
+            //this.dataPresupuesto.empleado_id = this.PacienteById.empleado_id 
+            this.dataPresupuesto.plan_id = this.PacienteById.pacienteplanes.plan_id                  
             this.dataPresupuesto.descuento = ''
             this.dataPresupuesto.tipocambio_id = this.getTipoCambioHoy.id
             this.dataPresupuesto.estadopresupuesto_id = 1
@@ -613,6 +615,7 @@ export default {
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')                
                 return;
             }
+            this.newidPresupuesto = response.data.idpresupuesto            
             this.$store.dispatch('LOAD_PRESUPUESTOS_ORTODONCIAS_LIST')    
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')              
@@ -645,11 +648,12 @@ export default {
             var doc = new jsPDF();
             var img = new Image()
             img.src = '/img/logo/multident.png'
-            doc.addImage(img, 'png', 150, 10, 45, 5)                    
+            doc.addImage(img, 'png', 150, 8, 45, 8)                 
             doc.setFontSize(12)
             doc.setFont("helvetica")
             doc.setFontType("bold")
-            doc.text(60,25,"PRESUPUESTO DE ORTODONCIA Nº 1265")
+            doc.text(60,25,"PRESUPUESTO DE ORTODONCIA Nº")
+            doc.text(140,25,this.newidPresupuesto.toString())            
             doc.setFontSize(9) 
             doc.setFontType("normal")                               
             doc.text(10,35,'Historia Clinica :')

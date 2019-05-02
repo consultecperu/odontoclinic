@@ -25,7 +25,7 @@ class PagoController extends Controller
      */
     public function index()
     {
-        $pagos = Pago::with('tipodocumento')->orderBy('id','ASC')->where('activo',true)->get();
+        $pagos = Pago::with('tipodocumento','tipopago','moneda')->orderBy('id','ASC')->where('activo',true)->get();
         return $pagos;
     }
 
