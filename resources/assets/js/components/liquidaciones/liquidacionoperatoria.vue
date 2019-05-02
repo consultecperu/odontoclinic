@@ -716,6 +716,7 @@ export default {
             this.loading = true
             let fec_cor = moment(this.dataFiltro.fecha_corte).format('DDMMYYYY')
             this.$store.dispatch('LOAD_PRELIQUIDACIONES_DOCTORES_LIST',{ empleado_id : this.dataFiltro.empleado_id , sede_id : this.dataFiltro.sede_id , fecha_corte : fec_cor}).then(() => {
+                console.log("liqui",this.preliquidaciondoctor);
                 this.rows = this.preliquidaciondoctor
                 this.$refs.table1.updateScrollbar(true);
                 this.paginationInfo.text = `<strong>`+ this.rows.length+` registros / `+ this.paginationInfo.pageSize+` reg. x página</strong>`

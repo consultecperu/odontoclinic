@@ -93,17 +93,17 @@ class Globales
     }   
     
     public static function pago_doctor($bruto, $comision, $descuento, $materiales, $devoluvionMat = FALSE){
-        $_descuento = 0;
+        $_descuento = 0.00;
         if(is_array($descuento)){
             foreach ($descuento as $value) {
                 $_descuento += $value;
             }
         }
-        $_sub = $bruto - $_descuento;        
-        $_sub = $_sub * ($comision / 100);
+        $_sub = (float)$bruto - (float)$_descuento;        
+        $_sub = (float)$_sub * ($comision / 100);
         //var_dump($_sub);
         if($devoluvionMat){
-          $_sub = $_sub + $materiales;  
+          $_sub = (float)$_sub + (float)$materiales;  
         }
         //return number_format($_sub, 2);
         return number_format($_sub, 2, '.', '');

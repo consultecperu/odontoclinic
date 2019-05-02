@@ -910,10 +910,10 @@ export default {
             empresa:this.presupuestoOperatoriaById.poliza_id == null ? '-' : this.presupuestoOperatoriaById.poliza.empresapaciente.razon_social,
             plan:this.presupuestoOperatoriaById.plan.descripcion,
             aseguradora:this.presupuestoOperatoriaById.poliza_id == null ? '-' : this.presupuestoOperatoriaById.poliza.plane.descripcion,
-            empleado_id:this.presupuestoOperatoriaById.paciente.empleado_id,
             fecha:moment(this.presupuestoOperatoriaById.fecha_registro).format('DD-MM-YYYY'),
             tipocambio:this.presupuestoOperatoriaById.tipocambio.tipo_cambio,
             empleado_id:this.presupuestoOperatoriaById.empleado_id,
+            empleado:this.presupuestoOperatoriaById.empleado.nombre_completo,
             deducible:this.presupuestoOperatoriaById.poliza_id == null ? '0' : this.presupuestoOperatoriaById.poliza.deducible,
             coaseguro:this.presupuestoOperatoriaById.poliza_id == null ? '0' : this.presupuestoOperatoriaById.poliza.coaseguro,
             tipo_presupuesto: this.presupuestoOperatoriaById.tipo_presupuesto            
@@ -1028,6 +1028,7 @@ export default {
                 fecha:'',
                 tipocambio:'',
                 empleado_id:'',
+                empleado:'',
                 deducible:'',
                 coaseguro:'',
                 tipo_presupuesto:''
@@ -2178,12 +2179,16 @@ export default {
                     var doc = new jsPDF();
                     var img = new Image()
                     img.src = '/img/logo/multident.png'
-                    doc.addImage(img, 'png', 150, 10, 45, 5)                    
+                    doc.addImage(img, 'png', 150, 8, 45, 8)                    
                     doc.setFontSize(12)
                     doc.setFont("helvetica")
                     doc.setFontType("bold")
-                    doc.text(15,15,"PRESUPUESTO Nº")
-                    doc.text(56,15,self.presupuestoOperatoriaById.id.toString())                    
+                    doc.setFillColor(130,142,154)
+                    doc.roundedRect(75, 8, 60, 7, 1,1, 'F') 
+                    doc.setTextColor(255, 255, 255)                   
+                    doc.text(80,13,"PRESUPUESTO Nº")
+                    doc.text(120,13,self.presupuestoOperatoriaById.id.toString())
+                    doc.setTextColor(0, 0, 0)                                        
                     doc.setFontSize(8)                   
                     doc.text(15,20,'FECHA :')
                     doc.text(40,20, self.dataPaciente.fecha)
@@ -2203,10 +2208,10 @@ export default {
                     doc.text(85,25,'Doctor:')
                     doc.setFontSize(6)
                     doc.setFontType("bold")                     
-                    //doc.text(100,25, self.PacienteById.empleado.nombre_completo) 
+                    doc.text(100,25, self.dataPaciente.empleado) 
                     doc.setFontSize(8)
                     doc.setFontType("normal")                                         
-                    doc.text(15,29,'Comp.de Seguros:')
+                    doc.text(15,29,'Plan:')
                     doc.text(40,29 , self.dataPaciente.plan)
                     doc.text(85,29,'Empresa:')
                     doc.text(100,29 , self.dataPaciente.empresa)                    

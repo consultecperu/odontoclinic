@@ -405,22 +405,22 @@ class PresupuestosoperatoriaController extends Controller
                 $moneda = 's/.';
                 //$costo_total = floatval($det->monto_efectivo) + floatval($det->monto_tarjeta);
                 $tipo_cambio = TipoCambio::where('fecha_registro',date('Y-m-d'));
-                $monto_tarjeta = $det->monto_tarjeta == null ? 0 : floatval($det->monto_tarjeta);
-                $monto_tarjeta = number_format($monto_tarjeta,2);
-                $monto_efectivo = $det->monto_efectivo == null ? 0 : floatval($det->monto_efectivo);
-                $monto_efectivo = number_format($monto_efectivo);
-                $costo_total = floatval($monto_tarjeta) + floatval($monto_efectivo);
-                $costo_total = number_format($costo_total,2);
+                $monto_tarjeta = $det->monto_tarjeta == null ? 0.00 : floatval($det->monto_tarjeta);
+                //$monto_tarjeta = number_format($monto_tarjeta,2);
+                $monto_efectivo = $det->monto_efectivo == null ? 0.00 : floatval($det->monto_efectivo);
+                //$monto_efectivo = number_format($monto_efectivo,2);
+                $costo_total = (float)$monto_efectivo + (float)$monto_tarjeta;
+                //$costo_total = number_format($costo_total,2);
 
                 if($det->moneda_id == 2){
                     $costo_total = $costo_total * $tipo_cambio;
-                    $costo_total = number_format($costo_total,2);
+                    //$costo_total = number_format($costo_total,2);
 
                     $monto_tarjeta = floatval($monto_tarjeta) * $tipo_cambio;
-                    $monto_tarjeta = number_format($monto_tarjeta,2);
+                    //$monto_tarjeta = number_format($monto_tarjeta,2);
 
                     $monto_efectivo = floatval($monto_efectivo) * $tipo_cambio;
-                    $monto_efectivo = number_format($monto_efectivo,2);                    
+                    //$monto_efectivo = number_format($monto_efectivo,2);                    
                 }
 
                 if($det->material_id != null){
@@ -452,6 +452,7 @@ class PresupuestosoperatoriaController extends Controller
 
                 $status = Globales::quitar_servicios_liquidacion($det->tarifario->servicio_id);
                 if($status){
+                    //dd($costo_total);
                     $servicio = array(
                         'paciente_id' => $det->presupuestooperatoria->paciente_id,
                         'presupuestooperatoriadetalle_id' => $det->id,
@@ -461,7 +462,7 @@ class PresupuestosoperatoriaController extends Controller
                         'pieza' =>  $det->diente_id == null ? '' : $det->diente->codigo,
                         'superficie' => $superf,
                         'fecha' => date('d-m-Y', strtotime($det->fecha_descarga)),
-                        'costo' => floatval($costo_total),
+                        'costo' => $costo_total,
                         'monto_efectivo' => $det->monto_efectivo != null ? $det->monto_efectivo : 0.00,
                         'monto_tarjeta' => $det->monto_tarjeta != null ? $det->monto_tarjeta : 0.00,
                         'moneda' => $moneda,
@@ -477,7 +478,6 @@ class PresupuestosoperatoriaController extends Controller
                         'neto' => floatval($neto)
                     );
                     array_push($datos_ppto,$servicio);                    
-
                 }
             }
         }

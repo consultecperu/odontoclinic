@@ -181,10 +181,10 @@ class LiquidacionoperatoriaController extends Controller
                 $moneda = 's/.';
                 $tipo_cambio = TipoCambio::where('fecha_registro',date('Y-m-d'));
                 $_monto_liquidar = floatval($liq->monto_total_liquidar);
-                $_monto_liquidar = number_format($_monto_liquidar,2);                  
+                //$_monto_liquidar = number_format($_monto_liquidar,2);                  
                 if($liq->moneda_id == 2){
                     $_monto_liquidar = floatval($liq->monto_total_liquidar) * $tipo_cambio;
-                    $_monto_liquidar = number_format($_monto_liquidar,2);                       
+                    //$_monto_liquidar = number_format($_monto_liquidar,2);                       
                 }
                 $nro_liq = "0000000000".$liq->id;
                 $nro_liq = substr($nro_liq,-10);
