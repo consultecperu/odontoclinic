@@ -6,38 +6,15 @@
             :can-cancel="false" 
             :is-full-page="fullPage">
         </loading>          
-        <div class="col-12 bg-white ml-10 pt-20">
-            <div class="row">
-                <div class="col-12">
-                    <p class="form-control-static text-danger font-weight-bold">DATOS DEL PACIENTE</p>
-                </div>
-            </div>             
-<!--             <div class="row">
-                <div class="col-4">
-                    <div class="form-group form-group-default" >
-                        <label for="historia" class="text-primary font-weight-bold">Paciente </label>
-                        <p class="form-control-static mb-0" v-text="dataPaciente.nombre_completo"></p>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-group form-group-default" >
-                        <label for="historia" class="text-primary font-weight-bold">Num. Historia </label>
-                        <p class="form-control-static text-center mb-0" v-text="dataPaciente.historiaclinica"></p>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="form-group form-group-default" >
-                        <label for="historia" class="text-primary font-weight-bold">T.C </label>
-                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.tipocambio"></p>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-group form-group-default" >
-                        <label for="historia" class="text-primary font-weight-bold">Fecha </label>
-                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.fecha"></p>
-                    </div>
-                </div>                 
-            </div> -->
+        <div class="col-12 bg-white ml-10 pt-10"> 
+            <div class="row mb-10">
+                <div class="col-6">
+                    <p class="form-control-static text-danger font-weight-bold">DATOS DEL PRESUPUESTO Nº : {{ dataPaciente.presupuesto_id }}</p>
+                </div> 
+                <div class="col-6">
+                    <button class="btn btn-danger btn-sm btn-round float-right" @click.prevent="$router.go(-1)"><span class="btn-label"><i class="la la-arrow-circle-o-left"></i></span>Volver</button>             
+                </div>               
+            </div>           
             <div class="row">
                 <div class="col-4 pr-0">
                     <div class="form-group form-group-default border-odonto">
@@ -123,12 +100,12 @@
                                     styleClass="vgt-table condensed bordered striped">
                                         <template slot="table-row" slot-scope="props">
                                             <span v-if="props.column.field == 'pagado'" class="center">
-                                                <span class="center badge" :class="{'badge-danger' : props.row.pagado == 0 ,'badge-primary' : props.row.pagado == 1 }">{{ props.row.pagado == 0 ? 'NO' : 'SI' }}</span>             
+                                                <span class="center badge-mini badge" :class="{'badge-danger' : props.row.pagado == 0 ,'badge-primary' : props.row.pagado == 1 }">{{ props.row.pagado == 0 ? 'NO' : 'SI' }}</span>             
                                             </span>
                                             <span v-else-if="props.column.field == 'realizado'">
-                                                <span class="center badge badge-danger" v-if="props.row.realizado == 1" v-text="'PENDIENTE'">pendiente</span>                                
-                                                <span class="center badge badge-primary" v-if="props.row.realizado == 2" v-text="'EN PROCESO'">proceso</span>                                
-                                                <span class="center badge badge-success" v-if="props.row.realizado == 3" v-text="'TERMINADO'">terminado</span>                                
+                                                <span class="center badge-mini badge badge-danger" v-if="props.row.realizado == 1" v-text="'PENDIENTE'"></span>                                
+                                                <span class="center badge-mini badge badge-primary" v-if="props.row.realizado == 2" v-text="'EN PROCESO'"></span>                                
+                                                <span class="center badge-mini badge badge-success" v-if="props.row.realizado == 3" v-text="'TERMINADO'"></span>                                
                                             </span>
                                             <span v-else>
                                                 {{props.formattedRow[props.column.field]}}
@@ -923,6 +900,7 @@ export default {
             id:this.presupuestoOperatoriaById.paciente_id,
             nombre_completo:this.presupuestoOperatoriaById.paciente.nombre_completo,
             historiaclinica:this.presupuestoOperatoriaById.paciente.historiaclinica,
+            presupuesto_id: this.presupuestoOperatoriaById.id,
             empresa:this.presupuestoOperatoriaById.poliza_id == null ? '-' : this.presupuestoOperatoriaById.poliza.empresapaciente.razon_social,
             plan:this.presupuestoOperatoriaById.plan.descripcion,
             aseguradora:this.presupuestoOperatoriaById.poliza_id == null ? '-' : this.presupuestoOperatoriaById.poliza.plane.descripcion,
@@ -1037,6 +1015,7 @@ export default {
                 id:'',
                 nombre_completo:'',
                 historiaclinica:'',
+                presupuesto_id:'',
                 empresa:'',
                 plan:'',
                 aseguradora:'',
@@ -1926,14 +1905,18 @@ export default {
             let self = this
             let list_detalles = [] 
             let verif_saldo = 0 
-            let sinterminar = false          
+            let sinterminar = false   
+            let conPagodirecto = false       
             this.seleccionados = this.$refs['tabla_detalle'].selectedRows
             this.dataPago.presupuestodetalles = []
             this.dataPago.fecha_descarga = moment().format('DD-MM-YYYY hh:mm:ss')
             _.each(this.seleccionados, function(value,key){  
                 if(value.realizado != 3){
                     sinterminar = true
-                }              
+                }  
+                if(value.pagado == 1){
+                    conPagodirecto = true
+                }            
                 if(value.pagado == 0 && value.realizado == 3){
                     verif_saldo += parseFloat(value.costo)
                     list_detalles.push(value.id)
@@ -1942,13 +1925,17 @@ export default {
             if(sinterminar){
                 this.notificaciones('Algunos registros no estan terminados ... verifique por favor!!','la la-thumbs-o-down','danger')
                 return                
-            }            
+            }       
+            if(conPagodirecto){
+                this.notificaciones('Algunos registros tienen Pago directo y no se pueden descargar con esta modalidad ... verifique por favor!!','la la-thumbs-o-down','danger')
+                return                
+            }                  
             this.dataPago.presupuestodetalles = _.clone(list_detalles)
             if(list_detalles.length == 0){
                 this.notificaciones('Los registros no pueden ser descargados ... deben estar terminados!!','la la-thumbs-o-down','danger')
                 return                
             }
-            console.log("saldo",this.MontoSaldoTotal,verif_saldo)
+            //console.log("saldo",this.MontoSaldoTotal,verif_saldo)
             if(parseFloat(this.MontoSaldoTotal) < parseFloat(verif_saldo)){
                 this.notificaciones('El Saldo no cubre el costo de todos los tratamientos seleccionados!!','la la-thumbs-o-down','danger')
                 return                 
@@ -2448,5 +2435,9 @@ export default {
     }
     .v-context ul li{
         padding: 10px 15px !important;
+    }
+    .badge-mini {
+        font-size: 8px !important;
+        font-weight: 600 !important;
     }
 </style>

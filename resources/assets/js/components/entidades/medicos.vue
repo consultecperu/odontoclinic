@@ -376,17 +376,6 @@
                                                     </div>
                                                 </div> 
                                             </div>                                                                                      
-<!--                                             <div class="col-6">
-                                                <div class="form-group form-group-default border border-primary">
-                                                    <label for="perfil" class="text-primary font-weight-bold">Perfil de Acceso</label>
-                                                    <select class="form-control form-control-sm" id="perfil" v-model="dataEmpleado.perfil_id" disabled>
-                                                        <option value="">-- Seleccione --</option>
-                                                        <option v-for="perfil in perfiles" :value="perfil.id" :key="perfil.id">
-                                                            {{ perfil.nombre_perfil}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div> -->
                                         </div>                                      
                                     </div>
                                 </div>

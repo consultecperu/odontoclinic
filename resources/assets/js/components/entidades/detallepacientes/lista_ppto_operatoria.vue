@@ -49,7 +49,7 @@
                                 </button>                                                             
                             </span>
                             <span v-else-if="props.column.field == 'estadopresupuesto.nombre_estadopresupuesto'">
-                                <span class="center badge" :class="{'badge-danger' : props.row.estadopresupuesto.nombre_estadopresupuesto == 'PENDIENTE','badge-primary' : props.row.estadopresupuesto.nombre_estadopresupuesto == 'PROCESO' , 'badge-success' : props.row.estadopresupuesto.nombre_estadopresupuesto == 'COMPLETADO' }">{{ props.row.estadopresupuesto.nombre_estadopresupuesto }}</span>                                
+                                <span class="center badge-mini badge" :class="{'badge-danger' : props.row.estadopresupuesto.nombre_estadopresupuesto == 'PENDIENTE','badge-primary' : props.row.estadopresupuesto.nombre_estadopresupuesto == 'PROCESO' , 'badge-success' : props.row.estadopresupuesto.nombre_estadopresupuesto == 'COMPLETADO' }">{{ props.row.estadopresupuesto.nombre_estadopresupuesto }}</span>                                
                             </span>
                             <span v-else>
                                 {{props.formattedRow[props.column.field]}}
@@ -267,7 +267,9 @@ export default {
                 }, 
                 {
                 label: 'Estado',
-                field: 'estadopresupuesto.nombre_estadopresupuesto',                
+                field: 'estadopresupuesto.nombre_estadopresupuesto',   
+                thClass: 'center',                
+                tdClass: 'center',                               
                 width:'15%',
                 },                                                                                                                                                                                                                                      
                 {
@@ -930,7 +932,6 @@ export default {
     .seleccionado {
         border-top:1px solid red;
     }
-
     .screen-reader {
         border: 0;
         clip: rect(0 0 0 0);
@@ -942,11 +943,13 @@ export default {
         white-space: nowrap;
         width: 1px;
     }   
-
     .table-ppto {
         min-height: 600px !important;
     } 
-
+    .badge-mini {
+        font-size: 9px !important;
+        font-weight: 600 !important;
+    }
 </style>
 
 

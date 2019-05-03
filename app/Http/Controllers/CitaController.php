@@ -212,6 +212,8 @@ class CitaController extends Controller
                 return response()->json(['errors'=>$validator->errors()]);
             }      
     
+            Cita::where(['id' => $request->get('cita_id')])->update(['estadocita_id' => $request->get('estadocita_id')]);
+
             $segcita = new Seguimientocita($request->all());
             $segcita->fecha_incidencia = Globales::FormatFecYMD_hms($request->get('fecha_incidencia'));
             $segcita->save();
@@ -225,7 +227,6 @@ class CitaController extends Controller
                 ['status' => $e->getMessage()], 422
             );
         }
-
     } 
     
     public function reprogramarcitas(Request $request,$id)
@@ -241,6 +242,7 @@ class CitaController extends Controller
             }              
             $cita = Cita::findOrFail($id); 
             $cita->reprogramado = 1;
+            $cita->estadocita_id = 1;
             $cita->fecha_cita = $request->get('fecha_nueva'); 
             $cita->start = $request->get('start_nueva');
             $cita->end = $request->get('end_nueva');     

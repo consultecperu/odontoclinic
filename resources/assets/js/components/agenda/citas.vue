@@ -612,6 +612,7 @@ export default {
             this.dataCita.sede_id = this.sede_system.id
             this.dataCita.user_id = this.user_system.id
             this.dataCita.reprogramado = 0
+            this.dataCita.estadocita_id = 1
 
             this.dataNewPaciente = {
                 tipodocumento_id:'',
@@ -926,8 +927,6 @@ export default {
                         });                        
                     }
                 });            
-
-
         },
         createCita: function(){
             if(this.dataCita.tipo == 1){
