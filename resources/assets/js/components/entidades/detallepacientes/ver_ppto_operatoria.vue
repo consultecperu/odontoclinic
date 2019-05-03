@@ -228,7 +228,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(pago, index) in PagosPresupuestoOperatoriaById" :key="pago.id" @contextmenu.prevent="menuPopup(pago)">
+                            <tr v-for="(pago, index) in PagosPresupuestoOperatoriaById" :key="pago.id" @contextmenu.prevent="$refs.menu.open($event, pago)">
                                 <th width="7%" align="center" scope="row" class="text-center">{{ index+1 }}</th>
                                 <td width="15%" class="text-center" v-if="pago.modo == 3">MIXTO</td>                                
                                 <td width="15%" class="text-center" v-if="pago.modo == 1 || pago.modo == 2">{{ pago.tipopago.descripcion}}</td>
@@ -246,11 +246,13 @@
                     </table> 
                 </div>                               
             </div>
-            <context-menu id="context-menu-pago" ref="ctxMenuPago">
-                <li @click.prevent="deleteItem">Ver Detalle</li>
-                <li @click.prevent="ausenteItem">Ver Comprobante</li>
-                <li @click.prevent="normalItem">Anular</li>
-            </context-menu>                      
+            <vue-context ref="menu">
+                <ul slot-scope="child">
+                    <li @click="verPago(child.data)">Ver detalle</li>
+                    <li @click="verComprobante(child.data)">Ver comprobante</li>
+                    <li @click="anularPago(child.data)">Anular</li>
+                </ul>
+            </vue-context>                   
         </div> 
         <!-- PAGE CONTENT MODAL ATENCIONES-->  
         <modal name="record_atencion" :width="'65%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
@@ -902,6 +904,7 @@ import  {_} from 'vue-underscore'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import { mapState, mapGetters } from 'vuex'
+import { VueContext } from 'vue-context';
 export default {
     name: 'ver-ppto-operatoria',
     mixins: [mixin],  
@@ -1342,6 +1345,9 @@ export default {
             
         }
     },
+    components: {
+        VueContext
+    },    
     computed: {
         ...mapState(['user_system','sede_system','monedas','empresapacientes','laboratorioservicios','materialservicios','laboratorios','materiales']),
         ...mapGetters(['getDientesByCuadrante','getMedicos','getTipoCambioHoy','getPresupuestoOperatoriaById','getTipopagosForma','getPagosPresupuestoOperatoriaById']), 
@@ -1838,14 +1844,16 @@ export default {
             this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
 
             });
+        },  
+        verPago(data){
+
         },
-        menuPopup(param){
-            $('#context-menu-pago').css({'display':'block'}) 
-            //this.deleteDent = param
-            //if(this.contains(this.odontograma,param.id) || this.contains(this.list_dent_missing,param.id)){
-                this.$refs.ctxMenuPago.open()
-            //}
-        },        
+        verComprobante(data){
+
+        },
+        anularPago(data){
+
+        },            
         cambioMoneda(){
             if(this.dataPago.moneda_id == 1){
                 this.dataPago.monto_efectivo = this.dataPago.total == '' ? 0.00 : this.dataPago.total
@@ -2432,29 +2440,13 @@ export default {
     .border-odonto {
         border-color: #c1c4c7 !important;
     } 
-    #context-menu{
-        background: rgb(238, 237, 237);
-        border: 1px solid #BDBDBD;
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-        display: block;
-        list-style: none;
-        margin: 0;
-        padding: 0;
+    .v-context{
+        width: 180px !important;
     }
-    #context-menu li {
-        cursor:pointer; 
-        cursor: hand ;  
-        border-bottom: 1px solid #E0E0E0;
-        margin: 0;
-        padding: 5px 35px;
+    .v-context ul {
+        padding: 2px 0 !important;
     }
-    #context-menu li:last-child {
-        border-bottom: none;
-    }
-    #context-menu li:hover {
-        background: #1E88E5;
-        color: #FAFAFA;
-        cursor:pointer; 
-        cursor: hand ; 
+    .v-context ul li{
+        padding: 10px 15px !important;
     }
 </style>
