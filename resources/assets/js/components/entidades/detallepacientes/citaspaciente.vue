@@ -200,6 +200,8 @@ export default {
         },
         verHistorial(param){
             let self = this
+            self.reprogramaciones_cita = []
+            self.seguimiento_cita = []
             _.each(param.seguimientocitas, function(value,key){
                 if(value.reprogramado == 1){
                     self.reprogramaciones_cita.push(value)
