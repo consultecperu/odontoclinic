@@ -27,7 +27,7 @@
     cursor:pointer; cursor: hand	      
 } 
 
-.enlace {
+.enlace, .enlace-mini {
     vertical-align: middle!important;
     font-size: 11px !important;
 }

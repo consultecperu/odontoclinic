@@ -202,5 +202,8 @@ export default {
     },   
     getSeguimientoPlanesbyPaciente: (state) => (id) => {
         return state.seguimientoplanes.filter(seg => seg.paciente_id == id)
-    },                                                                                                                        
+    },  
+    getcitasPacienteById: (state) => (id) => {
+        return state.citas.filter(cit => cit.paciente_id == id )
+    }                                                                                                                      
 }

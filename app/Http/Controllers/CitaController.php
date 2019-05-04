@@ -23,7 +23,7 @@ class CitaController extends Controller
      */
     public function index()
     {
-        $citas = Cita::orderBy('id','ASC')->where('activo',true)->get();
+        $citas = Cita::with('empleado','estadocita','seguimientocitas.estadocita','seguimientocitas.user.__empleado')->orderBy('fecha_cita','DESC')->where('activo',true)->get();
         return $citas;   
     }
 
@@ -293,5 +293,5 @@ class CitaController extends Controller
                 ['status' => $e->getMessage()], 422
             );
         }        
-    }    
+    }         
 }
