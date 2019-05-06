@@ -349,13 +349,13 @@
         </modal>        
         <context-menu id="context-menu" ref="ctxMenu">
 <!--             <li class="ctx-item" v-for="est in estadocitas" :key="est.id" :value="est.id" @click.prevent="cambioEstado(est)" :class="[est.id != (selectItem.estadocita_id + 1) && est.id < 6  ? 'disabled' : '', est.color_font]"><span class="circle_estado" :class="est.color"></span>{{est.nombre_estadocita}}</li> -->
-            <li class="ctx-item" value="1"><span class="circle_estado bg-primary"></span>Citado</li>
+            <li class="ctx-item" value="1" :class="[selectItem.estadocita_id + 1 && est.id < 6  ? 'disabled' : '', est.color_font]"><span class="circle_estado bg-primary"></span>Citado</li>
             <li class="ctx-item" value="2"><span class="circle_estado bg-secondary"></span>En sala de espera</li>
             <li class="ctx-item" value="3"><span class="circle_estado bg-default"></span>En consultorio</li>
             <li class="ctx-item border-bottom" value="4"><span class="circle_estado bg-success"></span>Atendido</li>
-            <li class="ctx-item" value="5"><span class="circle_estado bg-warning"></span>Reprogramado</li>
-            <li class="ctx-item border-bottom" value="6"><span class="circle_estado bg-danger"></span>Cancelado</li>
-            <li class="ctx-item" value="7"><span class="circle_estado bg-info"></span>Confirmar cita</li>
+            <li class="ctx-item border-bottom" value="5" :class="[selectItem.reprogramado == 1 ? 'disabled' : '']"><span class="circle_estado bg-warning"></span>Reprogramar</li>
+            <li class="ctx-item" value="6" v-if="selectItem.confirmado"><span class="circle_estado bg-danger"></span>Cancelar cita</li>
+            <li class="ctx-item" value="7" v-if="!selectItem.confirmado"><span class="circle_estado bg-info"></span>Confirmar cita</li>
         </context-menu>                
     </div>
 </template>
