@@ -348,7 +348,14 @@
             </div>                                
         </modal>        
         <context-menu id="context-menu" ref="ctxMenu">
-            <li class="ctx-item" v-for="est in estadocitas" :key="est.id" :value="est.id" @click.prevent="cambioEstado(est)" :class="[est.id != (selectItem.estadocita_id + 1) && est.id < 6  ? 'disabled' : '', est.color_font]"><span class="circle_estado" :class="est.color"></span>{{est.nombre_estadocita}}</li>
+<!--             <li class="ctx-item" v-for="est in estadocitas" :key="est.id" :value="est.id" @click.prevent="cambioEstado(est)" :class="[est.id != (selectItem.estadocita_id + 1) && est.id < 6  ? 'disabled' : '', est.color_font]"><span class="circle_estado" :class="est.color"></span>{{est.nombre_estadocita}}</li> -->
+            <li class="ctx-item" value="1"><span class="circle_estado bg-primary"></span>Citado</li>
+            <li class="ctx-item" value="2"><span class="circle_estado bg-secondary"></span>En sala de espera</li>
+            <li class="ctx-item" value="3"><span class="circle_estado bg-default"></span>En consultorio</li>
+            <li class="ctx-item border-bottom" value="4"><span class="circle_estado bg-success"></span>Atendido</li>
+            <li class="ctx-item" value="5"><span class="circle_estado bg-warning"></span>Reprogramado</li>
+            <li class="ctx-item border-bottom" value="6"><span class="circle_estado bg-danger"></span>Cancelado</li>
+            <li class="ctx-item" value="7"><span class="circle_estado bg-info"></span>Confirmar cita</li>
         </context-menu>                
     </div>
 </template>
@@ -1065,14 +1072,23 @@ export default {
             }
             _.each(data, function(value,key){
                 let class_event
-                switch (_.last(value.seguimientocitas).estadocita_id) {
+                let bg_color
+/*                 switch (_.last(value.seguimientocitas).estadocita_id) {
                     case 1 : class_event = 'fc-primary'; break;
                     case 2 : class_event = 'fc-secondary'; break;                    
                     case 3 : class_event = 'fc-default'; break;                    
                     case 4 : class_event = 'fc-success'; break;                    
                     case 5 : class_event = 'fc-danger'; break;                    
                     case 6 : class_event = 'fc-warning'; break;                    
-                }                
+                }  */    
+                switch (value.estadocita_id) {
+                    case 1 : bg_color = '#177DFF'; break;
+                    case 2 : bg_color = '#716ACA'; break;                    
+                    case 3 : bg_color = '#282A3C'; break;                    
+                    case 4 : bg_color = '#35CD3A'; break;                    
+                    case 5 : bg_color = '#FFA534'; break;                    
+                    case 6 : bg_color = '#F3545D'; break;                    
+                }                             
                 evento = {
                     id: String(value.id),
                     title: value.paciente.nombre_completo,
@@ -1088,8 +1104,9 @@ export default {
                     comentario: _.first(value.seguimientocitas).comentario,
                     estadocita_id : _.last(value.seguimientocitas).estadocita_id,
                     allDay : false ,
-                    className : class_event,
-                    backgroundColor : 'yellow',
+                    className : value.confirmado == true ? 'fc-success' : 'fc-danger',
+                    backgroundColor : bg_color,
+                    textColor : 'yellow',
                     especial: 'no'
                 }
                 let dato = _.clone(evento)
@@ -1132,7 +1149,7 @@ export default {
                 if(this.dataCita.empleado_id > 0){
                     citasxfiltro = this.citasfechas.filter(cif => cif.empleado_id == this.dataCita.empleado_id)
                 }
-                console.log("citas-filtro",citasxfiltro)
+                //console.log("citas-filtro",citasxfiltro)
                 //this.cargaEventos(this.citasfechas)
                 this.cargaEventos(citasxfiltro)
                 this.isLoading = false 
