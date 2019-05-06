@@ -43,8 +43,6 @@
                                                     <label for="sede" class="col-4 pl-0">Sede </label>
                                                     <div class="col-8 pr-0">
                                                         <input type="text" class="form-control form-control-sm border-odonto text-danger text-center font-weight-bold mb-0" id="edad" name="edad" v-model="dataPaciente.sede.nombre_sede" disabled>                                                        
-                                                        <!-- <p class="form-control-static text-danger text-center font-weight-bold mb-10">{{ dataPaciente.sede == null ? '--' : dataPaciente.sede.nombre_sede }}</p> -->
-                                                        <!-- <input type="text" class="form-control form-control-sm border-odonto" id="sede" name="sede" v-model="dataPaciente.sede" disabled> -->
                                                     </div>
                                                 </div>                                              
                                             </div>
@@ -237,14 +235,6 @@
                                             </div>                                        
                                         </div>
                                         <div class="row">
-<!--                                             <div class="col-6">
-                                                <div class="form-group row pb-0 pt-5">
-                                                    <label for="carnet" class="col-4 pl-0">Nº Carnet </label>
-                                                    <div class="col-8 pr-0">
-                                                        <input type="text" class="form-control form-control-sm border-odonto mayusculas" name="carnet" v-model="dataPaciente.numero_carnet">
-                                                    </div>                                                
-                                                </div>                                            
-                                            </div>  -->
                                             <div class="col-6">
                                                 <div class="form-group row pb-0 pt-5">
                                                     <label for="num_mensajeria" class="col-4 pl-0">Nº Mensajeria </label>

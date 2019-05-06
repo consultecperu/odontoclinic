@@ -93,6 +93,12 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/pacientes/actualizacelular/{id}', 'PacienteController@Actualizacelular');
     Route::put('/pacientes/actualizaplanes/{id}', 'PacienteController@ActualizaPlanesPaciente');
     Route::get('/seguimientoplanes','PacienteController@seguimientoplanes');
+    // imagenes y documentos de pacientes
+    Route::post('/uploadPdf','PacienteController@uploadPdf'); 
+    Route::post('/uploadImages','PacienteController@uploadImages');   
+    Route::get('/listarPDF/{id}','PacienteController@listarPDF');
+    Route::get('/listarImages/{id}','PacienteController@listarImages');      
+    Route::post('/deletePDF','PacienteController@destroy_file');     
     // dependientes
     Route::resource('dependientes','DependienteController'); 
     Route::post('/dependientes/relacion', 'DependienteController@relacion'); 

@@ -374,5 +374,84 @@ class PacienteController extends Controller
     {
         $seguiplanes = Seguimientoplane::with('plan','empresapaciente','poliza','user.__empleado')->orderBy('id','DESC')->where('activo',true)->get();
         return $seguiplanes;  
+    }  
+    
+    public function uploadPdf(Request $request)
+    {
+        if ($request->hasFile('files_pdf')){
+            $files = $request->files_pdf;
+            if(!empty($files)){
+                foreach($files as $file) {
+                    $filename = $file->getClientOriginalName();
+                    Storage::disk('public')->putFileAs('pdf/'.$request->id , $file , $filename);
+                }
+            }
+            return \Response::json(array('success' => true));
+        }else {
+            return response()->json(
+                ['status' => 'no existe Archivos Pdf para subirlos al servidor'],422
+            );
+        }
+
+    }
+
+    public function listarPDF($id){
+        $todos = array();
+        $directory = 'pdf/'.$id;
+        $files = Storage::disk('public')->files($directory);
+        foreach ($files as $key => $value) {
+            $pdf = array('name' => $value,
+                        'size' => Storage::disk('public')->size($value),    
+                        'time' => Storage::disk('public')->lastModified($value),
+                        'url' => Storage::disk('public')->url($value),
+                        'ruta' => Storage::disk('public')->getDriver()->getAdapter()->applyPathPrefix($value)     
+                        );
+
+            array_push($todos, $pdf);
+        }
+        return $todos;
+    }
+
+    public function destroy_file(Request $request)
+    {
+        $file = $request->file;
+        Storage::disk('public')->delete($file);
+    }
+
+    public function uploadImages(Request $request){
+        if ($request->hasFile('files_images')){
+            $files = $request->files_images;
+            if(!empty($files)){
+                foreach($files as $file) {
+                    $filename = $file->getClientOriginalName();
+                    Storage::disk('public')->putFileAs('images/'.$request->id , $file , $filename);
+                }
+            }
+            return \Response::json(array('success' => true));
+        }else {
+            return response()->json(
+                ['status' => 'no existe Archivos Imagenes para subirlos al servidor'],422
+            );
+        }
+    } 
+    
+    public function listarImages($id){
+        $todos = array();
+        $directory = 'images/'.$id;
+        $files = Storage::disk('public')->files($directory);
+        foreach ($files as $key => $value) {
+            $nomarc = explode("/",$value);  // extraccion del nombre del archivo
+            $images = array('name' => $value,
+                        'name_file'  => $nomarc[2],
+                        'size' => Storage::disk('public')->size($value),    
+                        'time' => Storage::disk('public')->lastModified($value),
+                        'url' => Storage::disk('public')->url($value),
+                        'ruta' => Storage::disk('public')->getDriver()->getAdapter()->applyPathPrefix($value)     
+                        );
+
+            array_push($todos, $images);
+        }
+        return $todos;
     }    
+    
 }

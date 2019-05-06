@@ -17,6 +17,8 @@ Vue.component('pagetitle', require('./components/template/main/breadcrumb/pageti
 Vue.component('sidebar', require('./components/template/sidebar/sidebar.vue'));
 /*--- Carga de Imagenes ---*/
 Vue.component('file-upload',require('./components/utils/FileUpload.vue'));
+Vue.component('file-upload-multiple', require('./components/utils/FileUploadMultiple.vue'));
+Vue.component('file-upload-images', require('./components/utils/FileUploadImages.vue'));
 
 import router from './router';
 import store from './store';

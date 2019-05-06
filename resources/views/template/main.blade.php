@@ -22,6 +22,8 @@
 	<link rel="stylesheet" href="{{ asset('css/loading.css') }}">		
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/ready.min.css') }}">
+    <!-- lightbox -->
+    <link rel="stylesheet" href="{{ asset('css/lightbox.css') }}">	
 	<!-- CSS bootstrap-datepicker -->
 	<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker/bootstrap-datepicker3.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker/prettify.css') }}">	
@@ -121,6 +123,8 @@
 	<!-- Sweet Alert -->
 	<script src="{{ asset('js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
+    <!-- Lightbox Scripts -->
+    <script src="{{ asset('js/plugin/lightbox2/lightbox.js') }}"></script>  
 	<!-- Ready Pro JS -->
 	<script src="{{ asset('js/ready.min.js') }}"></script>
 
