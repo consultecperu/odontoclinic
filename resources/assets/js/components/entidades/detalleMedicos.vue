@@ -453,7 +453,7 @@
 
                                             </div>
                                             <div class="col-8">
-                                                <table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
+                                                <table class="table table-sm table-bordered table-head-bg-info table-bordered-bd-info mt-4">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">Dia</th>
@@ -574,7 +574,7 @@
 
                                             </div>
                                             <div class="col-8">
-                                                <table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
+                                                <table class="table table-sm table-bordered table-head-bg-info table-bordered-bd-info mt-4">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">Dia</th>
@@ -1564,5 +1564,13 @@ export default {
     } 
     .border-odonto {
         border-color: #c1c4c7 !important;
-    }     
+    } 
+    .table-sm th,
+    .table-sm td {
+        padding: 0.3rem !important; 
+        font-size: 11px !important;
+    } 
+    .btn-xs {
+        padding: 3px !important;
+    }         
 </style>

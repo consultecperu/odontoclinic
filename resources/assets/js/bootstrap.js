@@ -32,6 +32,7 @@ import 'fullcalendar/dist/fullcalendar.css'
 import 'beautify-scrollbar/dist/index.css';
 import 'v2-table/dist/index.css';
 import V2Table from 'v2-table';
+import Datepicker from 'vuejs-datepicker';
 
 window.axios = require('axios');
 
@@ -53,3 +54,4 @@ Vue.use(PrettyCheckbox)
 Vue.component('context-menu',contextMenu)
 Vue.use(FullCalendar)
 Vue.use(V2Table)
+Vue.component('Datepicker', Datepicker)

@@ -326,6 +326,38 @@
                 </div>                
             </div>                                
         </modal> 
+        <modal name="reprogramacion-manual" :width="'60%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
+           <div class="card mb-0">
+                <div class="card-header pt-10 pb-10">
+                    <div class="card-title">Reprogramando la Cita</div>
+                </div>
+                <div class="card-body pt-10">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group row pt-0 d-inline">
+                                <label for="fecha" class="col-12 pl-10 mb-0">Nueva fecha de la cita</label>
+                                <datepicker :value="dateHoy" :inline="true"></datepicker>
+                            </div> 
+                        </div>                     
+                        <div class="col-8">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group pl-0 pr-0 pt-0 pb-0" >
+                                <label for="comentario_reprog" class="font-weight-bold">Motivo / Comentario: </label>
+                                <textarea name="comentario" id="comentario_reprog" rows="3" v-model="dataReprCita.comentario" required></textarea>
+                            </div>                             
+                        </div>
+                    </div>                                   
+                </div>
+                <div class="card-action pt-15 pb-15 pr-15">
+                    <button class="btn btn-primary float-right ml-10" @click.prevent="reprogramarCita" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+                    <button class="btn btn-warning float-right" @click="$modal.hide('reprogramacion-manual')"><span class="btn-label"><i class="la la-times-circle"></i> Salir</span></button>
+                </div>                
+            </div>                                
+        </modal>         
         <modal name="modificacion" :width="'30%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
            <div class="card mb-0">
                 <div class="card-header pt-10 pb-10">
@@ -349,13 +381,13 @@
         </modal>        
         <context-menu id="context-menu" ref="ctxMenu">
 <!--             <li class="ctx-item" v-for="est in estadocitas" :key="est.id" :value="est.id" @click.prevent="cambioEstado(est)" :class="[est.id != (selectItem.estadocita_id + 1) && est.id < 6  ? 'disabled' : '', est.color_font]"><span class="circle_estado" :class="est.color"></span>{{est.nombre_estadocita}}</li> -->
-            <li class="ctx-item" value="1" :class="[selectItem.estadocita_id + 1 && est.id < 6  ? 'disabled' : '', est.color_font]"><span class="circle_estado bg-primary"></span>Citado</li>
-            <li class="ctx-item" value="2"><span class="circle_estado bg-secondary"></span>En sala de espera</li>
-            <li class="ctx-item" value="3"><span class="circle_estado bg-default"></span>En consultorio</li>
-            <li class="ctx-item border-bottom" value="4"><span class="circle_estado bg-success"></span>Atendido</li>
-            <li class="ctx-item border-bottom" value="5" :class="[selectItem.reprogramado == 1 ? 'disabled' : '']"><span class="circle_estado bg-warning"></span>Reprogramar</li>
-            <li class="ctx-item" value="6" v-if="selectItem.confirmado"><span class="circle_estado bg-danger"></span>Cancelar cita</li>
-            <li class="ctx-item" value="7" v-if="!selectItem.confirmado"><span class="circle_estado bg-info"></span>Confirmar cita</li>
+            <li class="ctx-item disabled" value="1" ><span class="circle_estado bg-primary"></span>Citado</li>
+            <li class="ctx-item" value="2" :class="[selectItem.estadocita_id + 1 != 2 ? 'disabled' : '']" @click.prevent="cambioEstado(2)"><span class="circle_estado bg-secondary"></span>En sala de espera</li>
+            <li class="ctx-item" value="3" :class="[selectItem.estadocita_id + 1 != 3 ? 'disabled' : '']" @click.prevent="cambioEstado(3)"><span class="circle_estado bg-default"></span>En consultorio</li>
+            <li class="ctx-item border-bottom" value="4" :class="[selectItem.estadocita_id + 1 != 4 ? 'disabled' : '']" @click.prevent="cambioEstado(4)"><span class="circle_estado bg-success"></span>Atendido</li>
+            <li class="ctx-item border-bottom" value="5" :class="[selectItem.reprogramado == 1 ? 'disabled' : '']" @click.prevent="$modal.show('reprogramacion-manual');"><span class="circle_estado bg-warning"></span>Reprogramar</li>
+            <li class="ctx-item" value="6"><span class="circle_estado bg-danger" @click.prevent="cambioEstado(5)"></span>Cancelar cita</li>
+            <li class="ctx-item" value="7" v-if="!selectItem.confirmado"><span class="circle_estado bg-info" @click.prevent="cambioEstado(0)"></span>Confirmar cita</li>
         </context-menu>                
     </div>
 </template>
@@ -531,7 +563,9 @@ export default {
             turn_especials :[],
             turn_permisos:[],
             item_move: false ,
-            medicos_especialidad:[]
+            medicos_especialidad:[],
+
+            dateHoy: new Date(),
         }
     },
     computed: {
@@ -1156,7 +1190,7 @@ export default {
             }) 
           
         },
-        cambioEstado(param){
+        cambioEstado(e_cita_id){
             this.$swal({
                 title: 'Desea Modificar esta cita?',
                 text: "No podras revertir esto!",
@@ -1172,7 +1206,7 @@ export default {
                         let data = {
                             cita_id:this.selectItem.id,
                             fecha_incidencia: moment().format('DD-MM-YYYY hh:mm:ss'),
-                            estadocita_id:param.id,
+                            estadocita_id:e_cita_id,
                             user_id:this.user_system.id
                         }
                         var url = '/api/citas/cambioestado';
@@ -1326,6 +1360,11 @@ export default {
     }   
 }
 </script>
+<style>
+    .v--modal-overlay .v--modal-box {
+        overflow: visible !important;
+    }
+</style>
 <style scoped>
     .v--modal-overlay {
         z-index:9000;     
