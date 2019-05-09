@@ -102,8 +102,8 @@
                             <div class="user-box">
                                 <div class="u-img"><img src="/img/profile.jpg" alt="image profile"></div>
                                 <div class="u-text">
-                                    <h4>{{user_system.perfile.nombre_perfil}}</h4>
-                                    <p class="text-muted">{{ user_system.__empleado.nombres + ' ' + user_system.__empleado.apellido_paterno}}</p>
+                                    <h4>{{user_system == null ? '' : user_system.perfile.nombre_perfil}}</h4>
+                                    <p class="text-muted">{{ user_system == null ? '' : user_system.__empleado.nombres + ' ' + user_system.__empleado.apellido_paterno}}</p>
                                 </div>
                             </div>
                         </li>
@@ -134,7 +134,8 @@ import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'navbar',
     created() {      
-        this.$store.dispatch('LOAD_PERFIL_USER')   
+        this.$store.dispatch('LOAD_PERFIL_USER') 
+        //console.log("user",this.user_system)  
     },    
     data() {
         return {

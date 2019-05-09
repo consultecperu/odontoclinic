@@ -9,7 +9,7 @@ class Cita extends Model
 {
     protected $table = "citas";
 
-    protected $fillable = ['id', 'paciente_id','empleado_id','start','end','fecha_cita','sede_id','adicional','tipo','fuera_hora','user_id','estadocita_id','activo'];
+    protected $fillable = ['id', 'paciente_id','empleado_id','start','end','fecha_cita','sede_id','adicional','tipo','fuera_hora','user_id','activo','estadocita_id','reprogramado','confirmado'];
     
     public function getFechaCitaAttribute($date){
         return Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d');   //formateo de la fecha para verlo en el frontend

@@ -293,5 +293,28 @@ class CitaController extends Controller
                 ['status' => $e->getMessage()], 422
             );
         }        
-    }         
+    } 
+    
+    public function confirmarcitas(Request $request,$id)
+    {
+        DB::beginTransaction();    
+        try {         
+            $cita = Cita::findOrFail($id); 
+            $cita->confirmado = true;     
+            $cita->save(); 
+
+            $segcita = new Seguimientocita($request->all());
+            $segcita->fecha_incidencia = Globales::FormatFecYMD_hms($request->get('fecha_incidencia'));
+            $segcita->save();
+    
+            DB::commit();        
+            return;
+        }
+        catch(Exception $e){
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }        
+    }     
 }

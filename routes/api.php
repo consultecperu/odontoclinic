@@ -145,7 +145,8 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('citas','CitaController');      
     Route::get('/citas/fechas/{fecini}/{fecfin}','CitaController@cargacitas'); 
     Route::post('/citas/cambioestado', 'CitaController@cambioestadocitas'); 
-    Route::put('/citas/reprogramacion/{id}', 'CitaController@reprogramarcitas');    
+    Route::put('/citas/reprogramacion/{id}', 'CitaController@reprogramarcitas'); 
+    Route::put('/citas/confirmar/{id}', 'CitaController@confirmarcitas');        
     Route::put('/citas/modificacion/{id}', 'CitaController@modificarcitas'); 
     // laboratoriotrabajos
     Route::resource('laboratoriotrabajos','LaboratoriotrabajoController'); 

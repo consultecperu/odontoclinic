@@ -11,19 +11,14 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header pb-0">
-                            <!-- <div class="card-title">Control de Citas</div> -->
-                            <!-- <div class="card-category">Handcrafted by our friends from <a href="https://fullcalendar.io/">FullCalendar.io</a>. Please checkout their <a href="https://fullcalendar.io/docs/">full documentation</a>.</div> -->
                             <div class="row">
                                 <div class="col-12">
-                                    <p-radio class="p-icon p-curve p-tada" value="1" name="radagenda" color="primary-o" v-model="tipoAgenda" @change="agendaGeneral" >
-                                        <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">General </label>                              
-                                    </p-radio> 
-                                    <p-radio class="p-icon p-curve p-tada" value="2" name="radagenda" color="primary-o" v-model="tipoAgenda" @change="agendaFiltro" >
-                                        <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">Filtros </label>                              
-                                    </p-radio>
+                                    <p-radio v-for="tip in tipoAgenda" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="dataTipoAgenda.tipo" @change="cambioTipoAgenda(tip.id)" :disabled="$route.params.idpresupuesto != undefined">
+                                        <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">{{ tip.nombre_tipo }} </label>                              
+                                    </p-radio>                                      
                                 </div>
                             </div>
-                            <div class="row" v-if="tipoAgenda == 2">
+                            <div class="row" v-if="dataTipoAgenda.tipo == 2">
                                 <div class="col-4"> 
 									<div class="form-group form-floating-label">
 										<select ref="especialidades" class="form-control input-border-bottom" id="selectEspecialidades" v-model="dataCita.especialidade_id" @change="cambioEspecialidad" required>
@@ -46,7 +41,11 @@
 										<label for="selectMedicos" class="placeholder">Médicos</label>
 									</div>                                                                                                           
                                 </div>
-                               
+                                <div class="col-4">
+                                    <div class="form-group" v-if="ViewReprogramar">
+                                        <button type="button" class="btn btn-sm btn-danger float-right"><span class="btn-label"><i class="la la-remove"></i> Cancelar Reprogramacion</span></button>
+                                    </div>
+                                </div>                               
                             </div>
                         </div>
                         <div class="card-body" oncontextmenu="return false">                          
@@ -326,37 +325,72 @@
                 </div>                
             </div>                                
         </modal> 
-        <modal name="reprogramacion-manual" :width="'60%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
+        <modal name="reprogramacion-manual" :width="'50%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
            <div class="card mb-0">
                 <div class="card-header pt-10 pb-10">
-                    <div class="card-title">Reprogramando la Cita</div>
+                    <div class="card-title">Reprogramación de la Cita</div>
                 </div>
-                <div class="card-body pt-10">
+                <div class="card-body">
                     <div class="row">
-                        <div class="col-4">
-                            <div class="form-group row pt-0 d-inline">
-                                <label for="fecha" class="col-12 pl-10 mb-0">Nueva fecha de la cita</label>
-                                <datepicker :value="dateHoy" :inline="true"></datepicker>
+                        <div class="col">
+                            <div class="form-group pt-0 pb-0 pl-0">
+                                <label for="paciente" class="d-inline font-weight-bold">Paciente : </label>
+                                <p class="d-inline form-control-static mt-5 mb-0" v-text="dataReprCitaManual.paciente"></p>                            
                             </div> 
-                        </div>                     
-                        <div class="col-8">
-
-                        </div>
+                        </div>                        
+                    </div> 
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group pt-0 pb-0 pl-0">
+                                <label for="celular" class="d-inline font-weight-bold">Celular : </label>
+                                <p class="d-inline form-control-static mt-5 mb-0" v-text="dataReprCitaManual.celular"></p>                            
+                            </div> 
+                        </div>                        
+                    </div>                                       
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group pt-0 pb-0 pl-0">
+                                <label for="empleado" class="d-inline font-weight-bold">Odontólogo : </label>
+                                <p class="d-inline form-control-static mt-5 mb-0" v-text="dataReprCitaManual.empleado"></p>                            
+                            </div> 
+                        </div>                        
                     </div>
                     <div class="row">
+                        <div class="col">
+                            <div class="form-group pt-10 pb-0 pl-0">
+                                <label for="nombre" class="d-inline text-danger font-weight-bold">Fecha Cita Anterior : </label>
+                                <p class="d-inline form-control-static mt-5 mb-0" v-text="dataReprCitaManual.fecha_anterior"></p>
+                                <label for="nombre" class="d-inline text-danger font-weight-bold"> | Hora Cita : </label> 
+                                <p class="d-inline form-control-static mt-5 mb-0" v-text="'Desde ' + dataReprCitaManual.start_anterior"></p>
+                                <p class="d-inline form-control-static mt-5 mb-0" v-text="'Hasta ' + dataReprCitaManual.end_anterior"></p>                                                             
+                            </div> 
+                        </div>                        
+                    </div>  
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group pt-10 pb-0 pl-0">
+                                <label for="nombre" class="d-inline text-success font-weight-bold">Fecha Cita Nueva : </label>
+                                <p class="d-inline form-control-static mt-5 mb-0" v-text="dataReprCitaManual.fecha_nueva"></p>
+                                <label for="nombre" class="d-inline text-success font-weight-bold"> | Hora Cita : </label> 
+                                <p class="d-inline form-control-static mt-5 mb-0" v-text="'Desde ' + dataReprCitaManual.start_nueva"></p>
+                                <p class="d-inline form-control-static mt-5 mb-0" v-text="'Hasta ' + dataReprCitaManual.end_nueva"></p>                                                             
+                            </div> 
+                        </div>                        
+                    </div>                    
+                    <div class="row">
                         <div class="col-12">
-                            <div class="form-group pl-0 pr-0 pt-0 pb-0" >
-                                <label for="comentario_reprog" class="font-weight-bold">Motivo / Comentario: </label>
-                                <textarea name="comentario" id="comentario_reprog" rows="3" v-model="dataReprCita.comentario" required></textarea>
+                            <div class="form-group pl-0 pr-0 pt-10" >
+                                <label for="comentario" class="font-weight-bold">Motivo : </label>
+                                <textarea name="comentario" id="comentario" rows="4" v-model="dataReprCitaManual.comentario"></textarea>
                             </div>                             
                         </div>
-                    </div>                                   
+                    </div>                                    
                 </div>
-                <div class="card-action pt-15 pb-15 pr-15">
-                    <button class="btn btn-primary float-right ml-10" @click.prevent="reprogramarCita" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                    <button class="btn btn-warning float-right" @click="$modal.hide('reprogramacion-manual')"><span class="btn-label"><i class="la la-times-circle"></i> Salir</span></button>
+                <div class="card-action pt-15 pb-15">
+                    <button class="btn btn-primary float-right ml-10" @click.prevent="grabareprogramarCitaManual" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
+                    <button class="btn btn-warning float-right" @click="cancelReprogramacionManual"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                 </div>                
-            </div>                                
+            </div>                                                               
         </modal>         
         <modal name="modificacion" :width="'30%'" height="auto" transition="pop-out" :scrollable="true" :clickToClose="false" >
            <div class="card mb-0">
@@ -380,14 +414,13 @@
             </div>                                
         </modal>        
         <context-menu id="context-menu" ref="ctxMenu">
-<!--             <li class="ctx-item" v-for="est in estadocitas" :key="est.id" :value="est.id" @click.prevent="cambioEstado(est)" :class="[est.id != (selectItem.estadocita_id + 1) && est.id < 6  ? 'disabled' : '', est.color_font]"><span class="circle_estado" :class="est.color"></span>{{est.nombre_estadocita}}</li> -->
             <li class="ctx-item disabled" value="1" ><span class="circle_estado bg-primary"></span>Citado</li>
-            <li class="ctx-item" value="2" :class="[selectItem.estadocita_id + 1 != 2 ? 'disabled' : '']" @click.prevent="cambioEstado(2)"><span class="circle_estado bg-secondary"></span>En sala de espera</li>
-            <li class="ctx-item" value="3" :class="[selectItem.estadocita_id + 1 != 3 ? 'disabled' : '']" @click.prevent="cambioEstado(3)"><span class="circle_estado bg-default"></span>En consultorio</li>
-            <li class="ctx-item border-bottom" value="4" :class="[selectItem.estadocita_id + 1 != 4 ? 'disabled' : '']" @click.prevent="cambioEstado(4)"><span class="circle_estado bg-success"></span>Atendido</li>
-            <li class="ctx-item border-bottom" value="5" :class="[selectItem.reprogramado == 1 ? 'disabled' : '']" @click.prevent="$modal.show('reprogramacion-manual');"><span class="circle_estado bg-warning"></span>Reprogramar</li>
-            <li class="ctx-item" value="6"><span class="circle_estado bg-danger" @click.prevent="cambioEstado(5)"></span>Cancelar cita</li>
-            <li class="ctx-item" value="7" v-if="!selectItem.confirmado"><span class="circle_estado bg-info" @click.prevent="cambioEstado(0)"></span>Confirmar cita</li>
+            <li class="ctx-item" value="2" :class="classState(2)" @click.prevent="cambioEstado(2)"><span class="circle_estado bg-secondary"></span>En sala de espera</li>
+            <li class="ctx-item" value="3" :class="classState(3)" @click.prevent="cambioEstado(3)"><span class="circle_estado bg-default"></span>En consultorio</li>
+            <li class="ctx-item border-bottom" value="4" :class="classState(4)" @click.prevent="cambioEstado(4)"><span class="circle_estado bg-success"></span>Atendido</li>
+            <li class="ctx-item border-bottom" value="5" :class="classState(5)" @click.prevent="reprogramarCitaManual(selectItem)"><span class="circle_estado bg-warning"></span>Reprogramar</li>
+            <li class="ctx-item" value="6" :class="classState(6)"  @click.prevent="cambioEstado(5)"><span class="circle_estado bg-danger"></span>Cancelar cita</li>
+            <li class="ctx-item" value="7"  @click.prevent="confirmarCita(selectItem)" v-if="!selectItem.confirmado"><span class="circle_estado bg-info"></span>Confirmar cita</li>
         </context-menu>                
     </div>
 </template>
@@ -406,7 +439,6 @@ export default {
         this.$store.dispatch('LOAD_EMPLEADOS_LIST')
         this.$store.dispatch('LOAD_PACIENTES_LIST')
         this.$store.dispatch('LOAD_DATA_INIT_LIST')  
-        //console.log("sede",this.sede_system) 
         window.addEventListener('scroll', this.handleScroll);              
     },
     mounted(){
@@ -431,7 +463,13 @@ export default {
 
             IconClassCel : 'la la-refresh la-2x',
 
-            tipoAgenda: 1,
+/*             Agenda: {
+                tipoAgenda:1
+            }, */
+            tipoAgenda : [{id : 1 , nombre_tipo : 'General'},{ id: 2 , nombre_tipo : 'Filtros'}],
+            dataTipoAgenda:{
+                tipo : 1
+            },
             dataCita : {
                 paciente_id:'',
                 paciente:'',
@@ -484,6 +522,24 @@ export default {
                 comentario:'',
                 user_id:''               
             },
+            dataReprCitaManual :{
+                cita_id:'',
+                fecha_incidencia:'',
+                fecha_anterior:'',
+                fecha_nueva:'',
+                start_anterior:'',
+                end_anterior:'',
+                start_nueva:'',
+                end_nueva:'',
+                paciente:'',
+                empleado:'',
+                celular:'',
+                empleado_id:'',
+                estadocita_id:'',
+                reprogramado: 1,
+                comentario:'',
+                user_id:''               
+            },            
             columns_pacientes: [
                 {
                 label: 'DOC.',
@@ -531,7 +587,8 @@ export default {
                 }                               
             ],
             events: [],           
-            config: {                                           
+            config: {  
+                nowIndicator: true,                                         
                 weekends: true,
                 selectable : true,
                 selectHelper: true, 
@@ -566,6 +623,7 @@ export default {
             medicos_especialidad:[],
 
             dateHoy: new Date(),
+            ViewReprogramar: false  // cursor de reprogramar
         }
     },
     computed: {
@@ -578,19 +636,17 @@ export default {
             this.IconClass = eclass        
             this.labelButton = elabel            
         },         
-        agendaGeneral(){
-            console.log("general")
-        },
-        agendaFiltro(){
-            console.log("filtro")
+        cambioTipoAgenda(param){
+            this.dataCita.especialidade_id = 0
+            this.cambioEspecialidad()
         },
         eventSelected(event, jsEvent, view){
             this.dataCita.paciente = event.title
             this.dataCita.celular = event.celular
             this.dataCita.empleado = event.empleado
             this.dataCita.fecha_cita = moment(event.fecha_cita).format('DD-MM-YYYY')
-            this.dataCita.start = moment(event.start).format('hh:mm:ss')
-            this.dataCita.end = moment(event.end).format('hh:mm:ss')
+            this.dataCita.start = moment(event.start).format('HH:mm:ss')
+            this.dataCita.end = moment(event.end).format('HH:mm:ss')
             this.dataCita.comentario = event.comentario
             this.$modal.show('datos_cita')
         },
@@ -612,15 +668,22 @@ export default {
                 return                   
             } 
             let hoy = moment().format('YYYY-MM-DD') 
+            let horaActual = moment().format('YYYY-MM-DD HH:mm:ss')
             let d_start = moment(event.start).format('YYYY-MM-DD')
             let d_end = moment(event.end).format('YYYY-MM-DD')
             let h_start = moment(event.start).format('HH:mm:ss')
             let h_end = moment(event.end).format('HH:mm:ss')
+            let h_comparation = moment(event.start).format('YYYY-MM-DD HH:mm:ss')
             if(moment(d_start).isBefore(hoy)){
-                this.notificaciones('No se puede seleccionar una fecha anterior al dia de hoy!!','la la-thumbs-o-down','danger')
+                this.notificaciones('No se puede seleccionar una fecha anterior al dia de hoy !!','la la-thumbs-o-down','danger')
                 this.$refs.calendar.fireMethod('unselect')
                 return 
             }
+            if(moment(h_comparation).isBefore(horaActual)){
+                this.notificaciones('No se puede seleccionar una hora menor a la hora actual !!','la la-thumbs-o-down','danger')
+                this.$refs.calendar.fireMethod('unselect')
+                return 
+            }            
             if(!this.validandoTurnoMedico(d_start,d_end,h_start,h_end)){
                 this.$swal({
                     title: 'Confirmación del proceso',
@@ -643,13 +706,13 @@ export default {
             }                     
             this.dataCita.tipo = 1
             this.dataCita.fecha_cita = moment(event.start).format('DD-MM-YYYY')
-            this.dataCita.start = moment(event.start).format('hh:mm:ss')
-            this.dataCita.end = moment(event.end).format('hh:mm:ss')
+            this.dataCita.start = moment(event.start).format('HH:mm:ss')
+            this.dataCita.end = moment(event.end).format('HH:mm:ss')
             this.dataCita.paciente_id = ''
             this.dataCita.paciente = ''
             this.dataCita.celular = ''
             this.dataCita.comentario = ''
-            this.dataCita.fecha_incidencia = moment().format('DD-MM-YYYY hh:mm:ss')
+            this.dataCita.fecha_incidencia = moment().format('DD-MM-YYYY HH:mm:ss')
             this.dataCita.sede_id = this.sede_system.id
             this.dataCita.user_id = this.user_system.id
             this.dataCita.reprogramado = 0
@@ -671,7 +734,15 @@ export default {
                 plan_id:this.sede_system.plan_id,
                 tipo : 1
             } 
-            this.$modal.show('cita_nueva')                         
+            if(this.ViewReprogramar){
+                this.dataReprCitaManual.fecha_nueva = moment(event.start).format('DD-MM-YYYY')
+                this.dataReprCitaManual.start_nueva =  moment(event.start).format('HH:mm:ss')
+                this.dataReprCitaManual.end_nueva = moment(event.end).format('HH:mm:ss')
+                this.$modal.show('reprogramacion-manual')  
+            }else{
+                this.$modal.show('cita_nueva')  
+            }
+                       
         } ,
         eventDrop( event, delta, revertFunc, jsEvent, ui, view ){
             //console.log("cambio drop")
@@ -775,13 +846,15 @@ export default {
         },        
         eventRender(event,element){
             let self = this
-            element.on('contextmenu', function (e) { 
-                if(e.target.className != 'fc-bgevent'){
-                    $('#context-menu').css({'display':'block'})
-                    self.selectItem = event
-                    self.$refs.ctxMenu.open()
-                }
-            })
+            if(this.dataCita.empleado_id > 0){
+                element.on('contextmenu', function (e) { 
+                    if(e.target.className != 'fc-bgevent'){
+                        $('#context-menu').css({'display':'block'})
+                        self.selectItem = event
+                        self.$refs.ctxMenu.open()
+                    }
+                })
+            }
             if(event.rendering !== 'background'){
                 if(!self.item_move){
                     $(element).popover({
@@ -890,7 +963,11 @@ export default {
                 });            
         },
         viewRender(view,element){       // Recarga la vista
+            $('.popover').remove()
             this.CargaFullcalendar()
+            if(this.ViewReprogramar){
+                this.ModoReprogramacionManual(true)
+            }
         },
         selectPaciente(params){
             this.dataCita.paciente_id = params.row.id
@@ -899,6 +976,7 @@ export default {
             this.$modal.hide('pacientes')
         },
         cambioEspecialidad(){
+            console.log("cambio_e")
             if(this.dataCita.especialidade_id == 0){
                 this.medicos_especialidad = this.getMedicos
             }else{
@@ -1093,15 +1171,19 @@ export default {
                 end :  '', //'2019-02-14T13:00:00',
                 start_ant: '',
                 end_ant:'',
-                paciente :'',
+                paciente_id:'',
                 celular: '',
                 fecha_cita : '',
                 empleado: '',
                 empleado_id :'',
                 comentario: '',
+                estadocita_id:'',
+                reprogramado:'',
+                confirmado:'',
                 allDay : '',
                 className: '',
                 backgroundColor	: '',
+                textColor :'',
                 especial : ''              
             }
             _.each(data, function(value,key){
@@ -1136,7 +1218,9 @@ export default {
                     empleado: value.empleado.nombre_completo,
                     empleado_id : value.empleado_id,
                     comentario: _.first(value.seguimientocitas).comentario,
-                    estadocita_id : _.last(value.seguimientocitas).estadocita_id,
+                    estadocita_id : value.estadocita_id,
+                    reprogramado : value.reprogramado,
+                    confirmado : value.confirmado,
                     allDay : false ,
                     className : value.confirmado == true ? 'fc-success' : 'fc-danger',
                     backgroundColor : bg_color,
@@ -1157,7 +1241,7 @@ export default {
                 })
             }                        
             this.events = eventos 
-            this.isLoading = false          
+            this.isLoading = false      
         },
         CargaFullcalendar(){
             let self = this
@@ -1205,7 +1289,7 @@ export default {
                         this.isLoading = true
                         let data = {
                             cita_id:this.selectItem.id,
-                            fecha_incidencia: moment().format('DD-MM-YYYY hh:mm:ss'),
+                            fecha_incidencia: moment().format('DD-MM-YYYY HH:mm:ss'),
                             estadocita_id:e_cita_id,
                             user_id:this.user_system.id
                         }
@@ -1236,6 +1320,38 @@ export default {
                         });
                     }
                 });
+        },
+        reprogramarCitaManual(param){
+            this.dataReprCitaManual = {
+                cita_id:param.id,
+                fecha_incidencia:moment().format('DD-MM-YYYY HH:mm:ss'),
+                fecha_anterior:moment().format('DD-MM-YYYY'),
+                fecha_nueva:'',
+                start_anterior:moment(param.start_ant).format('HH:mm:ss'),
+                end_anterior:moment(param.end_ant).format('HH:mm:ss'),
+                start_nueva:'',
+                end_nueva:'',
+                empleado:param.empleado,
+                paciente:param.title,
+                celular:param.celular,
+                empleado_id:param.empleado_id,
+                estadocita_id:param.estadocita_id,
+                reprogramado: 1,
+                comentario:'',
+                user_id:this.user_system.id               
+            }
+            this.ViewReprogramar = true
+            this.ModoReprogramacionManual(true)
+        },
+        ModoReprogramacionManual(bparam){
+            const el = document.querySelectorAll('.fc-widget-content');
+            for (var i = 0; i < el.length; i++) {
+                if(bparam){
+                    el[i].classList.add('fc-cursor-new');
+                }else{
+                    el[i].classList.remove('fc-cursor-new');
+                }
+            }          
         },
         validandoTurnoMedico(d_s,d_e,h_s,h_e){
             // primero validamos el dia
@@ -1319,9 +1435,72 @@ export default {
             }).catch(error => {
                 this.errors = error.response.data.status;  
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
-                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')
             });
         },
+        confirmarCita(param){ 
+            let data = {
+                cita_id : param.id,
+                fecha_incidencia : moment().format('DD-MM-YYYY HH:mm:ss'),
+                estadocita_id : 1,
+                confirmado : 1,
+                user_id:this.user_system.id 
+            }          
+            var url = '/api/citas/confirmar/' + param.id;
+            this.StatusForm(true,'la la-spinner','Procesando')  
+            axios.put(url, data).then(response => {
+                if(typeof(response.data.errors) != "undefined"){
+                    this.errors = response.data.errors;
+                    var resultado = "";
+                    for (var i in this.errors) {
+                        if (this.errors.hasOwnProperty(i)) {
+                            resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                        }
+                    }   
+                    this.StatusForm(false,'la la-cloud-download','Grabar Datos')
+                    this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
+                    return;
+                } 
+                this.CargaFullcalendar()                 
+                this.errors = [];
+                this.StatusForm(false,'la la-cloud-download','Grabar Datos')           
+                this.notificaciones('la cita fue confirmada con exito','la la-thumbs-up','success')                  
+            }).catch(error => {
+                this.errors = error.response.data.status;  
+                this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')
+            });
+        },        
+        grabareprogramarCitaManual(){           
+            var url = '/api/citas/reprogramacion/' + this.dataReprCitaManual.cita_id;
+            this.StatusForm(true,'la la-spinner','Procesando')  
+            axios.put(url, this.dataReprCitaManual).then(response => {
+                if(typeof(response.data.errors) != "undefined"){
+                    this.errors = response.data.errors;
+                    var resultado = "";
+                    for (var i in this.errors) {
+                        if (this.errors.hasOwnProperty(i)) {
+                            resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                        }
+                    }   
+                    this.StatusForm(false,'la la-cloud-download','Grabar Datos')
+                    this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
+                    return;
+                }                 
+                this.errors = [];
+                this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
+                this.$modal.hide('reprogramacion-manual'); 
+                $('.popover').remove()
+                this.ViewReprogramar = false
+                this.ModoReprogramacionManual(false)  
+                this.CargaFullcalendar()                                
+                this.notificaciones('la cita fue reprogramada con exito','la la-thumbs-up','success')                  
+            }).catch(error => {
+                this.errors = error.response.data.status;  
+                this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')
+            });
+        },        
         cancelReprogramacion(){
             this.$modal.hide('reprogramacion')
             this.CargaFullcalendar()
@@ -1356,7 +1535,29 @@ export default {
         cancelModificacion(){
             this.$modal.hide('modificacion')
             this.CargaFullcalendar()
-        }             
+        },
+        cancelReprogramacionManual(){
+            this.$modal.hide('reprogramacion-manual')  
+            $('.popover').remove()
+            this.ViewReprogramar = false
+            this.ModoReprogramacionManual(false)
+            this.CargaFullcalendar()      
+        },
+        classState(param){
+            let state = false
+            if(param == 2 || param == 3 || param == 4){
+                state = parseInt(this.selectItem.estadocita_id) + 1 != param || this.selectItem.confirmado == false
+            }
+            if(param == 5){
+                state = this.selectItem.estadocita_id != 1 || this.selectItem.reprogramado == 1
+            }
+            if(param == 6){
+                state = this.selectItem.estadocita_id != 1
+            }
+            return {
+                'disabled' : state
+            }
+        }            
     }   
 }
 </script>
@@ -1386,7 +1587,20 @@ export default {
         height: 10px;
         margin-right: 10px;
         width: 10px;        
-    }         
- 
+    }
+    .table-sm th,
+    .table-sm td {
+        padding: 0.3rem !important; 
+        font-size: 11px !important;
+    } 
+    .btn-xs {
+        padding: 3px !important;
+    }   
+/*     .fc-widget-content {
+        cursor : move !important;
+    } */
+    .fc-cursor-new {
+        cursor : move !important;
+    }
 </style>
 

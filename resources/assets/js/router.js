@@ -31,17 +31,9 @@ router.beforeEach((to, from, next) => {
             next()
         }
     } else {
-        if (to.path == "/" && store.state.authenticated) {
-            next({
-                path: '/dashboard'
-            })
-        } else if (to.path == "/" && !store.state.authenticated) {
-            next({
-                path: '/login'
-            })
-        } else {
-            next()
-        }
+        next({
+            path: '/login'
+        })
     }
 })
 

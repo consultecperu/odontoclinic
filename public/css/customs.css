@@ -251,9 +251,18 @@ table.vgt-table td {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
-
+/* -- datepicker ---*/
+.vdp-datepicker__calendar {
+  width: 200px !important;
+} 
+.vdp-datepicker__calendar .cell {
+  height: 30px !important;
+  line-height: 30px !important;
+} 
 /* utilitarios margin padding */
-
+.fc-cursor-new {
+  cursor : move !important;
+}
   .p-0 {
     padding: 0px !important;
   }
