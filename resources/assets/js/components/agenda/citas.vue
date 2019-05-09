@@ -735,7 +735,7 @@ export default {
                 tipo : 1
             } 
             if(this.ViewReprogramar){
-                this.dataReprCitaManual.fecha_nueva = moment(event.start).format('DD-MM-YYYY')
+                this.dataReprCitaManual.fecha_nueva = moment(event.start).format('YYYY-MM-DD')
                 this.dataReprCitaManual.start_nueva =  moment(event.start).format('HH:mm:ss')
                 this.dataReprCitaManual.end_nueva = moment(event.end).format('HH:mm:ss')
                 this.$modal.show('reprogramacion-manual')  
