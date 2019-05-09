@@ -752,6 +752,16 @@ export default {
             $('.popover').remove()
             let fec_hoy = moment().format('YYYY-MM-DD')
             let fec_new = event.start.format('YYYY-MM-DD')
+            if(event.estadocita_id == 4){
+                this.notificaciones('Esta cita ya fue atendida no puede ser reprogramada !!','la la-thumbs-o-down','danger')
+                revertFunc()
+                return                  
+            }
+            if(event.estadocita_id == 5){
+                this.notificaciones('Esta cita fue cancelada no puede ser reprogramada !!','la la-thumbs-o-down','danger')
+                revertFunc()
+                return                  
+            }            
             // comprobando si la fecha es anterior al dia de hoy
             if(moment(fec_new).isBefore(fec_hoy)){
                 this.notificaciones('La fecha de reprogramacion no puede ser anterior al dia de hoy!!','la la-thumbs-o-down','danger')
