@@ -48,9 +48,9 @@ class Globales
     public static function DifMinutos($fecha,$hora)    // diferencia de minutos con respecto a la hora actual
     {
         // formato hora YYYY-MM-DD ------ formato hora HH:mm:ss
-        $start = new Carbon($fecha.' '.$hora);
+        $end = new Carbon($fecha.' '.$hora);
         $now = Carbon::now();
-        $minutos = $start->diffInMinutes($now);
+        $minutos = $now->diffInMinutes($end , false);
         return $minutos;
     }
 

@@ -192,16 +192,12 @@ class CitaController extends Controller
         $dat_ini = Carbon::create(substr($fecini,4,4), substr($fecini,2,2),substr($fecini,0,2));        
         $dat_fin = Carbon::create(substr($fecfin,4,4), substr($fecfin,2,2),substr($fecfin,0,2));        
         // actualizando el estado no se presento
-        $citas = Cita::where('estadocita_id',1)->where('activo',true)->whereDate('fecha_cita', '>=',$dat_ini)->whereDate('fecha_cita','<=',$dat_fin)->get();
-        
-        if($citas){
-            foreach ($citas as $cit)
+        $citas_nsp = Cita::where('estadocita_id',1)->where('activo',true)->whereDate('fecha_cita', '>=',$dat_ini)->whereDate('fecha_cita','<=',$dat_fin)->get();        
+        if($citas_nsp){
+            foreach ($citas_nsp as $cit)
             {
-                //var_dump(Globales::DiffMinutes($cit->fecha_cita,$cit->start));
-/*                 $fec= new Carbon($cit->fecha_cita.' '.$cit->start);
-                dd($fec);
-                return; */
-                if(Globales::DifMinutos($cit->fecha_cita,$cit->start) > 5 )
+                $minutos = Globales::DifMinutos($cit->fecha_cita,$cit->end);
+                if( $minutos <= -1 )
                 {
                     Cita::where('id',$cit->id)->update(['estadocita_id' => 6]);
                 }
