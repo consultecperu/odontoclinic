@@ -303,7 +303,7 @@
                                 <div class="row pl-20 font-weight-bold pb-10">Tratamientos</div>
                                 <div class="row pl-20">
                                     <div v-for="sim in simbolos" :key="sim.id"  class="d-inline pr-10 pl-0">
-                                        <div class="title-simbologia text-center text-white pt-3 pb-3 pl-5 pr-5 rounded" :class="[ sim.id == selected ? 'bg-danger' : 'bg-ppto']">{{ sim.id == 1 ? 'NORMAL' : sim.nombre_simbologia}}                                    
+                                        <div class="title-simbologia text-center text-white pt-3 pb-3 pl-5 pr-5 rounded" :class="[ sim.id == selected ? 'bg-danger' : 'bg-ppto']">{{ sim.id == 1 ? 'SUPERFICIE' : sim.nombre_simbologia}}                                    
                                         </div>
                                         <div class="form-check form-check-inline pl-0 mr-0">
                                             <p-radio class="p-icon p-curve p-tada mr-0" :value="sim.id" name="radio66" color="primary-o" v-model="simboloID" @change="cambiotratamiento(sim.id)">
@@ -1207,7 +1207,7 @@ export default {
             this.lista_general_presupuesto = []
             if(param == 1) this.odontograma = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
             if(param == 2) this.odontograma = [33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52]
-            if(param == 3) this.odontograma = [1,2,3,14,15,16,17,18,19,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52]
+            if(param == 3) this.odontograma = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52]
         },
         ActionServicio(){
             let self = this
