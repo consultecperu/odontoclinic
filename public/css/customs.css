@@ -1,271 +1,280 @@
-/** Clases Importantes para el uso del sistema **/
+  /** Clases Importantes para el uso del sistema **/
 
-.login .wrapper.wrapper-login {
-    background: #000046 !important; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #000046, #1cb5e0) !important; /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #000046, #1cb5e0) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-.login .wrapper.wrapper-login .container-login {
-    padding: 40px 25px !important;
-    width: 350px !important;
-}
-.login .wrapper.wrapper-login .container-login .btn-login {
-    padding: 10px 0 !important;
-    width: 185px !important;
-    font-size: 1.2em !important;
-    border-radius: 5px !important;
-}
-.user-box .u-text h4 {
-    font-size: 11px !important;
-}
-.close-form {
-    margin:15px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-.enlace:hover {
-    cursor:pointer; cursor: hand	      
-} 
+  .login .wrapper.wrapper-login {
+      background: #000046 !important; /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #000046, #1cb5e0) !important; /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #000046, #1cb5e0) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  .login .wrapper.wrapper-login .container-login {
+      padding: 40px 25px !important;
+      width: 350px !important;
+  }
+  .login .wrapper.wrapper-login .container-login .btn-login {
+      padding: 10px 0 !important;
+      width: 185px !important;
+      font-size: 1.2em !important;
+      border-radius: 5px !important;
+  }
+  .user-box .u-text h4 {
+      font-size: 11px !important;
+  }
+  .close-form {
+      margin:15px;
+      border-radius: 50%;
+      cursor: pointer;
+  }
+  .enlace:hover {
+      cursor:pointer; cursor: hand	      
+  } 
 
-.enlace, .enlace-mini {
-    vertical-align: middle!important;
-    font-size: 11px !important;
-}
-.seleccionado:hover, .no-seleccionado:hover{
-  cursor:pointer; cursor: hand  
-}
-.seleccionado, .no-seleccionado{
-    vertical-align: middle!important;
-    font-size: 11px !important;    
-}
-.seleccionado{
-  background-color:#b7d4ec !important; 
-}
-.vgt-left-align {
-    vertical-align: middle!important;
-}
-.bootstro-prev-btn {
-    float: left;
-} 
-.separador {
-    border-top: 1px solid #CF120B;
-}
-input.mayusculas, textarea.mayusculas{
-    text-transform:uppercase;
-}     
-input.minusculas{
-    text-transform:lowercase;
-}    
-.center {
-    text-align: center !important;
-}    
-.modal-main {
-    background-color: #F6E0A6 !important;
-    color:rgb(41, 2, 1);
-} 
-.modal-item {
-    border-bottom: 1px solid rgb(255, 81, 81);
-    border-left: 1px solid rgb(255, 81, 81);
-    border-right: 1px solid rgb(255, 81, 81);
-}
-.hand-up {
-    cursor: pointer;
-    cursor: hand;
-    font-size:17px !important;
-    color:red !important;
-}
-table.vgt-table {
-    font-size: 13px !important;
-}
-table.vgt-table td {
-  vertical-align: middle !important;
-}
-.font-large {
-    font-size: large !important;
-}
-.autocomplete--clear {
-    margin-top: -5px !important;
-}
-.tooltip-arrow {
-  border-style: none !important;
-}
-.tooltip-content{
-  font-size: 9px !important;
-} 
-.vue-tooltip {
-  z-index: 9999!important;
-}
-.autocomplete__box {
-  border: none !important;
-}
-.swal2-container {
-  z-index: 9100 !important;
-}  
-/***  MULTISELECT ****/
-.multiselect__option--selected {
-  font-weight: 200 !important;
-}
-.multiselect , .multiselect__input , .multiselect__single {
-  font-size: 10px !important;
-}
-.multiselect__option--highlight {
-  height: 15px !important;
-}
-.multiselect__tag {
-  margin-bottom: 0 !important;
-}
-.multiselect__tags {
-  font-size: 11px !important;
-  border : 1px solid #c1c4c7 !important;
-  border-radius:5px !important;
-  padding: 5px 40px 0 8px !important; 
-  min-height: 20px !important; 
-}
-.multiselect__select {
-  height: 28px !important;
-}
-/*** FIN MULTISELECT ***/
+  .enlace, .enlace-mini {
+      vertical-align: middle!important;
+      font-size: 11px !important;
+  }
+  .seleccionado:hover, .no-seleccionado:hover{
+      cursor:pointer; cursor: hand  
+  }
+  .seleccionado, .no-seleccionado{
+      vertical-align: middle!important;
+      font-size: 11px !important;    
+  }
+  .seleccionado{
+      background-color:#b7d4ec !important; 
+  }
+  .vgt-left-align {
+      vertical-align: middle!important;
+  }
+  .bootstro-prev-btn {
+      float: left;
+  } 
+  .separador {
+      border-top: 1px solid #CF120B;
+  }
+  input.mayusculas, textarea.mayusculas{
+      text-transform:uppercase;
+  }     
+  input.minusculas{
+      text-transform:lowercase;
+  }    
+  .center {
+      text-align: center !important;
+  }    
+  .modal-main {
+      background-color: #F6E0A6 !important;
+      color:rgb(41, 2, 1);
+  } 
+  .modal-item {
+      border-bottom: 1px solid rgb(255, 81, 81);
+      border-left: 1px solid rgb(255, 81, 81);
+      border-right: 1px solid rgb(255, 81, 81);
+  }
+  .hand-up {
+      cursor: pointer;
+      cursor: hand;
+      font-size:17px !important;
+      color:red !important;
+  }
+  table.vgt-table {
+      font-size: 13px !important;
+  }
+  table.vgt-table td {
+      vertical-align: middle !important;
+  }
+  .font-large {
+      font-size: large !important;
+  }
+  .autocomplete--clear {
+      margin-top: -5px !important;
+  }
+  .tooltip-arrow {
+      border-style: none !important;
+  }
+  .tooltip-content{
+      font-size: 9px !important;
+  } 
+  .vue-tooltip {
+      z-index: 9999!important;
+  }
+  .autocomplete__box {
+      border: none !important;
+  }
+  .swal2-container {
+      z-index: 9100 !important;
+  }  
+  /***  MULTISELECT ****/
+  .multiselect__option--selected {
+      font-weight: 200 !important;
+  }
+  .multiselect , .multiselect__input , .multiselect__single {
+      font-size: 10px !important;
+  }
+  .multiselect__option--highlight {
+      height: 15px !important;
+  }
+  .multiselect__tag {
+      margin-bottom: 0 !important;
+  }
+  .multiselect__tags {
+      font-size: 11px !important;
+      border : 1px solid #c1c4c7 !important;
+      border-radius:5px !important;
+      padding: 5px 40px 0 8px !important; 
+      min-height: 20px !important; 
+  }
+  .multiselect__select {
+      height: 28px !important;
+  }
+  /*** FIN MULTISELECT ***/
 
-.card-profile .profile-picture {
-  bottom: -60px !important;
-}
-.card-profile .profile-picture img {
-  width: 120px !important;
-  height: 120px !important;
-}
-/* ctx-menu --- menu content-menu --*/
-.ctx-menu {
-  font-size: 0.8em !important;
-  min-width: 130px !important;
-  padding: 5px 0 !important;
-  cursor: not-allowed !important;
-}
-.ctx-item.disabled{
-  pointer-events: none !important;
-}
-.ctx-item.disabled:hover{
-  cursor: none !important;
-}
-.ctx-item {
-  padding: 3px 10px !important;
-  font-weight: 500 !important;
-}
-/* popover del fullcalendar */
-.popover-header {
-  background-color: #73AD21 !important; 
-  color: #FFFFFF !important; 
-  font-size: 11px !important;
-  text-align:center !important;
-} 
-.popover-body {
-  font-size: 9px !important;
-  text-align: center !important;
-} 
-/* vue2 table datatable */
-.v2-table__cell {
-  border-bottom-color: darkslategray !important;
-  border-left-color: darkslategray !important;
-  border-right-color: darkslategray !important;
-}
-.v2-table__body.v2-table__header-border, .v2-table__footer.v2-table__header-border, .v2-table__header.v2-table__header-border {
-  border-top-color: darkslategray !important;
-}
-.v2-checkbox-item {
-  border-bottom-color: darkslategray !important;
-  margin-bottom: 1px !important;
-  background-color: #44A3D5 !important;
-}
-.v2-table__cell.v2-table__column-cell {
-  background-color: #44A3D5 !important;
-  color:white !important;
-}
-.v2-table__sort-caret.ascending-caret {
-  border-bottom-color: white !important;
-}
-.v2-table__sort-caret.descending-caret {
-  border-top-color: white !important;
-}
-.v2-table__table-container {
-  border-right: 1px solid darkslategray;
-}
-.v2-table-fixed {
-  box-shadow: 0 0 0 rgba(0,0,0,.12) !important;   
-  border-left: 1px solid darkslategray !important;
-  border-right: 1px solid darkslategray !important;
-  height: 240px !important;
-}
-.v2-table__body.v2-table__border .v2-table__cell, .v2-table__footer.v2-table__border .v2-table__cell, .v2-table__header.v2-table__border .v2-table__cell {
-  padding-left: 5px !important;
-  padding-right: 10px !important;
-}
-.v2-table__body td .cell, .v2-table__footer td .cell {
-  font-size: 11px !important;
-  color:darkslategray !important;
-}
-.v2-checkbox-list-wrap.wrap-border {
-  height: 240px !important;
-  border-left-color: darkslategray !important;
-  border-top-color: darkslategray !important;
-}
-.v2-table__empty-data.v2-table__empty-border {
-  height: 220px !important;
-}
-.beautify-scroll-container {
-  border-bottom: 1px solid darkslategray !important;
-  border-left: 1px solid darkslategray !important;
-}
-.v2-checkbox-list-wrap.wrap-border {
-  border-right: 0 !important;
-}
-.v2-table-fixed__body-wrapper {
-  border:0 !important;
-}
-.v2-table-fixed__right-empty-border {
-  border-bottom: 0 !important;
-}
-.v2-table__pagination-box .pagination-text-info {
-  font-size: 13px !important;
-  color:red !important;
-  padding-left: 50px !important;
-  /*position: relative !important;*/
-}
-.v2-table__pagination ul .cur-page {
-  border-color: red !important;
-  background-color: red !important;
-}
-.v2-table__pagination-box {
-  margin-top: 10px !important;
-}
-/* gallery light */
-.container {
-  width: 100%;
-  padding: 0;
-}
-.well {
-  min-height: 20px;
-  /*padding: 19px;*/
-  margin-bottom: 20px;
-  background-color: #f5f5f5;
-  border: 1px solid #e3e3e3;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-}
-/* -- datepicker ---*/
-.vdp-datepicker__calendar {
-  width: 200px !important;
-} 
-.vdp-datepicker__calendar .cell {
-  height: 30px !important;
-  line-height: 30px !important;
-} 
-/* utilitarios margin padding */
-.fc-cursor-new {
-  cursor : move !important;
-}
-.fc-event .fc-content {
-  color: white !important;
-}
+  .card-profile .profile-picture {
+      bottom: -60px !important;
+  }
+  .card-profile .profile-picture img {
+      width: 120px !important;
+      height: 120px !important;
+  }
+  /* ctx-menu --- menu content-menu --*/
+  .ctx-menu {
+      font-size: 0.8em !important;
+      min-width: 130px !important;
+      padding: 5px 0 !important;
+      cursor: not-allowed !important;
+  }
+  .ctx-item.disabled{
+      pointer-events: none !important;
+  }
+  .ctx-item.disabled:hover{
+      cursor: none !important;
+  }
+  .ctx-item {
+      padding: 3px 10px !important;
+      font-weight: 500 !important;
+  }
+  /* popover del fullcalendar */
+  .popover-header {
+      background-color: #73AD21 !important; 
+      color: #FFFFFF !important; 
+      font-size: 11px !important;
+      text-align:center !important;
+  } 
+  .popover-body {
+      font-size: 9px !important;
+      text-align: center !important;
+  } 
+  /* vue2 table datatable */
+  .v2-table__cell {
+      border-bottom-color: darkslategray !important;
+      border-left-color: darkslategray !important;
+      border-right-color: darkslategray !important;
+  }
+  .v2-table__body.v2-table__header-border, .v2-table__footer.v2-table__header-border, .v2-table__header.v2-table__header-border {
+      border-top-color: darkslategray !important;
+  }
+  .v2-checkbox-item {
+      border-bottom-color: darkslategray !important;
+      margin-bottom: 1px !important;
+      background-color: #44A3D5 !important;
+  }
+  .v2-table__cell.v2-table__column-cell {
+      background-color: #44A3D5 !important;
+      color:white !important;
+  }
+  .v2-table__sort-caret.ascending-caret {
+      border-bottom-color: white !important;
+  }
+  .v2-table__sort-caret.descending-caret {
+      border-top-color: white !important;
+  }
+  .v2-table__table-container {
+      border-right: 1px solid darkslategray;
+  }
+  .v2-table-fixed {
+      box-shadow: 0 0 0 rgba(0,0,0,.12) !important;   
+      border-left: 1px solid darkslategray !important;
+      border-right: 1px solid darkslategray !important;
+      height: 240px !important;
+  }
+  .v2-table__body.v2-table__border .v2-table__cell, .v2-table__footer.v2-table__border .v2-table__cell, .v2-table__header.v2-table__border .v2-table__cell {
+      padding-left: 5px !important;
+      padding-right: 10px !important;
+  }
+  .v2-table__body td .cell, .v2-table__footer td .cell {
+      font-size: 11px !important;
+      color:darkslategray !important;
+  }
+  .v2-checkbox-list-wrap.wrap-border {
+      height: 240px !important;
+      border-left-color: darkslategray !important;
+      border-top-color: darkslategray !important;
+  }
+  .v2-table__empty-data.v2-table__empty-border {
+      height: 220px !important;
+  }
+  .beautify-scroll-container {
+      border-bottom: 1px solid darkslategray !important;
+      border-left: 1px solid darkslategray !important;
+  }
+  .v2-checkbox-list-wrap.wrap-border {
+      border-right: 0 !important;
+  }
+  .v2-table-fixed__body-wrapper {
+      border:0 !important;
+  }
+  .v2-table-fixed__right-empty-border {
+      border-bottom: 0 !important;
+  }
+  .v2-table__pagination-box .pagination-text-info {
+      font-size: 13px !important;
+      color:red !important;
+      padding-left: 50px !important;
+    /*position: relative !important;*/
+  }
+  .v2-table__pagination ul .cur-page {
+      border-color: red !important;
+      background-color: red !important;
+  }
+  .v2-table__pagination-box {
+      margin-top: 10px !important;
+  }
+  /* gallery light */
+  .container {
+      width: 100%;
+      padding: 0;
+  }
+  .well {
+      min-height: 20px;
+      /*padding: 19px;*/
+      margin-bottom: 20px;
+      background-color: #f5f5f5;
+      border: 1px solid #e3e3e3;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  }
+  /* -- datepicker ---*/
+  .vdp-datepicker__calendar {
+      width: 200px !important;
+  } 
+  .vdp-datepicker__calendar .cell {
+      height: 30px !important;
+      line-height: 30px !important;
+  } 
+  /* utilitarios margin padding */
+  .fc-cursor-new {
+      cursor : move !important;
+  }
+  .fc-event .fc-content {
+      color: white !important;
+  }
+  .btn-circle {
+      width: 30px;
+      height: 30px;
+      padding: 6px 0px;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.42857;
+  } 
   .p-0 {
     padding: 0px !important;
   }

@@ -188,10 +188,26 @@ class CitaController extends Controller
         //
     } 
     public function cargacitas($fecini,$fecfin)
-    {
+    {    
         $dat_ini = Carbon::create(substr($fecini,4,4), substr($fecini,2,2),substr($fecini,0,2));        
         $dat_fin = Carbon::create(substr($fecfin,4,4), substr($fecfin,2,2),substr($fecfin,0,2));        
-     
+        // actualizando el estado no se presento
+        $citas = Cita::where('estadocita_id',1)->where('activo',true)->whereDate('fecha_cita', '>=',$dat_ini)->whereDate('fecha_cita','<=',$dat_fin)->get();
+        
+        if($citas){
+            foreach ($citas as $cit)
+            {
+                //var_dump(Globales::DiffMinutes($cit->fecha_cita,$cit->start));
+/*                 $fec= new Carbon($cit->fecha_cita.' '.$cit->start);
+                dd($fec);
+                return; */
+                if(Globales::DifMinutos($cit->fecha_cita,$cit->start) > 5 )
+                {
+                    Cita::where('id',$cit->id)->update(['estadocita_id' => 6]);
+                }
+            } 
+        }
+        // cargando las citas    
         $citas = Cita::with('paciente','empleado','seguimientocitas')->orderBy('id','ASC')->where('activo',true)->whereDate('fecha_cita', '>=',$dat_ini)->whereDate('fecha_cita','<=',$dat_fin)->get();
         return $citas;         
     }  
@@ -316,5 +332,18 @@ class CitaController extends Controller
                 ['status' => $e->getMessage()], 422
             );
         }        
-    }     
+    } 
+    
+    public function ActualizarAgenda()
+    {
+        
+        $citas = Cita::where(['estadocita_id' => 1,'activo' => true])->get();
+        foreach ($citas as $cit)
+        {
+            if(Globales::DiffMinutes($cit->fecha_cita,$cit->start) > 5 )
+            {
+                Cita::where('id',$cit->id)->update(['estadocita_id' => 6]);
+            }
+        }
+    }
 }

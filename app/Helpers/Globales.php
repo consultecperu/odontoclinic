@@ -45,6 +45,15 @@ class Globales
         return $dias;
     }
 
+    public static function DifMinutos($fecha,$hora)    // diferencia de minutos con respecto a la hora actual
+    {
+        // formato hora YYYY-MM-DD ------ formato hora HH:mm:ss
+        $start = new Carbon($fecha.' '.$hora);
+        $now = Carbon::now();
+        $minutos = $start->diffInMinutes($now);
+        return $minutos;
+    }
+
     public static function Edad($value)
     {
         $fecha = explode("-", $value);          

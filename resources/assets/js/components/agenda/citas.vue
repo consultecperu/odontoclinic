@@ -15,7 +15,8 @@
                                 <div class="col-12">
                                     <p-radio v-for="tip in tipoAgenda" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="dataTipoAgenda.tipo" @change="cambioTipoAgenda(tip.id)" :disabled="$route.params.idpresupuesto != undefined">
                                         <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">{{ tip.nombre_tipo }} </label>                              
-                                    </p-radio>                                      
+                                    </p-radio>  
+                                    <button type="button" class="btn btn-danger btn-sm float-right mb-5" v-tooltip="'Actualizar Agenda'" @click.prevent="ActualizarAgenda"><span class="btn-label"><i class="la flaticon-repeat"></i></span></button>                                    
                                 </div>
                             </div>
                             <div class="row" v-if="dataTipoAgenda.tipo == 2">
@@ -1543,6 +1544,13 @@ export default {
             this.ModoReprogramacionManual(false)
             this.CargaFullcalendar()      
         },
+        ActualizarAgenda(){
+            $('.popover').remove()
+            this.CargaFullcalendar()
+            if(this.ViewReprogramar){
+                this.ModoReprogramacionManual(true)
+            }
+        },
         classState(param){
             let state = false
             if(param == 2 || param == 3 || param == 4){
@@ -1595,7 +1603,7 @@ export default {
     } 
     .btn-xs {
         padding: 3px !important;
-    }   
+    }      
     .bg-citado { background-color:#177DFF !important}
     .bg-saladeespera { background-color: #6C7EB8 !important}
     .bg-enconsultorio { background-color:#0030DF !important}
