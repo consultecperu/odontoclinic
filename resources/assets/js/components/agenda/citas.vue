@@ -313,7 +313,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group pl-0 pr-0 pt-0 pb-0" >
-                                <label for="comentario_reprog" class="font-weight-bold">Motivo / Comentario: </label>
+                                <label for="comentario_reprog" class="font-weight-bold">Motivo / Comentario: <span class="required-label"> *</span> </label>
                                 <textarea name="comentario" id="comentario_reprog" rows="3" v-model="dataReprCita.comentario" required></textarea>
                             </div>                             
                         </div>
@@ -380,7 +380,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group pl-0 pr-0 pt-10" >
-                                <label for="comentario" class="font-weight-bold">Motivo : </label>
+                                <label for="comentario" class="font-weight-bold">Comentario (Motivo de la reprogramación): <span class="required-label"> *</span></label>
                                 <textarea name="comentario" id="comentario" rows="4" v-model="dataReprCitaManual.comentario"></textarea>
                             </div>                             
                         </div>
@@ -414,13 +414,13 @@
             </div>                                
         </modal>        
         <context-menu id="context-menu" ref="ctxMenu">
-            <li class="ctx-item disabled" value="1" ><span class="circle_estado bg-primary"></span>Citado</li>
-            <li class="ctx-item" value="2" :class="classState(2)" @click.prevent="cambioEstado(2)"><span class="circle_estado bg-secondary"></span>En sala de espera</li>
-            <li class="ctx-item" value="3" :class="classState(3)" @click.prevent="cambioEstado(3)"><span class="circle_estado bg-default"></span>En consultorio</li>
-            <li class="ctx-item border-bottom" value="4" :class="classState(4)" @click.prevent="cambioEstado(4)"><span class="circle_estado bg-success"></span>Atendido</li>
-            <li class="ctx-item border-bottom" value="5" :class="classState(5)" @click.prevent="reprogramarCitaManual(selectItem)"><span class="circle_estado bg-warning"></span>Reprogramar</li>
-            <li class="ctx-item" value="6" :class="classState(6)"  @click.prevent="cambioEstado(5)"><span class="circle_estado bg-danger"></span>Cancelar cita</li>
-            <li class="ctx-item" value="7"  @click.prevent="confirmarCita(selectItem)" v-if="!selectItem.confirmado"><span class="circle_estado bg-info"></span>Confirmar cita</li>
+            <li class="ctx-item disabled" value="1" ><span class="circle_estado bg-citado"></span>Citado</li>
+            <li class="ctx-item" value="2" :class="classState(2)" @click.prevent="cambioEstado(2)"><span class="circle_estado bg-saladeespera"></span>En sala de espera</li>
+            <li class="ctx-item" value="3" :class="classState(3)" @click.prevent="cambioEstado(3)"><span class="circle_estado bg-enconsultorio"></span>En consultorio</li>
+            <li class="ctx-item border-bottom" value="4" :class="classState(4)" @click.prevent="cambioEstado(4)"><span class="circle_estado bg-atendido"></span>Atendido</li>
+            <li class="ctx-item border-bottom" value="5" :class="classState(5)" @click.prevent="reprogramarCitaManual(selectItem)"><span class="circle_estado bg-reprogramado"></span>Reprogramar</li>
+            <li class="ctx-item" value="6" :class="classState(6)"  @click.prevent="cambioEstado(5)"><span class="circle_estado bg-cancelado"></span>Cancelar cita</li>
+            <li class="ctx-item" value="7"  @click.prevent="confirmarCita(selectItem)" v-if="!selectItem.confirmado"><span class="circle_estado bg-confirmarcita"></span>Confirmar cita</li>
         </context-menu>                
     </div>
 </template>
@@ -463,9 +463,6 @@ export default {
 
             IconClassCel : 'la la-refresh la-2x',
 
-/*             Agenda: {
-                tipoAgenda:1
-            }, */
             tipoAgenda : [{id : 1 , nombre_tipo : 'General'},{ id: 2 , nombre_tipo : 'Filtros'}],
             dataTipoAgenda:{
                 tipo : 1
@@ -600,7 +597,7 @@ export default {
                 maxTime : '24:00:00',  
                 editable : true,   
                 allDaySlot: false, 
-                eventLimit : true,                 
+                eventLimit : true,              
                 businessHours:[],
                 views : {
                     month : {
@@ -986,7 +983,6 @@ export default {
             this.$modal.hide('pacientes')
         },
         cambioEspecialidad(){
-            console.log("cambio_e")
             if(this.dataCita.especialidade_id == 0){
                 this.medicos_especialidad = this.getMedicos
             }else{
@@ -1194,26 +1190,19 @@ export default {
                 className: '',
                 backgroundColor	: '',
                 textColor :'',
+                color:'',
                 especial : ''              
             }
             _.each(data, function(value,key){
                 let class_event
-                let bg_color
-/*                 switch (_.last(value.seguimientocitas).estadocita_id) {
-                    case 1 : class_event = 'fc-primary'; break;
-                    case 2 : class_event = 'fc-secondary'; break;                    
-                    case 3 : class_event = 'fc-default'; break;                    
-                    case 4 : class_event = 'fc-success'; break;                    
-                    case 5 : class_event = 'fc-danger'; break;                    
-                    case 6 : class_event = 'fc-warning'; break;                    
-                }  */    
+                let bg_color   
                 switch (value.estadocita_id) {
-                    case 1 : bg_color = '#177DFF'; break;
-                    case 2 : bg_color = '#716ACA'; break;                    
-                    case 3 : bg_color = '#282A3C'; break;                    
-                    case 4 : bg_color = '#35CD3A'; break;                    
-                    case 5 : bg_color = '#FFA534'; break;                    
-                    case 6 : bg_color = '#F3545D'; break;                    
+                    case 1 : bg_color = '#177DFF'; break;   // citado
+                    case 2 : bg_color = '#6C7EB8'; break;   // en sala de espera                   
+                    case 3 : bg_color = '#0030DF'; break;   // en consulta                   
+                    case 4 : bg_color = '#00996E'; break;   // atendido                   
+                    case 5 : bg_color = '#F70000'; break;   // cancelado                   
+                    case 6 : bg_color = '#A8191F'; break;   // NSP                
                 }                             
                 evento = {
                     id: String(value.id),
@@ -1234,7 +1223,8 @@ export default {
                     allDay : false ,
                     className : value.confirmado == true ? 'fc-success' : 'fc-danger',
                     backgroundColor : bg_color,
-                    textColor : 'yellow',
+                    textColor : '#282A3C',
+                    color:'#282A3C',
                     especial: 'no'
                 }
                 let dato = _.clone(evento)
@@ -1606,11 +1596,12 @@ export default {
     .btn-xs {
         padding: 3px !important;
     }   
-/*     .fc-widget-content {
-        cursor : move !important;
-    } */
-    .fc-cursor-new {
-        cursor : move !important;
-    }
+    .bg-citado { background-color:#177DFF !important}
+    .bg-saladeespera { background-color: #6C7EB8 !important}
+    .bg-enconsultorio { background-color:#0030DF !important}
+    .bg-atendido { background-color: #00996E !important}
+    .bg-reprogramado { background-color: red !important}
+    .bg-cancelado { background-color: #F70000 !important}
+    .bg-confirmarcita { background-color:#00996E !important}
 </style>
 

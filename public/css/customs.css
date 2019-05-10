@@ -263,6 +263,9 @@ table.vgt-table td {
 .fc-cursor-new {
   cursor : move !important;
 }
+.fc-event .fc-content {
+  color: white !important;
+}
   .p-0 {
     padding: 0px !important;
   }
