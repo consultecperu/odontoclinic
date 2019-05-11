@@ -100,7 +100,7 @@
                                     styleClass="vgt-table condensed bordered striped">
                                         <template slot="table-row" slot-scope="props">
                                             <span v-if="props.column.field == 'pagado'" class="center">
-                                                <span class="center badge-mini badge" :class="{'badge-danger' : props.row.pagado == 0 ,'badge-primary' : props.row.pagado == 1 }">{{ props.row.pagado == 0 ? 'NO' : 'SI' }}</span>             
+                                                <span class="center badge-mini badge" :class="{'badge-danger' : props.row.pagado == 0 ,'badge-success' : props.row.pagado == 1 }">{{ props.row.pagado == 0 ? 'NO' : 'SI' }}</span>             
                                             </span>
                                             <span v-else-if="props.column.field == 'realizado'">
                                                 <span class="center badge-mini badge badge-danger" v-if="props.row.realizado == 1" v-text="'PENDIENTE'"></span>                                
@@ -195,29 +195,31 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">Nº</th>
-                                <th scope="col" class="text-center">Forma Pago</th>
+                                <th scope="col" class="text-center">Doc.</th>
+                                <th scope="col" class="text-center">Serie</th>
+                                <th scope="col" class="text-center">Num.</th>
+                                <th scope="col" class="text-center">Monto</th> 
                                 <th scope="col" class="text-center">Moneda</th>
-                                <th scope="col">Doc</th>
-                                <th scope="col">Número</th>
-                                <th scope="col" class="text-center">Tipo Pago</th>
-                                <th scope="col">Fecha</th>    
-                                <th scope="col" align="right">Monto</th>                                                                                                                      
+                                <th scope="col" class="text-center">Fecha</th>
+                                <th scope="col" class="text-center">Forma Pago</th>
+                                <th scope="col" class="text-center">Tipo Pago</th>                                                                                                                                                     
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(pago, index) in PagosPresupuestoOperatoriaById" :key="pago.id" @contextmenu.prevent="$refs.menu.open($event, pago)">
-                                <th width="7%" align="center" scope="row" class="text-center">{{ index+1 }}</th>
-                                <td width="15%" class="text-center" v-if="pago.modo == 3">MIXTO</td>                                
-                                <td width="15%" class="text-center" v-if="pago.modo == 1 || pago.modo == 2">{{ pago.tipopago.descripcion}}</td>
+                                <th width="5%" align="center" scope="row" class="text-center">{{ index+1 }}</th>
+                                <td width="13%" class="text-center">{{ pago.tipodocumento.nombre_tipodocumento}}</td> 
+                                <td width="8%" class="text-center">{{ pago.tipodocumento.abreviatura + pago.serie}}</td>
+                                <td width="5%" class="text-center">{{ pago.numero}}</td>
+                                <td width="10%" class="text-center">{{ pago.moneda_id == 1 ? parseFloat(pago.total).toFixed(2) : parseFloat(pago.total_dolares).toFixed(2)}}</td>                                                                                                                       
                                 <td width="10%" class="text-center">{{ pago.moneda.nombre_moneda}}</td>
-                                <td width="8%">{{ pago.tipodocumento.abreviatura}}</td>
-                                <td width="10%">{{ pago.serie + '-' + pago.numero}}</td> 
+                                <td width="21%" class="text-center">{{ pago.fecha_pago}}</td>
+                                <td width="13%" class="text-center" v-if="pago.modo == 3">MIXTO</td>                                
+                                <td width="13%" class="text-center" v-if="pago.modo == 1 || pago.modo == 2">{{ pago.tipopago.descripcion}}</td>
                                 <td width="15%" class="text-center">{{ pago.tipo == 1 ? 'DIRECTO': 'ADELANTADO' }}</td> 
-                                <td width="25%">{{ pago.fecha_pago}}</td> 
-                                <td width="10%" align="right">{{ pago.moneda_id == 1 ? parseFloat(pago.total).toFixed(2) : parseFloat(pago.total_dolares).toFixed(2)}}</td>                                                                                                                       
-                            </tr>
+                             </tr>
                             <tr v-if="PagosPresupuestoOperatoriaById.length == 0">
-                                <td colspan="8" class="text-center">NO HAY SERVICIOS CARGADOS ...</td>                                           
+                                <td colspan="9" class="text-center">NO HAY SERVICIOS CARGADOS ...</td>                                           
                             </tr>
                         </tbody>
                     </table> 

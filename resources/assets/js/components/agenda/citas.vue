@@ -16,7 +16,7 @@
                                     <p-radio v-for="tip in tipoAgenda" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="dataTipoAgenda.tipo" @change="cambioTipoAgenda(tip.id)" :disabled="$route.params.idpresupuesto != undefined">
                                         <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">{{ tip.nombre_tipo }} </label>                              
                                     </p-radio>  
-                                    <button type="button" class="btn btn-danger btn-sm float-right mb-5" v-tooltip="'Actualizar Agenda'" @click.prevent="ActualizarAgenda"><span class="btn-label"><i class="la flaticon-repeat"></i></span></button>                                    
+                                    <button type="button" v-show="false" id="actualiza_agenda" class="btn btn-danger btn-sm float-right mb-5" v-tooltip="'Actualizar Agenda'" @click.prevent="ActualizarAgenda"><span class="btn-label"><i class="la flaticon-repeat"></i></span></button>                                    
                                 </div>
                             </div>
                             <div class="row" v-if="dataTipoAgenda.tipo == 2">
@@ -49,7 +49,8 @@
                                 </div>                               
                             </div>
                         </div>
-                        <div class="card-body" oncontextmenu="return false">                          
+                        <!-- <div class="card-body" oncontextmenu="return false"> -->  
+                        <div class="card-body">                         
                             <full-calendar ref="calendar" :events="events" :config="config" @event-selected="eventSelected" @day-click="dayclick" @event-created="createEvent" @event-drop="eventDrop" @event-render="eventRender" @view-render="viewRender" @event-mouseover="eventMouseover" @event-drag-start="eventDragStart" @event-drag-stop="eventDragStop" @event-resize="eventResize"></full-calendar>                            
                         </div>
                     </div>
@@ -586,6 +587,20 @@ export default {
             ],
             events: [],           
             config: {  
+                customButtons: {
+                    add_event: {
+                        text: 'ACT.',
+                        //icon: "right-double-arrow",
+                        click: function() {
+                            $("#actualiza_agenda").click();
+                        }
+                    }
+                },
+                header: { 
+                    left: 'prev,next today', 
+                    center: 'title', 
+                    right: 'month,agendaWeek,agendaDay add_event' 
+                },                                
                 nowIndicator: true,                                         
                 weekends: true,
                 selectable : true,
@@ -1312,8 +1327,8 @@ export default {
                         this.CargaFullcalendar()
                         this.errors = [];
                         this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
-                        this.$modal.hide('cita_nueva');   
-                        this.notificaciones('La Cita fue modificada con exito','la la-thumbs-up','success')       
+                        //this.$modal.hide('cita_nueva');   
+                        //this.notificaciones('La Cita fue modificada con exito','la la-thumbs-up','success')       
                         }).catch(error => {
                         this.errors = error.response.data.status;
                         this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
@@ -1432,7 +1447,7 @@ export default {
                 this.errors = [];
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
                 this.$modal.hide('reprogramacion');  
-                this.notificaciones('la cita fue reprogramada con exito','la la-thumbs-up','success')                  
+                //this.notificaciones('la cita fue reprogramada con exito','la la-thumbs-up','success')                  
             }).catch(error => {
                 this.errors = error.response.data.status;  
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
@@ -1465,7 +1480,7 @@ export default {
                 this.CargaFullcalendar()                 
                 this.errors = [];
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')           
-                this.notificaciones('la cita fue confirmada con exito','la la-thumbs-up','success')                  
+                //this.notificaciones('la cita fue confirmada con exito','la la-thumbs-up','success')                  
             }).catch(error => {
                 this.errors = error.response.data.status;  
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
@@ -1495,7 +1510,7 @@ export default {
                 this.ViewReprogramar = false
                 this.ModoReprogramacionManual(false)  
                 this.CargaFullcalendar()                                
-                this.notificaciones('la cita fue reprogramada con exito','la la-thumbs-up','success')                  
+                //this.notificaciones('la cita fue reprogramada con exito','la la-thumbs-up','success')                  
             }).catch(error => {
                 this.errors = error.response.data.status;  
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
@@ -1526,7 +1541,7 @@ export default {
                 this.errors = [];
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
                 this.$modal.hide('modificacion');  
-                this.notificaciones('la cita fue actualizada con exito','la la-thumbs-up','success')                  
+                //this.notificaciones('la cita fue actualizada con exito','la la-thumbs-up','success')                  
             }).catch(error => {
                 this.errors = error.response.data.status;  
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')             
@@ -1556,12 +1571,15 @@ export default {
             if(param == 2 || param == 3 || param == 4){
                 state = parseInt(this.selectItem.estadocita_id) + 1 != param || this.selectItem.confirmado == false
             }
-            if(param == 5){
+/*             if(param == 5){
                 state = this.selectItem.estadocita_id != 1 || this.selectItem.reprogramado == 1
-            }
-            if(param == 6){
+            } */
+            if(param == 5 || param == 6){
+                state = this.selectItem.estadocita_id != 1 
+            }            
+/*             if(param == 6){
                 state = this.selectItem.estadocita_id != 1
-            }
+            } */
             return {
                 'disabled' : state
             }

@@ -1164,7 +1164,9 @@ export default {
         this.$store.dispatch('LOAD_POLIZAS_LIST')   
         this.$store.dispatch('LOAD_DERIVACIONES_LIST') 
         this.$store.dispatch('LOAD_DEPENDIENTES_LIST')  
-        this.$store.dispatch('LOAD_SEGUIMIENTO_PLANES_LIST')        
+        this.$store.dispatch('LOAD_SEGUIMIENTO_PLANES_LIST') 
+        this.$store.dispatch('LOAD_CAMPAÑAS_LIST')  
+        this.$store.dispatch('LOAD_CONVENIOS_LIST')     
         this.$store.dispatch('LOAD_DATA_INIT_PACIENTES_LIST').then(() => {
             this.isLoading = false
         })        
@@ -1460,7 +1462,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['user_system','tipodocumentos','estadosciviles','sedes','motivocaptaciones','asignaciones','parentescos','empresapacientesplanes','planes','polizas','pacientes','convenios','derivaciones','servicios']),
+        ...mapState(['user_system','tipodocumentos','estadosciviles','sedes','motivocaptaciones','asignaciones','parentescos','empresapacientesplanes','planes','polizas','pacientes','convenios','derivaciones','servicios','campañas']),
         ...mapGetters(['getubigeos','getMedicos','getDocumentosIdentidad','getplanes_aseguradoras','getPolizas','getPacienteById','getDependientesById','getSeguimientoPlanesbyPaciente']),
         departamentos: function(){
             return this.getubigeos.filter((ubigeo) => ubigeo.codprov == '00').filter((ubigeo) => ubigeo.coddist == '00');

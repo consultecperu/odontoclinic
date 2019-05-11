@@ -266,15 +266,9 @@
   .fc-event .fc-content {
       color: white !important;
   }
-  .btn-circle {
-      width: 30px;
-      height: 30px;
-      padding: 6px 0px;
-      border-radius: 15px;
-      text-align: center;
-      font-size: 12px;
-      line-height: 1.42857;
-  } 
+  .fc-title {
+      font-size: .72em !important;
+  }
   .p-0 {
     padding: 0px !important;
   }

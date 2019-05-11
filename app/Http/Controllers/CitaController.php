@@ -222,10 +222,14 @@ class CitaController extends Controller
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
-            }      
+            }     
+            
+            if($request->get('estadocita_id') == 5){
+                Cita::where(['id' => $request->get('cita_id')])->update(['estadocita_id' => $request->get('estadocita_id'), 'activo' => false]);
+            }else{
+                Cita::where(['id' => $request->get('cita_id')])->update(['estadocita_id' => $request->get('estadocita_id')]);
+            }
     
-            Cita::where(['id' => $request->get('cita_id')])->update(['estadocita_id' => $request->get('estadocita_id')]);
-
             $segcita = new Seguimientocita($request->all());
             $segcita->fecha_incidencia = Globales::FormatFecYMD_hms($request->get('fecha_incidencia'));
             $segcita->save();

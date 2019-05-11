@@ -52,7 +52,7 @@ class Presupuestoortodoncia extends Model
     }      
     public function presupuestosortodonciasdetalles()
     {
-        return $this->hasMany('App\Presupuestoortodonciadetalle');
+        return $this->hasMany('App\Presupuestoortodonciadetalle')->orderBy('id');;
     }                          
     public function user()
     {

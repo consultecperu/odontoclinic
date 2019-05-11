@@ -198,6 +198,7 @@ export default {
                                 'Este registro fue actualizado.',
                                 'success'
                                 )
+                                this.$router.push({ name: 'ver-ppto-ortodoncia' , params: { idpresupuesto: param } })
                             })                    
                         });
                     }
