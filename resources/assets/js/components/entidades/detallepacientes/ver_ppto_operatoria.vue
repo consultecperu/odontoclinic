@@ -219,7 +219,7 @@
                                 <td width="15%" class="text-center">{{ pago.tipo == 1 ? 'DIRECTO': 'ADELANTADO' }}</td> 
                              </tr>
                             <tr v-if="PagosPresupuestoOperatoriaById.length == 0">
-                                <td colspan="9" class="text-center">NO HAY SERVICIOS CARGADOS ...</td>                                           
+                                <td colspan="9" class="text-center">NO HAY PAGOS REALIZADOS ...</td>                                           
                             </tr>
                         </tbody>
                     </table> 
@@ -237,6 +237,12 @@
         <modal name="record_atencion" :width="'65%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de cargos -->
                 <div class="card mb-0">
+                    <loading :active.sync="isLoadingRecord"
+                        :background-color="'#000'" 
+                        :color="'red'"
+                        :can-cancel="false" 
+                        :is-full-page="fullPageRecord">
+                    </loading>                    
                     <div class="card-header">
                         <div class="card-title">Realización de Tratamientos</div>
                     </div>
@@ -414,8 +420,8 @@
                             <div class="col-7 pl-0">
                                 <div class="container border border-default">
                                     <div class="row">
-                                        <div class="col-12 pl-10 pr-10">
-                                            <div class="form-group pr-0 pl-0">
+                                        <div class="col-12">
+                                            <div class="form-group">
                                                 <label for="documento" class="text-primary font-weight-bold">Documento Multident</label>
                                                 <div class="select2-input">
                                                     <select id="documento" name="documento" class="form-control form-control-sm" v-model="dataPago.tipodocumento_id" @change="cambioDocumento()">
@@ -429,14 +435,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4 pl-0 pr-0">
+                                        <div class="col-4 pr-0">
                                             <div class="form-group pr-0 pt-0">
                                                 <label for="ruc" class="text-primary font-weight-bold mb-0">Facturar a:</label>
                                                 <input type="text" id="ruc" class="form-control form-control-sm" v-model="dataPago.ruc" disabled>
                                             </div>
                                         </div>
                                         <div class="col-8">
-                                            <div class="group-form">
+                                            <div class="group-form pr-10">
                                                 <div class="input-group pt-20">
                                                     <input type="text" class="form-control form-control-sm font-weight-bold" placeholder="Empresa" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="dataPago.empresa" readonly>
                                                     <div class="input-group-append">
@@ -451,27 +457,27 @@
                                 </div>
                                 <div class="container border border-default mt-10">
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group text-right ">
                                                 <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN SOLES : {{ dataPago.total}}</label>
                                             </div>
                                         </div> 
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group pt-0 text-right ">
                                                 <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN DOLARES : {{ dataPago.total_dolares}}</label>
                                             </div>
                                         </div> 
                                     </div>                                      
                                     <div class="row">
-                                        <div class="col-12 pr-0 pl-0 text-right">
+                                        <div class="col-12 text-right">
                                             <label for="" class="d-inline text-primary font-weight-bold text-right col-8">ENTREGO EFECTIVO :</label> 
                                             <input type="number" step="0.01" id="valor_efectivo" class="d-inline col-4 form-control text-right form-control-sm mr-10" v-model="entrego_efectivo" :disabled="dataPago.modo == 2" placeholder="0.00">        
                                         </div>                                          
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group pt-0 text-right">
                                                 <label for="" class="text-primary font-weight-bold mb-0 mt-10">VUELTO : {{ VueltoAdelantado}}</label>
                                             </div>
@@ -573,8 +579,8 @@
                             <div class="col-7 pl-0">
                                 <div class="container border border-default">
                                     <div class="row">
-                                        <div class="col-12 pl-10 pr-10">
-                                            <div class="form-group pr-0 pl-0">
+                                        <div class="col-12">
+                                            <div class="form-group">
                                                 <label for="documento" class="text-primary font-weight-bold">Documento Multident</label>
                                                 <div class="select2-input">
                                                     <select id="documento" name="documento" class="form-control form-control-sm" v-model="dataPago.tipodocumento_id">
@@ -588,7 +594,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4 pl-0 pr-0">
+                                        <div class="col-4 pr-0">
                                             <div class="form-group pr-0 pt-0">
                                                 <label for="ruc" class="text-primary font-weight-bold mb-0">Facturar a:</label>
                                                 <input type="text" id="ruc" class="form-control form-control-sm" v-model="dataPago.ruc" readonly>
@@ -596,7 +602,7 @@
                                         </div>
                                         <div class="col-8 pl-5">
                                             <div class="group-form">
-                                                <div class="input-group pt-20">
+                                                <div class="input-group pt-20 pr-10">
                                                     <input type="text" class="form-control form-control-sm font-weight-bold" placeholder="Empresa" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="dataPago.empresa" readonly>
                                                     <div class="input-group-append">
                                                         <button class="btn btn-primary btn-xs mr-5" type="button" id="button-addon2" @click.prevent="$modal.show('empresas')" :disabled="dataPago.tipodocumento_id != 6"><i class="flaticon-multimedia"></i></button>
@@ -609,27 +615,27 @@
                                 </div>
                                 <div class="container border border-default mt-10">
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group text-right ">
                                                 <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN SOLES : {{ TotalSolesAdelantado}}</label>
                                             </div>
                                         </div> 
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group pt-0 text-right ">
                                                 <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN DOLARES : {{ TotalDolaresAdelantado}}</label>
                                             </div>
                                         </div> 
                                     </div>                                      
                                     <div class="row">
-                                        <div class="col-12 pr-0 pl-0 text-right">
+                                        <div class="col-12 text-right">
                                             <label for="" class="d-inline text-primary font-weight-bold text-right col-8">ENTREGO EFECTIVO :</label> 
                                             <input type="number" step="0.01" id="valor_efectivo" class="d-inline col-4 form-control text-right form-control-sm mr-10" v-model="entrego_efectivo" placeholder="0.00">        
                                         </div>                                          
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group pt-0 text-right">
                                                 <label for="" class="text-primary font-weight-bold mb-0 mt-10">VUELTO : {{ VueltoAdelantado}}</label>
                                             </div>
@@ -922,6 +928,8 @@ export default {
         return {
             isLoading: false,
             fullPage: true,
+            isLoadingRecord: false,
+            fullPageRecord: false,            
 
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
@@ -1421,7 +1429,7 @@ export default {
         },
         VueltoAdelantado(){
             let vuelto = parseFloat(this.entrego_efectivo) - parseFloat(this.dataPago.monto_efectivo)
-            if(parseInt(this.entrego_efectivo) == 0){
+            if(parseInt(this.entrego_efectivo) == 0 || this.entrego_efectivo == ''){
                 return 0
             }
             return parseFloat(vuelto).toFixed(2)
@@ -1513,6 +1521,7 @@ export default {
                 liquidable:1                         
             }
             var url = '/api/recordatencion-operatorias';
+            this.isLoadingRecord = true
             this.StatusForm(true,'la la-spinner','Procesando')     
             axios.post(url, this.dataRecord).then(response => {
             if(typeof(response.data.errors) != "undefined"){
@@ -1524,7 +1533,8 @@ export default {
                     }
                 }
                 this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                
-                this.StatusForm(false,'la la-cloud-download','Grabar Datos')                
+                this.StatusForm(false,'la la-cloud-download','Grabar Datos')
+                this.isLoadingRecord = false              
                 return;
             }
             let copy_seleccionados = _.clone(this.seleccionados)
@@ -1540,6 +1550,7 @@ export default {
                         }
                     })
                 })
+                this.isLoadingRecord = false 
             })    
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
@@ -1548,7 +1559,7 @@ export default {
             this.errors = error.response.data.status;
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
             this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
-
+            this.isLoadingRecord = false 
             });
         },
         finalizarTratamiento(param){

@@ -8,7 +8,7 @@ class Diente extends Model
 {
     protected $table = "dientes";
 
-    protected $fillable = ['id', 'codigo', 'nombre_diente','cuadrante','tipo'];
+    protected $fillable = ['id', 'codigo', 'nombre_diente','cuadrante','tipo','cara_1','cara_2','cara_3','cara_4','cara_5','sector'];
 
     public function presupuestosoperatoriasdetalles()
     {

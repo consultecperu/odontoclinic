@@ -111,11 +111,11 @@
                                             <div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del diente -->
-                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')" /> <!-- CARA 1 Trapecio superior -->
-                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
-                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'P')" /> <!-- CARA 3 Trapecio inferior -->
-                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
-                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')" /> <!-- CARA 5 Cuadrado Central -->
+                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'1')" /> <!-- CARA 1 Trapecio superior -->
+                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'2')"/> <!-- CARA 2 Trapecio lateral derecho -->
+                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'3')" /> <!-- CARA 3 Trapecio inferior -->
+                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'4')"/> <!-- CARA 4 trapecio lateral izquierdo-->
+                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'5')" /> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
                                                     <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
                                                     <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
@@ -141,11 +141,11 @@
                                             <div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente -->
-                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
-                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
-                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'P')"/> <!-- CARA 3 Trapecio inferior -->
-                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
-                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
+                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'1')"/> <!-- CARA 1 Trapecio superior -->
+                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'2')"/> <!-- CARA 2 Trapecio lateral derecho -->
+                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'3')"/> <!-- CARA 3 Trapecio inferior -->
+                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'4')"/> <!-- CARA 4 trapecio lateral izquierdo-->
+                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'5')"/> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
                                                     <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
                                                     <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
@@ -177,11 +177,11 @@
                                             <div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente -->
-                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
-                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
-                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'P')"/> <!-- CARA 3 Trapecio inferior -->
-                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
-                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
+                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'1')"/> <!-- CARA 1 Trapecio superior -->
+                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'2')"/> <!-- CARA 2 Trapecio lateral derecho -->
+                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'3')"/> <!-- CARA 3 Trapecio inferior -->
+                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'4')"/> <!-- CARA 4 trapecio lateral izquierdo-->
+                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'5')"/> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
                                                     <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
                                                     <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
@@ -206,11 +206,11 @@
                                             <div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" height="64" :class="info.tipo" width="32" :id="info.id" @click.prevent="ShowDiente(info)" @contextmenu.prevent="menuPopup(info)">
                                                     <!-- Caras del Diente-->
-                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'V')"/> <!-- CARA 1 Trapecio superior -->
-                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'M')"/> <!-- CARA 2 Trapecio lateral derecho -->
-                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'P')"/> <!-- CARA 3 Trapecio inferior -->
-                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'D')"/> <!-- CARA 4 trapecio lateral izquierdo-->
-                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'O')"/> <!-- CARA 5 Cuadrado Central -->
+                                                    <polygon points="6,38 30,38 24,44 12,44" :style="BuscoCara(info,'1')"/> <!-- CARA 1 Trapecio superior -->
+                                                    <polygon points="30,38 30,62 24,56 24,44" :style="BuscoCara(info,'2')"/> <!-- CARA 2 Trapecio lateral derecho -->
+                                                    <polygon points="30,62 6,62 12,56 24,56" :style="BuscoCara(info,'3')"/> <!-- CARA 3 Trapecio inferior -->
+                                                    <polygon points="6,62 12,56 12,44 6,38" :style="BuscoCara(info,'4')"/> <!-- CARA 4 trapecio lateral izquierdo-->
+                                                    <polygon points="12,44 24,44 24,56 12,56" :style="BuscoCara(info,'5')"/> <!-- CARA 5 Cuadrado Central -->
                                                     <!-- Tratamientos / Estados del diente -->
                                                     <polygon points="17,40 19,40 19,60 17,60" :style="BuscoDiente(info,2)" />
                                                     <circle cx="18" cy="50" r="10" :style="BuscoDiente(info,3)" />
@@ -753,6 +753,7 @@ export default {
                 diente_codigo: '',
                 texto_diente:'',
                 caras: '',
+                lados:'',
                 simbologia: '',
                 letras : '',
                 servicio_id : '',
@@ -1030,7 +1031,7 @@ export default {
             let self = this
             if(!this.contains(this.odontograma,params.id)) return
             this.infodent = params
-            if(this.select_multi){
+            if(this.select_multi){                  // SELECCION MULTIPLE
                 if(this.diente_ancla.length == 0){
                     this.diente_ancla = _.clone(params)
                     this.toolTipDiente = {
@@ -1063,10 +1064,9 @@ export default {
                         return val.id == params.id
                     });
                 }else{
-                    this.list_dent_multiple.push(params)
+                    this.list_dent_multiple.push(params)    // cargo los dientes en este Array
                 }
-            }else{
-                //console.log("params",params)
+            }else{                                      // SELECCION NORMAL
                 this.toolTipDiente = {
                     cara_1 : params.cara_1,
                     cara_2 : params.cara_2,
@@ -1136,7 +1136,9 @@ export default {
             }
         },
         selectServicio(param){
-            let _letras = ''   
+            let _letras = ''  
+            let _lados = ''         // var proc. espejo 
+            let _newlados = ''
             let self = this 
             let datalist = []                  
             if(this.multicaras.includes(5)) _letras += this.toolTipDiente.cara_5.substr(0,1)
@@ -1144,19 +1146,28 @@ export default {
             if(this.multicaras.includes(3)) _letras += this.toolTipDiente.cara_3.substr(0,1)
             if(this.multicaras.includes(2)) _letras += this.toolTipDiente.cara_2.substr(0,1)
             if(this.multicaras.includes(4)) _letras += this.toolTipDiente.cara_4.substr(0,1)
+            // llenamos la var con los numeros de caras
+            if(this.multicaras.includes(1)) _lados += '1'
+            if(this.multicaras.includes(2)) _lados += '2'
+            if(this.multicaras.includes(3)) _lados += '3'            
+            if(this.multicaras.includes(4)) _lados += '4' 
+            if(this.multicaras.includes(5)) _lados += '5'                       
             if(this.simboloID != 1) _letras=this.toolTipDiente.cara_5.substr(0,1)+this.toolTipDiente.cara_1.substr(0,1)+this.toolTipDiente.cara_3.substr(0,1)+this.toolTipDiente.cara_2.substr(0,1)+this.toolTipDiente.cara_4.substr(0,1)
             if(this.select_multi){
                 let _costo_deducible = param.row.solocoaseguro == 1 ? 0.00 : parseFloat(this.dataPaciente.deducible).toFixed(2)
                 let _costo_coaseguro = (parseFloat(param.row.costo) - parseFloat(_costo_deducible)) * ((parseFloat(this.dataPaciente.coaseguro))/100)
                 let _pago_cliente = parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro)
                 let _costo_aseguradora = parseFloat(param.row.costo) - ( parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro))
-                this.list_dent_multiple.map(function(value, key) {                                       
+                this.list_dent_multiple.map(function(value, key) { 
+                    _newlados = self.CaraEspejo(self.diente_ancla.sector,value.sector,_lados) 
+                    console.log("lados",_newlados)                                     
                     self.dataTratamiento = {
                         tarifario_id:param.row.id,
                         diente_id: value.id,
                         diente_codigo: value.codigo,
                         texto_diente:'',
                         caras: _letras,
+                        lados: _newlados,
                         simbologia: self.simboloID,
                         letras : value.codigo.replace('.', '') + '_' + _letras,
                         servicio_id : param.row.servicio_id,
@@ -1187,6 +1198,7 @@ export default {
                     diente_codigo: this.infodent.codigo,
                     texto_diente:'',
                     caras: _letras,
+                    lados: _lados,
                     simbologia: this.simboloID,
                     letras : this.infodent.codigo.replace('.', '') + '_' + _letras,
                     servicio_id : param.row.servicio_id,
@@ -1210,7 +1222,7 @@ export default {
             this.simboloID = ''
             this.$modal.hide('tratamientos');          
         },
-        selectD(param){
+        selectD(param){                     // param --- numero de cara
             if(this.simboloID != 1) return
             if(this.multicaras.includes(param)){
                 this.multicaras.splice(this.multicaras.indexOf(param), 1)
@@ -1356,19 +1368,16 @@ export default {
             }
             return valor
         },  
-        BuscoCara(param,cara){
+        BuscoCara(param,lado){
             let encontrado;
-            //let valor = 'deshabilitado'
             let valor = this.deshabilitado
             self = this
-            if(this.contains(this.odontograma,param.id)){
-                //valor = 'diente'     
+            if(this.contains(this.odontograma,param.id)){    
                 valor = self.diente           
                 encontrado = self.lista_general_presupuesto.filter(ser => ser.diente_id == param.id)
                 if(encontrado.length > 0){                 
                     encontrado.map(function(value, key) {
-                        if((value.simbologia == 1) && (value.caras.indexOf(cara)) >-1) {
-                            //valor = 'marcadoRojo marcado'
+                        if((value.simbologia == 1) && (value.lados.indexOf(lado)) >-1) {
                             if(value.realizado == 3){
                                 valor = self.marcadoAzul
                                 return
@@ -1381,6 +1390,150 @@ export default {
                 }
             }
             return valor
+        },
+/*         BuscoCara(param,cara){
+            let encontrado;
+            let valor = this.deshabilitado
+            self = this
+            if(this.contains(this.odontograma,param.id)){    
+                valor = self.diente           
+                encontrado = self.lista_general_presupuesto.filter(ser => ser.diente_id == param.id)
+                if(encontrado.length > 0){                 
+                    encontrado.map(function(value, key) {
+                        if((value.simbologia == 1) && (value.caras.indexOf(cara)) >-1) {
+                            if(value.realizado == 3){
+                                valor = self.marcadoAzul
+                                return
+                            }else{
+                                valor = self.marcadoRojo
+                                return
+                            }
+                        }
+                    })
+                }
+            }
+            return valor
+        }, */        
+        CaraEspejo(sector_ancla,sector_selec,contenido){
+            let newlados = ''
+            if(sector_ancla == "A"){
+                if(sector_selec == "A") {
+                    if(contenido.indexOf('1') >-1) newlados += '1'
+                    if(contenido.indexOf('2') >-1) newlados += '2'
+                    if(contenido.indexOf('3') >-1) newlados += '3'
+                    if(contenido.indexOf('4') >-1) newlados += '4'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "B") {
+                    if(contenido.indexOf('1') >-1) newlados += '1'
+                    if(contenido.indexOf('2') >-1) newlados += '4'
+                    if(contenido.indexOf('3') >-1) newlados += '3'
+                    if(contenido.indexOf('4') >-1) newlados += '2'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "C") {
+                    if(contenido.indexOf('1') >-1) newlados += '3'
+                    if(contenido.indexOf('2') >-1) newlados += '4'
+                    if(contenido.indexOf('3') >-1) newlados += '1'
+                    if(contenido.indexOf('4') >-1) newlados += '2'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "D") {
+                    if(contenido.indexOf('1') >-1) newlados += '3'
+                    if(contenido.indexOf('2') >-1) newlados += '2'
+                    if(contenido.indexOf('3') >-1) newlados += '1'
+                    if(contenido.indexOf('4') >-1) newlados += '4'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+            }else if(sector_ancla == "B"){
+                if(sector_selec == "A") {
+                    if(contenido.indexOf('1') >-1) newlados += '1'
+                    if(contenido.indexOf('2') >-1) newlados += '4'
+                    if(contenido.indexOf('3') >-1) newlados += '3'
+                    if(contenido.indexOf('4') >-1) newlados += '2'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "B") {
+                    if(contenido.indexOf('1') >-1) newlados += '1'
+                    if(contenido.indexOf('2') >-1) newlados += '2'
+                    if(contenido.indexOf('3') >-1) newlados += '3'
+                    if(contenido.indexOf('4') >-1) newlados += '4'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "C") {
+                    if(contenido.indexOf('1') >-1) newlados += '3'
+                    if(contenido.indexOf('2') >-1) newlados += '2'
+                    if(contenido.indexOf('3') >-1) newlados += '1'
+                    if(contenido.indexOf('4') >-1) newlados += '4'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "D") {
+                    if(contenido.indexOf('1') >-1) newlados += '3'
+                    if(contenido.indexOf('2') >-1) newlados += '4'
+                    if(contenido.indexOf('3') >-1) newlados += '1'
+                    if(contenido.indexOf('4') >-1) newlados += '2'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+            }else if(sector_ancla == "C"){
+                if(sector_selec == "A") {
+                    if(contenido.indexOf('1') >-1) newlados += '3'
+                    if(contenido.indexOf('2') >-1) newlados += '4'
+                    if(contenido.indexOf('3') >-1) newlados += '1'
+                    if(contenido.indexOf('4') >-1) newlados += '2'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "B") {
+                    if(contenido.indexOf('1') >-1) newlados += '3'
+                    if(contenido.indexOf('2') >-1) newlados += '2'
+                    if(contenido.indexOf('3') >-1) newlados += '1'
+                    if(contenido.indexOf('4') >-1) newlados += '4'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "C") {
+                    if(contenido.indexOf('1') >-1) newlados += '1'
+                    if(contenido.indexOf('2') >-1) newlados += '2'
+                    if(contenido.indexOf('3') >-1) newlados += '3'
+                    if(contenido.indexOf('4') >-1) newlados += '4'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "D") {
+                    if(contenido.indexOf('1') >-1) newlados += '1'
+                    if(contenido.indexOf('2') >-1) newlados += '4'
+                    if(contenido.indexOf('3') >-1) newlados += '3'
+                    if(contenido.indexOf('4') >-1) newlados += '2'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+            }else if(sector_ancla == "D"){
+                if(sector_selec == "A") {
+                    if(contenido.indexOf('1') >-1) newlados += '3'
+                    if(contenido.indexOf('2') >-1) newlados += '2'
+                    if(contenido.indexOf('3') >-1) newlados += '1'
+                    if(contenido.indexOf('4') >-1) newlados += '4'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "B") {
+                    if(contenido.indexOf('1') >-1) newlados += '3'
+                    if(contenido.indexOf('2') >-1) newlados += '4'
+                    if(contenido.indexOf('3') >-1) newlados += '1'
+                    if(contenido.indexOf('4') >-1) newlados += '2'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "C") {
+                    if(contenido.indexOf('1') >-1) newlados += '1'
+                    if(contenido.indexOf('2') >-1) newlados += '4'
+                    if(contenido.indexOf('3') >-1) newlados += '3'
+                    if(contenido.indexOf('4') >-1) newlados += '2'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+                if(sector_selec == "D") {
+                    if(contenido.indexOf('1') >-1) newlados += '1'
+                    if(contenido.indexOf('2') >-1) newlados += '2'
+                    if(contenido.indexOf('3') >-1) newlados += '3'
+                    if(contenido.indexOf('4') >-1) newlados += '4'
+                    if(contenido.indexOf('5') >-1) newlados += '5'
+                }
+            }
+            return newlados
         },
         menuPopup(param){
             $('#context-menu').css({'display':'block'}) 
@@ -1720,14 +1873,6 @@ export default {
 
 
             }
-
-  
-            
-            
-
-
-
-
             this.$modal.hide('descuento')                   
         },
         cambiaTipo(){
@@ -1822,6 +1967,7 @@ export default {
                     user_id:self.user_system.id,
                     diente_id:value.diente_id,
                     caras:value.caras,
+                    lados:value.lados,
                     letras:value.letras,
                     simbologia_id:value.simbologia,
                     texto_diente:''
@@ -2041,6 +2187,7 @@ export default {
                         diente_codigo: value.diente == null ? '--' : value.diente.codigo,
                         texto_diente:value.texto_diente,
                         caras:value.caras == null ? '--' : value.caras,
+                        lados:value.lados == null ? '' : value.lados,
                         simbologia:value.simbologia_id,
                         letras:value.letras,
                         servicio_id:value.tarifario.servicio_id,

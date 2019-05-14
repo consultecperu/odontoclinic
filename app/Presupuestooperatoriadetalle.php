@@ -8,7 +8,7 @@ class Presupuestooperatoriadetalle extends Model
 {
     protected $table = "presupuestosoperatoriasdetalle";
 
-    protected $fillable = ['id','presupuestooperaroria_id','tarifario_id','tarifa','moneda_id','deducible','solocoaseguro','pago_cliente','pago_aseguradora','costo','costo_base','descuento','tipo_odontograma','empleado_id','realizado','descargado','pagado','tipo_pagado','laboratorio_id','monto_lab','material_id','monto_mat','solicitud','user_id','diente_id','caras','letras','simbologia_id','texto_diente','pago_id','liquidado','fecha_descarga','monto_efectivo','monto_tarjeta','tipopago_id','activo'];
+    protected $fillable = ['id','presupuestooperaroria_id','tarifario_id','tarifa','moneda_id','deducible','solocoaseguro','pago_cliente','pago_aseguradora','costo','costo_base','descuento','tipo_odontograma','empleado_id','realizado','descargado','pagado','tipo_pagado','laboratorio_id','monto_lab','material_id','monto_mat','solicitud','user_id','diente_id','caras','letras','simbologia_id','texto_diente','pago_id','liquidado','fecha_descarga','monto_efectivo','monto_tarjeta','tipopago_id','lados','activo'];
     
     public function presupuestooperatoria()
     {
