@@ -240,11 +240,20 @@
                     <p class="form-control-static text-center font-weight-bold mb-0" :class="{ 'text-warning': select_multi }">BUCAL</p>
                 </div>              
             </div>
-            <!-- Fin de Odontograma -->          
+            <!-- Fin de Odontograma -->
+            <div class="row">
+                <div class="col-12 pr-20 mb-10 pt-10">
+                    <button type="button" class="btn btn-sm btn-danger float-right ml-10" :disabled="checkTxs.length == 0" @click.prevent="EliminarItemsMultiple" ><span class="btn-label"><i class="la la-trash-o"></i></span> Eliminar Item(s)</button>
+                    <button type="button" class="btn btn-sm btn-primary float-right" v-if="dataPaciente.tipo_plan == 1" :disabled="checkTxs.length == 0"  @click.prevent="AplicarDescuentoMultiple"><span class="btn-label"><i class="la la-calculator font-large"></i></span> Aplicar Descuento</button>
+                </div>
+            </div>          
             <div class="row pl-20 pr-20">
                 <table class="table table-bordered table-sm table-head-bg-info table-bordered-bd-info">
                     <thead>
                         <tr>
+                            <th align="center" class="text-center" style="width: 15px !important;">
+                                <input id="" type="checkbox" @change.prevent="marcarAllTx" v-model="checkAllTx">
+                            </th>                            
                             <th scope="col">Diente</th>
                             <th scope="col">Servicio</th>
                             <th scope="col">Moneda</th>
@@ -252,11 +261,14 @@
                             <th scope="col">Coaseguro</th>
                             <th scope="col">P.Aseg</th>     
                             <th scope="col">C.Total</th> 
-                            <th scope="col"></th>                                                                                                                         
+<!--                             <th scope="col"></th>  -->                                                                                                                        
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(serv, index) in lista_general_presupuesto" :key="serv.id">
+                            <td align="center">
+                                <input :id="'checkbox-type-rounded'+ index" type="checkbox" v-model="checkTxs" :value="index" @change.prevent="change_checkTxs(index)">
+                            </td>
                             <td>{{ serv.letras }}</td>
                             <td>{{ serv.nombre_servicio}}</td> 
                             <td>{{ serv.nombre_moneda}}</td>
@@ -264,19 +276,19 @@
                             <td align="center">{{ serv.solocoaseguro}}</td>  
                             <td align="center">{{ serv.pago_aseguradora}}</td>   
                             <td align="center">{{ serv.costo}}</td> 
-                            <td><button type="button" v-tooltip="'Eliminar Item'" class="btn btn-danger btn-xs" @click.prevent="borrarItem(serv,index)">
+<!--                             <td><button type="button" v-tooltip="'Eliminar Item'" class="btn btn-danger btn-xs" @click.prevent="borrarItem(serv,index)">
                                     <i class="la la-trash-o font-large"></i>
                                 </button>
                                 <button type="button" v-if="$route.params.idpresupuesto == undefined && dataPaciente.tipo_plan == 1" v-tooltip="'Descuento'" class="btn btn-success btn-xs" @click.prevent="AplicaDescuento(serv,index)">
                                     <i class="la la-calculator font-large"></i>
                                 </button>
-                            </td>                                                                                                                        
+                            </td> -->                                                                                                                        
                         </tr>
                         <tr v-if="lista_general_presupuesto.length == 0">
-                            <td colspan="8" class="text-center">NO HAY SERVICIOS CARGADOS ...</td>                                           
+                            <td colspan="9" class="text-center">NO HAY SERVICIOS CARGADOS ...</td>                                           
                         </tr>
                         <tr v-else>
-                            <td>Totales</td>
+                            <td colspan="2">Totales</td>
                             <td v-if="dataPaciente.tipo_plan == 1">Cliente: {{ costoTotal }}</td>
                             <td v-if="dataPaciente.tipo_plan == 2">Clientes: {{ costoCliente }}</td>
                             <td colspan="2">Aseguradora:</td>
@@ -508,8 +520,8 @@
                     <div class="card-title">Aplicar Descuento</div>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col">
+                    <div class="row" v-if="igual_monto">
+                        <div class="col-12">
                             <div class="form-check form-check-inline pt-0 pb-0">
                                 <div class="custom-control custom-radio">
                                     <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" value="0" v-model="dataDescuento.tipo" @change="cambiaTipo">
@@ -522,11 +534,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
+                    <div class="row" v-else>
+                        <div class="col-12">
+                            <p class="form-control-static mb-0">Descuento por Porcentaje</p>
+                        </div>
+                    </div>
+                    <div class="row" v-if="igual_monto">
+                        <div class="col-12">
                             <div class="form-group pt-0 pb-0">
                                 <label for="nombre" class="text-primary font-weight-bold">Monto Actual <span class="required-label"> *</span></label>
-                                <input type="text" id="nombre" class="form-control form-control-sm border border-primary" v-model="dataDescuento.monto_actual">
+                                <input type="text" id="nombre" class="form-control form-control-sm border border-primary" v-model="dataDescuento.monto_actual" disabled>
                             </div> 
                         </div>                        
                     </div>
@@ -538,7 +555,7 @@
                             </div> 
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" v-if="igual_monto">
                         <div class="col">
                             <div class="form-group pt-10 pb-0">
                                 <label for="nombre" class="text-primary font-weight-bold">Nuevo Monto <span class="required-label"> *</span></label>
@@ -790,6 +807,9 @@ export default {
             list_dent_missing:[],
             valor_texto_material:'',
             diente_ancla:[],            // diente de referencia en la seleccion multiple
+            checkAllTx:'',              // check para marcar todos los tx en la tabla de nuevo tx
+            checkTxs:[],
+            igual_monto:true,           // para los descuentos masivos de los items
 
             diente: {
                 cursor:'pointer', 
@@ -991,10 +1011,12 @@ export default {
             }
         },
         'dataDescuento.porcentaje' (newVal,oldVal){
-            if(newVal != 0){
-                this.dataDescuento.nuevo_monto = this.dataDescuento.monto_actual * ( 1 - (this.dataDescuento.porcentaje / 100))
-            }else{
-                this.dataDescuento.nuevo_monto = ''
+            if(this.igual_monto){
+                if(newVal != 0){
+                    this.dataDescuento.nuevo_monto = this.dataDescuento.monto_actual * ( 1 - (this.dataDescuento.porcentaje / 100))
+                }else{
+                    this.dataDescuento.nuevo_monto = ''
+                }
             }
         }       
     },   
@@ -1148,7 +1170,8 @@ export default {
                         deducible: self.dataPaciente.tipo_plan == 1 ?  0.00 : parseFloat(_costo_deducible).toFixed(2),
                         solocoaseguro: self.dataPaciente.tipo_plan == 1 ?  0.00 : parseFloat(_costo_coaseguro).toFixed(2),
                         pago_cliente: self.dataPaciente.tipo_plan == 1 ?  param.row.costo : parseFloat(_pago_cliente).toFixed(2),
-                        pago_aseguradora: self.dataPaciente.tipo_plan == 1 ? 0.00 : parseFloat(_costo_aseguradora).toFixed(2)                        
+                        pago_aseguradora: self.dataPaciente.tipo_plan == 1 ? 0.00 : parseFloat(_costo_aseguradora).toFixed(2),
+                        activo: true
                     } 
                     datalist = _.clone(self.dataTratamiento)             
                     self.list_services_dent.push(datalist)      // nuevos servicios
@@ -1177,7 +1200,8 @@ export default {
                     deducible: self.dataPaciente.tipo_plan == 1 ?  0.00 : parseFloat(_costo_deducible).toFixed(2),
                     solocoaseguro: self.dataPaciente.tipo_plan == 1 ?  0.00 : parseFloat(_costo_coaseguro).toFixed(2),
                     pago_cliente: self.dataPaciente.tipo_plan == 1 ?  parseFloat(param.row.costo).toFixed(2) : parseFloat(_pago_cliente).toFixed(2),
-                    pago_aseguradora: self.dataPaciente.tipo_plan == 1 ? 0.00 : parseFloat(_costo_aseguradora).toFixed(2) 
+                    pago_aseguradora: self.dataPaciente.tipo_plan == 1 ? 0.00 : parseFloat(_costo_aseguradora).toFixed(2),
+                    activo: true
                 }                
                 this.list_services_dent.push(this.dataTratamiento)          // nuevos servicios
             }
@@ -1528,6 +1552,58 @@ export default {
                     }
                 });              
         },
+        newborrarItems(){
+            this.$swal({
+                title: 'Desea eliminar estos registros ?',
+                text: "No podras revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.value) {
+                        if(this.$route.params.idpresupuesto == undefined){
+                            let self = this
+                            this.$delete(self.lista_general_presupuesto , index) 
+                        }else{
+                            this.isLoading = true
+                            this.dataPpto = {
+                                id: param.idppto,
+                                idDetalle:param.id,
+                                user_id:this.user_system.id
+                            }
+                            var url = '/api/presupuestosoperatoriasdetalles/delete/'+this.dataPpto.id;;
+                            axios.put(url, this.dataPpto).then(response => {
+                                if(typeof(response.data.errors) != "undefined"){
+                                    this.errors = response.data.errors;
+                                    var resultado = "";
+                                    for (var i in this.errors) {
+                                        if (this.errors.hasOwnProperty(i)) {
+                                            resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                                        }
+                                    }   
+                                    this.StatusForm(false,'la la-cloud-download','Grabar Datos')
+                                    this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
+                                    return;
+                                }
+                                this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                                    this.CargaDetalleEdit()
+                                    this.isLoading = false
+                                })                  
+                                this.errors = []; 
+                                this.notificaciones('el Registro fue eliminado con exito','la la-thumbs-up','success')                  
+                                this.isLoading = false
+                            }).catch(error => {
+                                this.errors = error.response.data.status;  
+                                this.isLoading = false            
+                                this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')
+                            });
+                        }
+                    }
+                });              
+        },        
         EliminaServicio(index){
             this.$swal({
                 title: 'Desea eliminar este registro?',
@@ -1556,10 +1632,103 @@ export default {
             this.$modal.show('descuento')
         },
         ActionDescuento(){             
-            let desc = parseFloat(this.dataDescuento.monto_actual) - parseFloat(this.dataDescuento.nuevo_monto)
+/*             let desc = parseFloat(this.dataDescuento.monto_actual) - parseFloat(this.dataDescuento.nuevo_monto)
             this.lista_general_presupuesto[this.dataDescuento.index].descuento = parseFloat(desc).toFixed(2)
             this.lista_general_presupuesto[this.dataDescuento.index].costo = this.dataDescuento.nuevo_monto
-            this.$modal.hide('descuento')
+            this.$modal.hide('descuento') */
+            let desc
+            let nuevo_monto
+            let monto_actual
+            let item = {
+                id:'',
+                costo:'',
+                descuento:''
+            }
+
+            let items_descuento = []
+
+            if(this.$route.params.idpresupuesto == undefined){
+                for(let i = this.lista_general_presupuesto.length - 1; i>=0 ;i--){
+                    if(this.lista_general_presupuesto[i].activo == false){
+                        monto_actual = this.lista_general_presupuesto[i].costo
+                        if(this.dataDescuento.tipo == 0){           // por monto
+                            nuevo_monto = this.dataDescuento.nuevo_monto
+                        }else if(this.dataDescuento.tipo == 1){     // por porcentaje
+                            nuevo_monto = monto_actual * ( 1 - (this.dataDescuento.porcentaje / 100))
+                        }
+                        desc = parseFloat(monto_actual) - parseFloat(nuevo_monto)
+                        this.lista_general_presupuesto[i].descuento =+ parseFloat(desc).toFixed(2)
+                        this.lista_general_presupuesto[i].costo = parseFloat(nuevo_monto).toFixed(2)                    
+                    }
+                }  
+                this.checkTxs = [] 
+            }else{
+                let j = 0
+                this.isLoading = true
+                for(let i = 0; i < this.lista_general_presupuesto.length - 1; i++){
+                    if(this.lista_general_presupuesto[i].activo == false){
+                        monto_actual = this.lista_general_presupuesto[i].costo
+                        if(this.dataDescuento.tipo == 0){           // por monto
+                            nuevo_monto = this.dataDescuento.nuevo_monto
+                        }else if(this.dataDescuento.tipo == 1){     // por porcentaje
+                            nuevo_monto = monto_actual * ( 1 - (this.dataDescuento.porcentaje / 100))
+                        }
+                        desc = parseFloat(monto_actual) - parseFloat(nuevo_monto)
+                        item.descuento = parseFloat(desc).toFixed(2)
+                        item.costo = parseFloat(nuevo_monto).toFixed(2)
+                        item.id = this.lista_general_presupuesto[i].id
+                        let _item = _.clone(item)
+                        items_descuento.push(_item)
+                        //this.lista_general_presupuesto[i].descuento = parseFloat(desc).toFixed(2)
+                        //this.lista_general_presupuesto[i].costo = parseFloat(nuevo_monto).toFixed(2)                    
+                    }
+                }                  
+                this.dataPpto = {
+                    id: this.$route.params.idpresupuesto,
+                    detalle:items_descuento,
+                    user_id:this.user_system.id
+                }
+                var url = '/api/presupuestosoperatoriasdetalles/descuento_masivo/'+this.dataPpto.id
+                axios.put(url, this.dataPpto).then(response => {
+                    if(typeof(response.data.errors) != "undefined"){
+                        this.errors = response.data.errors;
+                        var resultado = "";
+                        for (var i in this.errors) {
+                            if (this.errors.hasOwnProperty(i)) {
+                                resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                            }
+                        }   
+                        this.StatusForm(false,'la la-cloud-download','Grabar Datos')
+                        this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
+                        this.isLoading = false
+                        return;
+                    }
+                    this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                        this.CargaDetalleEdit()
+                        this.isLoading = false
+                    })                  
+                    this.errors = []
+                    this.checkTxs = [] 
+                    this.checkAllTx = false
+                    //this.notificaciones('el Registro fue eliminado con exito','la la-thumbs-up','success')                  
+                    this.isLoading = false
+                }).catch(error => {
+                    this.errors = error.response.data.status;  
+                    this.isLoading = false            
+                    this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')
+                });
+
+
+            }
+
+  
+            
+            
+
+
+
+
+            this.$modal.hide('descuento')                   
         },
         cambiaTipo(){
             this.dataDescuento.nuevo_monto = ''
@@ -1877,11 +2046,15 @@ export default {
                         servicio_id:value.tarifario.servicio_id,
                         nombre_servicio:value.tarifario.servicio.nombre_servicio,
                         costo_base:value.costo_base,
-                        costo:value.costo,
+                        costo:parseFloat(value.costo).toFixed(2),
                         moneda_id:value.moneda_id,
                         nombre_moneda:value.moneda.nombre_moneda,
                         descuento:value.descuento,
                         realizado:value.realizado,
+                        deducible:value.deducible == null ? '0.00' : parseFloat(value.deducible).toFixed(2),
+                        solocoaseguro:value.solocoaseguro == null ? '0.00' : parseFloat(value.solocoaseguro).toFixed(2),
+                        pago_cliente:value.pago_cliente == null ? '0.00' : parseFloat(value.pago_cliente).toFixed(2),
+                        pago_aseguradora:value.pago_aseguradora == null ? '0.00' : parseFloat(value.pago_aseguradora).toFixed(2),                        
                         activo:value.activo
                     }
                     if(self.dataTratamiento.activo){
@@ -1942,6 +2115,116 @@ export default {
                 }
             }           
 
+        },
+        marcarAllTx(){
+            let self = this
+            if(this.checkAllTx){    // si esta marcando todo
+                self.checkTxs = []
+                this.lista_general_presupuesto.map(function(value, key) { 
+                    self.checkTxs.push(key)
+                })
+            }else{                  // si esta desmarcando todo
+                self.checkTxs = []
+            }
+        },
+        change_checkTxs(param){
+            if(this.checkTxs.length == this.lista_general_presupuesto.length ){
+                this.checkAllTx = true
+            }else {
+                this.checkAllTx = false
+            }
+            // marcamos -- desmarcamos de la lista 
+            if(this.checkTxs.includes(param)){    // el valor de index es true
+                this.lista_general_presupuesto[param].activo = false
+            }else{                                // el valor de index es false
+                this.lista_general_presupuesto[param].activo = true
+            }
+        },
+        AplicarDescuentoMultiple(){
+            this.igual_monto = true
+            this.dataDescuento.tipo = "0"         // por monto
+            let firts_monto = parseFloat(this.lista_general_presupuesto[this.checkTxs[0]].costo) 
+            this.dataDescuento.monto_actual = firts_monto.toFixed(2)
+            for (let i = 0; i < this.checkTxs.length; i++) {
+                let elem = this.checkTxs[i];
+                this.lista_general_presupuesto[elem].activo = false  
+                if(parseFloat(this.lista_general_presupuesto[elem].costo) != firts_monto){
+                    this.igual_monto = false
+                    this.dataDescuento.tipo = "1" // por porcentaje
+                    this.dataDescuento.monto_actual = null
+                }              
+            }
+            this.dataDescuento.porcentaje = ''
+            this.dataDescuento.nuevo_monto = ''
+            this.$modal.show('descuento')
+        },
+        EliminarItemsMultiple(){
+            this.$swal({
+                title: 'Desea eliminar estos tratamientos?',
+                text: "No podras revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, Eliminar!'
+                }).then((result) => {
+                    if (result.value) {
+                        let list_detalle = []
+                        for (let i = 0; i < this.checkTxs.length; i++) {
+                            let elem = this.checkTxs[i];
+                            this.lista_general_presupuesto[elem].activo = false                
+                        }
+                        if(this.$route.params.idpresupuesto == undefined){
+                            for(let i = this.lista_general_presupuesto.length - 1; i>=0 ;i--){
+                                if(this.lista_general_presupuesto[i].activo == false)
+                                    this.lista_general_presupuesto.splice(i,1);
+                            }  
+                            this.checkTxs = []
+                            this.checkAllTx = false
+                        }else{
+                            this.isLoading = true
+                            for(let i = this.lista_general_presupuesto.length - 1; i>=0 ;i--){
+                                if(this.lista_general_presupuesto[i].activo == false)                        
+                                    list_detalle.push(this.lista_general_presupuesto[i].id)
+                            }                 
+                            this.dataPpto = {
+                                id: this.$route.params.idpresupuesto,
+                                detalle:list_detalle,
+                                user_id:this.user_system.id
+                            }
+                            var url = '/api/presupuestosoperatoriasdetalles/delete_masivo/'+this.dataPpto.id;;
+                            axios.put(url, this.dataPpto).then(response => {
+                                if(typeof(response.data.errors) != "undefined"){
+                                    this.errors = response.data.errors;
+                                    var resultado = "";
+                                    for (var i in this.errors) {
+                                        if (this.errors.hasOwnProperty(i)) {
+                                            resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                                        }
+                                    }   
+                                    this.StatusForm(false,'la la-cloud-download','Grabar Datos')
+                                    this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                 
+                                    this.isLoading = false
+                                    return;
+                                }
+                                this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                                    this.CargaDetalleEdit()
+                                    this.isLoading = false
+                                })                  
+                                this.errors = []
+                                this.checkTxs = [] 
+                                this.checkAllTx = false
+                                //this.notificaciones('el Registro fue eliminado con exito','la la-thumbs-up','success')                  
+                                this.isLoading = false
+                            }).catch(error => {
+                                this.errors = error.response.data.status;  
+                                this.isLoading = false            
+                                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')
+                            });
+                        }
+                    }
+                });
         },
         handleScroll(){
             $('#context-menu').css({'display':'none'}) 
@@ -2150,6 +2433,9 @@ export default {
         padding: 0.3rem !important; 
         font-size: 11px !important;
     } 
+    td {
+        vertical-align: middle !important;
+    }
     .btn-xs {
         padding: 3px !important;
     } 

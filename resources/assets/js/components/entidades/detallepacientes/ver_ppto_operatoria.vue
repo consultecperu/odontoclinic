@@ -1342,7 +1342,7 @@ export default {
             return this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles.filter(pd => pd.descargado == 1)
         },
         items_sindescarga(){
-            return this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles.filter(pd => pd.descargado == 0)
+            return this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles.filter(pd => pd.descargado == 0 && pd.activo == true)
         },
         PagosPresupuestoOperatoriaById(){
             return this.getPagosPresupuestoOperatoriaById(this.$route.params.idpresupuesto)

@@ -185,7 +185,60 @@ class PresupuestosoperatoriaController extends Controller
             );
         }
     } 
-    
+
+    public function deleteitem_masivo(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();     
+            foreach ($request->get('detalle') as $det) {
+                $pptodet = Presupuestooperatoriadetalle::findOrFail($det);
+                $pptodet->activo = false;
+                $pptodet->user_id = $request->get('user_id');            
+                $pptodet->save();
+            }        
+            $ppto = Presupuestooperatoria::findOrFail($id);
+            $valor_total = Presupuestooperatoriadetalle::where(['activo' => true ,'presupuestooperatoria_id' => $id])->sum('costo');            
+            $ppto->pago_cliente = $valor_total;            
+            $ppto->pago_total = $valor_total;
+            $ppto->user_id = $request->get('user_id');
+            $ppto->save();             
+            DB::commit();  
+            return;  
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
+    } 
+
+    public function descuento_masivo(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();     
+            foreach ($request->get('detalle') as $det) {
+                $pptodet = Presupuestooperatoriadetalle::findOrFail($det['id']);
+                $pptodet->costo = $det['costo'];
+                $pptodet->descuento = floatval($pptodet->descuento) + floatval($det['descuento']);
+                $pptodet->user_id = $request->get('user_id');            
+                $pptodet->save();
+            }        
+            $ppto = Presupuestooperatoria::findOrFail($id);
+            $valor_total = Presupuestooperatoriadetalle::where(['activo' => true ,'presupuestooperatoria_id' => $id])->sum('costo');            
+            $ppto->pago_cliente = $valor_total;            
+            $ppto->pago_total = $valor_total;
+            $ppto->user_id = $request->get('user_id');
+            $ppto->save();             
+            DB::commit();  
+            return;  
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(
+                ['status' => $e->getMessage()], 422
+            );
+        }
+    }
+
     public function additem(Request $request, $id)
     {
         try {

@@ -117,6 +117,8 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/presupuestosoperatoriasdetalles/descargasaldo/{id}','PresupuestosoperatoriaController@descargaSaldo');              
     Route::put('/presupuestosoperatoriasdetalles/texsupdie/{id}','PresupuestosoperatoriaController@textoSuperiorDiente');
     Route::get('/presupuestosoperatoriasdetalles/liquidacion-doctor/{empleado}/{sede}/{fechacorte}','PresupuestosoperatoriaController@liquidacion_doctor');
+    Route::put('/presupuestosoperatoriasdetalles/delete_masivo/{id}','PresupuestosoperatoriaController@deleteitem_masivo');        
+    Route::put('/presupuestosoperatoriasdetalles/descuento_masivo/{id}','PresupuestosoperatoriaController@descuento_masivo');        
 
     Route::get('presupuestos-operatorias/detalles','PresupuestosoperatoriaController@listaDetalles');    
     // ppto ortodoncia

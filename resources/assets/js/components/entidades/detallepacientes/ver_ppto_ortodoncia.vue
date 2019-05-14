@@ -1222,7 +1222,7 @@ export default {
             return this.presupuestoOrtodonciaById.presupuestosortodonciasdetalles.filter(pd => pd.descargado == 1)
         },
         items_sindescarga(){
-            return this.presupuestoOrtodonciaById.presupuestosortodonciasdetalles.filter(pd => pd.descargado == 0)
+            return this.presupuestoOrtodonciaById.presupuestosortodonciasdetalles.filter(pd => pd.descargado == 0 && pd.activo == true)
         },
         PagosPresupuestoOrtodonciaById(){
             return this.getPagosPresupuestoOrtodonciaById(this.$route.params.idpresupuesto)
