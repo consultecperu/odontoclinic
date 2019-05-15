@@ -71,9 +71,20 @@ class LiquidacionortodonciaController extends Controller
             if ($validator->fails()) {
                 return response()->json(['errors'=>$validator->errors()]);
             }       
+
+            if(floatval($request->get('monto_total_liquidar')) > 700){
+                $monto_total = floatval($request->get('monto_total_liquidar'));
+                $detraccion = $monto_total * 0.12;
+                $monto_liquidable = floatval($monto_total) - floatval($detraccion);
+            }else{
+                $monto_liquidable = 0;
+                $detraccion = 0;
+            }
     
             $liqort = new Liquidacionortodoncia($request->all());
             $liqort->fecha_corte = Globales::FormatFecYMD_hms($request->get('fecha_corte'));
+            $liqort->monto_liquidable = $monto_liquidable;
+            $liqort->detraccion = $detraccion;
             $liqort->save();
             // Agregamos el detalle de la liquidacion 
             foreach ($request->get('detalle') as $det) {
@@ -181,10 +192,12 @@ class LiquidacionortodonciaController extends Controller
                 $moneda = 's/.';
                 $tipo_cambio = TipoCambio::where('fecha_registro',date('Y-m-d'));
                 $_monto_liquidar = floatval($liq->monto_total_liquidar);
-                $_monto_liquidar = number_format($_monto_liquidar,2);                  
+                $_monto_liquidable = floatval($liq->monto_liquidable);
+                $_detraccion = floatval($liq->detraccion);
+                //$_monto_liquidar = number_format($_monto_liquidar,2);                  
                 if($liq->moneda_id == 2){
                     $_monto_liquidar = floatval($liq->monto_total_liquidar) * $tipo_cambio;
-                    $_monto_liquidar = number_format($_monto_liquidar,2);                       
+                    //$_monto_liquidar = number_format($_monto_liquidar,2);                       
                 }
                 $nro_liq = "0000000000".$liq->id;
                 $nro_liq = substr($nro_liq,-10);
@@ -198,6 +211,8 @@ class LiquidacionortodonciaController extends Controller
                     'usuario' => $liq->user->__empleado->nombre_completo,
                     'moneda' => $moneda,
                     'total' =>  $_monto_liquidar,
+                    'monto_liquidable' => $_monto_liquidable,
+                    'detraccion' => $_detraccion,
                     'estado' => $liq->pagado == 0 ? 'NO PAGADO': 'PAGADO',
                     'facturas' => $liq->liquidacionortodonciasfacturas
                 );

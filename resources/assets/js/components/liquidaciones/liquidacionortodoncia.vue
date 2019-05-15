@@ -440,6 +440,12 @@
                                     <input type="text" class="form-control form-control-sm text-right" name="monto_facturar" v-model="dataPago.monto" disabled>
                                 </div>
                             </div>
+                            <div class="col-3 pr-0">
+                                <div class="form-group pt-0 pr-0 pl-0" >
+                                    <label for="detraccion" class="font-weight-bold mb-0">Detracción </label>
+                                    <input type="text" class="form-control form-control-sm text-right" name="detraccion" v-model="dataPago.detraccion" disabled>
+                                </div>
+                            </div>                            
                             <div class="col-3">
                                 <div class="form-group pt-0 pl-0 pr-0" >
                                     <label for="numero_facturas" class="font-weight-bold mb-0">Nº Facturas</label>
@@ -634,6 +640,7 @@ export default {
             dataPago:{
                 liquidacionortodoncia_id:'',
                 monto:'',
+                detraccion:'',
                 numero_facturas:1,
                 serie:'',
                 numero:'',
@@ -1111,6 +1118,7 @@ export default {
         },
         pagarLiquidacion(param){
             this.dataPago.monto = parseFloat(param.total).toFixed(2)
+            this.dataPago.detraccion = parseFloat(param.detraccion).toFixed(2);
             this.dataPago.liquidacionortodoncia_id = param.id
             this.dataPago.serie = ''
             this.dataPago.numero = ''

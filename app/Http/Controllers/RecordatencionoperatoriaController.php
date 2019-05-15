@@ -89,7 +89,12 @@ class RecordatencionoperatoriaController extends Controller
                 $labtra->fecha_separacion = Globales::FormatFecYMD_hms($request->get('fecha_separacion'));            
                 $labtra->save();                
 
-                Presupuestooperatoriadetalle::where(['id' => $request->get('presupuestooperatoriadetalle_id')])->update(['laboratorio_id' => $request->get('laboratorio_id'),'monto_lab' => $request->get('monto_lab')]);
+                //Presupuestooperatoriadetalle::where(['id' => $request->get('presupuestooperatoriadetalle_id')])->update(['laboratorio_id' => $request->get('laboratorio_id'),'monto_lab' => $request->get('monto_lab')]);                
+                $pptodet = Presupuestooperatoriadetalle::findOrFail($request->get('presupuestooperatoriadetalle_id'));
+                $pptodet->laboratorio_id = $request->get('laboratorio_id');           
+                $pptodet->monto_lab = $pptodet->monto_lab != null ? (floatval($pptodet->monto_lab) + floatval($request->get('monto_lab'))) : $request->get('monto_lab') ;
+                $pptodet->user_id = $request->get('user_id');
+                $pptodet->save();
             }
 
             if($request->filled('material_id')){

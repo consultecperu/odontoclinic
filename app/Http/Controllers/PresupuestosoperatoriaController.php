@@ -515,7 +515,7 @@ class PresupuestosoperatoriaController extends Controller
                         'pieza' =>  $det->diente_id == null ? '' : $det->diente->codigo,
                         'superficie' => $superf,
                         'fecha' => date('d-m-Y', strtotime($det->fecha_descarga)),
-                        'costo' => $costo_total,
+                        'costo' => floatval($costo_total),
                         'monto_efectivo' => $det->monto_efectivo != null ? $det->monto_efectivo : 0.00,
                         'monto_tarjeta' => $det->monto_tarjeta != null ? $det->monto_tarjeta : 0.00,
                         'moneda' => $moneda,

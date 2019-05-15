@@ -12,7 +12,7 @@
                     <p class="form-control-static text-danger font-weight-bold">DATOS DEL PRESUPUESTO Nº : {{ dataPaciente.presupuesto_id }}</p>
                 </div> 
                 <div class="col-6">
-                    <button class="btn btn-danger btn-sm btn-round float-right" @click.prevent="$router.go(-1)"><span class="btn-label"><i class="la la-arrow-circle-o-left"></i></span>Volver</button>             
+                    <button class="btn btn-danger btn-sm btn-round float-right" @click.prevent="$router.go(-1)"><span class="btn-label"><i class="la la-angle-double-left"></i></span>Volver</button>             
                 </div>               
             </div>           
             <div class="row">
@@ -149,7 +149,7 @@
                                     styleClass="vgt-table condensed bordered striped">
                                         <template slot="table-row" slot-scope="props">
                                             <span v-if="props.column.field == 'realizado'">
-                                                <span class="center badge badge-success" v-if="props.row.realizado == 3" v-text="'TERMINADO'">terminado</span>                                
+                                                <span class="center badge-mini badge badge-success" v-if="props.row.realizado == 3" v-text="'TERMINADO'">terminado</span>                                
                                             </span>
                                             <span v-else>
                                                 {{props.formattedRow[props.column.field]}}
@@ -913,7 +913,7 @@ export default {
             plan:this.presupuestoOperatoriaById.plan.descripcion,
             aseguradora:this.presupuestoOperatoriaById.poliza_id == null ? '-' : this.presupuestoOperatoriaById.poliza.plane.descripcion,
             fecha:moment(this.presupuestoOperatoriaById.fecha_registro).format('DD-MM-YYYY'),
-            tipocambio:this.presupuestoOperatoriaById.tipocambio.tipo_cambio,
+            tipocambio:parseFloat(this.presupuestoOperatoriaById.tipocambio.tipo_cambio).toFixed(2),
             empleado_id:this.presupuestoOperatoriaById.empleado_id,
             empleado:this.presupuestoOperatoriaById.empleado.nombre_completo,
             deducible:this.presupuestoOperatoriaById.poliza_id == null ? '0' : this.presupuestoOperatoriaById.poliza.deducible,
@@ -938,58 +938,58 @@ export default {
             columns: [
                 {
                 label: 'Pieza',
-                field: 'letras',               
-                width:'15%',
+                field: this.fieldFn,               
+                //width:'15%',
                 }, 
                 {
                 label: 'Servicio',
                 field: 'tarifario.servicio.nombre_servicio',           
-                width:'40%',
+                //width:'40%',
                 },
                 {
                 label: 'Pagado',
                 field: 'pagado',
                 thClass: 'center',
                 tdClass: 'center',                
-                width:'15%',
+                //width:'15%',
                 },                 
                 {
                 label: 'Estado',
                 field: 'realizado', 
                 thClass: 'center',
                 tdClass: 'center',                               
-                width:'20%',
+                //width:'20%',
                 },                                                                                                                                                                                                                       
                 {
                 label: 'Total',
                 field: 'costo',
                 type:'decimal',
-                width:'10%',  
+                //width:'10%',  
                 }                               
             ],
             columns2: [
                 {
                 label: 'Pieza',
-                field: 'letras',               
-                width:'15%',
+                field: this.fieldFn,               
+                //width:'15%',
                 }, 
                 {
                 label: 'Servicio',
                 field: 'tarifario.servicio.nombre_servicio',           
-                width:'50%',
+                //width:'50%',
                 },                
                 {
                 label: 'Estado',
                 field: 'realizado', 
                 thClass: 'center',
                 tdClass: 'center',                               
-                width:'25%',
+                //width:'25%',
                 },                                                                                                                                                                                                                       
                 {
                 label: 'Total',
                 field: 'costo',
                 type:'decimal',
-                width:'10%',  
+                //width:'10%',  
                 }                               
             ],
 
@@ -1342,6 +1342,7 @@ export default {
         ...mapGetters(['getDientesByCuadrante','getMedicos','getTipoCambioHoy','getPresupuestoOperatoriaById','getTipopagosForma','getPagosPresupuestoOperatoriaById']), 
         presupuestoOperatoriaById(){
             if(this.$route.params.idpresupuesto != undefined){
+                console.log("ppto",this.getPresupuestoOperatoriaById(this.$route.params.idpresupuesto))
                 return this.getPresupuestoOperatoriaById(this.$route.params.idpresupuesto)                 
             }
             return []        
@@ -2337,7 +2338,13 @@ export default {
         getMaterial(param){
             let material = this.materiales.find(mat => mat.id == param)
             return material.nombre_material
-        }          
+        },
+        fieldFn(rowObj) {
+            if(rowObj.simbologia_id == 1){
+                return rowObj.diente.codigo + ' - ' + rowObj.caras
+            }
+            return rowObj.diente.codigo + ' - PZA.'
+        }                 
     },
     filters: {
         fixed(value){
@@ -2453,4 +2460,5 @@ export default {
         font-size: 8px !important;
         font-weight: 600 !important;
     }
+  
 </style>

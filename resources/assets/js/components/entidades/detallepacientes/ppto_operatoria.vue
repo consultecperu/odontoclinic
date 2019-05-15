@@ -70,6 +70,8 @@
                     </div>
                 </div>
                 <div class="col-3">
+                    <button class="btn btn-danger btn-sm btn-round float-right mb-10" @click.prevent="$router.go(-1)"><span class="btn-label"><i class="la la-angle-double-left"></i></span>Volver</button>             
+                   
                     <button class="btn btn-info btn-block btn-sm" @click.prevent="Tratamientos_sin_piezas"><span class="btn-label"><i class="la la-info"></i></span>Tx sin Piezas</button>
                     <button class="btn btn-default btn-block btn-sm" v-if="$route.params.idpresupuesto != undefined" @click.prevent="createPDF"><span class="btn-label"><i class="la la-info"></i></span>Imprimir</button>
                     <button class="btn btn-success btn-block btn-sm" v-if="$route.params.idpresupuesto == undefined" @click.prevent="CrearDatosPpto"><span class="btn-label"><i class="la la-check"></i></span>Grabar</button>

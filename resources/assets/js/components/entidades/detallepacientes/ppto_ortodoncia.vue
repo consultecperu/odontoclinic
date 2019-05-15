@@ -8,12 +8,18 @@
         </loading>          
         <div class="col-12 bg-white ml-10 pt-20">
             <div class="row">
-                <div class="col-12">
+<!--                 <div class="col-12">
                     <p class="form-control-static text-danger font-weight-bold">DATOS DEL PACIENTE</p>
-                </div>
+                </div> -->
+                <div class="col-6">
+                    <p class="form-control-static text-danger font-weight-bold">DATOS DEL PACIENTE</p>
+                </div> 
+                <div class="col-6">
+                    <button class="btn btn-danger btn-sm btn-round float-right" @click.prevent="$router.go(-1)"><span class="btn-label"><i class="la la-angle-double-left"></i></span>Volver</button>             
+                </div>                 
             </div>             
             <div class="row">
-                <div class="col-4">
+                <div class="col-8">
                     <div class="form-group form-group-default" >
                         <label for="historia" class="text-primary font-weight-bold">Paciente </label>
                         <p class="form-control-static mb-0" v-text="dataPaciente.nombre_completo"></p>
@@ -25,12 +31,7 @@
                         <p class="form-control-static text-center mb-0" v-text="dataPaciente.historiaclinica"></p>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="form-group form-group-default" >
-                        <label for="historia" class="text-primary font-weight-bold">T.C </label>
-                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.tipocambio"></p>
-                    </div>
-                </div>
+
             </div>
             <div class="row">
                 <div class="col-4">
@@ -64,12 +65,18 @@
                         </select>                                
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class="form-group form-group-default" >
                         <label for="historia" class="text-primary font-weight-bold">Fecha </label>
                         <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.fecha"></p>
                     </div>
-                </div>                
+                </div>
+                <div class="col-2">
+                    <div class="form-group form-group-default" >
+                        <label for="historia" class="text-primary font-weight-bold">T.C </label>
+                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.tipocambio"></p>
+                    </div>
+                </div>                                
             </div>
             <div class="row">
                 <div class="col-12">
@@ -683,23 +690,23 @@ export default {
             doc.setFontType("normal") 
             doc.setFontSize(7)                                
             doc.line(8,67 , 205 ,67)
-            doc.text(190,71 , 'TARIFA')                                    
+            //doc.text(190,71 , 'TARIFA')                                    
             doc.line(8,73 , 205 ,73)                      
             doc.text(11,77, 'Cantidad')
             doc.text(80,77,'Concepto')
             doc.text(170,77,'P.Unitario')
-            doc.text(195,77,'S/.')
+            //doc.text(195,77,'S/.')
             doc.line(8,79 , 205,79)
             // Carga de Datos
             doc.text(14,83,'1','center')
             doc.text(30,83,'CUOTA INICIAL')   
             doc.text(180,83, this.dataPresupuesto.cuota_inicial,'right')   
-            doc.text(200,83, this.dataPresupuesto.cuota_inicial,'right') 
+            //doc.text(200,83, this.dataPresupuesto.cuota_inicial,'right') 
             doc.line(8,85 , 205,85) 
             doc.text(14,89,this.dataPresupuesto.cuotas,'center')
             doc.text(30,89,'CONTROL MENSUAL')   
             doc.text(180,89, this.dataPresupuesto.control_mensual,'right')   
-            doc.text(200,89, total_cuotas,'right')  
+            //doc.text(200,89, total_cuotas,'right')  
             doc.line(8,91 , 205,91)                                                
             let y = 89
             let y2
@@ -708,7 +715,7 @@ export default {
                 doc.text(14,y , '1' ,'center')
                 doc.text(30,y,value.nombre_servicio)
                 doc.text(180,y,parseFloat(value.costo).toFixed(2),'right')
-                doc.text(200,y,parseFloat(value.costo).toFixed(2),'right')
+                //doc.text(200,y,parseFloat(value.costo).toFixed(2),'right')
                 y2 = y + 2
                 doc.line(8,y2 , 205,y2)
             }) 

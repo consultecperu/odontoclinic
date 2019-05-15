@@ -363,21 +363,21 @@ class PresupuestosortodonciaController extends Controller
                 //$costo_total = floatval($det->monto_efectivo) + floatval($det->monto_tarjeta);
                 $tipo_cambio = TipoCambio::where('fecha_registro',date('Y-m-d'));
                 $monto_tarjeta = $det->monto_tarjeta == null ? 0 : floatval($det->monto_tarjeta);
-                $monto_tarjeta = number_format($monto_tarjeta,2);
+                //$monto_tarjeta = number_format($monto_tarjeta,2);
                 $monto_efectivo = $det->monto_efectivo == null ? 0 : floatval($det->monto_efectivo);
-                $monto_efectivo = number_format($monto_efectivo);
+                //$monto_efectivo = number_format($monto_efectivo);
                 $costo_total = floatval($monto_tarjeta) + floatval($monto_efectivo);
-                $costo_total = number_format($costo_total,2);
+                //$costo_total = number_format($costo_total,2);
 
                 if($det->moneda_id == 2){
                     $costo_total = $costo_total * $tipo_cambio;
-                    $costo_total = number_format($costo_total,2);
+                    //$costo_total = number_format($costo_total,2);
 
                     $monto_tarjeta = floatval($monto_tarjeta) * $tipo_cambio;
-                    $monto_tarjeta = number_format($monto_tarjeta,2);
+                    //$monto_tarjeta = number_format($monto_tarjeta,2);
 
                     $monto_efectivo = floatval($monto_efectivo) * $tipo_cambio;
-                    $monto_efectivo = number_format($monto_efectivo,2);                    
+                    //$monto_efectivo = number_format($monto_efectivo,2);                    
                 }
 
                 if($det->material_id != null){

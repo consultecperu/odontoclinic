@@ -8,7 +8,7 @@ class Liquidacionortodoncia extends Model
 {
     protected $table = "liquidacionortodoncias";
 
-    protected $fillable = ['id','empleado_id','sede_id','fecha_corte','monto_total_atenciones','monto_total_abonos','monto_total_descuentos','monto_total_liquidar','motivo_eliminacion','tipo','moneda_id','pagado','user_id','fecha_cancelacion', 'activo'];
+    protected $fillable = ['id','empleado_id','sede_id','fecha_corte','monto_total_atenciones','monto_total_abonos','monto_total_descuentos','monto_total_liquidar','motivo_eliminacion','tipo','moneda_id','pagado','user_id','fecha_cancelacion','monto_liquidable','detraccion', 'activo'];
     
     public function empleado()
     {

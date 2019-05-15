@@ -7,12 +7,20 @@
             :is-full-page="fullPage">
         </loading>          
         <div class="col-12 bg-white ml-10 pt-20">
-            <div class="row">
+            <div class="row mb-10">
+                <div class="col-6">
+                    <p class="form-control-static text-danger font-weight-bold">DATOS DEL PRESUPUESTO Nº : {{ dataPaciente.presupuesto_id }}</p>
+                </div> 
+                <div class="col-6">
+                    <button class="btn btn-danger btn-sm btn-round float-right" @click.prevent="$router.go(-1)"><span class="btn-label"><i class="la la-angle-double-left"></i></span>Volver</button>             
+                </div>               
+            </div>             
+<!--             <div class="row">
                 <div class="col-12">
                     <p class="form-control-static text-danger font-weight-bold">DATOS DEL PACIENTE</p>
                 </div>
-            </div>             
-            <div class="row">
+            </div> -->             
+<!--             <div class="row">
                 <div class="col-4">
                     <div class="form-group form-group-default" >
                         <label for="historia" class="text-primary font-weight-bold">Paciente </label>
@@ -25,19 +33,8 @@
                         <p class="form-control-static text-center mb-0" v-text="dataPaciente.historiaclinica"></p>
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="form-group form-group-default" >
-                        <label for="historia" class="text-primary font-weight-bold">T.C </label>
-                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.tipocambio"></p>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-group form-group-default" >
-                        <label for="historia" class="text-primary font-weight-bold">Fecha </label>
-                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.fecha"></p>
-                    </div>
-                </div>                 
-            </div>
+                
+            </div> -->
             <div class="row">
                 <div class="col-4">
                     <div class="form-group form-group-default" >
@@ -59,7 +56,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-8">
+                <div class="col-7">
                     <div class="form-group form-group-default" >
                         <label for="medicos" class="text-primary font-weight-bold">Profesional </label>
                         <select class="form-control mt-5" id="medicos" v-model="dataPaciente.empleado_id" @change.prevent="CambioMedico(dataPresupuesto.empleado_id)">
@@ -69,7 +66,19 @@
                             </option>
                         </select>                                
                     </div>
-                </div>               
+                </div>
+                <div class="col-2">
+                    <div class="form-group form-group-default" >
+                        <label for="historia" class="text-primary font-weight-bold">T.C </label>
+                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.tipocambio"></p>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group form-group-default" >
+                        <label for="historia" class="text-primary font-weight-bold">Fecha </label>
+                        <p class="form-control-static mt-5 mb-0" v-text="dataPaciente.fecha"></p>
+                    </div>
+                </div>                                
             </div>
             <div class="row">
                 <div class="col-9 pr-10">
@@ -114,9 +123,9 @@
                                                 <span class="center badge" :class="{'badge-danger' : props.row.pagado == 0 ,'badge-success' : props.row.pagado == 1 }">{{ props.row.pagado == 0 ? 'NO' : 'SI' }}</span>             
                                             </span>
                                             <span v-else-if="props.column.field == 'realizado'">
-                                                <span class="center badge badge-danger" v-if="props.row.realizado == 1" v-text="'PENDIENTE'">pendiente</span>                                
-                                                <span class="center badge badge-primary" v-if="props.row.realizado == 2" v-text="'EN PROCESO'">proceso</span>                                
-                                                <span class="center badge badge-success" v-if="props.row.realizado == 3" v-text="'TERMINADO'">terminado</span>                                
+                                                <span class="center badge-mini badge badge-danger" v-if="props.row.realizado == 1" v-text="'PENDIENTE'">pendiente</span>                                
+                                                <span class="center badge-mini badge badge-primary" v-if="props.row.realizado == 2" v-text="'EN PROCESO'">proceso</span>                                
+                                                <span class="center badge-mini badge badge-success" v-if="props.row.realizado == 3" v-text="'TERMINADO'">terminado</span>                                
                                             </span>
                                             <span v-else>
                                                 {{props.formattedRow[props.column.field]}}
@@ -160,7 +169,7 @@
                                     styleClass="vgt-table condensed bordered striped">
                                         <template slot="table-row" slot-scope="props">
                                             <span v-if="props.column.field == 'realizado'">
-                                                <span class="center badge badge-success" v-if="props.row.realizado == 3" v-text="'TERMINADO'">terminado</span>                                
+                                                <span class="center badge-mini badge badge-success" v-if="props.row.realizado == 3" v-text="'TERMINADO'">terminado</span>                                
                                             </span>
                                             <span v-else>
                                                 {{props.formattedRow[props.column.field]}}
@@ -252,6 +261,12 @@
         <modal name="record_atencion" :width="'65%'" :height="'auto'" transition="pop-out" :scrollable="true" :clickToClose="false">
             <!-- form de registro de record atencion -->
                 <div class="card mb-0">
+                    <loading :active.sync="isLoadingRecord"
+                        :background-color="'#000'" 
+                        :color="'red'"
+                        :can-cancel="false" 
+                        :is-full-page="fullPageRecord">
+                    </loading>                     
                     <div class="card-header">
                         <div class="card-title">Realización de Tratamientos</div>
                     </div>
@@ -264,9 +279,9 @@
                                 </div>
                                 <div class="col-3">
                                     <p class="form-control-static"><span class="font-weight-bold">Estado : </span>
-                                        <span class="badge badge-warning" v-if="rec.realizado == 1">Pendiente</span>
-                                        <span class="badge badge-primary" v-if="rec.realizado == 2">En Proceso</span>
-                                        <span class="badge badge-success" v-if="rec.realizado == 3">Terminado</span>
+                                        <span class="badge badge-mini badge-warning" v-if="rec.realizado == 1">Pendiente</span>
+                                        <span class="badge badge-mini badge-primary" v-if="rec.realizado == 2">En Proceso</span>
+                                        <span class="badge badge-mini badge-success" v-if="rec.realizado == 3">Terminado</span>
                                     </p>
                                 </div>
                                 <div class="col-2">
@@ -313,7 +328,7 @@
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.laboratorio.nombre_laboratorio}}</label>
                                                     </div>                                                    
                                                 </div>
-<!--                                                 <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
+                                                <div class="col-6" v-if="rec.tarifario.servicio.materialservicios.length > 0">
                                                     <label for="material" class="text-primary font-weight-bold pt-10">{{ rec.material_id == null ? 'Asignar Material :' : 'Material Asignado :'}}</label>
                                                     <div class="select2-input" v-if="rec.material_id == null">
                                                         <select id="material" name="material" class="col-8 form-control form-control-sm border" v-model="dataServicio.materialservicio_id" @change="cambioMaterial">
@@ -323,11 +338,10 @@
                                                             </option>
                                                         </select>
                                                     </div> 
-                                                    <div class="text-primary font-weight-bold" v-if="rec.material_id != null">
+<!--                                                     <div class="text-primary font-weight-bold" v-if="rec.material_id != null">
                                                         <label for="descripcion" class="text-danger font-weight-bold">{{ rec.material.nombre_material}}</label>
-                                                    </div>                                                     
-                                                </div> -->
-
+                                                    </div>   -->                                                   
+                                                </div>
                                             </div>                                            
                                             <button type="button" class="btn btn-danger btn-sm float-right" @click.prevent="numid = 0"><span class="btn-label"><i class="la la-times-circle"></i> Cancelar</span></button>
                                             <button type="button" class="btn btn-primary btn-sm float-right mr-10" @click.prevent="GrabarRecord(rec)" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
@@ -428,8 +442,8 @@
                             <div class="col-7 pl-0">
                                 <div class="container border border-default">
                                     <div class="row">
-                                        <div class="col-12 pl-10 pr-10">
-                                            <div class="form-group pr-0 pl-0">
+                                        <div class="col-12">
+                                            <div class="form-group">
                                                 <label for="documento" class="text-primary font-weight-bold">Documento Multident</label>
                                                 <div class="select2-input">
                                                     <select id="documento" name="documento" class="form-control form-control-sm" v-model="dataPago.tipodocumento_id" @change="cambioDocumento()">
@@ -443,14 +457,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4 pl-0 pr-0">
+                                        <div class="col-4 pr-0">
                                             <div class="form-group pr-0 pt-0">
                                                 <label for="ruc" class="text-primary font-weight-bold mb-0">Facturar a:</label>
                                                 <input type="text" id="ruc" class="form-control form-control-sm" v-model="dataPago.ruc" disabled>
                                             </div>
                                         </div>
                                         <div class="col-8">
-                                            <div class="group-form">
+                                            <div class="group-form pr-10">
                                                 <div class="input-group pt-20">
                                                     <input type="text" class="form-control form-control-sm font-weight-bold" placeholder="Empresa" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="dataPago.empresa" readonly>
                                                     <div class="input-group-append">
@@ -465,27 +479,27 @@
                                 </div>
                                 <div class="container border border-default mt-10">
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group text-right ">
                                                 <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN SOLES : {{ dataPago.total}}</label>
                                             </div>
                                         </div> 
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group pt-0 text-right ">
                                                 <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN DOLARES : {{ dataPago.total_dolares}}</label>
                                             </div>
                                         </div> 
                                     </div>                                      
                                     <div class="row">
-                                        <div class="col-12 pr-0 pl-0 text-right">
+                                        <div class="col-12 text-right">
                                             <label for="" class="d-inline text-primary font-weight-bold text-right col-8">ENTREGO EFECTIVO :</label> 
                                             <input type="number" step="0.01" id="valor_efectivo" class="d-inline col-4 form-control text-right form-control-sm mr-10" v-model="entrego_efectivo" :disabled="dataPago.modo == 2" placeholder="0.00">        
                                         </div>                                          
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group pt-0 text-right">
                                                 <label for="" class="text-primary font-weight-bold mb-0 mt-10">VUELTO : {{ VueltoAdelantado}}</label>
                                             </div>
@@ -587,8 +601,8 @@
                             <div class="col-7 pl-0">
                                 <div class="container border border-default">
                                     <div class="row">
-                                        <div class="col-12 pl-10 pr-10">
-                                            <div class="form-group pr-0 pl-0">
+                                        <div class="col-12">
+                                            <div class="form-group">
                                                 <label for="documento" class="text-primary font-weight-bold">Documento Multident</label>
                                                 <div class="select2-input">
                                                     <select id="documento" name="documento" class="form-control form-control-sm" v-model="dataPago.tipodocumento_id">
@@ -602,7 +616,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4 pl-0 pr-0">
+                                        <div class="col-4 pr-0">
                                             <div class="form-group pr-0 pt-0">
                                                 <label for="ruc" class="text-primary font-weight-bold mb-0">Facturar a:</label>
                                                 <input type="text" id="ruc" class="form-control form-control-sm" v-model="dataPago.ruc" readonly>
@@ -623,27 +637,27 @@
                                 </div>
                                 <div class="container border border-default mt-10">
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group text-right ">
                                                 <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN SOLES : {{ TotalSolesAdelantado}}</label>
                                             </div>
                                         </div> 
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group pt-0 text-right ">
                                                 <label for="" class="text-primary font-weight-bold mb-0">TOTAL EN DOLARES : {{ TotalDolaresAdelantado}}</label>
                                             </div>
                                         </div> 
                                     </div>                                      
                                     <div class="row">
-                                        <div class="col-12 pr-0 pl-0 text-right">
+                                        <div class="col-12 text-right">
                                             <label for="" class="d-inline text-primary font-weight-bold text-right col-8">ENTREGO EFECTIVO :</label> 
                                             <input type="number" step="0.01" id="valor_efectivo" class="d-inline col-4 form-control text-right form-control-sm mr-10" v-model="entrego_efectivo" placeholder="0.00">        
                                         </div>                                          
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 pl-0 pr-0">
+                                        <div class="col-12">
                                             <div class="form-group pt-0 text-right">
                                                 <label for="" class="text-primary font-weight-bold mb-0 mt-10">VUELTO : {{ VueltoAdelantado}}</label>
                                             </div>
@@ -912,13 +926,14 @@ export default {
             id:this.presupuestoOrtodonciaById.paciente_id,
             nombre_completo:this.presupuestoOrtodonciaById.paciente.nombre_completo,
             historiaclinica:this.presupuestoOrtodonciaById.paciente.historiaclinica,
+            presupuesto_id:this.presupuestoOrtodonciaById.id,
             //empresa:this.presupuestoOrtodonciaById.paciente.pacienteplanes.tipo == 1 ? '-' : this.presupuestoOrtodonciaById.paciente.pacienteplanes.empresapaciente.razon_social,
             empresa: '-',
             plan:this.presupuestoOrtodonciaById.plan.descripcion,
             aseguradora:'-',
             //aseguradora:this.presupuestoOrtodonciaById.paciente.pacienteplanes.plan.descripcion ,
             fecha:moment(this.presupuestoOrtodonciaById.fecha_registro).format('DD-MM-YYYY'),
-            tipocambio:this.presupuestoOrtodonciaById.tipocambio.tipo_cambio,
+            tipocambio:parseFloat(this.presupuestoOrtodonciaById.tipocambio.tipo_cambio).toFixed(2),
             empleado_id:this.presupuestoOrtodonciaById.empleado_id
         } 
     },
@@ -929,6 +944,8 @@ export default {
         return {
             isLoading: false,
             fullPage: true,
+            isLoadingRecord: false,
+            fullPageRecord: false,             
 
             IconClass : 'la la-cloud-download',
             ShowIcon : false,
@@ -1295,7 +1312,11 @@ export default {
         },
         VueltoAdelantado(){
             let vuelto = parseFloat(this.entrego_efectivo) - parseFloat(this.dataPago.monto_efectivo)
+            if(parseInt(this.entrego_efectivo) == 0 || this.entrego_efectivo == ''){
+                return 0
+            }
             return parseFloat(vuelto).toFixed(2)
+
         },
         TratamientosAdicionales(){
             return this.tarifarios.filter(tar => tar.plan_id == this.presupuestoOrtodonciaById.paciente.pacienteplanes.plan_id && tar.sede_id == 1)
@@ -2182,11 +2203,15 @@ export default {
     .title {
         font-weight: 500 !important;
     } 
-    .btn-xs {
+/*     .btn-xs {
         padding: 2px !important;
-    }
+    } */
     .btn-no-xs {
         font-size: 10px !important;
         padding: 5px 9px !important;
-    }          
+    } 
+    .badge-mini {
+        font-size: 8px !important;
+        font-weight: 600 !important;
+    }             
 </style>
