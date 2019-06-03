@@ -1,11 +1,6 @@
 
 window._ = require('lodash');
 
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router'
@@ -32,7 +27,11 @@ import 'fullcalendar/dist/fullcalendar.css'
 import 'beautify-scrollbar/dist/index.css';
 import 'v2-table/dist/index.css';
 import V2Table from 'v2-table';
-import Datepicker from 'vuejs-datepicker';
+//import Datepicker from 'vuejs-datepicker';
+import DatePicker from 'vue2-datepicker'
+import Datatable from 'vue2-datatable-component';
+import locale from 'vue2-datatable-component/locale/es-pe'
+import MaskedInput from 'vue-masked-input'
 
 window.axios = require('axios');
 
@@ -54,4 +53,7 @@ Vue.use(PrettyCheckbox)
 Vue.component('context-menu',contextMenu)
 Vue.use(FullCalendar)
 Vue.use(V2Table)
-Vue.component('Datepicker', Datepicker)
+//Vue.component('Datepicker', Datepicker)
+Vue.component('DatePicker', DatePicker)
+Vue.component('MaskedInput',MaskedInput)
+Vue.use(Datatable, { locale }) // done!

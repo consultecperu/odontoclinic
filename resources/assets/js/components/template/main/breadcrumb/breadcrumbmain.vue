@@ -7,8 +7,9 @@
         <!-- breadcrumbs-items -->
         <breadcrumb></breadcrumb>
         <!-- end breadcrumb-items -->
-    </div>
-    <!-- end breadcrumbmain-->    
+        <!-- menu drop down -->
+        <menuDropdown></menuDropdown>        
+    </div>  
 </template>
 <script>
 export default {

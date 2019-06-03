@@ -1138,7 +1138,8 @@ export default {
             }
         },
         selectServicio(param){
-            let _letras = ''  
+            let _letras = '' 
+            let _newletras = '' 
             let _lados = ''         // var proc. espejo 
             let _newlados = ''
             let self = this 
@@ -1147,7 +1148,7 @@ export default {
             if(this.multicaras.includes(1)) _letras += this.toolTipDiente.cara_1.substr(0,1)
             if(this.multicaras.includes(3)) _letras += this.toolTipDiente.cara_3.substr(0,1)
             if(this.multicaras.includes(2)) _letras += this.toolTipDiente.cara_2.substr(0,1)
-            if(this.multicaras.includes(4)) _letras += this.toolTipDiente.cara_4.substr(0,1)
+            if(this.multicaras.includes(4)) _letras += this.toolTipDiente.cara_4.substr(0,1)          
             // llenamos la var con los numeros de caras
             if(this.multicaras.includes(1)) _lados += '1'
             if(this.multicaras.includes(2)) _lados += '2'
@@ -1162,16 +1163,16 @@ export default {
                 let _costo_aseguradora = parseFloat(param.row.costo) - ( parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro))
                 this.list_dent_multiple.map(function(value, key) { 
                     _newlados = self.CaraEspejo(self.diente_ancla.sector,value.sector,_lados) 
-                    console.log("lados",_newlados)                                     
+                    _newletras = self.LetrasEspejo(_newlados,value)
                     self.dataTratamiento = {
                         tarifario_id:param.row.id,
                         diente_id: value.id,
                         diente_codigo: value.codigo,
                         texto_diente:'',
-                        caras: _letras,
+                        caras: _newletras,
                         lados: _newlados,
                         simbologia: self.simboloID,
-                        letras : value.codigo.replace('.', '') + '_' + _letras,
+                        letras : value.codigo.replace('.', '') + '_' + _newletras,
                         servicio_id : param.row.servicio_id,
                         nombre_servicio : param.row.servicio.nombre_servicio,
                         costo_base: parseFloat(param.row.costo).toFixed(2),
@@ -1536,6 +1537,15 @@ export default {
                 }
             }
             return newlados
+        },
+        LetrasEspejo(_newlad,_valdie){
+            let _newletras = ''
+            if(_newlad.includes(5)) _newletras += _valdie.cara_5.substr(0,1)
+            if(_newlad.includes(1)) _newletras += _valdie.cara_1.substr(0,1)
+            if(_newlad.includes(3)) _newletras += _valdie.cara_3.substr(0,1)
+            if(_newlad.includes(2)) _newletras += _valdie.cara_2.substr(0,1)
+            if(_newlad.includes(4)) _newletras += _valdie.cara_4.substr(0,1) 
+            return _newletras 
         },
         menuPopup(param){
             $('#context-menu').css({'display':'block'}) 

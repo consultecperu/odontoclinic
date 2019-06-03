@@ -27,6 +27,10 @@
 	<!-- CSS bootstrap-datepicker -->
 	<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker/bootstrap-datepicker3.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker/prettify.css') }}">	
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.18/sc-2.0.0/datatables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.18/fc-3.2.5/datatables.min.css"/>     
+
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="{{ asset('css/fonts.css') }}">	 
 	<link rel="stylesheet" href="{{ asset('css/demo.css') }}">

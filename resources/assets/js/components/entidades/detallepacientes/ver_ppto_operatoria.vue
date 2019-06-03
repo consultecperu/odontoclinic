@@ -1470,6 +1470,7 @@ export default {
             this.labelButton = elabel            
         },        
         selectionChanged(param){
+            console.log("selectioncahnged",param)
             this.color_selected = param.selectedRows
         },
         selectionChanged2(param){

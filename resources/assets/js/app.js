@@ -14,6 +14,7 @@ Vue.component('contentmain', require('./components/template/main/contentmain.vue
 Vue.component('breadcrumbmain', require('./components/template/main/breadcrumb/breadcrumbmain.vue'));
 Vue.component('breadcrumb', require('./components/template/main/breadcrumb/breadcrumb.vue'));
 Vue.component('pagetitle', require('./components/template/main/breadcrumb/pagetitle.vue'));
+Vue.component('menuDropdown', require('./components/template/main/breadcrumb/menuDropdown.vue'));
 Vue.component('sidebar', require('./components/template/sidebar/sidebar.vue'));
 /*--- Carga de Imagenes ---*/
 Vue.component('file-upload',require('./components/utils/FileUpload.vue'));

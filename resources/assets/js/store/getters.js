@@ -132,16 +132,16 @@ export default {
         let servicios = []
         if(idsim == 1){
             if(multicaras == 1){  
-                state.tarifarios.map(function(value, key) { 
-                    if(value.servicio.simbologia_id == idsim && (value.plan_id == idplased || value.plan_id == idpla) && value.sede_id == idsed && !value.servicio.nombre_servicio.includes('COMPUESTA') && !value.servicio.nombre_servicio.includes('COMPLEJA')){
+                state.tarifarios.map(function(value, key) {    
+                    if(value.servicio.simbologia_id == idsim && (value.plan_id == idplased || value.plan_id == idpla) && value.sede_id == idsed && (value.servicio.nombre_servicio.includes('SIMPLE') || value.servicio.nombre_servicio.includes('RESTAURACION ESTETICA') || value.servicio.nombre_servicio.includes('RECUBRIMIENTO PULPAR'))){
                         servicios.push(value)
-                    }                    
+                    }                                       
                 })
                 return servicios           
             }
             if(multicaras == 2){
                 state.tarifarios.map(function(value, key) { 
-                    if(value.servicio.simbologia_id == idsim && (value.plan_id == idplased || value.plan_id == idpla) && value.sede_id == idsed && !value.servicio.nombre_servicio.includes('SIMPLE') && !value.servicio.nombre_servicio.includes('COMPLEJA')){
+                    if(value.servicio.simbologia_id == idsim && (value.plan_id == idplased || value.plan_id == idpla) && value.sede_id == idsed && (value.servicio.nombre_servicio.includes('COMPUESTA') || value.servicio.nombre_servicio.includes('MODERADA') || value.servicio.nombre_servicio.includes('RESTAURACION ESTETICA') || value.servicio.nombre_servicio.includes('RECUBRIMIENTO PULPAR'))){
                         servicios.push(value)
                     }                    
                 })
@@ -149,7 +149,7 @@ export default {
             }
             if(multicaras >= 3 ){
                 state.tarifarios.map(function(value, key) { 
-                    if(value.servicio.simbologia_id == idsim && (value.plan_id == idplased || value.plan_id == idpla) && value.sede_id == idsed && !value.servicio.nombre_servicio.includes('COMPUESTA') && !value.servicio.nombre_servicio.includes('SIMPLE')){
+                    if(value.servicio.simbologia_id == idsim && (value.plan_id == idplased || value.plan_id == idpla) && value.sede_id == idsed && (value.servicio.nombre_servicio.includes('COMPLEJA') || value.servicio.nombre_servicio.includes('RESTAURACION ESTETICA') || value.servicio.nombre_servicio.includes('RECUBRIMIENTO PULPAR'))){
                         servicios.push(value)
                     }                    
                 })

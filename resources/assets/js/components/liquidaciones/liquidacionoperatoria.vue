@@ -9,17 +9,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-12 pb-10 border-bottom mb-20">
-                            <button type="button" class="btn btn-sm btn-primary float-right"><span class="btn-label"><i class="la la-file-text"></i></span>Reporte de Liquidación</button>
-                            <button type="button" class="btn btn-sm btn-primary float-right mr-5"><span class="btn-label"><i class="la la-print"></i></span>Reimpresión</button>
-                            <button type="button" class="btn btn-sm btn-primary float-right mr-5"><span class="btn-label"><i class="la la-unlock-alt"></i></span>Liberar Liquidación</button>
-                            <button type="button" class="btn btn-sm btn-primary float-right mr-5"><span class="btn-label"><i class="la la-files-o"></i></span>Liquidaciones</button>
-                        </div>
-                    </div>
                     <ul class="nav nav-tabs nav-danger mt-10" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold active" id="pills-trabfinalizado-tab" data-toggle="pill" href="#pills-trabfinalizado" role="tab" aria-controls="pills-trabfinalizado" aria-selected="true">POR TRABAJO FINALIZADO</a>
+                            <a class="nav-link font-weight-bold active" id="pills-trabfinalizado-tab" data-toggle="pill" href="#pills-trabfinalizado" role="tab" aria-controls="pills-trabfinalizado" aria-selected="true">TRABAJOS FINALIZADOS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link font-weight-bold" id="pills-pagoliquidaciones-tab" data-toggle="pill" href="#pills-pagoliquidaciones" role="tab" aria-controls="pills-pagoliquidaciones" aria-selected="false">PAGO DE LIQUIDACIONES</a>
@@ -71,86 +63,16 @@
                                         <div class="tab-pane fade show active" id="pills-produccion" role="tabpanel" aria-labelledby="pills-produccion-tab">
                                             <div class="row">
                                                 <div class="col-12 mb-10 mt-10">
-                                                    <button type="button" class="btn btn-sm btn-danger float-right" v-show="seleccionados.length > 0" @click.prevent=""><span class="btn-label"><i class="la la-minus-circle"></i></span> No Facturable</button>
-                                                    <button type="button" class="btn btn-sm btn-info float-right mr-5" v-show="seleccionados.length > 0" @click.prevent=""><span class="btn-label"><i class="la la-file-excel-o"></i></span> Preliminar (Excel)</button>
-                                                    <button type="button" class="btn btn-sm btn-success float-right mr-5" v-show="seleccionados.length > 0" @click.prevent="createLiquidacion"><span class="btn-label"><i class="la la-edit"></i></span> Liquidar</button>
+                                                    <button type="button" class="btn btn-sm btn-danger float-right" v-show="options.selection.length > 0" @click.prevent=""><span class="btn-label"><i class="la la-minus-circle"></i></span> No Facturable</button>
+                                                    <button type="button" class="btn btn-sm btn-info float-right mr-5" v-show="options.selection.length > 0" @click.prevent=""><span class="btn-label"><i class="la la-file-excel-o"></i></span> Preliminar (Excel)</button>
+                                                    <button type="button" class="btn btn-sm btn-success float-right mr-5" v-show="options.selection.length > 0" @click.prevent="createLiquidacion"><span class="btn-label"><i class="la la-edit"></i></span> Liquidar</button>
                                                 </div>
                                             </div>                                            
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div>
-                                                        <v2-table :data="rows" ref="table1"
-                                                                border 
-                                                                stripe 
-                                                                height="210"
-                                                                :lazy-load="true"
-                                                                :loading="loading"                                                                 
-                                                                :default-sort='{prop: "presupuesto_id", order: "descending"}' 
-                                                                @sort-change="handleSortChange" 
-                                                                :row-class-name="getRowClassName"
-                                                                :total="total"
-                                                                :cell-height="34"
-                                                                :col-height="30"
-                                                                :shown-pagination="true"
-                                                                :pagination-info="paginationInfo"
-                                                                @page-change="handlePageChange"
-                                                                @select-change="handleSelectChange">
-                                                            <div slot="empty"></div>
-                                                            <v2-table-column type="selection" width="45"></v2-table-column>                              
-                                                            <v2-table-column label="Ppto" prop="presupuesto_id" width="110" sortable></v2-table-column>
-                                                            <v2-table-column label="Paciente" prop="paciente" width="300" align="left" sortable></v2-table-column>
-                                                            <v2-table-column label="Pieza" prop="pieza" width="100" align="left" sortable></v2-table-column>
-                                                            <v2-table-column label="Superf." prop="superficie" width="100" align="left" sortable></v2-table-column>
-                                                            <v2-table-column label="Servicio" prop="nombre_servicio" width="350" align="left" sortable></v2-table-column>
-                                                            <v2-table-column label="Plan" prop="plan" align="left"></v2-table-column>
-                                                            <v2-table-column label="Fecha Descarga" prop="fecha" align="left" sortable></v2-table-column>
-                                                            <v2-table-column label="% Dr." prop="comision" align="left"></v2-table-column>
-                                                            <v2-table-column label="Tipo Pago" prop="type_cash" align="left"></v2-table-column>
-                                                            <v2-table-column label="Mon." prop="moneda" align="center"></v2-table-column>
-                                                            <v2-table-column label="Total" prop="costo" width="100" align="right">
-                                                                <template slot-scope="scope">
-                                                                    <div>{{scope.row.costo | formatMoney}}</div> 
-                                                                </template>                                                
-                                                            </v2-table-column>
-                                                            <v2-table-column label="Monto Efectivo" prop="monto_efectivo" width="120" align="right">
-                                                                <template slot-scope="scope">
-                                                                    <div>{{scope.row.monto_efectivo | formatMoney}}</div> 
-                                                                </template>                                                              
-                                                            </v2-table-column>
-                                                            <v2-table-column label="Monto Tarjeta" prop="monto_tarjeta" width="120" align="right">
-                                                                <template slot-scope="scope">
-                                                                    <div>{{scope.row.monto_tarjeta | formatMoney}}</div> 
-                                                                </template>                                                              
-                                                            </v2-table-column>
-                                                            <v2-table-column label="Ret.Banco" prop="comision_tarjeta" align="right">
-                                                                <template slot-scope="scope">
-                                                                    <div>{{scope.row.comision_tarjeta | formatMoney}}</div> 
-                                                                </template>                                                              
-                                                            </v2-table-column>
-                                                            <v2-table-column label="Sunat Ret." prop="sunat" align="right">
-                                                                <template slot-scope="scope">
-                                                                    <div>{{scope.row.sunat | formatMoney}}</div> 
-                                                                </template>                                                              
-                                                            </v2-table-column>
-                                                            <v2-table-column label="LAB" prop="laboratorio" align="right">
-                                                                <template slot-scope="scope">
-                                                                    <div>{{scope.row.laboratorio | formatMoney}}</div> 
-                                                                </template>                                                              
-                                                            </v2-table-column>
-                                                            <v2-table-column label="Mats.DR." prop="material_doctor" align="right">
-                                                                <template slot-scope="scope">
-                                                                    <div>{{scope.row.material_doctor | formatMoney}}</div> 
-                                                                </template>                                                              
-                                                            </v2-table-column>
-                                                            <v2-table-column label="Neto" prop="neto" width="100" align="right" fixed="right">
-                                                                <template slot-scope="scope">
-                                                                    <div>{{scope.row.neto | formatMoney}}</div> 
-                                                                </template>                                                              
-                                                            </v2-table-column>
-                                                        </v2-table> 
-                                                    </div>
-                                                </div>                         
-                                            </div>                                                                                                  
+                                                    <datatable v-bind="options" :rowStyleClass="rowStyleClassFn"/>
+                                                </div>
+                                            </div>                                                                                                                                             
                                         </div>
                                         <div class="tab-pane fade" id="pills-abonodescuentos" role="tabpanel" aria-labelledby="pills-abonodescuentos-tab">
                                             <div class="row">
@@ -161,43 +83,9 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div>
-                                                        <v2-table :data="rows2" ref="table2"
-                                                                border 
-                                                                stripe 
-                                                                height="210"
-                                                                :lazy-load="true"
-                                                                :loading="loading2" 
-                                                                :default-sort='{prop: "presupuesto_id", order: "descending"}' 
-                                                                @sort-change="handleSortChange2" 
-                                                                :row-class-name="getRowClassName2"
-                                                                :total="total2"
-                                                                :cell-height="34"
-                                                                :col-height="30"
-                                                                :shown-pagination="true"
-                                                                :pagination-info="paginationInfo2"
-                                                                @page-change="handlePageChange2"
-                                                                @select-change="handleSelectChange2">
-                                                            <div slot="empty"></div>
-                                                            <v2-table-column type="selection" width="45"></v2-table-column>                              
-                                                            <v2-table-column label="Tipo" width="130" prop="tipo" align="left"></v2-table-column>
-                                                            <v2-table-column label="Concepto" prop="concepto" width="200" align="left" sortable></v2-table-column>
-                                                            <v2-table-column label="Descripcion" prop="descripcion" width="300" align="left" sortable></v2-table-column>
-                                                            <v2-table-column label="Fecha" prop="fecha" width="150" align="left" sortable></v2-table-column>
-                                                            <v2-table-column label="Monto" prop="monto" width="150" align="right">
-                                                                <template slot-scope="scope">
-                                                                    <div>{{scope.row.monto | formatMoney}}</div> 
-                                                                </template>                                                             
-                                                            </v2-table-column>
-                                                            <v2-table-column label="Accion" prop="accion" width="80" align="center">
-                                                                <template slot-scope="scope">
-                                                                    <div><button type="button" class="btn btn-xs btn-danger" @click.prevent="eliminarAbono(scope.row)"><span class="btn-label"><i class="la la-trash"></i></span></button></div> 
-                                                                </template>                                                                
-                                                            </v2-table-column>
-                                                        </v2-table> 
-                                                    </div>
-                                                </div>                         
-                                            </div> 
+                                                    <datatable v-bind="options_abonos_dsctos" :rowStyleClass="rowStyleClassFn_abonos_dsctos"/>
+                                                </div>
+                                            </div>                                             
                                         </div>
                                     </div> 
                                 </div>
@@ -312,57 +200,58 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+<!--                             <div class="row">
                                 <div class="col-12">                                           
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div>
-                                                <v2-table :data="rows3" ref="table3"
-                                                        border 
-                                                        stripe 
-                                                        height="210"
-                                                        :lazy-load="true"
-                                                        :loading="loading3"                                                                 
-                                                        :default-sort='{prop: "numero_liquidacion", order: "descending"}' 
-                                                        @sort-change="handleSortChange3" 
-                                                        :total="total3"
-                                                        :cell-height="34"
-                                                        :col-height="30"
-                                                        :shown-pagination="true"
-                                                        :pagination-info="paginationInfo3"
-                                                        @page-change="handlePageChange3">
-                                                    <div slot="empty"></div>                            
-                                                    <v2-table-column label="Nro. Liq." prop="numero_liquidacion" width="100" sortable></v2-table-column>
-                                                    <v2-table-column label="Fecha Liq." prop="fecha_liquidacion" width="110" align="left"></v2-table-column>
-                                                    <v2-table-column label="Sede" prop="sede" width="150" align="left" sortable></v2-table-column>
-                                                    <v2-table-column label="Odontologo" prop="empleado" width="280" align="left" sortable></v2-table-column>
-                                                    <v2-table-column label="Moneda" prop="moneda" width="70" align="left"></v2-table-column>
-                                                    <v2-table-column label="Total" prop="total" width="100" align="right">
-                                                        <template slot-scope="scope">
-                                                            <div>{{scope.row.total | formatMoney}}</div> 
-                                                        </template>                                                
-                                                    </v2-table-column>                                                    
-                                                    <v2-table-column label="Estado" prop="estado" width="120" align="center" sortable>
-                                                        <template slot-scope="scope">
-                                                            <div v-if="scope.row.estado == 'NO PAGADO'"><span class="badge badge-danger">{{scope.row.estado}}</span></div> 
-                                                            <div v-if="scope.row.estado == 'PAGADO'"><span class="badge badge-success">{{scope.row.estado}}</span></div> 
-                                                        </template>                                                         
-                                                    </v2-table-column>
-                                                    <v2-table-column label="Accion" prop="accion" width="120" align="center">
-                                                        <template slot-scope="scope">
-                                                            <div>
-                                                                <button type="button" v-if="scope.row.estado == 'NO PAGADO'" class="btn btn-xs btn-success" @click.prevent="pagarLiquidacion(scope.row)"><span class="btn-label"><i class="la la-money"></i></span></button> 
-                                                                <button type="button" v-if="scope.row.estado == 'PAGADO'" class="btn btn-xs btn-primary" @click.prevent="verLiquidacion(scope.row)"><span class="btn-label"><i class="la la-eye"></i></span></button> 
-                                                                <button type="button" class="btn btn-xs btn-warning" @click.prevent="imprimirLiquidacion(scope.row)"><span class="btn-label"><i class="la la-print"></i></span></button>
-                                                            </div> 
-                                                        </template>                                                                
-                                                    </v2-table-column>                                                    
-                                                </v2-table> 
-                                            </div>
-                                        </div>                         
-                                    </div>                                                                                                  
+                                    <div>
+                                        <v2-table :data="rows3" ref="table3"
+                                                border 
+                                                stripe 
+                                                height="210"
+                                                :lazy-load="true"
+                                                :loading="loading3"                                                                 
+                                                :default-sort='{prop: "numero_liquidacion", order: "descending"}' 
+                                                @sort-change="handleSortChange3" 
+                                                :total="total3"
+                                                :cell-height="34"
+                                                :col-height="30"
+                                                :shown-pagination="true"
+                                                :pagination-info="paginationInfo3"
+                                                @page-change="handlePageChange3">
+                                            <div slot="empty"></div>                            
+                                            <v2-table-column label="Nro. Liq." prop="numero_liquidacion" width="100" sortable></v2-table-column>
+                                            <v2-table-column label="Fecha Liq." prop="fecha_liquidacion" width="110" align="left"></v2-table-column>
+                                            <v2-table-column label="Sede" prop="sede" width="150" align="left" sortable></v2-table-column>
+                                            <v2-table-column label="Odontologo" prop="empleado" width="280" align="left" sortable></v2-table-column>
+                                            <v2-table-column label="Moneda" prop="moneda" width="70" align="left"></v2-table-column>
+                                            <v2-table-column label="Total" prop="total" width="100" align="right">
+                                                <template slot-scope="scope">
+                                                    <div>{{scope.row.total | formatMoney}}</div> 
+                                                </template>                                                
+                                            </v2-table-column>                                                    
+                                            <v2-table-column label="Estado" prop="estado" width="120" align="center" sortable>
+                                                <template slot-scope="scope">
+                                                    <div v-if="scope.row.estado == 'NO PAGADO'"><span class="badge badge-danger">{{scope.row.estado}}</span></div> 
+                                                    <div v-if="scope.row.estado == 'PAGADO'"><span class="badge badge-success">{{scope.row.estado}}</span></div> 
+                                                </template>                                                         
+                                            </v2-table-column>
+                                            <v2-table-column label="Accion" prop="accion" width="120" align="center">
+                                                <template slot-scope="scope">
+                                                    <div>
+                                                        <button type="button" v-if="scope.row.estado == 'NO PAGADO'" class="btn btn-xs btn-success" @click.prevent="pagarLiquidacion(scope.row)"><span class="btn-label"><i class="la la-money"></i></span></button> 
+                                                        <button type="button" v-if="scope.row.estado == 'PAGADO'" class="btn btn-xs btn-primary" @click.prevent="verLiquidacion(scope.row)"><span class="btn-label"><i class="la la-eye"></i></span></button> 
+                                                        <button type="button" class="btn btn-xs btn-warning" @click.prevent="imprimirLiquidacion(scope.row)"><span class="btn-label"><i class="la la-print"></i></span></button>
+                                                    </div> 
+                                                </template>                                                                
+                                            </v2-table-column>                                                    
+                                        </v2-table> 
+                                    </div>                                                                                                                                      
                                 </div>
-                            </div>                                                  
+                            </div>  -->  
+                            <div class="row">
+                                <div class="col-12">
+                                    <datatable v-bind="options_pagos" :rowStyleClass="rowStyleClassFn_pagos"/>
+                                </div>
+                            </div>                                                                            
                         </div>                        
                     </div>  
                 </div>
@@ -576,14 +465,24 @@
     </div>
 </template>
 <script>
-import DatePicker from 'vue2-datepicker'
+import Vue from 'vue'
+import uniq from 'lodash/uniq'
+import orderBy from 'lodash/orderBy'
+
+//import DatePicker from 'vue2-datepicker'
 import mixin from '../../mixins.js'
-import MaskedInput from 'vue-masked-input'
+//import MaskedInput from 'vue-masked-input'
 import  {_} from 'vue-underscore'
 import { mapState, mapGetters } from 'vuex'
+import components from './comps/'
+
+const typeOf = o => Object.prototype.toString.call(o).slice(8, -1).toLowerCase()
+const purify = o => JSON.parse(JSON.stringify(o)) // purify data
+
 export default {
     name: 'liquidacionoperatoria',
     mixins: [mixin],
+    props: ['row'],
     created(){
         this.$store.dispatch('LOAD_EMPLEADOS_LIST')        
         this.$store.dispatch('LOAD_SEDES_LIST')
@@ -658,39 +557,7 @@ export default {
                     dateRange: 'Select Date Range'
                 }
             }, 
-            tableData:[],
-            loading: false,
-            loading2:false,
-            loading3:false,
-            currentPage: 1,
-            currentPage2:1,
-            currentPage3:1,
-            total: 50, 
-            total2: 50,
-            total3: 50,
-            paginationInfo: {
-                text: '<strong>0 registros / 50 reg. x Página</strong>',
-                pageSize:50,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            },                      
-            rows:[],  
-            paginationInfo2: {
-                text: '<strong>0 registros - 50 reg. x Página</strong>',
-                pageSize:50,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            },
-            rows2:[],            
-            paginationInfo3: {
-                text: '<strong>0 registros - 50 reg. x Página</strong>',
-                pageSize:50,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            },              
-            rows3:[],
-            seleccionados:[],
-            seleccionados2:[],
+
             // labels del resumen
             label_total_atenciones:0.00,
             label_total_abonos:0.00,
@@ -698,7 +565,85 @@ export default {
             label_total_liquidar:0.00,
             neto_a_liquidar:0.00 ,
             generar: false,
-            datos:[]                                          
+            datos:[],
+            
+            /** test vue2-datatables */
+            options: {
+                fixHeaderAndSetBodyMaxHeight: 200,
+                HeaderSettings: false,
+                tblStyle: 'table-layout: fixed', // must
+                tblClass: 'table-bordered table-sm table-hover',
+                selection:[],
+                columns: [
+                    { title: 'Ppto', field: 'presupuesto_id', tdClass: 'text-center', sortable: true , colStyle: { width : '90px'} },
+                    { title: 'PptoDet', field: 'presupuestooperatoriadetalle_id', visible: false },
+                    { title: 'Paciente', field: 'paciente', sortable: true, colStyle: { width : '300px'} },
+                    { title: 'Pieza', field: 'pieza', colStyle: { width : '80px'} },
+                    { title: 'Superf.', field: 'superficie', colStyle: { width : '90px'}},
+                    { title: 'Servicio', field: 'nombre_servicio', colStyle: { width : '400px'} },
+                    { title: 'Plan', field: 'plan', tdClass: 'text-center' , colStyle: { width : '150px'} },
+                    { title: 'Fecha descarga', field: 'fecha', sortable: true , colStyle: { width : '200px'} }, 
+                    { title: '% Dr', field: 'comision', colStyle: { width : '90px'} },                                                            
+                    { title: 'Tipo Pago', field: 'type_cash', tdClass: 'text-center' ,colStyle: { width : '80px'} },
+                    { title: 'Mon.', field: 'moneda', tdClass: 'text-center', colStyle: { width : '70px'} },
+                    { title: 'Total', field: 'costo', colStyle: { width : '120px'} },
+                    { title: 'Monto Efectivo', field: 'monto_efectivo', colStyle: { width : '120px'} },
+                    { title: 'Monto Tarjeta', field: 'monto_tarjeta', colStyle: { width : '120px'}},
+                    { title: 'Ret. Banco', field: 'comision_tarjeta', colStyle: { width : '100px'} },
+                    { title: 'Sunat Ret.', field: 'sunat', tdClass: 'text-center' , colStyle: { width : '100px'} },
+                    { title: 'LAB.', field: 'laboratorio', colStyle: { width : '100px'} }, 
+                    { title: 'Mats.Dr.', field: 'material_doctor', tdClass: 'text-center' , colStyle: { width : '100px'} },
+                    { title: 'Neto', field: 'neto', colStyle: { width : '120px'} , fixed : 'right' }, 
+                ],
+                data: [],
+                //summary: {},
+                total: 0,
+                query: {}                
+            },
+            options_abonos_dsctos: {
+                fixHeaderAndSetBodyMaxHeight: 200,
+                HeaderSettings: false,
+                tblStyle: 'table-layout: fixed', // must
+                tblClass: 'table-bordered table-sm table-hover',
+                selection:[],
+                columns: [
+                    { title: 'ID', field: 'id', tdClass: 'text-center', visible: false ,colStyle: { width : '120px'} },
+                    { title: 'Tipo', field: 'tipo', tdClass: 'text-center', sortable: true , visible: false , colStyle: { width : '120px'} },
+                    { title: 'Concepto', field: 'concepto', sortable: true, colStyle: { width : '200px'} },
+                    { title: 'Descripcion', field: 'descripcion', colStyle: { width : '250px'} },
+                    { title: 'Fecha', field: 'fecha', colStyle: { width : '130px'}},
+                    { title: 'Monto', field: 'monto', colStyle: { width : '100px'} },
+                    { title: 'Accion', tdComp: 'Opt', visible: 'true' , tdClass : 'center' , thClass : 'center', colStyle: { width : '100px'} },
+                ],
+                data: [],
+                //summary: {},
+                total: 0,
+                query: {}                
+            },  
+
+            options_pagos: {
+                fixHeaderAndSetBodyMaxHeight: 200,
+                HeaderSettings: false,
+                tblStyle: 'table-layout: fixed', // must
+                tblClass: 'table-bordered table-sm table-hover',
+                selection:[],
+                columns: [
+                    { title: 'ID', field: 'id', visible : false },
+                    { title: 'Nro.Liquid.', field: 'numero_liquidacion', tdClass: 'text-center', sortable: true , colStyle: { width : '120px'} },
+                    { title: 'Fecha Liquid.', field: 'fecha_liquidacion', tdClass: 'text-center', sortable: true , visible: false , colStyle: { width : '120px'} },
+                    { title: 'Sede', field: 'sede', sortable: true, colStyle: { width : '300px'} },
+                    { title: 'Odontologo', field: 'empleado', sortable: true, colStyle: { width : '250px'} },
+                    { title: 'Moneda', field: 'moneda', colStyle: { width : '100px'}},
+                    { title: 'Total', field: 'total', colStyle: { width : '150px'} },
+                    { title: 'Estado', field: 'estado', tdComp: 'IP' ,visible: 'true', tdClass : 'center' , thClass : 'center', colStyle: { width : '200px'} },
+                    { title: 'Accion', tdComp: 'Opt', visible: 'true' , tdClass : 'center' , thClass : 'center', colStyle: { width : '100px'} }, 
+                ],
+                data: [],
+                //summary: {},
+                total: 0,
+                query: {}                   
+            },                                  
+
         }
     },
     computed: {
@@ -712,79 +657,15 @@ export default {
             return []
         }                                                 
     },
-    components: { DatePicker ,  MaskedInput  },     
-    methods:{
-        StatusForm: function(eshow,eclass,elabel){
-            this.ShowIcon = eshow
-            this.IconClass = eclass        
-            this.labelButton = elabel            
-        },          
-        cargaDatos(){           
-            this.loading = true
-            let fec_cor = moment(this.dataFiltro.fecha_corte).format('DDMMYYYY')
-            this.$store.dispatch('LOAD_PRELIQUIDACIONES_DOCTORES_LIST',{ empleado_id : this.dataFiltro.empleado_id , sede_id : this.dataFiltro.sede_id , fecha_corte : fec_cor}).then(() => {
-                this.rows = this.preliquidaciondoctor
-                this.$refs.table1.updateScrollbar(true);
-                this.paginationInfo.text = `<strong>`+ this.rows.length+` registros / `+ this.paginationInfo.pageSize+` reg. x página</strong>`
-                this.loading = false            
-            }) 
-            this.cargaDatos2()                
-        },
-        handleSortChange( {prop, order}) {
-            this.loading = true;
-            let list = [].concat(this.rows);
-            list.sort((item1, item2) => {
-                let val1 = '';
-                let val2 = '';
-
-                if (prop === 'fecha') {
-                    val1 = new Date(item1[prop]).getTime();
-                    val2 = new Date(item2[prop]).getTime();
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-
-                if (prop === 'presupuesto_id' || prop === 'paciente' || prop === 'nombre_servicio' || prop === 'superficie' || prop === 'pieza') {
-                    val1 = item1[prop];
-                    val2 = item2[prop]
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-            });
-            setTimeout (() => {
-                this.loading = false;
-                this.rows = [].concat(list);
-            }, 2000);
-        },
-        handlePageChange(page) {
-            this.currentPage = page;
-            this.loading = true;
-            let start = (page - 1) * 10 + 1;
-
-            const list = this.rows.map(item => {
-                return Object.assign({}, item, {
-                    name: `test${start++}`
-                });
-            });
-
-            setTimeout(() => {
-                this.loading = false;
-                this.rows = [].concat(list);
-            }, 2000);  
-        },
-        handleSelectChange (rows) {
+    watch : {
+        'options.selection' (newVal,oldVal){
             let self = this
-            this.seleccionados = rows
             let valor_atenciones = 0.00
             let valor_liquidar = 0.00
             this.label_total_atenciones = 0.00
             this.label_total_liquidar = 0.00
-            if(this.seleccionados.length > 0){
-                _.each(self.seleccionados, function(value,key){
+            if(this.options.selection.length > 0){
+                _.each(self.options.selection, function(value,key){
                     valor_atenciones += parseFloat(value.costo)
                     valor_liquidar += parseFloat(value.neto)
                     self.label_total_atenciones = parseFloat(valor_atenciones).toFixed(2)
@@ -793,20 +674,114 @@ export default {
                 })
             }else{
                 this.netoliquidacion(this.label_total_liquidar,this.label_total_abonos,this.label_total_descuentos)
-            }
-
+            }            
         },
-        getRowClassName ({row, rowIndex}) {
-            let encontrado = this.seleccionados.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
-            if(encontrado.length > 0){
-                return 'seleccionado'
-            }
-            return 'no-seleccionado'
-        },
-        cargaDatos2(){        
-            this.loading2 = true
+        'options_abonos_dsctos.selection' (newVal,oldVal){
             let self = this
-            this.tableData = []
+            let valor_abonos = 0.00
+            let valor_descuentos = 0.00
+            this.label_total_abonos = 0.00
+            this.label_total_descuentos = 0.00
+            if(this.options_abonos_dsctos.selection.length > 0){
+                _.each(self.options_abonos_dsctos.selection, function(value,key){
+                    if(value.type == 1){
+                        valor_abonos += parseFloat(value.monto)
+                    }else{
+                        valor_descuentos += parseFloat(value.monto)                    
+                    }
+                    self.label_total_abonos = parseFloat(valor_abonos).toFixed(2)
+                    self.label_total_descuentos = parseFloat(valor_descuentos).toFixed(2)
+                    if(self.options.selection.length > 0){
+                        self.netoliquidacion(self.label_total_liquidar,self.label_total_abonos,self.label_total_descuentos)
+                    }
+                }) 
+            }else{
+                this.netoliquidacion(this.label_total_liquidar,this.label_total_abonos,this.label_total_descuentos)
+            }
+        },
+        'options.query': {
+            handler (query) {
+                let self = this
+                this.mockData(query).then(({ rows, total }) => {
+                    self.options.data = rows
+                    self.options.total = total
+                })
+            },
+            deep: true
+        },
+        'options_abonos_dsctos.query': {
+            handler (query) {
+                let self = this
+                this.mockData_abonos_dsctos(query).then(({ rows, total }) => {
+                    self.options_abonos_dsctos.data = rows
+                    self.options_abonos_dsctos.total = total
+                })
+            },
+            deep: true
+        }, 
+        'options_pagos.query': {
+            handler (query) {
+                let self = this
+                this.mockData_pagos(query).then(({ rows, total }) => {
+                    self.options_pagos.data = rows
+                    self.options_pagos.total = total
+                })
+            },
+            deep: true
+        },                           
+    },
+
+    //components: { DatePicker ,  MaskedInput  },  
+    components,   
+    methods:{
+        StatusForm: function(eshow,eclass,elabel){
+            this.ShowIcon = eshow
+            this.IconClass = eclass        
+            this.labelButton = elabel            
+        },          
+        cargaDatos(){           
+            let self = this
+            this.isLoading = true
+            this.options.data = []
+            let fec_cor = moment(this.dataFiltro.fecha_corte).format('DDMMYYYY')
+            this.$store.dispatch('LOAD_PRELIQUIDACIONES_DOCTORES_LIST',{ empleado_id : this.dataFiltro.empleado_id , sede_id : this.dataFiltro.sede_id , fecha_corte : fec_cor}).then(() => {
+                self.options.data = self.preliquidaciondoctor  
+                self.options.total = self.options.data.length 
+                self.cargaDatos2()  
+                self.isLoading = false      
+            }) 
+               
+        },
+        mockData(query){
+            query = purify(query)
+            const { limit = 10, offset = 0, sort = '', order = '' } = query
+            let rows = this.options.data
+            let columns = ['presupuesto_id', 'paciente', 'fecha']
+            columns.forEach(field => {
+                switch (typeOf(query[field])) {
+                case 'array':
+                    rows = rows.filter(row => query[field].includes(row[field]))
+                    break
+                case 'string':
+                    rows = rows.filter(row => row[field].toLowerCase().includes(query[field].toLowerCase()))
+                    break
+                default:
+                    // nothing to do
+                    break
+                }
+            })
+            if (sort) {
+                rows = orderBy(rows, sort, order)
+            }
+            const res = {
+                rows: rows.slice(offset, offset + limit),
+                total: rows.length
+            }
+            return Promise.resolve(purify(res))
+        },          
+        cargaDatos2(){        
+            let self = this
+            this.options_abonos_dsctos.data = []
             let filtrados = this.transacciones_doctor.filter(trad => trad.sede_id == this.dataFiltro.sede_id && trad.empleado_id == this.dataFiltro.empleado_id && moment(trad.fecha,'DD-MM-YYYY').isSameOrBefore(moment(this.dataFiltro.fecha_corte,'DD-MM-YYYY')) && trad.liquidado == 0 && trad.origen == 1)
             _.each(filtrados, function(value,key){
                 let files= {
@@ -819,109 +794,37 @@ export default {
                     monto:value.total
                 }
                 let copyfile = _.clone(files)
-                self.tableData.push(copyfile)
+                self.options_abonos_dsctos.data.push(copyfile)
             })
-            this.getTableData2()            
+            self.options_abonos_dsctos.total = self.options_abonos_dsctos.data.length          
         },
-        getTableData2(){
-            this.rows2 = this.tableData
-            this.$refs.table2.updateScrollbar(true);
-            this.paginationInfo2.text = `<strong>Total `+ this.rows2.length+` registros - `+ this.paginationInfo2.pageSize+` reg. x página</strong>`
-            this.loading2 = false
-        },        
-        handleSortChange2( {prop, order}) {
-            this.loading2 = true;
-            let list = [].concat(this.rows2);
-            list.sort((item1, item2) => {
-                let val1 = '';
-                let val2 = '';
-
-                if (prop === 'fecha') {
-                    val1 = new Date(item1[prop]).getTime();
-                    val2 = new Date(item2[prop]).getTime();
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
+        mockData_abonos_dsctos(query){
+            query = purify(query)
+            const { limit = 10, offset = 0, sort = '', order = '' } = query
+            let rows = this.options_abonos_dsctos.data
+            let columns = ['tipo', 'concepto', 'fecha']
+            columns.forEach(field => {
+                switch (typeOf(query[field])) {
+                case 'array':
+                    rows = rows.filter(row => query[field].includes(row[field]))
+                    break
+                case 'string':
+                    rows = rows.filter(row => row[field].toLowerCase().includes(query[field].toLowerCase()))
+                    break
+                default:
+                    // nothing to do
+                    break
                 }
-
-                if (prop === 'tipo' || prop === 'concepto' || prop === 'monto') {
-                    val1 = item1[prop];
-                    val2 = item2[prop]
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-            });
-            setTimeout (() => {
-                this.loading2 = false;
-                this.rows2 = [].concat(list);
-            }, 2000);
-        },
-        handlePageChange2(page) {
-            this.currentPage2 = page;
-            this.loading2 = true;
-            let start = (page - 1) * 10 + 1;
-
-            const list = this.rows2.map(item => {
-                return Object.assign({}, item, {
-                    name: `test${start++}`
-                });
-            });
-
-            setTimeout(() => {
-                this.loading2 = false;
-                this.rows2 = [].concat(list);
-            }, 2000);  
-        },
-        handleSelectChange2 (rows) {
-            let self = this
-            this.seleccionados2 = rows
-            let valor_abonos = 0.00
-            let valor_descuentos = 0.00
-            this.label_total_abonos = 0.00
-            this.label_total_descuentos = 0.00
-            if(this.seleccionados2.length > 0){
-                _.each(self.seleccionados2, function(value,key){
-                    if(value.type == 1){
-                        valor_abonos += parseFloat(value.monto)
-                    }else{
-                        valor_descuentos += parseFloat(value.monto)                    
-                    }
-                    self.label_total_abonos = parseFloat(valor_abonos).toFixed(2)
-                    self.label_total_descuentos = parseFloat(valor_descuentos).toFixed(2)
-                    if(self.seleccionados.length > 0){
-                        self.netoliquidacion(self.label_total_liquidar,self.label_total_abonos,self.label_total_descuentos)
-                    }
-                }) 
-            }else{
-                this.netoliquidacion(this.label_total_liquidar,this.label_total_abonos,this.label_total_descuentos)
+            })
+            if (sort) {
+                rows = orderBy(rows, sort, order)
             }
-           
-        }, 
-        getRowClassName2 ({row, rowIndex}) {
-            let encontrado = this.seleccionados2.filter(sel => sel.id == row.id)      
-            if(encontrado.length > 0){
-                return 'seleccionado'
+            const res = {
+                rows: rows.slice(offset, offset + limit),
+                total: rows.length
             }
-            return 'no-seleccionado'
-        },
-        accion_nav(param){
-            if(param == 1){     // produccion
-                this.loading = true
-                setTimeout(() => {                    
-                    this.$refs.table1.updateScrollbar(true)
-                    this.loading = false
-                }, 2000); 
-            }else{              // abonos
-                this.loading2 = true
-                setTimeout(() => {
-                    this.$refs.table2.updateScrollbar(true)
-                    this.loading2 = false
-                }, 2000); 
-            }
-        },
+            return Promise.resolve(purify(res))
+        },          
         agregaDescuento(){
             this.dataTransaccion ={
                empleado_id:this.dataFiltro.empleado_id,
@@ -977,7 +880,6 @@ export default {
             })    
             this.errors = [];
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')            
-            //this.$modal.hide('paciente');   
             this.notificaciones('Nuevo registro creado con exito','la la-thumbs-up','success')   
             this.$modal.hide('transacciones');                         
             }).catch(error => {
@@ -1062,62 +964,42 @@ export default {
 
         },
         cargaDatosLiquidacion(){         
-            this.loading3 = true
+            this.isLoading = true
             let fec_ini = moment(this.dataFiltroPL.fecha_desde).format('DDMMYYYY')
             let fec_fin = moment(this.dataFiltroPL.fecha_hasta).format('DDMMYYYY')            
             this.$store.dispatch('LOAD_LIQUIDACIONES_SEDES_LIST',{ sede_id : this.dataFiltroPL.sede_id , fecha_desde : fec_ini , fecha_hasta : fec_fin}).then(() => {
-                this.rows3 = this.liquidacionessedes
-                this.$refs.table3.updateScrollbar(true);
-                this.paginationInfo3.text = `<strong>`+ this.rows3.length+` registros / `+ this.paginationInfo3.pageSize+` reg. x página</strong>`
-                this.loading3 = false            
-            })         
+                this.options_pagos.data = this.liquidacionessedes
+                this.options_pagos.total = this.options_pagos.data.length   
+                this.isLoading = false            
+            })                   
         },
-        handleSortChange3( {prop, order}) {
-            this.loading3 = true;
-            let list = [].concat(this.rows3);
-            list.sort((item1, item2) => {
-                let val1 = '';
-                let val2 = '';
-
-                if (prop === 'fecha_liquidacion') {
-                    val1 = new Date(item1[prop]).getTime();
-                    val2 = new Date(item2[prop]).getTime();
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
+        mockData_pagos(query){
+            query = purify(query)
+            const { limit = 10, offset = 0, sort = '', order = '' } = query
+            let rows = this.options_pagos.data
+            let columns = ['numero_liquidacion', 'fecha_liquidacion', 'sede' ,'empleado']
+            columns.forEach(field => {
+                switch (typeOf(query[field])) {
+                case 'array':
+                    rows = rows.filter(row => query[field].includes(row[field]))
+                    break
+                case 'string':
+                    rows = rows.filter(row => row[field].toLowerCase().includes(query[field].toLowerCase()))
+                    break
+                default:
+                    // nothing to do
+                    break
                 }
-
-                if (prop === 'numero_liquidacion' || prop === 'sede' || prop === 'empleado' || prop === 'estado') {
-                    val1 = item1[prop];
-                    val2 = item2[prop]
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-            });
-            setTimeout (() => {
-                this.loading3 = false;
-                this.rows3 = [].concat(list);
-            }, 2000);
-        },
-        handlePageChange3(page) {
-            this.currentPage3 = page;
-            this.loading3 = true;
-            let start = (page - 1) * 10 + 1;
-
-            const list = this.rows3.map(item => {
-                return Object.assign({}, item, {
-                    name: `test${start++}`
-                });
-            });
-
-            setTimeout(() => {
-                this.loading3 = false;
-                this.rows3 = [].concat(list);
-            }, 2000);  
-        },
+            })
+            if (sort) {
+                rows = orderBy(rows, sort, order)
+            }
+            const res = {
+                rows: rows.slice(offset, offset + limit),
+                total: rows.length
+            }
+            return Promise.resolve(purify(res))
+        },         
         pagarLiquidacion(param){
             this.dataPago.monto = parseFloat(param.total).toFixed(2)
             this.dataPago.liquidacionoperatoria_id = param.id
@@ -1169,17 +1051,51 @@ export default {
                     }
                 });
 
-        }                       
+        },
+        rowStyleClassFn(row){
+            let encontrado = this.options.selection.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
+            if(encontrado.length > 0){
+                return 'bg-info text-white'
+            }
+            return 'text-black'
+        },  
+        rowStyleClassFn_abonos_dsctos(row){
+            let encontrado = this.options_abonos_dsctos.selection.filter(sel => sel.id == row.id)      
+            if(encontrado.length > 0){
+                return 'bg-info text-white'
+            }
+            return 'text-black'
+        }, 
+        rowStyleClassFn_pagos(row){
+            let encontrado = this.options_pagos.selection.filter(sel => sel.id == row.id)      
+            if(encontrado.length > 0){
+                return 'bg-info text-white'
+            }
+            return 'text-black'
+        },                                 
 
     },
     filters: {
-      formatMoney (val) {
-        return parseFloat(val).toFixed(2)
-      }
-    }      
+        formatMoney (val) {
+            return parseFloat(val).toFixed(2)
+        }
+    }          
 }
 </script>
+<style>
+    .v--modal-overlay .v--modal-box {
+        overflow: visible !important;
+    }
+    th, td { white-space: nowrap; } 
+    .-page-size-select {
+        padding: .375rem .75rem !important; 
+    }  
+    .table-sm td, .table-sm th {
+        padding: .3rem !important;
+    }                  
+</style>
 <style scoped>
+@import 'http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
     .v--modal-overlay {
         z-index:9000;     
     }    
@@ -1211,6 +1127,10 @@ export default {
     .btn .btn-label i {
         margin-left: 0 !important;
         margin-right: 0 !important;
-    }     
+    } 
+    select.input-sm {
+        height: 30px;
+        line-height: 30px;
+    }    
 </style>
 

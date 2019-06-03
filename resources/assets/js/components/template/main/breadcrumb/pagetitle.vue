@@ -1,7 +1,9 @@
 <template>
-    <!-- page-title -->
-    <h4 class="page-title" v-text="_breadmain == null ? breadmain : _breadmain"></h4>
-    <!-- end page-title -->    
+    <div>
+        <!-- page-title -->
+        <h4 class="page-title" v-text="_breadmain == null ? breadmain : _breadmain"></h4>
+        <!-- end page-title --> 
+    </div>   
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'

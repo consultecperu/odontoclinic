@@ -117,6 +117,7 @@ class LaboratoriotrabajoController extends Controller
                     $pptodet_ort = Presupuestoortodonciadetalle::with('presupuestoortodoncia')->findOrFail($labtra->presupuestoortodonciadetalle_id);
                 }
                 // preguntar si el monto es menor igual saldo_lab
+                
                 // si es mayor - igual descontar del saldo_lab
                 $labtra->seguimiento = 2;         
                 $labtra->fecha_envio =  Globales::FormatFecYMD_hms($request->get('fecha_envio'));

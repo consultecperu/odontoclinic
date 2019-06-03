@@ -54,48 +54,15 @@
                                         <date-picker @change="cargaDatos" v-model="dataFiltro1.fecha_corte" :first-day-of-week="1" :lang="lang" format="DD-MM-YYYY"></date-picker>
                                     </div>
 
-                                    <button type="button" class="btn btn-sm btn-success d-inline ml-5 mb-5 float-right mr-20" v-if="seleccionados.length > 0" @click.prevent="enviar"><span class="btn-label"><i class="la la-level-up"></i></span>Mandar a Laboratorio</button>
-                                    <button type="button" class="btn btn-sm btn-danger d-inline ml-5 mb-5 float-right" v-if="seleccionados.length > 0" @click.prevent="noLiquidable"><span class="btn-label"><i class="la la-remove"></i></span>No Liquidable</button>
+                                    <button type="button" class="btn btn-sm btn-success d-inline ml-5 mb-5 float-right mr-20" v-if="options.selection.length > 0" @click.prevent="enviar"><span class="btn-label"><i class="la la-level-up"></i></span>Mandar a Laboratorio</button>
+                                    <button type="button" class="btn btn-sm btn-danger d-inline ml-5 mb-5 float-right" v-if="options.selection.length > 0" @click.prevent="noLiquidable"><span class="btn-label"><i class="la la-remove"></i></span>No Liquidable</button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <div>
-                                        <v2-table :data="rows" ref="table1"
-                                                border 
-                                                stripe 
-                                                height="210"
-                                                :lazy-load="true"
-                                                :loading="loading" 
-                                                :default-sort='{prop: "presupuesto_id", order: "descending"}' 
-                                                @sort-change="handleSortChange" 
-                                                :row-class-name="getRowClassName"
-                                                :total="total"
-                                                :cell-height="34"
-                                                :col-height="30"                                                
-                                                :shown-pagination="true"
-                                                :pagination-info="paginationInfo"
-                                                @page-change="handlePageChange"
-                                                @select-change="handleSelectChange">
-                                            <div slot="empty"></div>
-                                            <v2-table-column type="selection" width="45"></v2-table-column>                              
-                                            <v2-table-column label="ID" width="92" prop="id"></v2-table-column>
-                                            <v2-table-column label="Presupuesto" prop="presupuesto_id" width="110" sortable></v2-table-column>
-                                            <v2-table-column label="Paciente" prop="paciente" width="300" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Servicio" prop="servicio" width="350" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Fase" prop="fase" align="left"></v2-table-column>
-                                            <v2-table-column label="Pieza" prop="pieza" width="100" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Total" prop="total" width="100" align="right">
-                                                <template slot-scope="scope">
-                                                    <div>{{scope.row.total | formatMoney}}</div> 
-                                                </template>                                                
-                                            </v2-table-column>
-                                            <v2-table-column label="Doctor" prop="doctor" width="350" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Fecha Separacion" prop="fecha_separacion" align="left" width="150" sortable fixed="right"></v2-table-column>
-                                        </v2-table> 
-                                    </div>
-                                </div>                         
-                            </div>                                                      
+                                    <datatable v-bind="options" :rowStyleClass="rowStyleClassFn"/>
+                                </div>
+                            </div>                                                                      
                         </div>
                         <div class="tab-pane fade" id="pills-laboratorio" role="tabpanel" aria-labelledby="pills-laboratorio-tab">
                             <div class="row">
@@ -126,48 +93,14 @@
                                         <label for="fecha" class="col-12 pl-10 mb-0 label-title">Fecha de Corte</label>
                                         <date-picker @change="cargaDatos2" v-model="dataFiltro2.fecha_corte" :first-day-of-week="1" :lang="lang" format="DD-MM-YYYY"></date-picker>
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-success d-inline mr-20 mb-5 float-right" v-if="seleccionados2.length > 0" @click.prevent="recibidos"><span class="btn-label"><i class="la la-check-circle-o"></i></span>Marcar como Recibidos</button>
+                                    <button type="button" class="btn btn-sm btn-success d-inline mr-20 mb-5 float-right" v-if="options_enviados.selection.length > 0" @click.prevent="recibidos"><span class="btn-label"><i class="la la-check-circle-o"></i></span>Marcar como Recibidos</button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <div>
-                                        <v2-table :data="rows2" ref="table2"
-                                                border 
-                                                stripe 
-                                                height="210"
-                                                :lazy-load="true"
-                                                :loading="loading2" 
-                                                :default-sort='{prop: "presupuesto_id", order: "descending"}' 
-                                                @sort-change="handleSortChange2" 
-                                                :row-class-name="getRowClassName2"
-                                                :total="total2"
-                                                :cell-height="34"
-                                                :col-height="30"                                                
-                                                :shown-pagination="true"
-                                                :pagination-info="paginationInfo2"
-                                                @page-change="handlePageChange2"
-                                                @select-change="handleSelectChange2">
-                                            <div slot="empty"></div>
-                                            <v2-table-column type="selection" width="45"></v2-table-column>                              
-                                            <v2-table-column label="ID" width="92" prop="id"></v2-table-column>
-                                            <v2-table-column label="Presupuesto" prop="presupuesto_id" width="110" sortable></v2-table-column>
-                                            <v2-table-column label="Paciente" prop="paciente" width="300" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Servicio" prop="servicio" width="350" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Fase" prop="fase" align="left"></v2-table-column>
-                                            <v2-table-column label="Pieza" prop="pieza" width="100" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Total" prop="total" width="100" align="right">
-                                                <template slot-scope="scope">
-                                                    <div>{{scope.row.total | formatMoney}}</div> 
-                                                </template>                                                 
-                                            </v2-table-column>
-                                            <v2-table-column label="Doctor" prop="doctor" width="350" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Fecha de Envio" prop="fecha_envio" align="left" width="150" sortable fixed="right"></v2-table-column>
-                                            <v2-table-column label="Fecha de Entrega" prop="fecha_entrega" align="left" width="150" sortable fixed="right"></v2-table-column>
-                                        </v2-table> 
-                                    </div>
-                                </div>                         
-                            </div> 
+                                    <datatable v-bind="options_enviados" :rowStyleClass="rowStyleClassFn_enviados"/>
+                                </div>
+                            </div>                            
                         </div>
                         <div class="tab-pane fade" id="pills-recibidos" role="tabpanel" aria-labelledby="pills-recibidos-tab">
                             <div class="row">
@@ -198,47 +131,14 @@
                                         <label for="fecha" class="col-12 pl-10 mb-0 label-title">Fecha de Corte</label>
                                         <date-picker @change="cargaDatos3" v-model="dataFiltro3.fecha_corte" :first-day-of-week="1" :lang="lang" format="DD-MM-YYYY"></date-picker>
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-success d-inline mr-20 mb-5 float-right" v-if="seleccionados3.length > 0" @click.prevent="liquidar"><span class="btn-label"><i class="la la-check-circle-o"></i></span>Liquidar</button>
+                                    <button type="button" class="btn btn-sm btn-success d-inline mr-20 mb-5 float-right" v-if="options_recibidos.selection.length > 0" @click.prevent="liquidar"><span class="btn-label"><i class="la la-check-circle-o"></i></span>Liquidar</button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <div>
-                                        <v2-table :data="rows3" ref="table3"
-                                                border 
-                                                stripe 
-                                                height="210"
-                                                :lazy-load="true"
-                                                :loading="loading3" 
-                                                :default-sort='{prop: "presupuesto_id", order: "descending"}' 
-                                                @sort-change="handleSortChange3" 
-                                                :row-class-name="getRowClassName3"
-                                                :total="total3"
-                                                :cell-height="34"
-                                                :col-height="30"                                                
-                                                :shown-pagination="true"
-                                                :pagination-info="paginationInfo3"
-                                                @page-change="handlePageChange3"
-                                                @select-change="handleSelectChange3">
-                                            <div slot="empty"></div>
-                                            <v2-table-column type="selection" width="45"></v2-table-column>                              
-                                            <v2-table-column label="ID" width="92" prop="id"></v2-table-column>
-                                            <v2-table-column label="Presupuesto" prop="presupuesto_id" width="110" sortable></v2-table-column>
-                                            <v2-table-column label="Paciente" prop="paciente" width="300" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Servicio" prop="servicio" width="350" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Fase" prop="fase" align="left"></v2-table-column>
-                                            <v2-table-column label="Pieza" prop="pieza" width="100" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Total" prop="total" width="100" align="right">
-                                                <template slot-scope="scope">
-                                                    <div>{{scope.row.total | formatMoney}}</div> 
-                                                </template>                                                 
-                                            </v2-table-column>
-                                            <v2-table-column label="Doctor" prop="doctor" width="350" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Fecha de Recepcion" prop="fecha_recepcion" align="left" width="150" sortable fixed="right"></v2-table-column>
-                                        </v2-table> 
-                                    </div>
-                                </div>                         
-                            </div> 
+                                    <datatable v-bind="options_recibidos" :rowStyleClass="rowStyleClassFn_recibidos"/>
+                                </div>
+                            </div>                            
                         </div>
                         <div class="tab-pane fade" id="pills-liquidados" role="tabpanel" aria-labelledby="pills-liquidados-tab">
                             <div class="row">
@@ -273,49 +173,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <div>
-                                        <v2-table :data="rows4" ref="table4"
-                                                border 
-                                                stripe 
-                                                height="210"
-                                                :lazy-load="true"
-                                                :loading="loading4" 
-                                                :default-sort='{prop: "presupuesto_id", order: "descending"}' 
-                                                @sort-change="handleSortChange4" 
-                                                :row-class-name="getRowClassName4"
-                                                :total="total4"
-                                                :cell-height="34"
-                                                :col-height="30"                                                
-                                                :shown-pagination="true"
-                                                :pagination-info="paginationInfo4"
-                                                @page-change="handlePageChange4"
-                                                @select-change="handleSelectChange4">
-                                            <div slot="empty"></div>
-                                            <v2-table-column type="selection" width="45"></v2-table-column>                              
-                                            <v2-table-column label="Nro. Liquidación" width="150" prop="codigo"></v2-table-column>
-                                            <v2-table-column label="Sede" prop="sede" width="200" sortable></v2-table-column>
-                                            <v2-table-column label="Monto" prop="monto" width="100" align="right">
-                                                <template slot-scope="scope">
-                                                    <div>{{scope.row.monto | formatMoney}}</div> 
-                                                </template>                                                 
-                                            </v2-table-column>
-                                            <v2-table-column label="Estado" prop="pagado" width="250" align="center">
-                                                <template slot-scope="scope">
-                                                    <span class="center badge" :class="{'badge-danger' : scope.row.pagado == 0,'badge-primary' : scope.row.pagado == 1 }">{{scope.row.pagado == 0 ? 'PENDIENTE': 'PAGADO' }}</span>                                
-                                                </template>                                                
-                                            </v2-table-column>
-                                            <v2-table-column label="Fecha Liquidación" prop="fecha_liquidacion" width="200" align="left" sortable></v2-table-column>
-                                            <v2-table-column label="Accion" prop="accion" width="100" align="center">
-                                                <template slot-scope="scope">
-                                                    <button type="button" class="btn btn-success btn-xs" v-tooltip="'Imprimir'" @click.prevent="imprimirLiquidacion(scope.row)">
-                                                        <i class="la la-print font-large"></i>
-                                                    </button>                                
-                                                </template>                                                 
-                                            </v2-table-column>
-                                        </v2-table> 
-                                    </div>
-                                </div>                         
-                            </div> 
+                                    <datatable v-bind="options_liquidados" :rowStyleClass="rowStyleClassFn_liquidados"/>
+                                </div>
+                            </div>                             
                         </div>
                     </div>  
                 </div>
@@ -332,7 +192,7 @@
                         <div class="col">
                             <div class="form-group row pt-0 d-inline">
                                 <label for="fecha" class="col-12 pl-10 mb-0">Fecha de Entrega</label>
-                                <date-picker v-model="dataFiltro1.fecha_entrega" :first-day-of-week="1" :lang="lang" format="DD-MM-YYYY"></date-picker>
+                                <date-picker v-model="dataFiltro1.fecha_entrega" :first-day-of-week="1" :lang="lang" format="DD-MM-YYYY"></date-picker> 
                             </div>                            
                         </div>  
                     </div>
@@ -346,20 +206,38 @@
     </div>    
 </template>
 <script>
-import DatePicker from 'vue2-datepicker'
+import Vue from 'vue'
+import uniq from 'lodash/uniq'
+import orderBy from 'lodash/orderBy'
+
+//import DatePicker from 'vue2-datepicker'
 import mixin from '../../mixins.js'
 import  {_} from 'vue-underscore'
 import { mapState, mapGetters } from 'vuex'
+import components from './comps/'
+
+const typeOf = o => Object.prototype.toString.call(o).slice(8, -1).toLowerCase()
+const purify = o => JSON.parse(JSON.stringify(o)) // purify data
+
 export default {
     name: 'liquidacionlaboratorio',
+    //name: 'FriendsTable', // `name` is required as a recursive component
     mixins: [mixin],
+    props: ['row'],
     created(){
         this.$store.dispatch('LOAD_LABORATORIOS_LIST')        
         this.$store.dispatch('LOAD_SEDES_LIST') 
         this.$store.dispatch('LOAD_LABORATORIO_TRABAJOS_LIST') 
         this.$store.dispatch('LOAD_LIQUIDACION_LABORATORIOS_LIST') 
-    },    
+        this.options_liquidados.xprops.eventbus
+            .$on('RELOAD', this.loadData) // namespace prefix is free!
+            .$on('RELOAD2', function (row) {
+                /* do something */
+                console.log("fila",row)
+            })        
+        },  
     data(){
+        const amINestedComp = !!this.row
         return {
             isLoading: false,
             fullPage: true,
@@ -407,75 +285,162 @@ export default {
                     dateRange: 'Select Date Range'
                 }
             },
-            tableDate:[],
-            loading: false,
-            currentPage: 1,
-            total: 10, 
-            paginationInfo: {
-                text: '<strong>Total 0 registros - 10 reg. x Página</strong>',
-                pageSize:10,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            },                      
-            rows:[], 
+            
+            //cambio:1,
+            /** test vue2-datatables */
+            options: {
+                fixHeaderAndSetBodyMaxHeight: 200,
+                HeaderSettings: false,
+                tblStyle: 'table-layout: fixed', // must
+                tblClass: 'table-bordered table-sm table-hover',
+                selection:[],
+                columns: [
+                    { title: 'ID', field: 'id', sortable: true , tdClass: 'text-center' ,colStyle: { width : '80px'} },
+                    { title: 'Presupuesto', field: 'presupuesto_id', tdClass: 'text-center', sortable: true , colStyle: { width : '120px'} },
+                    { title: 'Paciente', field: 'paciente', sortable: true, colStyle: { width : '300px'} },
+                    { title: 'Servicio', field: 'servicio', sortable: true, colStyle: { width : '250px'} },
+                    { title: 'Fase', field: 'fase', colStyle: { width : '100px'}},
+                    { title: 'Pieza', field: 'pieza', colStyle: { width : '150px'} },
+                    { title: 'Total', field: 'total', sortable: true, tdClass: 'text-center' , colStyle: { width : '100px'} },
+                    { title: 'Doctor', field: 'doctor', sortable: true , colStyle: { width : '250px'} }, 
+                    { title: 'Fecha Separación', field: 'fecha_separacion', colStyle: { width : '150px'}, fixed : 'right' },                                        
+                    ],
+                data: [],
+                //summary: {},
+                total: 0,
+                query: {}                
+            },
+            options_enviados: {
+                fixHeaderAndSetBodyMaxHeight: 200,
+                HeaderSettings: false,
+                tblStyle: 'table-layout: fixed', // must
+                tblClass: 'table-bordered table-sm table-hover',
+                selection:[],
+                columns: [
+                    { title: 'ID', field: 'id', sortable: true , tdClass: 'text-center' ,colStyle: { width : '80px'} },
+                    { title: 'Presupuesto', field: 'presupuesto_id', tdClass: 'text-center', sortable: true , colStyle: { width : '120px'} },
+                    { title: 'Paciente', field: 'paciente', sortable: true, colStyle: { width : '300px'} },
+                    { title: 'Servicio', field: 'servicio', sortable: true, colStyle: { width : '250px'} },
+                    { title: 'Fase', field: 'fase', colStyle: { width : '100px'}},
+                    { title: 'Pieza', field: 'pieza', colStyle: { width : '150px'} },
+                    { title: 'Total', field: 'total', sortable: true, tdClass: 'text-center' , colStyle: { width : '100px'} },
+                    { title: 'Doctor', field: 'doctor', sortable: true , colStyle: { width : '250px'} }, 
+                    { title: 'Fecha de Envio', field: 'fecha_envio', colStyle: { width : '150px'}, fixed : 'right' },                                        
+                    { title: 'Fecha de Entrega', field: 'fecha_entrega', colStyle: { width : '150px'}, fixed : 'right' },                                        
+                    ],
+                data: [],
+                total: 0,
+                query: {}                
+            },
+            options_recibidos: {
+                fixHeaderAndSetBodyMaxHeight: 200,
+                HeaderSettings: false,
+                tblStyle: 'table-layout: fixed', // must
+                tblClass: 'table-bordered table-sm table-hover',
+                selection:[],
+                columns: [
+                    { title: 'ID', field: 'id', sortable: true , tdClass: 'text-center' ,colStyle: { width : '80px'} },
+                    { title: 'Presupuesto', field: 'presupuesto_id', tdClass: 'text-center', sortable: true , colStyle: { width : '120px'} },
+                    { title: 'Paciente', field: 'paciente', sortable: true, colStyle: { width : '300px'} },
+                    { title: 'Servicio', field: 'servicio', sortable: true, colStyle: { width : '250px'} },
+                    { title: 'Fase', field: 'fase', colStyle: { width : '100px'}},
+                    { title: 'Pieza', field: 'pieza', colStyle: { width : '150px'} },
+                    { title: 'Total', field: 'total', sortable: true, tdClass: 'text-center' , colStyle: { width : '100px'} },
+                    { title: 'Doctor', field: 'doctor', sortable: true , colStyle: { width : '250px'} }, 
+                    { title: 'Fecha de Recepcion', field: 'fecha_recepcion', colStyle: { width : '150px'}, fixed : 'right' },                                        
+                    ],
+                data: [],
+                total: 0,
+                query: {}                
+            },
+            options_liquidados: {
+                //supportBackup: true,
+                supportNested: true,
+                tblClass: 'table-bordered table-sm table-hover',   
+                //tblStyle: 'table-layout: fixed', // must    
+                tblStyle: 'color: #666',                                         
+                //fixHeaderAndSetBodyMaxHeight: 200,
+                HeaderSettings: false,
+                pageSizeOptions: [10, 50, 75, 100, 150],
+                columns: (() => {
+                    const cols = [
+                    { title: 'Codigo', field: 'codigo', thClass: 'center', tdClass: 'center', sortable: true , colStyle: { width : '150px'} },
+                    { title: 'Sede', field: 'sede', sortable: true, colStyle: { width : '200px'} },
+                    { title: 'Monto', field: 'monto', thClass: 'center', tdClass: 'center', colStyle: { width : '150px'} },
+                    { title: 'Pagado', field: 'pagado', tdComp: 'IP' ,visible: 'true', tdClass : 'center' , thClass : 'center', colStyle: { width : '200px'}},
+                    { title: 'FechaLiquidacion', field: 'fecha_liquidacion', colStyle: { width : '200px'} },
+                    { title: 'Accion', tdComp: 'Opt', visible: 'true' , tdClass : 'center' , thClass : 'center', colStyle: { width : '100px'} }
+                    ]
+                    return cols                   
+                })(),                    
+                data: [],
+                total: 0,
+                selection:[],
+                //query: {},
+                query: amINestedComp ? { id: this.row.friends } : {},
+                xprops: {
+                    eventbus: new Vue()
+                }                               
+            }                                    
 
-            tableDate2:[],
-            loading2: false,
-            //currentPage: 1,
-            total2: 10, 
-            paginationInfo2: {
-                text: '<strong>Total 0 registros - 10 reg. x Página</strong>',
-                pageSize:10,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            },                      
-            rows2:[], 
-
-            tableDate3:[],
-            loading3: false,
-            //currentPage: 1,
-            total3: 10, 
-            paginationInfo3: {
-                text: '<strong>Total 0 registros - 10 reg. x Página</strong>',
-                pageSize:10,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            },                      
-            rows3:[], 
-
-            tableDate4:[],
-            loading4: false,
-            //currentPage: 1,
-            total4: 10, 
-            paginationInfo4: {
-                text: '<strong>Total 0 registros - 10 reg. x Página</strong>',
-                pageSize:10,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            },                      
-            rows4:[],             
-
-            cambio:1,
-            seleccionados:[], 
-            seleccionados2:[],
-            seleccionados3:[],
-            seleccionados4:[],             
-            color_selected:[],
-            items_separados:[]          
         }
     },
     computed: {
         ...mapState(['user_system','sede_system','laboratorios','sedes','laboratoriotrabajos','liquidacionlaboratorios']),
-        ...mapGetters(['getubigeos']),                                         
+        ...mapGetters(['getubigeos'])                                              
     },
-    components: { DatePicker }, 
+    watch : {
+        'options.query': {
+            handler (query) {
+                let self = this
+                this.mockData(query).then(({ rows, total }) => {
+                    self.options.data = rows
+                    self.options.total = total
+                })
+            },
+            deep: true
+        },
+        'options_enviados.query': {
+            handler (query) {
+                let self = this
+                this.mockData_enviados(query).then(({ rows, total }) => {
+                    self.options_enviados.data = rows
+                    self.options_enviados.total = total
+                })
+            },
+            deep: true
+        }, 
+        'options_recibidos.query': {
+            handler (query) {
+                let self = this
+                this.mockData_recibidos(query).then(({ rows, total }) => {
+                    self.options_recibidos.data = rows
+                    self.options_recibidos.total = total
+                })
+            },
+            deep: true
+        },  
+        'options_liquidados.query': {
+            handler () {
+                let self = this
+                this.mockData_liquidados(this.options_liquidados.query).then(({ rows, total }) => {
+                    self.options_liquidados.data = rows
+                    self.options_liquidados.total = total
+                })                
+            },
+            deep: true            
+        },                         
+    },
+    //components: { DatePicker , comps}, 
+    components,
     methods:{
+        loadData(){
+            alert("hola")
+        },      
         cargaDatos(){           // separados
-            this.loading = true
             let self = this
-            this.tableDate = []
+            this.options.data = []
             let filtrados = this.laboratoriotrabajos.filter(labt => labt.laboratorioservicio.laboratorio_id == this.dataFiltro1.laboratorio_id && labt.seguimiento == 1 && labt.liquidable == 1 && labt.sede_id == this.dataFiltro1.sede_id && moment(labt.fecha_separacion,'DD-MM-YYYY').isSameOrBefore(moment(this.dataFiltro1.fecha_corte,'DD-MM-YYYY')))
-            //let filtrados = this.laboratoriotrabajos.filter(labt => labt.laboratorioservicio.laboratorio_id == this.dataLiquidacion.laboratorio_id && labt.sede_id == this.dataLiquidacion.sede_id && moment(labt.fecha_separacion,'DD-MM-YYYY').isSameOrBefore(moment(this.dataLiquidacion.fecha_corte,'DD-MM-YYYY')))
             _.each(filtrados, function(value,key){
                 let files= {
                     id:value.id,
@@ -484,31 +449,48 @@ export default {
                     presupuesto_id:value.presupuestooperatoriadetalle_id != null ? value.presupuestooperatoriadetalle.presupuestooperatoria_id : value.presupuestoortodonciadetalle.presupuestoortodoncia_id,
                     paciente:value.presupuestooperatoriadetalle_id != null ? value.presupuestooperatoriadetalle.presupuestooperatoria.paciente.nombre_completo : value.presupuestoortodonciadetalle.presupuestoortodoncia.paciente.nombre_completo,
                     servicio:value.laboratorioservicio.nombre_servicio,
-                    pieza:value.presupuestooperatoriadetalle.letras,
-                    total:value.costo,
-                    doctor:value.empleado.nombre_completo,
                     fase:value.fase_id,
+                    pieza:value.presupuestooperatoriadetalle.letras,
+                    total:parseFloat(value.costo).toFixed(2),
+                    doctor:value.empleado.nombre_completo,
                     fecha_separacion:value.fecha_separacion
                 }
                 let copyfile = _.clone(files)
-                self.tableDate.push(copyfile)
+                self.options.data.push(copyfile)
+            }) 
+            self.options.total = self.options.data.length                   
+        },    
+        mockData(query){
+            query = purify(query)
+            const { limit = 10, offset = 0, sort = '', order = '' } = query
+            let rows = this.options.data
+            let columns = ['id', 'presupuesto_id', 'paciente', 'servicio', 'pieza', 'doctor']
+            columns.forEach(field => {
+                switch (typeOf(query[field])) {
+                case 'array':
+                    rows = rows.filter(row => query[field].includes(row[field]))
+                    break
+                case 'string':
+                    rows = rows.filter(row => row[field].toLowerCase().includes(query[field].toLowerCase()))
+                    break
+                default:
+                    // nothing to do
+                    break
+                }
             })
-            this.getTableData()            
-        },
-        getRowClassName ({row, rowIndex}) {
-            //console.log("Selecc",this.seleccionados)
-            let encontrado = this.seleccionados.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
-            if(encontrado.length > 0){
-                return 'seleccionado'
+            if (sort) {
+                rows = orderBy(rows, sort, order)
             }
-            return 'no-seleccionado'
-        },        
+            const res = {
+                rows: rows.slice(offset, offset + limit),
+                total: rows.length
+            }
+            return Promise.resolve(purify(res))
+        },       
         cargaDatos2(){              // enviados
-            this.loading2 = true
             let self = this
-            this.tableDate2 = []
+            this.options_enviados.data = []
             let filtrados = this.laboratoriotrabajos.filter(labt => labt.laboratorioservicio.laboratorio_id == this.dataFiltro2.laboratorio_id && labt.seguimiento == 2 && labt.liquidable == 1 && labt.sede_id == this.dataFiltro2.sede_id && moment(labt.fecha_separacion,'DD-MM-YYYY').isSameOrBefore(moment(this.dataFiltro2.fecha_corte,'DD-MM-YYYY')))
-            //let filtrados = this.laboratoriotrabajos.filter(labt => labt.laboratorioservicio.laboratorio_id == this.dataLiquidacion.laboratorio_id && labt.sede_id == this.dataLiquidacion.sede_id && moment(labt.fecha_separacion,'DD-MM-YYYY').isSameOrBefore(moment(this.dataLiquidacion.fecha_corte,'DD-MM-YYYY')))
             _.each(filtrados, function(value,key){
                 let files= {
                     id:value.id,
@@ -525,23 +507,41 @@ export default {
                     fecha_entrega:value.fecha_entrega
                 }
                 let copyfile = _.clone(files)
-                self.tableDate2.push(copyfile)
+                self.options_enviados.data.push(copyfile)
             })
-            this.getTableData2()            
+            self.options_enviados.total = self.options_enviados.data.length           
         },  
-        getRowClassName2 ({row, rowIndex}) {
-            let encontrado = this.seleccionados2.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
-            if(encontrado.length > 0){
-                return 'seleccionado'
+        mockData_enviados(query){
+            query = purify(query)
+            const { limit = 10, offset = 0, sort = '', order = '' } = query
+            let rows = this.options_enviados.data
+            let columns = ['id', 'presupuesto_id', 'paciente', 'servicio', 'pieza', 'doctor']
+            columns.forEach(field => {
+                switch (typeOf(query[field])) {
+                case 'array':
+                    rows = rows.filter(row => query[field].includes(row[field]))
+                    break
+                case 'string':
+                    rows = rows.filter(row => row[field].toLowerCase().includes(query[field].toLowerCase()))
+                    break
+                default:
+                    // nothing to do
+                    break
+                }
+            })
+            if (sort) {
+                rows = orderBy(rows, sort, order)
             }
-            return 'no-seleccionado'
-        },           
+            const res = {
+                rows: rows.slice(offset, offset + limit),
+                total: rows.length
+            }
+            return Promise.resolve(purify(res))
+        },       
         cargaDatos3(){              //recibidos
-            this.loading3 = true
             let self = this
-            this.tableDate3 = []
+            this.options_recibidos.data = []
             let filtrados = this.laboratoriotrabajos.filter(labt => labt.laboratorioservicio.laboratorio_id == this.dataFiltro3.laboratorio_id && labt.seguimiento == 3 && labt.liquidable == 1 && labt.sede_id == this.dataFiltro3.sede_id && moment(labt.fecha_separacion,'DD-MM-YYYY').isSameOrBefore(moment(this.dataFiltro3.fecha_corte,'DD-MM-YYYY')))
-            //let filtrados = this.laboratoriotrabajos.filter(labt => labt.laboratorioservicio.laboratorio_id == this.dataLiquidacion.laboratorio_id && labt.sede_id == this.dataLiquidacion.sede_id && moment(labt.fecha_separacion,'DD-MM-YYYY').isSameOrBefore(moment(this.dataLiquidacion.fecha_corte,'DD-MM-YYYY')))
             _.each(filtrados, function(value,key){
                 let files= {
                     id:value.id,
@@ -557,70 +557,92 @@ export default {
                     fecha_recepcion:value.fecha_recepcion
                 }
                 let copyfile = _.clone(files)
-                self.tableDate3.push(copyfile)
+                self.options_recibidos.data.push(copyfile)
             })
-            this.getTableData3()            
-        },
-        getRowClassName3 ({row, rowIndex}) {
-            let encontrado = this.seleccionados3.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
-            if(encontrado.length > 0){
-                return 'seleccionado'
+            self.options_recibidos.total = self.options_recibidos.data.length          
+        }, 
+        mockData_recibidos(query){
+            query = purify(query)
+            const { limit = 10, offset = 0, sort = '', order = '' } = query
+            let rows = this.options_recibidos.data
+            let columns = ['id', 'presupuesto_id', 'paciente', 'servicio', 'pieza', 'doctor']
+            columns.forEach(field => {
+                switch (typeOf(query[field])) {
+                case 'array':
+                    rows = rows.filter(row => query[field].includes(row[field]))
+                    break
+                case 'string':
+                    rows = rows.filter(row => row[field].toLowerCase().includes(query[field].toLowerCase()))
+                    break
+                default:
+                    // nothing to do
+                    break
+                }
+            })
+            if (sort) {
+                rows = orderBy(rows, sort, order)
             }
-            return 'no-seleccionado'
-        },           
+            const res = {
+                rows: rows.slice(offset, offset + limit),
+                total: rows.length
+            }
+            return Promise.resolve(purify(res))
+        },                
         cargaDatos4(){              //liquidados
-            this.loading4 = true
             let self = this
-            this.tableDate4 = []
+            this.options_liquidados.data = []
             let filtrados = this.liquidacionlaboratorios.filter(labt => labt.laboratorio_id == this.dataFiltro4.laboratorio_id && labt.sede_id == this.dataFiltro4.sede_id && moment(labt.fecha_liquidacion,'DD-MM-YYYY').isSameOrBefore(moment(this.dataFiltro4.fecha_corte,'DD-MM-YYYY')))
-            //let filtrados = this.laboratoriotrabajos.filter(labt => labt.laboratorioservicio.laboratorio_id == this.dataLiquidacion.laboratorio_id && labt.sede_id == this.dataLiquidacion.sede_id && moment(labt.fecha_separacion,'DD-MM-YYYY').isSameOrBefore(moment(this.dataLiquidacion.fecha_corte,'DD-MM-YYYY')))
             _.each(filtrados, function(value,key){
                 let files= {
                     id:value.id,
                     codigo:value.codigo,
                     sede:value.sede.nombre_sede,
-                    monto:value.monto,
+                    monto:parseFloat(value.monto).toFixed(2),
                     pagado:value.pagado,
                     fecha_liquidacion:value.fecha_liquidacion,
                     accion:''
                 }
                 let copyfile = _.clone(files)
-                self.tableDate4.push(copyfile)
+                self.options_liquidados.data.push(copyfile)
             })
-            this.getTableData4()            
+            self.options_liquidados.total = self.options_liquidados.data.length
+         
         },
-        getRowClassName4 ({row, rowIndex}) {
-            let encontrado = this.seleccionados4.filter(sel => sel.presupuestooperatoriadetalle_id == row.presupuestooperatoriadetalle_id)      
-            if(encontrado.length > 0){
-                return 'seleccionado'
+        mockData_liquidados(query){
+            query = purify(query)
+            const { limit = 10, offset = 0, sort = '', order = '' } = query
+            let rows = this.options_liquidados.data
+            let columns = ['codigo', 'sede', 'pagado']
+            columns.forEach(field => {
+                switch (typeOf(query[field])) {
+                case 'array':
+                    rows = rows.filter(row => query[field].includes(row[field]))
+                    break
+                case 'string':
+                    rows = rows.filter(row => row[field].toLowerCase().includes(query[field].toLowerCase()))
+                    break
+                default:
+                    // nothing to do
+                    break
+                }
+            })
+            if (sort) {
+                rows = orderBy(rows, sort, order)
             }
-            return 'no-seleccionado'
-        },                         
-        getTableData(){
-            this.rows = this.tableDate
-            this.$refs.table1.updateScrollbar(true);
-            this.paginationInfo.text = `<strong>Total `+ this.rows.length+` registros - `+ this.paginationInfo.pageSize+` reg. x página</strong>`
-            this.loading = false
-        },
-        getTableData2(){
-            this.rows2 = this.tableDate2
-            this.$refs.table2.updateScrollbar(true);
-            this.paginationInfo2.text = `<strong>Total `+ this.rows2.length+` registros - `+ this.paginationInfo2.pageSize+` reg. x página</strong>`
-            this.loading2 = false
-        },
-        getTableData3(){
-            this.rows3 = this.tableDate3
-            this.$refs.table3.updateScrollbar(true);
-            this.paginationInfo3.text = `<strong>Total `+ this.rows3.length+` registros - `+ this.paginationInfo3.pageSize+` reg. x página</strong>`
-            this.loading3 = false
-        },   
-        getTableData4(){
-            this.rows4 = this.tableDate4
-            this.$refs.table4.updateScrollbar(true);
-            this.paginationInfo4.text = `<strong>Total `+ this.rows4.length+` registros - `+ this.paginationInfo4.pageSize+` reg. x página</strong>`
-            this.loading4 = false
-        },                       
-        enviar(){             
+            const res = {
+                rows: rows.slice(offset, offset + limit),
+                total: rows.length
+            }
+            return Promise.resolve(purify(res))
+        },                        
+        handleQueryChange () {
+            let self = this
+            this.mockData_liquidados(this.options_liquidados.query).then(({ rows, total }) => {
+                self.options_liquidados.data = rows
+                self.options_liquidados.total = total
+            })
+        },                        
+        enviar(){         
             this.$swal({
                 title: 'Desea enviar estos registros?',
                 text: "No podras revertir esto!",
@@ -643,7 +665,7 @@ export default {
                 fecha_entrega: moment(this.dataFiltro1.fecha_entrega).format('DD-MM-YYYY hh:mm:ss'),
                 detalle:[]
             }
-            _.each(this.seleccionados, function(value,key){
+            _.each(this.options.selection, function(value,key){
                 datos.detalle.push(value.id)
             })
             this.isLoading = true
@@ -657,9 +679,9 @@ export default {
                         resultado += "error -> " + i + " = " + this.errors[i] + "\n";
                     }
                 }
-                this.isLoading = false
                 this.StatusForm(false,'la la-cloud-download','Grabar Datos')                  
                 this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                              
+                this.isLoading = false
                 return;
             }
             this.$store.dispatch('LOAD_LABORATORIO_TRABAJOS_LIST').then(() => {
@@ -673,9 +695,9 @@ export default {
             }).catch(error => {
             this.errors = error.response.data.status;
             this.$modal.hide('envio_laboratorio') 
-            this.StatusForm(false,'la la-cloud-download','Grabar Datos')                       
+            this.StatusForm(false,'la la-cloud-download','Grabar Datos')   
+            this.isLoading = false                   
             this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
-            this.isLoading = false
             });
 
         },
@@ -700,10 +722,10 @@ export default {
                             fecha_recepcion : moment().format('DD-MM-YYYY hh:mm:ss'),
                             detalle:[]
                         }
-                        _.each(this.seleccionados2, function(value,key){
+                        _.each(this.options_enviados.selection, function(value,key){
                             datos.detalle.push(value.id)
                         })
-                        this.isLoading2 = true
+                        this.isLoading = true
                         var url = '/api/laboratoriotrabajos/recibir/'+datos.id;
                         axios.put(url, datos).then(response => {
                         if(typeof(response.data.errors) != "undefined"){
@@ -714,20 +736,20 @@ export default {
                                     resultado += "error -> " + i + " = " + this.errors[i] + "\n";
                                 }
                             }
-                            this.isLoading2 = false
                             this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                              
+                            this.isLoading = false
                             return;
                         }
                         this.$store.dispatch('LOAD_LABORATORIO_TRABAJOS_LIST').then(() => {
                             this.cargaDatos2() 
-                            this.isLoading2 = false
+                            this.isLoading = false
                         })  
                         this.errors = [];                        
                         this.notificaciones('Datos actualizados con exito','la la-thumbs-up','success')                         
                         }).catch(error => {
                         this.errors = error.response.data.status;                 
                         this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
-                        this.isLoading2 = false
+                        this.isLoading = false
                         });
                     }
                 });
@@ -744,7 +766,7 @@ export default {
                 confirmButtonText: 'Si, liquidar!'
                 }).then((result) => {
                     if (result.value) {
-                        this.isLoading3 = true
+                        this.isLoading = true
                         let montoTotal = 0
                         let datos = {
                             fecha_liquidacion : moment().format('DD-MM-YYYY hh:mm:ss'),
@@ -757,7 +779,7 @@ export default {
                             user_id:this.user_system.id,               
                             detalle:[]
                         }
-                        _.each(this.seleccionados3, function(value,key){
+                        _.each(this.options_recibidos.selection, function(value,key){
                             datos.detalle.push(value.id)
                             montoTotal += parseFloat(value.total)                
                         })
@@ -772,232 +794,25 @@ export default {
                                     resultado += "error -> " + i + " = " + this.errors[i] + "\n";
                                 }
                             }
-                            this.isLoading3 = false
+                            this.isLoading = false
                             this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                              
                             return;
                         }
                         this.$store.dispatch('LOAD_LABORATORIO_TRABAJOS_LIST').then(() => {
                             this.$store.dispatch('LOAD_LIQUIDACION_LABORATORIOS_LIST')
                             this.cargaDatos3() 
-                            this.isLoading3 = false
+                            this.isLoading = false
                         })  
                         this.errors = [];                        
                         this.notificaciones('Datos actualizados con exito','la la-thumbs-up','success')                         
                         }).catch(error => {
                         this.errors = error.response.data.status;                 
                         this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
-                        this.isLoading3 = false
+                        this.isLoading = false
                         });                        
                     }
                 });
         },
-        // Modulo de Separados
-        handleSortChange( {prop, order}) {
-            this.loading = true;
-            let list = [].concat(this.rows);
-            list.sort((item1, item2) => {
-                let val1 = '';
-                let val2 = '';
-
-                if (prop === 'fecha_separacion') {
-                    val1 = new Date(item1[prop]).getTime();
-                    val2 = new Date(item2[prop]).getTime();
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-
-                if (prop === 'presupuesto_id' || prop === 'paciente' || prop === 'servicio' || prop === 'doctor' || prop === 'pieza') {
-                    val1 = item1[prop];
-                    val2 = item2[prop]
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-            });
-            setTimeout (() => {
-                this.loading = false;
-                this.rows = [].concat(list);
-            }, 2000);
-        },
-        handlePageChange(page) {
-            this.currentPage = page;
-            this.loading = true;
-            let start = (page - 1) * 10 + 1;
-
-            const list = this.rows.map(item => {
-                return Object.assign({}, item, {
-                    name: `test${start++}`
-                });
-            });
-
-            setTimeout(() => {
-                this.loading = false;
-                this.rows = [].concat(list);
-            }, 2000);  
-        },
-        handleSelectChange (rows) {
-            //console.log(rows);
-            this.seleccionados = rows
-        },
-        // Modulo de En Laboratorio
-        handleSortChange2( {prop, order}) {
-            this.loading2 = true;
-            let list = [].concat(this.rows2);
-            list.sort((item1, item2) => {
-                let val1 = '';
-                let val2 = '';
-
-                if (prop === 'fecha_envio' || prop === 'fecha_entrega') {
-                    val1 = new Date(item1[prop]).getTime();
-                    val2 = new Date(item2[prop]).getTime();
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-
-                if (prop === 'presupuesto_id' || prop === 'paciente' || prop === 'servicio' || prop === 'doctor' || prop === 'pieza') {
-                    val1 = item1[prop];
-                    val2 = item2[prop]
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-            });
-            setTimeout (() => {
-                this.loading2 = false;
-                this.rows2 = [].concat(list);
-            }, 2000);
-        },
-        handlePageChange2(page) {
-            this.currentPage = page;
-            this.loading2 = true;
-            let start = (page - 1) * 10 + 1;
-
-            const list = this.rows2.map(item => {
-                return Object.assign({}, item, {
-                    name: `test${start++}`
-                });
-            });
-
-            setTimeout(() => {
-                this.loading2 = false;
-                this.rows2 = [].concat(list);
-            }, 2000);  
-        },
-        handleSelectChange2 (rows) {
-            //console.log(rows);
-            this.seleccionados2 = rows
-        },
-        // Modulo de recibidos
-        handleSortChange3( {prop, order}) {
-            // Customize your sorting method. Maybe it will get data from server.
-            this.loading3 = true;
-            let list = [].concat(this.rows3);
-            list.sort((item1, item2) => {
-                let val1 = '';
-                let val2 = '';
-
-                if (prop === 'fecha_recepcion') {
-                    val1 = new Date(item1[prop]).getTime();
-                    val2 = new Date(item2[prop]).getTime();
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-
-                if (prop === 'presupuesto_id' || prop === 'paciente' || prop === 'servicio' || prop === 'doctor' || prop === 'pieza') {
-                    val1 = item1[prop];
-                    val2 = item2[prop]
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-            });
-            setTimeout (() => {
-                this.loading3 = false;
-                this.rows3 = [].concat(list);
-            }, 2000);
-        },
-        handlePageChange3(page) {
-            this.currentPage = page;
-            this.loading3 = true;
-            let start = (page - 1) * 10 + 1;
-
-            const list = this.rows3.map(item => {
-                return Object.assign({}, item, {
-                    name: `test${start++}`
-                });
-            });
-
-            setTimeout(() => {
-                this.loading3 = false;
-                this.rows3 = [].concat(list);
-            }, 2000);  
-        },
-        handleSelectChange3 (rows) {
-            //console.log(rows);
-            this.seleccionados3 = rows
-        },
-        // Modulo de liquidados
-        handleSortChange4( {prop, order}) {
-            // Customize your sorting method. Maybe it will get data from server.
-            this.loading4 = true;
-            let list = [].concat(this.rows4);
-            list.sort((item1, item2) => {
-                let val1 = '';
-                let val2 = '';
-
-                if (prop === 'fecha_liquidacion') {
-                    val1 = new Date(item1[prop]).getTime();
-                    val2 = new Date(item2[prop]).getTime();
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-
-                if (prop === 'sede') {
-                    val1 = item1[prop];
-                    val2 = item2[prop]
-                    if (order === 'descending') {
-                    return val2 < val1 ? -1 : 1
-                    }
-                    return val1 < val2 ? -1 : 1
-                }
-            });
-            setTimeout (() => {
-                this.loading4 = false;
-                this.rows4 = [].concat(list);
-            }, 2000);
-        },
-        handlePageChange4(page) {
-            this.currentPage = page;
-            this.loading4 = true;
-            let start = (page - 1) * 10 + 1;
-
-            const list = this.rows4.map(item => {
-                return Object.assign({}, item, {
-                    name: `test${start++}`
-                });
-            });
-
-            setTimeout(() => {
-                this.loading4 = false;
-                this.rows4 = [].concat(list);
-            }, 2000);  
-        },
-        handleSelectChange4 (rows) {
-            //console.log(rows);
-            this.seleccionados4 = rows
-        },
-
         cambioTab(param){
             this.dataFiltro1 = {
                 laboratorio_id:0,
@@ -1024,25 +839,39 @@ export default {
             this.rows = []
             this.rows2 = []
             this.rows3 = []
-            this.paginationInfo = {
-                text: '<strong>Total 0 registros - 10 reg. x Página</strong>',
-                pageSize:10,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            }             
-            this.paginationInfo2 = {
-                text: '<strong>Total 0 registros - 10 reg. x Página</strong>',
-                pageSize:10,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            } 
-            this.paginationInfo3 = {
-                text: '<strong>Total 0 registros - 10 reg. x Página</strong>',
-                pageSize:10,
-                nextPageText:'Sig.',
-                prevPageText:'Ant.'               
-            }                         
-        }                                             
+                       
+        },
+        seleccion(param){
+            console.log("items",param)
+        },
+        rowStyleClassFn(row){
+            let encontrado = this.options.selection.filter(sel => sel.id == row.id)      
+            if(encontrado.length > 0){
+                return 'bg-info text-white'
+            }
+            return 'text-black'
+        },  
+        rowStyleClassFn_enviados(row){
+            let encontrado = this.options_enviados.selection.filter(sel => sel.id == row.id)      
+            if(encontrado.length > 0){
+                return 'bg-info text-white'
+            }
+            return 'text-black'
+        }, 
+        rowStyleClassFn_recibidos(row){
+            let encontrado = this.options_recibidos.selection.filter(sel => sel.id == row.id)      
+            if(encontrado.length > 0){
+                return 'bg-info text-white'
+            }
+            return 'text-black'
+        },  
+        rowStyleClassFn_liquidados(row){
+            let encontrado = this.options_liquidados.selection.filter(sel => sel.id == row.id)      
+            if(encontrado.length > 0){
+                return 'bg-info text-white'
+            }
+            return 'text-black'
+        },                                                                  
     },
     filters: {
       formatMoney (val) {
@@ -1055,9 +884,17 @@ export default {
     .v--modal-overlay .v--modal-box {
         overflow: visible !important;
     }
+    th, td { white-space: nowrap; } 
+    .-page-size-select {
+        padding: .375rem .75rem !important; 
+    }  
+    .table-sm td, .table-sm th {
+        padding: .3rem !important;
+    }                  
 </style>
 
 <style scoped>
+@import 'http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
     .label-title {
         font-size: 85% !important;
     }
@@ -1092,6 +929,12 @@ export default {
     .btn .btn-label i {
         margin-left: 0 !important;
         margin-right: 0 !important;
-    }     
+    } 
+    select.input-sm {
+        height: 30px;
+        line-height: 30px;
+    } 
+   
+   
 </style>
 
