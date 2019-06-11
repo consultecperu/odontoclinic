@@ -162,7 +162,7 @@
       text-align: center !important;
   } 
   /* vue2 table datatable */
-  .v2-table__cell {
+/*   .v2-table__cell {
       border-bottom-color: darkslategray !important;
       border-left-color: darkslategray !important;
       border-right-color: darkslategray !important;
@@ -210,7 +210,7 @@
   .v2-table__empty-data.v2-table__empty-border {
       height: 220px !important;
   }
-  .beautify-scroll-container {
+ */  .beautify-scroll-container {
       border-bottom: 1px solid darkslategray !important;
       border-left: 1px solid darkslategray !important;
   }
@@ -227,7 +227,7 @@
       font-size: 13px !important;
       color:red !important;
       padding-left: 50px !important;
-    /*position: relative !important;*/
+    
   }
   .v2-table__pagination ul .cur-page {
       border-color: red !important;
@@ -269,6 +269,21 @@
   .fc-title {
       font-size: .72em !important;
   }
+  .fc-license-message {
+    display: none !important;
+  }
+  .fc-icon-chevron-left:after {
+    content: "\2039";
+    font-weight: bold;
+    font-size: 200%;
+    top: -7%;
+  } 
+  .fc-icon-chevron-right:after {
+    content: "\203A";
+    font-weight: bold;
+    font-size: 200%;
+    top: -7%;
+  }     
 
   .p-0 {
     padding: 0px !important;

@@ -63,6 +63,7 @@ export default {
     pagos:[],
     citas:[],
     citasfechas:[],
+    citasconsultorios:[],
     estadocitas:[],
     laboratoriotrabajos:[],
     liquidacionlaboratorios:[],

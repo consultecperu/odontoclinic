@@ -146,6 +146,7 @@ Route::middleware(['auth'])->group(function(){
     // citas
     Route::resource('citas','CitaController');      
     Route::get('/citas/fechas/{fecini}/{fecfin}','CitaController@cargacitas'); 
+    Route::get('/citas/consultorios/fechas/{fecha}','CitaController@cargacitasconsultorios');     
     Route::post('/citas/cambioestado', 'CitaController@cambioestadocitas'); 
     Route::put('/citas/reprogramacion/{id}', 'CitaController@reprogramarcitas'); 
     Route::put('/citas/confirmar/{id}', 'CitaController@confirmarcitas');        

@@ -410,6 +410,14 @@ export default {
             console.log(err)
         });
     }, 
+    LOAD_CITAS_CONSULTORIOS_LIST: function({ commit },payload){
+        var url = '/api/citas/consultorios/fechas/'+ payload.fecha;
+        return axios.get(url).then((response) => {
+            commit('SET_CITAS_CONSULTORIOS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },
     LOAD_LABORATORIO_TRABAJOS_LIST: function ({ commit }) {
         var url = '/api/laboratoriotrabajos/';
         return axios.get(url).then((response) => {

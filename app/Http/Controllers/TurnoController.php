@@ -19,7 +19,7 @@ class TurnoController extends Controller
      */
     public function index()
     {
-        $turnos = Turno::with('sede','dia','horaini1','horafin1','horaini2','horafin2')->orderBy('id','ASC')->where('activo',true)->get();
+        $turnos = Turno::with('sede','empleado','dia','horaini1','horafin1','horaini2','horafin2')->orderBy('id','ASC')->where('activo',true)->get();
         return $turnos;
     }
 

@@ -8,51 +8,49 @@
         </loading>         
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p-radio v-for="tip in tipoAgenda" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="dataTipoAgenda.tipo" @change="cambioTipoAgenda(tip.id)" :disabled="$route.params.idpresupuesto != undefined">
-                                        <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">{{ tip.nombre_tipo }} </label>                              
-                                    </p-radio>  
-                                    <button type="button" v-show="false" id="actualiza_agenda" class="btn btn-danger btn-sm float-right mb-5" v-tooltip="'Actualizar Agenda'" @click.prevent="ActualizarAgenda"><span class="btn-label"><i class="la flaticon-repeat"></i></span></button>                                    
-                                </div>
-                            </div>
-                            <div class="row" v-if="dataTipoAgenda.tipo == 2">
-                                <div class="col-4"> 
-									<div class="form-group form-floating-label">
-										<select ref="especialidades" class="form-control input-border-bottom" id="selectEspecialidades" v-model="dataCita.especialidade_id" @change="cambioEspecialidad" required>
-                                            <option value="0">--Todas--</option>
-                                            <option v-for="esp in especialidades" :value="esp.id" :key="esp.id">
-                                                {{ esp.nombre_especialidad}}
-                                            </option>
-										</select>
-										<label for="selectEspecialidades" class="placeholder">Especialidades</label>
-									</div>
-                                </div>
-                                <div class="col-4">  
-									<div class="form-group form-floating-label">
-										<select class="form-control input-border-bottom" id="selectMedicos" v-model="dataCita.empleado_id" @change="cambioMedico" required>
-                                            <option value="0">--Todos--</option>
-                                            <option v-for="med in medicos_especialidad" :value="med.id" :key="med.id">
-                                                {{ med.nombre_completo}}
-                                            </option>                                            
-										</select>
-										<label for="selectMedicos" class="placeholder">Médicos</label>
-									</div>                                                                                                           
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group" v-if="ViewReprogramar">
-                                        <button type="button" class="btn btn-sm btn-danger float-right"><span class="btn-label"><i class="la la-remove"></i> Cancelar Reprogramacion</span></button>
-                                    </div>
-                                </div>                               
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <div class="row">
+                            <div class="col-12">
+                                <p-radio v-for="tip in tipoAgenda" class="p-icon p-curve p-tada" :key="tip.id" :value="tip.id" name="radio77" color="primary-o" v-model="dataTipoAgenda.tipo" @change="cambioTipoAgenda(tip.id)" :disabled="$route.params.idpresupuesto != undefined">
+                                    <i slot="extra" class="icon la la-check"></i><label class="text-primary font-weight-bold float-left">{{ tip.nombre_tipo }} </label>                              
+                                </p-radio>  
+                                <button type="button" v-show="false" id="actualiza_agenda" class="btn btn-danger btn-sm float-right mb-5" v-tooltip="'Actualizar Agenda'" @click.prevent="ActualizarAgenda"><span class="btn-label"><i class="la flaticon-repeat"></i></span></button>                                    
                             </div>
                         </div>
-                        <!-- <div class="card-body" oncontextmenu="return false"> -->  
-                        <div class="card-body">                         
-                            <full-calendar ref="calendar" :events="events" :config="config" @event-selected="eventSelected" @day-click="dayclick" @event-created="createEvent" @event-drop="eventDrop" @event-render="eventRender" @view-render="viewRender" @event-mouseover="eventMouseover" @event-drag-start="eventDragStart" @event-drag-stop="eventDragStop" @event-resize="eventResize"></full-calendar>                            
+                        <div class="row" v-if="dataTipoAgenda.tipo == 2">
+                            <div class="col-4"> 
+                                <div class="form-group form-floating-label">
+                                    <select ref="especialidades" class="form-control input-border-bottom" id="selectEspecialidades" v-model="dataCita.especialidade_id" @change="cambioEspecialidad" required>
+                                        <option value="0">--Todas--</option>
+                                        <option v-for="esp in especialidades" :value="esp.id" :key="esp.id">
+                                            {{ esp.nombre_especialidad}}
+                                        </option>
+                                    </select>
+                                    <label for="selectEspecialidades" class="placeholder">Especialidades</label>
+                                </div>
+                            </div>
+                            <div class="col-4">  
+                                <div class="form-group form-floating-label">
+                                    <select class="form-control input-border-bottom" id="selectMedicos" v-model="dataCita.empleado_id" @change="cambioMedico" required>
+                                        <option value="0">--Todos--</option>
+                                        <option v-for="med in medicos_especialidad" :value="med.id" :key="med.id">
+                                            {{ med.nombre_completo}}
+                                        </option>                                            
+                                    </select>
+                                    <label for="selectMedicos" class="placeholder">Médicos</label>
+                                </div>                                                                                                           
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group" v-if="ViewReprogramar">
+                                    <button type="button" class="btn btn-sm btn-danger float-right"><span class="btn-label"><i class="la la-remove"></i> Cancelar Reprogramacion</span></button>
+                                </div>
+                            </div>                               
                         </div>
+                    </div>
+                    <div class="card-body" oncontextmenu="return false">  
+                    <!--<div class="card-body"> --->                        
+                        <full-calendar ref="calendar" :events="events" :config="config" @event-selected="eventSelected" @day-click="dayclick" @event-created="createEvent" @event-drop="eventDrop" @event-render="eventRender" @view-render="viewRender" @event-mouseover="eventMouseover" @event-drag-start="eventDragStart" @event-drag-stop="eventDragStop" @event-resize="eventResize"></full-calendar>                            
                     </div>
                 </div>
             </div>
@@ -872,6 +870,7 @@ export default {
             if(this.dataCita.empleado_id > 0){
                 element.on('contextmenu', function (e) { 
                     if(e.target.className != 'fc-bgevent'){
+                        //console.log("activar menu")
                         $('#context-menu').css({'display':'block'})
                         self.selectItem = event
                         self.$refs.ctxMenu.open()

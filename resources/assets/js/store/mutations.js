@@ -186,7 +186,10 @@ export default {
     },   
     SET_CITAS_FECHAS_LIST: (state, { list }) => {      // CITAS x FECHAS
         state.citasfechas = list
-    },  
+    }, 
+    SET_CITAS_CONSULTORIOS_LIST: (state, { list}) => {  // CITAS x CONSULTORIOS
+        state.citasconsultorios = list
+    },
     SET_LABORATORIO_TRABAJOS_LIST: (state, { list }) => {      // LABORATORIO - TRABAJOS
         state.laboratoriotrabajos = list
     },   

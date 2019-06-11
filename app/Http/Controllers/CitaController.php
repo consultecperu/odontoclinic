@@ -207,6 +207,26 @@ class CitaController extends Controller
         $citas = Cita::with('paciente','empleado','seguimientocitas')->orderBy('id','ASC')->where('activo',true)->whereDate('fecha_cita', '>=',$dat_ini)->whereDate('fecha_cita','<=',$dat_fin)->get();
         return $citas;         
     }  
+    public function cargacitasconsultorios($fec)
+    {    
+        $dat_fec = Carbon::create(substr($fec,4,4), substr($fec,2,2),substr($fec,0,2));             
+        // actualizando el estado no se presento
+        $citas_nsp = Cita::where('estadocita_id',1)->where('activo',true)->whereDate('fecha_cita', '=',$dat_fec)->get();        
+        if($citas_nsp){
+            foreach ($citas_nsp as $cit)
+            {
+                $minutos = Globales::DifMinutos($cit->fecha_cita,$cit->end);
+                if( $minutos <= -1 )
+                {
+                    Cita::where('id',$cit->id)->update(['estadocita_id' => 6]);
+                }
+            } 
+        }
+        // cargando las citas    
+        $citas = Cita::with('paciente','empleado','seguimientocitas')->orderBy('id','ASC')->where('activo',true)->whereDate('fecha_cita', '=',$dat_fec)->get();
+        return $citas;         
+    }  
+
     
     public function cambioestadocitas(Request $request)
     {
