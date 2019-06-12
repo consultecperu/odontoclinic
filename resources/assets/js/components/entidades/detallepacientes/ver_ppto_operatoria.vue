@@ -1348,7 +1348,7 @@ export default {
             return []        
         },
         items_descargados(){
-            return this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles.filter(pd => pd.descargado == 1)
+            return this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles.filter(pd => pd.descargado == 1 && pd.activo == true)
         },
         items_sindescarga(){
             return this.presupuestoOperatoriaById.presupuestosoperatoriasdetalles.filter(pd => pd.descargado == 0 && pd.activo == true)
@@ -1470,7 +1470,6 @@ export default {
             this.labelButton = elabel            
         },        
         selectionChanged(param){
-            console.log("selectioncahnged",param)
             this.color_selected = param.selectedRows
         },
         selectionChanged2(param){
@@ -2344,7 +2343,7 @@ export default {
             if(rowObj.simbologia_id == 1){
                 return rowObj.diente.codigo + ' - ' + rowObj.caras
             }
-            return rowObj.diente.codigo + ' - PZA.'
+            return rowObj.diente == null ? '' : rowObj.diente.codigo + ' - PZA.'
         }                 
     },
     filters: {

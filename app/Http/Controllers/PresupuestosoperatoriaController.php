@@ -244,7 +244,7 @@ class PresupuestosoperatoriaController extends Controller
         try {
             DB::beginTransaction();             
             foreach ($request->get('detalle') as $det) {
-                $rules2 = [ 'tarifario_id'      =>  'required',
+                $rules = [  'tarifario_id'      =>  'required',
                             'tarifa'            =>  'required',
                             'moneda_id'         =>  'required',
                             'empleado_id'       =>  'required',
@@ -252,10 +252,10 @@ class PresupuestosoperatoriaController extends Controller
                             'costo_base'        =>  'required',
                             'simbologia_id'     =>  'required'
                         ];                         
-                $validator2 = Validator::make($det, $rules2);
-                if ($validator2->fails()) {
+                $validator = Validator::make($det, $rules);
+                if ($validator->fails()) {
                     DB::rollback();
-                    return response()->json(['errors'=>$validator2->errors()]);
+                    return response()->json(['errors'=>$validator->errors()]);
                 } 
                 $pptodet = new Presupuestooperatoriadetalle($det);
                 $pptodet->presupuestooperatoria_id = $id;

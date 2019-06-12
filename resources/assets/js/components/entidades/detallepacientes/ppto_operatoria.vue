@@ -1324,7 +1324,7 @@ export default {
                     self.isLoading = false
                 })  
                 self.errors = [];            
-                self.notificaciones('Nuevo Registros creados con exito','la la-thumbs-up','success')                          
+                self.notificaciones('Nuevo Registro creado con exito','la la-thumbs-up','success')                          
                 }).catch(error => {
                 self.errors = error.response.data.status;         
                 self.notificaciones('Hubo un error en el proceso: '+ self.errors.data.error,'la la-thumbs-o-down','danger')           
@@ -1896,7 +1896,8 @@ export default {
             this.$modal.show('tratamientos_sin_piezas')            
         },
         selectServicioSinPiezas(param){
-            this.dataTratamiento = {
+            console.log("param",param)
+/*             this.dataTratamiento = {
                 tarifario_id:param.row.id,
                 diente_id: '',
                 diente_codigo: '',
@@ -1911,12 +1912,78 @@ export default {
                 moneda_id:param.row.moneda.id,
                 nombre_moneda : param.row.moneda.nombre_moneda,
                 descuento:'',
-                realizado:''
-            }                
-            this.lista_general_presupuesto.push(this.dataTratamiento)          // nuevos servicios
+                realizado:'',
+                user_id:this.user_system.id
+            }  */
+            let _costo_deducible = param.row.solocoaseguro == 1 ? 0.00 : parseFloat(this.dataPaciente.deducible).toFixed(2)
+            let _costo_coaseguro = (parseFloat(param.row.costo) - parseFloat(_costo_deducible)) * ((parseFloat(this.dataPaciente.coaseguro))/100)
+            let _pago_cliente = parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro)
+            let _costo_aseguradora = parseFloat(param.row.costo) - ( parseFloat(_costo_deducible) + parseFloat(_costo_coaseguro))
+
+            this.dataTratamiento = {
+                tarifario_id:param.row.id,
+                tarifa:self.PacienteById.pacienteplanes.tipo, 
+                deducible: _costo_deducible,
+                solocoaseguro: _costo_coaseguro,
+                pago_cliente:_pago_cliente,
+                pago_aseguradora:_costo_aseguradora,                               
+                diente_id: '',
+                diente_codigo: '',
+                texto_diente:'',
+                caras: '',
+                simbologia_id: this.simboloID,
+                letras : '00_0',
+                servicio_id : param.row.servicio_id,
+                nombre_servicio : param.row.servicio.nombre_servicio,
+                costo_base: param.row.costo,
+                costo : param.row.costo,
+                moneda_id:param.row.moneda.id,
+                nombre_moneda : param.row.moneda.nombre_moneda,
+                descuento:'',
+                realizado:1,
+                descargado:0,
+                pagado:0,                
+                user_id:this.user_system.id,
+                tipo_odontograma:1,
+                empleado_id:this.PacienteById.empleado_id,                
+            }                              
+            //this.lista_general_presupuesto.push(this.dataTratamiento)          // nuevos servicio            
+            if(this.$route.params.idpresupuesto == undefined){
+                this.lista_general_presupuesto.push(this.dataTratamiento)
+            }else{        
+                this.dataPresupuesto.detalle.push(this.dataTratamiento)
+                // Grabamos los registros en la BD
+                this.dataPresupuesto.pago_cliente = this.dataPaciente.tipo_plan == 1 ? (parseFloat(this.costoTotal) + parseFloat(param.row.costo)).toFixed(2) : (parseFloat(this.costoCliente) + parseFloat(_pago_cliente)).toFixed(2)
+                this.dataPresupuesto.pago_aseguradora = this.dataPaciente.tipo_plan == 1 ? 0.00 : (parseFloat(this.costoAseguradora) + parseFloat(_costo_aseguradora)).toFixed(2)
+                this.dataPresupuesto.pago_total = (parseFloat(this.costoTotal) + parseFloat(param.row.costo)).toFixed(2)                
+                this.dataPresupuesto.user_id = this.user_system.id
+                var url = '/api/presupuestosoperatoriasdetalles/add/'+ this.$route.params.idpresupuesto;  
+                axios.put(url, this.dataPresupuesto).then(response => {
+                if(typeof(response.data.errors) != "undefined"){
+                    this.errors = response.data.errors;
+                    var resultado = "";
+                    for (var i in this.errors) {
+                        if (this.errors.hasOwnProperty(i)) {
+                            resultado += "error -> " + i + " = " + this.errors[i] + "\n";
+                        }
+                    }
+                    this.notificaciones('Hubo un error en el proceso: '+ resultado,'la la-thumbs-o-down','danger')                              
+                    return;
+                }
+                this.$store.dispatch('LOAD_PRESUPUESTOS_OPERATORIAS_LIST').then(() => {
+                    this.CargaDetalleEdit()
+                    this.isLoading = false
+                })  
+                this.errors = [];            
+                this.notificaciones('Nuevo Registro creado con exito','la la-thumbs-up','success')                          
+                }).catch(error => {
+                this.errors = error.response.data.status;         
+                this.notificaciones('Hubo un error en el proceso: '+ this.errors,'la la-thumbs-o-down','danger')           
+                });
+            } 
             this.cambiotratamiento(undefined)
             this.simboloID = ''
-            this.$modal.hide('tratamientos_sin_piezas');              
+            this.$modal.hide('tratamientos_sin_piezas')                       
         },
         CrearDatosPpto(){
             if(this.lista_general_presupuesto.length == 0){
