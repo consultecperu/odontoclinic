@@ -64,6 +64,7 @@ export default {
     citas:[],
     citasfechas:[],
     citasconsultorios:[],
+    confirmacioncitas:[],
     estadocitas:[],
     laboratoriotrabajos:[],
     liquidacionlaboratorios:[],

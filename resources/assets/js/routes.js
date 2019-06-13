@@ -53,6 +53,7 @@ import Detallepersonal from './components/entidades/detallepersonal.vue'
 import Citas from './components/agenda/citas.vue'
 import Seguimientos from './components/agenda/seguimientos.vue'
 import Consultorios from './components/agenda/consultorios.vue'
+import Confirmacioncitas from './components/agenda/confirmacioncitas.vue'
 
 import TipoCambios from './components/caja/tipocambios.vue'
 import CierreCaja from './components/caja/cierrecaja.vue'
@@ -542,7 +543,18 @@ export default [
                     store.commit('SET_BREADCRUMB',{ datos: payload })
                     next();
                 }                   
-            },             
+            },   
+            {
+                path: '/confirmacion-citas',
+                name: 'confirmacioncitas',
+                component: Confirmacioncitas,
+                meta: { requiresAuth: true },
+                beforeEnter:(to,from,next) => {
+                    var payload = { main: 'Confirmacion citas', second: 'Agenda', third : null }
+                    store.commit('SET_BREADCRUMB',{ datos: payload })
+                    next();
+                }                   
+            },                      
             {
                 path: '/tipocambio',
                 name: 'tipocambio',

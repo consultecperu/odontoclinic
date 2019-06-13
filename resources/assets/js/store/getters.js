@@ -57,9 +57,8 @@ export default {
         return state.empleados.filter(emp => emp.tipo == 1)
     },  
     getMedicosOrtodoncias: (state, getters) => {
-        //return getters.getMedicos.especialidades.filter(med => med.id == 6)
         let ortodoncistas = [] 
-        let medicos = this.getMedicos
+        let medicos = getters.getMedicos
         _.each(medicos, function(value,key){
             _.each(value.especialidades, function(value2,key2){
                 if(value2.id == 6){
@@ -69,7 +68,19 @@ export default {
         })
         return ortodoncistas         
         //return state.empleados.filter(emp => emp.tipo == 1 && emp.especialidades.pivot.especialidade_id == 6)
-    },              
+    },   
+    getMedicosSedes: (state, getters) => (idsede) => {
+        let medicos_sede = [] 
+        let medicos = getters.getMedicos
+        _.each(medicos, function(value,key){
+            _.each(value.sedes, function(value2,key2){
+                if(value2.id == idsede){
+                    medicos_sede.push(value)
+                }
+            })
+        })
+        return medicos_sede         
+    },                
     getPersonal: state => {
         return state.empleados.filter(emp => emp.tipo == 2)
     }, 

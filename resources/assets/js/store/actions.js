@@ -418,6 +418,14 @@ export default {
             console.log(err)
         });
     },
+    LOAD_CONFIRMACION_CITAS_LIST: function ({ commit }, payload) {
+        var url = '/api/citas/confirmacion/'+ payload.empleado_id + '/' + payload.sede_id + '/' + payload.fecini + '/'+ payload.fecfin;
+        return axios.get(url).then((response) => {
+            commit('SET_CONFIRMACION_CITAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },     
     LOAD_LABORATORIO_TRABAJOS_LIST: function ({ commit }) {
         var url = '/api/laboratoriotrabajos/';
         return axios.get(url).then((response) => {

@@ -151,6 +151,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/citas/reprogramacion/{id}', 'CitaController@reprogramarcitas'); 
     Route::put('/citas/confirmar/{id}', 'CitaController@confirmarcitas');        
     Route::put('/citas/modificacion/{id}', 'CitaController@modificarcitas'); 
+    Route::get('/citas/confirmacion/{empleado_id}/{sede_id}/{fecini}/{fecfin}','CitaController@cargaconfirmacioncitas');     
     // laboratoriotrabajos
     Route::resource('laboratoriotrabajos','LaboratoriotrabajoController'); 
     Route::put('/laboratoriotrabajos/envio/{id}', 'LaboratoriotrabajoController@envioTrabajo');   

@@ -76,7 +76,7 @@ export default {
   components: {
     vFullCalendar // make the <FullCalendar> tag available
   },
-  data: function() {
+  data() {
     return {
             isLoading: false,
             fullPage: true,  

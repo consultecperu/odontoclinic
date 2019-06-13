@@ -190,6 +190,9 @@ export default {
     SET_CITAS_CONSULTORIOS_LIST: (state, { list}) => {  // CITAS x CONSULTORIOS
         state.citasconsultorios = list
     },
+    SET_CONFIRMACION_CITAS_LIST: (state, { list }) => {     // CONFIRMACION DE CITAS
+        state.confirmacioncitas = list
+    },
     SET_LABORATORIO_TRABAJOS_LIST: (state, { list }) => {      // LABORATORIO - TRABAJOS
         state.laboratoriotrabajos = list
     },   
