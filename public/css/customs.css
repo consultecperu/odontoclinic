@@ -26,7 +26,10 @@
   .enlace:hover {
       cursor:pointer; cursor: hand	      
   } 
-
+  .title-add {
+    font-size: 1.5em !important;
+    font-weight: 400 !important;
+  }
   .enlace, .enlace-mini {
       vertical-align: middle!important;
       font-size: 11px !important;

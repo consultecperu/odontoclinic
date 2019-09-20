@@ -38,7 +38,7 @@
                             :events="calendarEvents"
                             :resources="resources"
                             @dateClick="handleDateClick"
-                            @select="handleDateClick"
+                            @select="handleDateClick22"
                             @datesRender="handleDatesRender"
                             />
                       </div>
@@ -126,7 +126,7 @@ export default {
             resources :[],
             calendarEvents: [
               { id: '1', resourceId: 'a', start: '2019-05-26', end: '2019-05-28', title: 'event 1' },
-              { id: '2', resourceId: 'a', start: '2019-05-27T09:00:00', end: '2019-05-27T14:00:00', title: 'event 2' },
+              { id: '2', resourceId: 'a', start: '2019-09-10T09:00:00', end: '2019-09-10T14:00:00', title: 'event 2' },
               { id: '3', resourceId: 'b', start: '2019-05-27T12:00:00', end: '2019-05-28T06:00:00', title: 'event 3' },
               { id: '4', resourceId: 'c', start: '2019-05-27T07:30:00', end: '2019-05-27T09:30:00', title: 'event 4' },
               { id: '5', resourceId: 'd', start: '2019-05-27T10:00:00', end: '2019-05-27T15:00:00', title: 'event 5' }
@@ -155,6 +155,8 @@ export default {
     handleDateClick(arg) {
       if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
         this.calendarEvents.push({ // add new event data
+          id: 13,
+          resourceId:13,
           title: 'New Event',
           start: arg.date,
           allDay: arg.allDay
@@ -162,20 +164,37 @@ export default {
       }
     },
 
+    handleDateClick22(arg){
+      let ar = arg.resource
+      console.log("arg22",arg)
+      console.log("resourceApi",ar.id)
+        this.calendarEvents.push({ // add new event data
+          resourceId:arg.resource.id,
+          title: 'New Event',
+          start: arg.startStr,
+          end : arg.endStr
+        })      
+      
+    },   
+
     handleDatesRender(info){    // recarga la vista
-    let self = this
-      //console.log("dates",info.view.currentStart)
+      let self = this
       let other_resources = this.CargaTurnoMedico(info.view.currentStart)
 
-      _.each(other_resources, function(value,key){
-          self.resources.push(value)            
-      })            
-
-      let calendario = this.$refs.fullCalendar.getApi()      
+      if(other_resources.length > 0){
+        _.each(other_resources, function(value,key){
+            self.resources.push(value)            
+        }) 
+      }else{
+        self.resources.length = 0
+        self.resources.push([])
+      }   
     },
+
     handleviewSkeletonRender(info){
       console.log("info",info)
     },
+    
     cambiarFecha(){
       let fec = moment(this.fecha_fullcalendar).format('YYYY-MM-DD')
       let calendarApi = this.$refs.fullCalendar.getApi() // from the ref="..."
@@ -184,10 +203,11 @@ export default {
     },
     CargaTurnoMedico(fec){
         let self = this
+        self.resources.length = 0
         let numdia = moment(fec).day()
         let bussinessDoctor = []
         this.turn_especials = []    // turnos especiales del doctor
-        this.turn_permisos = []
+        this.turn_permisos = []     // turnos permisos
         let turnomedico = this.turnos.filter(tur => tur.dia_id == numdia && tur.empleado.tipo == 1)
         //console.log("turnos",turnomedico)
         let turnomedico_esp = this.turnosespeciales.filter(tur => moment(tur.fecha).day() == numdia && tur.empleado.tipo == 1)
@@ -298,7 +318,7 @@ export default {
 <style scoped>
     .demo-app-calendar {
       margin: 0 auto;
-      max-width: 900px;
+      max-width: 1200px;
     }
     .v--modal-overlay {
         z-index:9000;     

@@ -13,8 +13,8 @@ export default {
     },
     SAVE_TOKEN(state, { datos }) {
         state.authenticated = true
-        state.user_system = datos.user.user[0]  // aca estan los datos del usuario loggeado  
-        //state.sede_system = null        
+        state.user_system = datos.user.user[0]  // aca estan los datos del usuario loggeado    
+        state.sedes_perfil = state.user_system.perfil_id == 1 ? state.sedes : state.user_system.__empleado.sedes    
         localStorage.setItem('autentificado', true)
         localStorage.setItem('user', JSON.stringify(datos.user.user[0]))
     },
@@ -31,6 +31,8 @@ export default {
     },    
     SET_PERFIL_USER: (state, { list }) => {      // PERFIL DE USUARIO
         state.perfil_user = list
+        state.sedes_perfil = state.user_system.perfil_id == 1 ? state.sedes : state.user_system.__empleado.sedes    
+
     },       
     SET_PERFILES_LIST: (state, { list }) => {      // PERFILES
         state.perfiles = list
@@ -193,6 +195,9 @@ export default {
     SET_CONFIRMACION_CITAS_LIST: (state, { list }) => {     // CONFIRMACION DE CITAS
         state.confirmacioncitas = list
     },
+    SET_SEGUIMIENTO_CITAS_LIST: (state, { list }) => {     // SEGUIMIENTO DE CITAS
+        state.seguimientocitas = list
+    },    
     SET_LABORATORIO_TRABAJOS_LIST: (state, { list }) => {      // LABORATORIO - TRABAJOS
         state.laboratoriotrabajos = list
     },   

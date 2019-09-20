@@ -425,7 +425,15 @@ export default {
         }, (err) => {
             console.log(err)
         });
-    },     
+    },  
+    LOAD_SEGUIMIENTO_CITAS_LIST: function ({ commit }, payload) {
+        var url = '/api/citas/seguimiento/' + payload.sede_id + '/' + payload.fecini + '/'+ payload.fecfin;
+        return axios.get(url).then((response) => {
+            commit('SET_SEGUIMIENTO_CITAS_LIST', { list: response.data })
+        }, (err) => {
+            console.log(err)
+        });
+    },       
     LOAD_LABORATORIO_TRABAJOS_LIST: function ({ commit }) {
         var url = '/api/laboratoriotrabajos/';
         return axios.get(url).then((response) => {

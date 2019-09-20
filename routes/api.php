@@ -152,6 +152,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/citas/confirmar/{id}', 'CitaController@confirmarcitas');        
     Route::put('/citas/modificacion/{id}', 'CitaController@modificarcitas'); 
     Route::get('/citas/confirmacion/{empleado_id}/{sede_id}/{fecini}/{fecfin}','CitaController@cargaconfirmacioncitas');     
+    Route::get('/citas/seguimiento/{sede_id}/{fecini}/{fecfin}','CitaController@cargaseguimientocitas');     
     // laboratoriotrabajos
     Route::resource('laboratoriotrabajos','LaboratoriotrabajoController'); 
     Route::put('/laboratoriotrabajos/envio/{id}', 'LaboratoriotrabajoController@envioTrabajo');   
@@ -171,5 +172,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('liquidacionortodoncia','LiquidacionortodonciaController');
     Route::get('/liquidacionesortodoncias/sedes/{sede}/{fechadesde}/{fechahasta}','LiquidacionortodonciaController@carga_liquidaciones_sede');
     Route::put('/liquidacionesortodoncias/facturar/{id}', 'LiquidacionortodonciaController@facturarLiquidacion');                                                                                                                                             
+    // reportes en pdf
+    Route::get('/reportes/pacientes/ficha/{id}','ReportePacienteController@imprimir_ficha');
 
 });

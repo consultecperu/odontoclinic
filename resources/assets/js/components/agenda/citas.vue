@@ -1222,8 +1222,8 @@ export default {
                 evento = {
                     id: String(value.id),
                     title: value.paciente.nombre_completo,
-                    start : String(value.fecha_cita) + 'T' + value.start,
-                    end: String(value.fecha_cita) + 'T' + value.end,
+                    start : String(moment(value.fecha_cita , "DD-MM-YYYY").format("YYYY-MM-DD")) + 'T' + value.start,
+                    end: String(moment(value.fecha_cita,"DD-MM-YYYY").format("YYYY-MM-DD")) + 'T' + value.end,
                     start_ant : String(value.fecha_cita) + 'T' + value.start,
                     end_ant: String(value.fecha_cita) + 'T' + value.end,                    
                     paciente_id: value.paciente_id,
@@ -1254,7 +1254,7 @@ export default {
                 _.each(this.turn_permisos, function(value,key){
                     eventos.push(value)
                 })
-            }                        
+            }                      
             this.events = eventos 
             this.isLoading = false      
         },
@@ -1282,8 +1282,6 @@ export default {
                 if(this.dataCita.empleado_id > 0){
                     citasxfiltro = this.citasfechas.filter(cif => cif.empleado_id == this.dataCita.empleado_id)
                 }
-                //console.log("citas-filtro",citasxfiltro)
-                //this.cargaEventos(this.citasfechas)
                 this.cargaEventos(citasxfiltro)
                 this.isLoading = false 
             }) 

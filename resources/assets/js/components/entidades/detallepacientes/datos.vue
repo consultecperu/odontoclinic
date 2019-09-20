@@ -304,7 +304,7 @@
                             </div>
                             <div class="card-action pr-20 pt-20 pl-20">
                                 <button type="submit" class="btn btn-primary float-right" :disabled="ShowIcon"><span class="btn-label"><i :class="[IconClass]"></i> {{ labelButton }}</span></button>
-                                <button type="button" class="btn btn-success" @click.prevent="imprimirFicha"><span class="btn-label"><i class="la la-print"></i> Imprimir</span></button>
+                                <button type="button" class="btn btn-success" @click.prevent="imprimirFicha"><span class="btn-label"><i class="la la-print"></i> Imprimir</span></button>                                
                             </div>
                         </form> 
                     </div>
@@ -2172,7 +2172,11 @@ export default {
             this.StatusForm(false,'la la-cloud-download','Grabar Datos')          
             this.notificaciones('Hubo un error en el proceso: '+ this.errors.data.error,'la la-thumbs-o-down','danger')           
             });
-        },                                        
+        }, 
+        imprimirFicha(){
+            //window.open('http://localhost/dsa/public/muestra/informeMuestra/' + id + ',' + '_blank');  
+            window.open('http://localhost:8000/api/reportes/pacientes/ficha/'+ this.$route.params.idpaciente);          
+        }                                       
 
     }            
 }

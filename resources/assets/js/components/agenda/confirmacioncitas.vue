@@ -171,6 +171,7 @@ export default {
         ...mapState(['user_system','sede_system','especialidades','documentos','empleados','citas','confirmacioncitas']),
         ...mapGetters(['getMedicosSedes','getDocumentosIdentidad']),  
         doc_sede(){
+            //console.log("sede:",this.sede_system)
             return this.getMedicosSedes(this.sede_system.id)
         },                        
     },

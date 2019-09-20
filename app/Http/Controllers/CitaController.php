@@ -378,4 +378,17 @@ class CitaController extends Controller
             }
         }
     }
+    public function cargaseguimientocitas($sede_id,$fecini,$fecfin)
+    {    
+        $dat_ini = Carbon::create(substr($fecini,4,4), substr($fecini,2,2),substr($fecini,0,2));        
+        $dat_fin = Carbon::create(substr($fecfin,4,4), substr($fecfin,2,2),substr($fecfin,0,2));        
+        // cargando las citas    
+        if($sede_id == 0 ){
+            $citas = Cita::with('paciente','empleado','seguimientocitas')->orderBy('id','ASC')->where('activo',true)->whereDate('fecha_cita', '>=',$dat_ini)->whereDate('fecha_cita','<=',$dat_fin)->get();
+
+        }else{
+            $citas = Cita::with('paciente','empleado','seguimientocitas')->orderBy('id','ASC')->where('activo',true)->whereDate('fecha_cita', '>=',$dat_ini)->whereDate('fecha_cita','<=',$dat_fin)->where(['sede_id' => $sede_id])->get();
+        }
+        return $citas;         
+    }     
 }

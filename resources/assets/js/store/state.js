@@ -1,6 +1,7 @@
 export default {
     user_system: null, 
-    sede_system:[],   
+    sede_system:[],
+    sedes_perfil:[],   
     authenticated: false,
     perfil_user: [],      
     perfiles:[],
@@ -65,6 +66,7 @@ export default {
     citasfechas:[],
     citasconsultorios:[],
     confirmacioncitas:[],
+    seguimientocitas:[],
     estadocitas:[],
     laboratoriotrabajos:[],
     liquidacionlaboratorios:[],

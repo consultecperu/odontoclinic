@@ -19,7 +19,7 @@ class TurnoEspecialController extends Controller
      */
     public function index()
     {
-        $turnosespeciales = TurnoEspecial::with('sede','horaini1','horafin1','horaini2','horafin2')->orderBy('id','ASC')->where('activo',true)->get();
+        $turnosespeciales = TurnoEspecial::with('sede','horaini1','horafin1','horaini2','horafin2','empleado')->orderBy('id','ASC')->where('activo',true)->get();
         return $turnosespeciales;
     }
 

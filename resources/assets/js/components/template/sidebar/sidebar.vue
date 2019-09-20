@@ -27,7 +27,7 @@
                     <div class="pt-10">
                         <div class="form-group form-floating-label pb-0">
                             <select class="form-control input-border-bottom" id="selectSedes" v-model="sede" @change="cambioSede">
-                                <option v-for="sed in listSedes" :value="sed.id" :key="sed.id">
+                                <option v-for="sed in sedes_perfil" :value="sed.id" :key="sed.id">
                                     {{ sed.nombre_sede}}
                                 </option>
                             </select>
@@ -75,10 +75,9 @@ export default {
         this.$store.dispatch('LOAD_PERFIL_USER')   
     },  
     mounted(){
-        if(this.user_system != null){
-            this.listSedes = this.user_system.__empleado.sedes
-            this.sede = this.user_system.__empleado.sedes[0].id
-            this.$store.dispatch('CAMBIO_SEDE', this.sede)            
+        if(this.sedes_perfil != null){  
+            this.sede = this.sedes_perfil[0].id                  
+            this.$store.dispatch('CAMBIO_SEDE', this.sede )  
         }
     },
     updated(){
@@ -95,14 +94,13 @@ export default {
     data () {
       return {
         listMenu : [],
-        listSedes : [],
         sede:'',
         isLoading: false,
         fullPage: true,        
       }
     },
     computed: {
-        ...mapState(['perfil_user','user_system','sedes','sede_system']),
+        ...mapState(['perfil_user','user_system','sedes','sede_system','sedes_perfil']),
     },   
 
     watch:{
@@ -114,12 +112,10 @@ export default {
                 this.listMenu = []
             }
         },
-        user_system(newVal) {
-            this.listSedes = []
-            if(newVal != null){
-                this.listSedes = this.user_system.__empleado.sedes
-                this.sede = this.user_system.__empleado.sedes[0].id
-                this.$store.dispatch('CAMBIO_SEDE', this.sede)
+        sedes_perfil(newVal) {
+            if(newVal != null){  
+                this.sede = this.sedes_perfil[0].id                  
+                this.$store.dispatch('CAMBIO_SEDE', this.sede )  
             }
         }
     }, 
